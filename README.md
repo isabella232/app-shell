@@ -11,4 +11,8 @@ npm install @bufferapp/app-shell
 
 ## Usage
 
-For now, refer to [the old documentation for `@bufferapp/ui/AppShell`](https://bufferapp.github.io/ui/#/ui/ui/appshell) as this is an exact copy of the old `AppShell` there.
+🚩 **You should be able to drop this component into your apps, replacing the old AppShell.**
+
+There are no API or breaking changes.
+
+For now, refer to [the old documentation for `@bufferapp/ui/AppShell`](https://bufferapp.github.io/ui/#/ui/ui/appshell) until we migrate docs here.
