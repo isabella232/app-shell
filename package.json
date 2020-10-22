@@ -1,9 +1,11 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
-  "files": ["lib/**"],
+  "files": [
+    "lib/**"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
