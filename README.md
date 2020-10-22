@@ -17,6 +17,9 @@ npm install @bufferapp/app-shell
 // ❌ Change this
 import AppShell from '@bufferapp/ui/AppShell';
 
+// ❌ Or this
+import { AppShell } from '@bufferapp/ui';
+
 // ✅ To this
 import AppShell from '@bufferapp/app-shell';
 ```
