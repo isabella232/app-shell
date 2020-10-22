@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { blueDarker, orangeLighter, orangeDark, white } from '../style/colors';
+import { blueDarker, orangeLighter, orangeDark, white } from '@bufferapp/ui/style/colors';
 
-import { fontSize, fontFamily } from '../style/fonts';
+import { fontSize, fontFamily } from '@bufferapp/ui/style/fonts';
 
 export const BannerStyled = styled.div`
   align-items: center;
