@@ -38,7 +38,7 @@ git clone git@github.com:bufferapp/app-shell.git
 ```
 
 * Ensure your editor is setup for ESLint and Prettier.
-* Make and test your changes locally using `npm link` or `yarn link`.
+* Make and test your changes locally (docs for this TBD, contact @hamstu in the meantime).
 * Make a pull request and have it reviewed and merged into `main`.
 * Now, from the `main` branch:
   * `git pull`
