@@ -197,7 +197,7 @@ export function appendOrgSwitcher(orgSwitcher) {
       itemCopy.defaultTooltipMessage = 'No channels connected yet.';
     }
 
-    return item;
+    return itemCopy;
   });
 }
 
