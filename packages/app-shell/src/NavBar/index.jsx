@@ -28,6 +28,8 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
+import { ENABLE_ENGAGE_URL} from '../index';
+import { UserContext } from '../User';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -201,32 +203,63 @@ export function appendOrgSwitcher(orgSwitcher) {
   });
 }
 
+const products = [
+  {
+    id: 'publish',
+    label: 'Publishing',
+    isNew: false
+  },
+  {
+    id: 'analyze',
+    label: 'Analytics',
+    isNew: false
+  },
+  {
+    id: 'engage',
+    label: 'Engagement',
+    isNew: true
+  }
+];
+
 /**
  * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
  */
 class NavBar extends React.Component {
   shouldComponentUpdate(nextProps) {
-    const { user, isImpersonation, products, orgSwitcher } = this.props;
+    const { isImpersonation, orgSwitcher } = this.props;
     return (
-      nextProps.user.name !== user.name ||
-      nextProps.user.email !== user.email ||
       nextProps.isImpersonation !== isImpersonation ||
-      nextProps.products !== products ||
       nextProps.orgSwitcher !== orgSwitcher
     );
   }
 
   render() {
     const {
-      products,
       activeProduct,
-      user,
       helpMenuItems,
       onLogout,
       displaySkipLink,
       isImpersonation,
       orgSwitcher,
     } = this.props;
+
+    const user = this.context
+
+    const enabledProducts = user.products.map(product => product.name)
+    const engageEnabled = enabledProducts.includes('engage');
+    const engageAccess = user.featureFlips.includes('engageRollOut');
+
+    const productsArray = products.map((product) => {
+      const productURL = `https://${product.id}.buffer.com`;
+
+      return {
+        id: product.id,
+        label: product.label,
+        isNew: product.isNew,
+        href: productURL,
+      };
+    });
+
 
     const orgSwitcherHasItems =
       orgSwitcher && orgSwitcher.menuItems && orgSwitcher.menuItems.length > 0;
@@ -313,36 +346,12 @@ class NavBar extends React.Component {
   }
 }
 
-NavBar.propTypes = {
-  /** The list of available products */
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      isNew: PropTypes.bool,
-      href: PropTypes.string,
-    })
-  ),
+NavBar.contextType = UserContext
 
+NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
 
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    avatar: PropTypes.string,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        component: PropTypes.func,
-        hasDivider: PropTypes.bool,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
-  }).isRequired,
   helpMenuItems: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -372,7 +381,6 @@ NavBar.propTypes = {
 };
 
 NavBar.defaultProps = {
-  products: [],
   activeProduct: undefined,
   helpMenuItems: null,
   isImpersonation: false,
