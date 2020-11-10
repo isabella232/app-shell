@@ -182,22 +182,20 @@ export function appendOrgSwitcher(orgSwitcher) {
   }
 
   return orgSwitcher.menuItems.map((item, index) => {
-    const itemCopy = { ...item };
-    itemCopy.type = ORG_SWITCHER;
-    if (orgSwitcher.title && index === 0) {
-      itemCopy.hasDivider = true;
-      itemCopy.dividerTitle = orgSwitcher.title;
-    }
-    if (itemCopy.subItems) {
-      itemCopy.subItems.map((subItem) => {
-        return { ...subItem, icon: getNetworkIcon(subItem) };
-      });
-    }
-    if (!itemCopy.subItems || itemCopy.subItems.length === 0) {
-      itemCopy.defaultTooltipMessage = 'No channels connected yet.';
-    }
+    // Adds social icon to each channel
+    const subItems = (item.subItems || []).map((subItem) => ({
+      ...subItem,
+      icon: getNetworkIcon(subItem),
+    }));
 
-    return itemCopy;
+    return {
+      ...item,
+      type: ORG_SWITCHER,
+      hasDivider: index === 0 && !!orgSwitcher.title,
+      dividerTitle: index === 0 && orgSwitcher.title,
+      subItems: subItems.length ? subItems : undefined,
+      defaultTooltipMessage: !subItems.length && 'No channels connected yet.',
+    };
   });
 }
 
