@@ -1,4 +1,6 @@
 # Changelog
+## [1.0.3] - 2020-11-10
+- Refactor appendOrgSwitcher function.
 
 ## [1.0.2] - 2020-11-09
 - Fix org switcher menu items.
