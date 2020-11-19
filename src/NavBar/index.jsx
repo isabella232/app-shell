@@ -194,7 +194,9 @@ export function appendOrgSwitcher(orgSwitcher) {
       hasDivider: index === 0 && !!orgSwitcher.title,
       dividerTitle: index === 0 && orgSwitcher.title,
       subItems: subItems.length ? subItems : undefined,
-      defaultTooltipMessage: !subItems.length && 'No channels connected yet.',
+      defaultTooltipMessage: orgSwitcher.hideTooltips
+        ? ''
+        : !subItems.length && 'No channels connected yet.',
     };
   });
 }
