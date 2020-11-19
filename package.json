@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
   "files": [
