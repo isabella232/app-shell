@@ -18,6 +18,7 @@ export const QUERY_ACCOUNT = gql`
       id
       email
       featureFlips
+      isImpersonation
       organizations {
         id
       }
@@ -34,7 +35,6 @@ export const QUERY_ACCOUNT = gql`
       products {
         name
       }
-      isImpersonation
     }
   }
 `;

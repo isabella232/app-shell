@@ -3,7 +3,6 @@ import AppShell, { UserContext } from '@bufferapp/app-shell';
 
 const AnotherComponentRenderingUserData = () => {
   const user = useContext(UserContext);
-  console.log(user);
   return (
     <>
       <h1>Hey there</h1>
@@ -22,19 +21,6 @@ const App = () => (
       content={
         <>
           <AnotherComponentRenderingUserData/>
-          <header className="App-header">
-            <p>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
         </>
       }
     >
