@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.6] - 2020-12-01
+- Fix function binding error when trying to close `Banner`
+
 ## [1.0.5] - 2020-11-15
 - Re-publishing to NPM with correct version.
 

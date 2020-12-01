@@ -20,6 +20,7 @@ export default class Banner extends React.Component {
     this.state = {
       isOpen: true,
     };
+    this.closeBanner = this.closeBanner.bind(this);
   }
 
   closeBanner() {

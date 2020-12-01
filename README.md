@@ -42,7 +42,7 @@ git clone git@github.com:bufferapp/app-shell.git
 * Make a pull request and have it reviewed and merged into `main`.
 * Now, from the `main` branch:
   * `git pull`
-  * `npm run build` 
+  * `npm run build`
   * Update [CHANGELOG.md](/CHANGELOG.md)
   * `npm version [patch|minor|major]` - pick one depending on type of changes
   * `git push origin main` - push changes to GitHub
