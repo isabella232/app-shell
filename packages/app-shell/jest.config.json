@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "moduleNameMapper": {
+    "\\.(css|less)$": "identity-obj-proxy"
+  }
+}

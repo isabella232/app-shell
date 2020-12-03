@@ -11,7 +11,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'testing-library', 'jest-dom'],
   rules: {},
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
 };

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useMutation } from '@apollo/client'
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -28,8 +29,9 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
-import { ENABLE_ENGAGE_URL} from '../index';
+import { ENABLE_ENGAGE_URL } from '../index';
 import { UserContext } from '../User';
+import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -178,9 +180,28 @@ function getNetworkIcon(item) {
   return null;
 }
 
-export function appendOrgSwitcher(orgSwitcher) {
-  if (!orgSwitcher || !orgSwitcher.menuItems) {
+function appendOrgSwitcher(user, switchOrganization) {
+  if (user.organizations.length === 1) {
     return [];
+  }
+  const orgSwitcher = {
+    title: 'Organizations',
+    menuItems: user.organizations.map((org, index) => {
+      const isCurrentOrganization = user.currentOrganization ?
+          user.currentOrganization.id === org.id
+          : index === 0
+      return ({
+        id: org.id,
+        title: org.name,
+        selected: isCurrentOrganization,
+        hasDivider: index === 0,
+        onItemClick: () => {
+          if (!isCurrentOrganization) {
+            switchOrganization(org.id);
+          }
+        },
+      });
+    })
   }
 
   return orgSwitcher.menuItems.map((item, index) => {
@@ -224,129 +245,126 @@ const products = [
 /**
  * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
  */
-class NavBar extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const { isImpersonation, orgSwitcher } = this.props;
-    return (
-      nextProps.isImpersonation !== isImpersonation ||
-      nextProps.orgSwitcher !== orgSwitcher
-    );
+const NavBar = React.memo((props) => {
+  const {
+    activeProduct,
+    helpMenuItems,
+    onLogout,
+    displaySkipLink,
+    onOrganizationSelected,
+    menuItems,
+    ignoreMenuItems,
+  } = props;
+
+  const user = useContext(UserContext);
+  const [setCurrentOrganization] = useMutation(
+    SET_CURRENT_ORGANIZATION, {
+      refetchQueries: [{
+        query: QUERY_ACCOUNT,
+      }],
+    }
+  )
+
+  const switchOrganization = async (organizationId) => {
+    setCurrentOrganization({
+      variables: {
+        organizationId,
+      }
+    })
+    onOrganizationSelected(organizationId)
   }
 
-  render() {
-    const {
-      activeProduct,
-      helpMenuItems,
-      onLogout,
-      displaySkipLink,
-      isImpersonation,
-      orgSwitcher,
-    } = this.props;
+  const productsArray = products.map((product) => {
+    const productURL = `https://${product.id}.buffer.com`;
 
-    const user = this.context
+    return {
+      id: product.id,
+      label: product.label,
+      isNew: product.isNew,
+      href: productURL,
+    };
+  })
 
-    const enabledProducts = user.products.map(product => product.name)
-    const engageEnabled = enabledProducts.includes('engage');
-    const engageAccess = user.featureFlips.includes('engageRollOut');
-
-    const productsArray = products.map((product) => {
-      const productURL = `https://${product.id}.buffer.com`;
-
-      return {
-        id: product.id,
-        label: product.label,
-        isNew: product.isNew,
-        href: productURL,
-      };
-    });
-
-
-    const orgSwitcherHasItems =
-      orgSwitcher && orgSwitcher.menuItems && orgSwitcher.menuItems.length > 0;
-
-    return (
-      <NavBarStyled aria-label="Main menu">
-        <NavBarLeft>
-          {displaySkipLink && (
-            <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
-          )}
-          <BufferLogo />
-          <NavBarVerticalRule />
-          <NavBarProducts products={products} activeProduct={activeProduct} />
-        </NavBarLeft>
-        <NavBarRight>
-          {helpMenuItems && (
-            <DropdownMenu
-              xPosition="right"
-              ariaLabel="Help Menu"
-              ariaLabelPopup="Help"
-              menubarItem={
-                <NavBarHelp>
-                  <InfoIcon />
-                  <NavBarHelpText>Help</NavBarHelpText>
-                </NavBarHelp>
-              }
-              items={helpMenuItems}
-            />
-          )}
-          <NavBarVerticalRule />
+  return (
+    <NavBarStyled aria-label="Main menu">
+      <NavBarLeft>
+        {displaySkipLink && (
+          <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
+        )}
+        <BufferLogo />
+        <NavBarVerticalRule />
+        <NavBarProducts products={productsArray} activeProduct={activeProduct} />
+      </NavBarLeft>
+      <NavBarRight>
+        {helpMenuItems && (
           <DropdownMenu
             xPosition="right"
-            ariaLabel="Account Menu"
-            ariaLabelPopup="Account"
-            horizontalOffset="-16px"
-            isImpersonation={isImpersonation}
+            ariaLabel="Help Menu"
+            ariaLabelPopup="Help"
             menubarItem={
-              <NavBarMenu user={user} isImpersonation={isImpersonation} />
+              <NavBarHelp>
+                <InfoIcon />
+                <NavBarHelpText>Help</NavBarHelpText>
+              </NavBarHelp>
             }
-            items={[
-              ...appendOrgSwitcher(orgSwitcher),
-              appendMenuItem(user.ignoreMenuItems, {
-                id: 'account',
-                title: 'Account',
-                icon: <PersonIcon color={gray} />,
-                hasDivider: orgSwitcherHasItems,
-                onItemClick: () => {
-                  window.location.assign(
-                    getAccountUrl(window.location.href, user)
-                  );
-                },
-              }),
-              ...user.menuItems,
-              appendMenuItem(
-                user.ignoreMenuItems,
-                isImpersonation
-                  ? {
-                      id: 'Stop Impersonation',
-                      title: 'Stop Impersonation',
-                      icon: <Cross color={gray} />,
-                      hasDivider: user.menuItems && user.menuItems.length > 0,
-                      onItemClick: () => {
-                        window.location.assign(getStopImpersonationUrl());
-                      },
-                    }
-                  : {
-                      id: 'logout',
-                      title: 'Logout',
-                      icon: <ArrowLeft color={gray} />,
-                      hasDivider: user.menuItems && user.menuItems.length > 0,
-                      onItemClick: () => {
-                        if (typeof onLogout === 'function') onLogout();
-                        window.location.assign(
-                          getLogoutUrl(window.location.href)
-                        );
-                      },
-                    }
-              ),
-            ].filter((e) => e)}
+            items={helpMenuItems}
           />
-        </NavBarRight>
-      </NavBarStyled>
-    );
-  }
-}
-
-NavBar.contextType = UserContext
+        )}
+        <NavBarVerticalRule />
+        <DropdownMenu
+          xPosition="right"
+          ariaLabel="Account Menu"
+          ariaLabelPopup="Account"
+          horizontalOffset="-16px"
+          isImpersonation={user.isImpersonation}
+          menubarItem={
+            <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
+          }
+          items={[
+            ...appendOrgSwitcher(user, switchOrganization),
+            appendMenuItem(ignoreMenuItems, {
+              id: 'account',
+              title: 'Account',
+              icon: <PersonIcon color={gray} />,
+              hasDivider: false,
+              onItemClick: () => {
+                window.location.assign(
+                  getAccountUrl(window.location.href, user)
+                );
+              },
+            }),
+            ...menuItems,
+            appendMenuItem(
+              ignoreMenuItems,
+              user.isImpersonation
+                ? {
+                    id: 'Stop Impersonation',
+                    title: 'Stop Impersonation',
+                    icon: <Cross color={gray} />,
+                    hasDivider: menuItems && menuItems.length > 0,
+                    onItemClick: () => {
+                      window.location.assign(getStopImpersonationUrl());
+                    },
+                  }
+                : {
+                    id: 'logout',
+                    title: 'Logout',
+                    icon: <ArrowLeft color={gray} />,
+                    hasDivider: menuItems && menuItems.length > 0,
+                    onItemClick: () => {
+                      if (typeof onLogout === 'function') onLogout();
+                      window.location.assign(
+                        getLogoutUrl(window.location.href)
+                      );
+                    },
+                  }
+            ),
+          ].filter((e) => e)}
+        />
+      </NavBarRight>
+    </NavBarStyled>
+  );
+})
 
 NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
@@ -361,7 +379,6 @@ NavBar.propTypes = {
       onItemClick: PropTypes.func,
     })
   ),
-  isImpersonation: PropTypes.bool,
 
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,
@@ -378,15 +395,20 @@ NavBar.propTypes = {
       })
     ).isRequired,
   }),
+  onOrganizationSelected: PropTypes.func,
+  menuItems: PropTypes.array,
+  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string)
 };
 
 NavBar.defaultProps = {
   activeProduct: undefined,
   helpMenuItems: null,
-  isImpersonation: false,
   onLogout: undefined,
   displaySkipLink: false,
   orgSwitcher: undefined,
+  onOrganizationSelected: () => {},
+  menuItems: [],
+  ignoreMenuItems: [],
 };
 
 export default NavBar;

@@ -1,43 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
 
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-
 import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
-import { ApolloClient } from '@apollo/client';
 import { UserContext } from './User';
+import { QUERY_ACCOUNT } from './graphql/account';
 
-export const QUERY_ACCOUNT = gql`
-  query account {
-    account {
-      id
-      email
-      featureFlips
-      isImpersonation
-      organizations {
-        id
-      }
-      channels {
-        name
-        id
-        service
-        isDisconnected
-        avatar
-        serviceId
-        organizationId
-        products
-      }
-      products {
-        name
-      }
-    }
-  }
-`;
 export const ENABLE_ENGAGE_URL = 'https://login.buffer.com/signup?product=engage';
 
 /**
@@ -51,38 +23,41 @@ const AppShell = ({
   bannerOptions,
   onLogout,
   displaySkipLink,
-  orgSwitcher,
-  children,
+  onOrganizationSelected,
+  menuItems,
+  ignoreMenuItems,
 }) => {
-  const { data, loading, error } = useQuery(QUERY_ACCOUNT)
+  const { data, loading } = useQuery(QUERY_ACCOUNT)
 
   const user = loading ? {
     name: '...',
     email: '...',
-    menuItems: [],
-    ignoreMenuItems: [],
     products: [],
     featureFlips: [],
+    organizations: [],
+    currentOrganization: {},
+    isImpersonation: false,
   } : {
-    menuItems: [],
-    ignoreMenuItems: [],
     name: '',
     ...data.account,
   };
+
   return (
     <AppShellStyled>
       <UserContext.Provider value={user}>
         <NavBar
           activeProduct={activeProduct}
           helpMenuItems={helpMenuItems}
+          menuItems={menuItems}
+          ignoreMenuItems={ignoreMenuItems}
           onLogout={onLogout}
           displaySkipLink={displaySkipLink}
-          orgSwitcher={orgSwitcher}
+          onOrganizationSelected={onOrganizationSelected}
         />
         {bannerOptions && <Banner {...bannerOptions} />}
         <Wrapper>
           {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-          <ContentWrapper>{content || children}</ContentWrapper>
+          <ContentWrapper>{content}</ContentWrapper>
         </Wrapper>
       </UserContext.Provider>
     </AppShellStyled>
@@ -143,8 +118,7 @@ AppShell.propTypes = {
       })
     ).isRequired,
   }),
-  apolloClient: PropTypes.instanceOf(ApolloClient),
-  children: PropTypes.node,
+  onOrganizationSelected: PropTypes.func,
 };
 
 AppShell.defaultProps = {
@@ -157,8 +131,7 @@ AppShell.defaultProps = {
   isImpersonation: false,
   displaySkipLink: false,
   orgSwitcher: undefined,
-  apolloClient: null,
-  children: null,
+  onOrganizationSelected: () => {},
 };
 
 export default AppShell;
