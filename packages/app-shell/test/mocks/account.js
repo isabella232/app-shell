@@ -18,5 +18,4 @@ export const account = {
     name: 'My other organization',
   }],
   products: [],
-  channels: [],
 };

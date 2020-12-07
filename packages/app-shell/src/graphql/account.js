@@ -20,12 +20,6 @@ export const QUERY_ACCOUNT = gql`
         role
         createdAt
       }
-      channels {
-        id,
-        name,
-        service,
-        avatar
-      }
       organizations {
         id
         name

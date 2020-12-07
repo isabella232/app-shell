@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "1.1.0-rc.2",
+  "version": "1.1.0-alpha.38+0de33c3",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
   "files": [
@@ -22,7 +22,6 @@
   "author": "Hamish Macpherson <hamish@buffer.com>",
   "license": "MIT",
   "devDependencies": {
-    "@apollo/react-testing": "^4.0.0",
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@babel/plugin-transform-runtime": "^7.12.1",
@@ -55,7 +54,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.4",
-    "@apollo/react-hooks": "^4.0.0",
     "graphql-tag": "^2.11.0"
-  }
+  },
+  "gitHead": "0de33c38393c9457cbd35473f54c6c1e8e30657b"
 }
