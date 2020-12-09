@@ -1,8 +1,9 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
-import { act, render } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import AppShell from '../src/index';
 import { QUERY_ACCOUNT } from '../src/graphql/account';
+import {account} from "./mocks/account";
 
 async function renderAppShell(account) {
   const mocks = [{
@@ -15,7 +16,7 @@ async function renderAppShell(account) {
       },
     },
   }];
-  const {container} = render(
+  render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <AppShell content={
         <h1>Hello world!</h1>
@@ -25,10 +26,12 @@ async function renderAppShell(account) {
   await act(async () => {
     await new Promise(resolve => setTimeout(resolve, 0)); // wait for response
   });
-  return { mocks, container };
 }
 
 describe('App Shell', () => {
-  test.todo('retrieves global account information')
+  it('retrieves global account information', () => {
+     renderAppShell(account)
+     screen.findByText(account.email)
+  })
 })
 
