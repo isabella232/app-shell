@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "1.1.0-alpha.38+0de33c3",
+  "version": "1.1.0-alpha.41+1932e82",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
   "files": [
@@ -46,6 +46,7 @@
     "styled-components": "^5.2.0"
   },
   "peerDependencies": {
+    "@apollo/client": "^3.3.4",
     "@bufferapp/ui": ">= 5.48.2",
     "prop-types": ">= 15.7.2",
     "react": ">= 16.8.0",
@@ -56,5 +57,5 @@
     "@apollo/client": "^3.3.4",
     "graphql-tag": "^2.11.0"
   },
-  "gitHead": "0de33c38393c9457cbd35473f54c6c1e8e30657b"
+  "gitHead": "1932e825881acd596ce979e11507d1c95ffba6db"
 }
