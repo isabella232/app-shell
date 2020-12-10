@@ -26,8 +26,12 @@ const AppShell = ({
   onOrganizationSelected,
   menuItems,
   ignoreMenuItems,
+  apolloClient,
 }) => {
-  const { data, loading } = useQuery(QUERY_ACCOUNT)
+  const graphqlConfig = apolloClient ? {
+    client: apolloClient
+  } : {}
+  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig)
 
   const user = loading ? {
     name: '...',
@@ -53,6 +57,7 @@ const AppShell = ({
           onLogout={onLogout}
           displaySkipLink={displaySkipLink}
           onOrganizationSelected={onOrganizationSelected}
+          graphqlConfig={graphqlConfig}
         />
         {bannerOptions && <Banner {...bannerOptions} />}
         <Wrapper>
@@ -119,6 +124,7 @@ AppShell.propTypes = {
     ).isRequired,
   }),
   onOrganizationSelected: PropTypes.func,
+  apolloClient: PropTypes.instanceOf('ApolloClient'),
 };
 
 AppShell.defaultProps = {
@@ -132,6 +138,7 @@ AppShell.defaultProps = {
   displaySkipLink: false,
   orgSwitcher: undefined,
   onOrganizationSelected: () => {},
+  apolloClient: undefined,
 };
 
 export default AppShell;

@@ -254,11 +254,13 @@ const NavBar = React.memo((props) => {
     onOrganizationSelected,
     menuItems,
     ignoreMenuItems,
+    graphqlConfig,
   } = props;
 
   const user = useContext(UserContext);
   const [setCurrentOrganization] = useMutation(
     SET_CURRENT_ORGANIZATION, {
+      ...graphqlConfig,
       refetchQueries: [{
         query: QUERY_ACCOUNT,
       }],
@@ -397,7 +399,10 @@ NavBar.propTypes = {
   }),
   onOrganizationSelected: PropTypes.func,
   menuItems: PropTypes.array,
-  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string)
+  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
+  graphqlConfig: PropTypes.shape({
+    client: PropTypes.instanceOf('ApolloClient'),
+  })
 };
 
 NavBar.defaultProps = {
@@ -409,6 +414,7 @@ NavBar.defaultProps = {
   onOrganizationSelected: () => {},
   menuItems: [],
   ignoreMenuItems: [],
+  graphqlConfig: {},
 };
 
 export default NavBar;
