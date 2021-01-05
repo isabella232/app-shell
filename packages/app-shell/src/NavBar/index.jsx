@@ -180,7 +180,7 @@ function getNetworkIcon(item) {
   return null;
 }
 
-function appendOrgSwitcher(user, switchOrganization) {
+function appendOrgSwitcher(user, switchOrganization, channels) {
   if (user.organizations.length === 1) {
     return [];
   }
@@ -195,6 +195,14 @@ function appendOrgSwitcher(user, switchOrganization) {
         title: org.name,
         selected: isCurrentOrganization,
         hasDivider: index === 0,
+        subItems: channels
+          .filter(channel => channel.organizationId === org.id)
+          .map(channel => ({
+            id: channel.id,
+            title: channel.name,
+            network: channel.service,
+          }))
+        ,
         onItemClick: () => {
           if (!isCurrentOrganization) {
             switchOrganization(org.id);
@@ -255,6 +263,7 @@ const NavBar = React.memo((props) => {
     menuItems,
     ignoreMenuItems,
     graphqlConfig,
+    channels,
   } = props;
 
   const user = useContext(UserContext);
@@ -323,7 +332,7 @@ const NavBar = React.memo((props) => {
             <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
           }
           items={[
-            ...appendOrgSwitcher(user, switchOrganization),
+            ...appendOrgSwitcher(user, switchOrganization, channels),
             appendMenuItem(ignoreMenuItems, {
               id: 'account',
               title: 'Account',
@@ -402,7 +411,13 @@ NavBar.propTypes = {
   ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf('ApolloClient'),
-  })
+  }),
+  channels: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    organizationId: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    service: PropTypes.string.isRequired,
+  }))
 };
 
 NavBar.defaultProps = {
@@ -415,6 +430,7 @@ NavBar.defaultProps = {
   menuItems: [],
   ignoreMenuItems: [],
   graphqlConfig: {},
+  channels: [],
 };
 
 export default NavBar;

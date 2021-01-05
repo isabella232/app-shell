@@ -27,6 +27,7 @@ const AppShell = ({
   menuItems,
   ignoreMenuItems,
   apolloClient,
+  channels
 }) => {
   const graphqlConfig = apolloClient ? {
     client: apolloClient
@@ -58,6 +59,7 @@ const AppShell = ({
           displaySkipLink={displaySkipLink}
           onOrganizationSelected={onOrganizationSelected}
           graphqlConfig={graphqlConfig}
+          channels={channels}
         />
         {bannerOptions && <Banner {...bannerOptions} />}
         <Wrapper>
@@ -125,6 +127,12 @@ AppShell.propTypes = {
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf('ApolloClient'),
+  channels: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    service: PropTypes.string.isRequired,
+    organizationId: PropTypes.string.isRequired,
+  }))
 };
 
 AppShell.defaultProps = {
@@ -139,6 +147,7 @@ AppShell.defaultProps = {
   orgSwitcher: undefined,
   onOrganizationSelected: () => {},
   apolloClient: undefined,
+  channels: [],
 };
 
 export default AppShell;
