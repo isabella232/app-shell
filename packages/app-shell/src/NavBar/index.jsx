@@ -12,6 +12,7 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
+import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 
 import {
   gray,
@@ -174,6 +175,8 @@ function getNetworkIcon(item) {
       return <PinterestIcon size="medium" />;
     case 'linkedin':
       return <LinkedInIcon size="medium" />;
+    case 'shopify':
+      return <ShopifyIcon size="medium" />;
     default:
       break;
   }
