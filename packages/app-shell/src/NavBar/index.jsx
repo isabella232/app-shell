@@ -183,7 +183,7 @@ function getNetworkIcon(item) {
   return null;
 }
 
-function appendOrgSwitcher(user, switchOrganization, channels) {
+function buildOrgSwitcher(user, switchOrganization, channels) {
   if (user.organizations.length === 1) {
     return [];
   }
@@ -299,6 +299,8 @@ const NavBar = React.memo((props) => {
     };
   })
 
+  const organizations = buildOrgSwitcher(user, switchOrganization, channels)
+
   return (
     <NavBarStyled aria-label="Main menu">
       <NavBarLeft>
@@ -335,12 +337,12 @@ const NavBar = React.memo((props) => {
             <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
           }
           items={[
-            ...appendOrgSwitcher(user, switchOrganization, channels),
+            ...organizations,
             appendMenuItem(ignoreMenuItems, {
               id: 'account',
               title: 'Account',
               icon: <PersonIcon color={gray} />,
-              hasDivider: false,
+              hasDivider: organizations.length > 1,
               onItemClick: () => {
                 window.location.assign(
                   getAccountUrl(window.location.href, user)
