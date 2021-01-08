@@ -12,15 +12,15 @@ function useOrgSwitcher() {
     }
   )
 
-  return async (organizationId, {
-    onCompleted
-  }) => {
+  return async (organizationId, options = {}) => {
     await setCurrentOrganization({
       variables: {
         organizationId,
       }
     })
-    onCompleted(organizationId)
+    if (options.onCompleted) {
+      options.onCompleted(organizationId)
+    }
   }
 }
 
