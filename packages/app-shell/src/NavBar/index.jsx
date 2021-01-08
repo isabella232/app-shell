@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useMutation } from '@apollo/client'
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -14,15 +13,9 @@ import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 
-import {
-  gray,
-  blueDarker,
-  grayLight,
-  grayLighter,
-  grayDark,
-} from '@bufferapp/ui/style/colors';
+import { blueDarker, gray, grayDark, grayLight, grayLighter } from '@bufferapp/ui/style/colors';
 
-import { fontWeightMedium, fontFamily } from '@bufferapp/ui/style/fonts';
+import { fontFamily, fontWeightMedium } from '@bufferapp/ui/style/fonts';
 
 import Link from '@bufferapp/ui/Link';
 import DropdownMenu from '@bufferapp/ui/DropdownMenu';
@@ -30,9 +23,10 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
-import { ENABLE_ENGAGE_URL } from '../index';
 import { UserContext } from '../User';
-import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account';
+import useOrgSwitcher from '../useOrgSwitcher';
+
+const ENABLE_ENGAGE_URL = 'https://login.buffer.com/signup?product=engage';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -183,7 +177,7 @@ function getNetworkIcon(item) {
   return null;
 }
 
-function buildOrgSwitcher(user, switchOrganization, channels) {
+function buildOrgSwitcher(user, selectOrganization, channels) {
   if (user.organizations.length === 1) {
     return [];
   }
@@ -208,7 +202,7 @@ function buildOrgSwitcher(user, switchOrganization, channels) {
         ,
         onItemClick: () => {
           if (!isCurrentOrganization) {
-            switchOrganization(org.id);
+            selectOrganization(org.id);
           }
         },
       });
@@ -265,28 +259,11 @@ const NavBar = React.memo((props) => {
     onOrganizationSelected,
     menuItems,
     ignoreMenuItems,
-    graphqlConfig,
     channels,
   } = props;
 
   const user = useContext(UserContext);
-  const [setCurrentOrganization] = useMutation(
-    SET_CURRENT_ORGANIZATION, {
-      ...graphqlConfig,
-      refetchQueries: [{
-        query: QUERY_ACCOUNT,
-      }],
-    }
-  )
-
-  const switchOrganization = async (organizationId) => {
-    setCurrentOrganization({
-      variables: {
-        organizationId,
-      }
-    })
-    onOrganizationSelected(organizationId)
-  }
+  const switchOrganization = useOrgSwitcher()
 
   const productsArray = products.map((product) => {
     const productURL = `https://${product.id}.buffer.com`;
@@ -299,7 +276,12 @@ const NavBar = React.memo((props) => {
     };
   })
 
-  const organizations = buildOrgSwitcher(user, switchOrganization, channels)
+  const selectOrganization = (organizationId) => {
+    switchOrganization(organizationId, {
+      onCompleted: onOrganizationSelected
+    })
+  }
+  const organizations = buildOrgSwitcher(user, selectOrganization, channels)
 
   return (
     <NavBarStyled aria-label="Main menu">

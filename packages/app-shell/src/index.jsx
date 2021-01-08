@@ -8,9 +8,8 @@ import Banner from './Banner';
 
 import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
 import { UserContext } from './User';
+import useOrgSwitcher from './useOrgSwitcher';
 import { QUERY_ACCOUNT } from './graphql/account';
-
-export const ENABLE_ENGAGE_URL = 'https://login.buffer.com/signup?product=engage';
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
@@ -153,3 +152,5 @@ AppShell.defaultProps = {
 export default AppShell;
 
 export { UserContext } from './User';
+
+export { default as useOrgSwitcher } from './useOrgSwitcher';
