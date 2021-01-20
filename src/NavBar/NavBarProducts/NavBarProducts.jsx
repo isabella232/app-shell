@@ -142,7 +142,7 @@ const getLogo = (product) => {
 
 const NavBarProducts = ({ products, activeProduct }) => (
   <StyledNavBarProducts>
-    {products.map(({ id, href, isNew }) => (
+    {products.map(({ id, label, href, isNew }) => (
       <ProductLink
         active={activeProduct === id}
         href={href}
@@ -150,7 +150,7 @@ const NavBarProducts = ({ products, activeProduct }) => (
         id={`product-${id}`}
       >
         {getLogo(id)}
-        <ProductText>{id}</ProductText>
+        <ProductText>{label}</ProductText>
         {isNew && (
           <NewLabel aria-label="This is a new product! Give it a try!">
             New!

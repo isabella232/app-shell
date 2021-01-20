@@ -12,7 +12,30 @@ import {
   ContentWrapper,
 } from './style';
 
-const ENABLE_ENGAGE_URL = 'https://login.buffer.com/signup?product=engage';
+const ENGAGE_SIGNUP_URL = 'https://login.buffer.com/signup?product=engage';
+
+const getProductURL = product => `https://${product}.buffer.com`;
+
+const getProductList = enabledProducts => [
+  {
+    id: 'publish',
+    label: 'Publishing',
+    isNew: false,
+    href: getProductURL('publish')
+  },
+  {
+    id: 'analyze',
+    label: 'Analytics',
+    isNew: false,
+    href: getProductURL('analyze')
+  },
+  {
+    id: 'engage',
+    label: 'Engagement',
+    isNew: true,
+    href: enabledProducts.includes('engage') ? getProductURL('engage') : ENGAGE_SIGNUP_URL
+  }
+];
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
@@ -30,54 +53,26 @@ const AppShell = ({
   displaySkipLink,
   orgSwitcher,
   isImpersonation,
-}) => {
-  const engageEnabled = enabledProducts.includes('engage');
-  const engageAccess = featureFlips.includes('engageRollOut');
-
-  let products = ['publish', 'analyze'];
-  if (engageEnabled || engageAccess) {
-    products.push('engage');
-  }
-
-  products = products.map((product) => {
-    const productURL = `https://${product}.buffer.com`;
-
-    if (product === 'engage') {
-      return {
-        id: product,
-        isNew: true,
-        href: engageEnabled ? productURL : ENABLE_ENGAGE_URL,
-      };
-    }
-
-    return {
-      id: product,
-      isNew: false,
-      href: productURL,
-    };
-  });
-
-  return (
-    <AppShellStyled>
-      {/* <GlobalStyles /> */}
-      <NavBar
-        products={products}
-        activeProduct={activeProduct}
-        user={user}
-        helpMenuItems={helpMenuItems}
-        onLogout={onLogout}
-        displaySkipLink={displaySkipLink}
-        orgSwitcher={orgSwitcher}
-        isImpersonation={isImpersonation}
-      />
-      {bannerOptions && <Banner {...bannerOptions} />}
-      <Wrapper>
-        {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-        <ContentWrapper>{content}</ContentWrapper>
-      </Wrapper>
-    </AppShellStyled>
-  );
-};
+}) => (
+  <AppShellStyled>
+    {/* <GlobalStyles /> */}
+    <NavBar
+      products={getProductList(enabledProducts)}
+      activeProduct={activeProduct}
+      user={user}
+      helpMenuItems={helpMenuItems}
+      onLogout={onLogout}
+      displaySkipLink={displaySkipLink}
+      orgSwitcher={orgSwitcher}
+      isImpersonation={isImpersonation}
+    />
+    {bannerOptions && <Banner {...bannerOptions} />}
+    <Wrapper>
+      {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+      <ContentWrapper>{content}</ContentWrapper>
+    </Wrapper>
+  </AppShellStyled>
+);
 
 AppShell.propTypes = {
   /** The list of features enabled for the user */
