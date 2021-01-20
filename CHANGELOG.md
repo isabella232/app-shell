@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0] - 2021-01-20
+- Remove requirement for `engageRollout` feature flip.
+- Rename links on navigation bar.
+
 ## [1.0.6] - 2020-12-01
 - Fix function binding error when trying to close `Banner`
 
