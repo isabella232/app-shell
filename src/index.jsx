@@ -19,16 +19,19 @@ const getProductURL = product => `https://${product}.buffer.com`;
 const getProductList = enabledProducts => [
   {
     id: 'publish',
+    label: 'Publishing',
     isNew: false,
     href: getProductURL('publish')
   },
   {
     id: 'analyze',
+    label: 'Analytics',
     isNew: false,
     href: getProductURL('analyze')
   },
   {
     id: 'engage',
+    label: 'Engagement',
     isNew: true,
     href: enabledProducts.includes('engage') ? getProductURL('engage') : ENGAGE_SIGNUP_URL
   }
