@@ -142,10 +142,10 @@ const getLogo = (product) => {
 
 const NavBarProducts = ({ products, activeProduct }) => (
   <StyledNavBarProducts>
-    {products.map(({ id, label, href, isNew }) => (
+    {products.map(({ id, label, isNew }) => (
       <ProductLink
         active={activeProduct === id}
-        href={href}
+        href={`https://${id}.buffer.com`}
         key={id}
         id={`product-${id}`}
       >
