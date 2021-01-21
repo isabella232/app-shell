@@ -12,28 +12,21 @@ import {
   ContentWrapper,
 } from './style';
 
-const ENGAGE_SIGNUP_URL = 'https://login.buffer.com/signup?product=engage';
-
-const getProductURL = product => `https://${product}.buffer.com`;
-
-const getProductList = enabledProducts => [
+const products = [
   {
     id: 'publish',
     label: 'Publishing',
-    isNew: false,
-    href: getProductURL('publish')
+    isNew: false
   },
   {
     id: 'analyze',
     label: 'Analytics',
-    isNew: false,
-    href: getProductURL('analyze')
+    isNew: false
   },
   {
     id: 'engage',
     label: 'Engagement',
-    isNew: true,
-    href: enabledProducts.includes('engage') ? getProductURL('engage') : ENGAGE_SIGNUP_URL
+    isNew: true
   }
 ];
 
@@ -42,7 +35,6 @@ const getProductList = enabledProducts => [
  */
 const AppShell = ({
   featureFlips,
-  enabledProducts,
   activeProduct,
   user,
   helpMenuItems,
@@ -57,7 +49,7 @@ const AppShell = ({
   <AppShellStyled>
     {/* <GlobalStyles /> */}
     <NavBar
-      products={getProductList(enabledProducts)}
+      products={products}
       activeProduct={activeProduct}
       user={user}
       helpMenuItems={helpMenuItems}
@@ -77,9 +69,6 @@ const AppShell = ({
 AppShell.propTypes = {
   /** The list of features enabled for the user */
   featureFlips: PropTypes.arrayOf(PropTypes.string),
-
-  /** The list of products that the user has enabled on their account. */
-  enabledProducts: PropTypes.arrayOf(PropTypes.string),
 
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
@@ -155,7 +144,6 @@ AppShell.propTypes = {
 AppShell.defaultProps = {
   featureFlips: [],
   sidebar: null,
-  enabledProducts: [],
   activeProduct: undefined,
   bannerOptions: null,
   onLogout: undefined,
