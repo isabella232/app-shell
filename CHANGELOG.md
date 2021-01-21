@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.1] - 2021-01-21
+- Update `Engagement` URL.
+
 ## [1.1.0] - 2021-01-20
 - Remove requirement for `engageRollout` feature flip.
 - Rename links on navigation bar.
