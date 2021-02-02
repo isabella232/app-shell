@@ -127,6 +127,24 @@ const EngageLogo = () => (
   </svg>
 );
 
+const products = [
+  {
+    id: 'publish',
+    label: 'Publishing',
+    isNew: false
+  },
+  {
+    id: 'analyze',
+    label: 'Analytics',
+    isNew: false
+  },
+  {
+    id: 'engage',
+    label: 'Engagement',
+    isNew: true
+  }
+];
+
 const getLogo = (product) => {
   switch (product) {
     case 'analyze':
@@ -140,7 +158,7 @@ const getLogo = (product) => {
   }
 };
 
-const NavBarProducts = ({ products, activeProduct }) => (
+const NavBarProducts = ({ activeProduct }) => (
   <StyledNavBarProducts>
     {products.map(({ id, label, isNew }) => (
       <ProductLink

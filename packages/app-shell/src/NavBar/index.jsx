@@ -229,24 +229,6 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
   });
 }
 
-const products = [
-  {
-    id: 'publish',
-    label: 'Publishing',
-    isNew: false
-  },
-  {
-    id: 'analyze',
-    label: 'Analytics',
-    isNew: false
-  },
-  {
-    id: 'engage',
-    label: 'Engagement',
-    isNew: true
-  }
-];
-
 /**
  * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
  */
@@ -265,17 +247,6 @@ const NavBar = React.memo((props) => {
   const user = useContext(UserContext);
   const switchOrganization = useOrgSwitcher()
 
-  const productsArray = products.map((product) => {
-    const productURL = `https://${product.id}.buffer.com`;
-
-    return {
-      id: product.id,
-      label: product.label,
-      isNew: product.isNew,
-      href: productURL,
-    };
-  })
-
   const selectOrganization = (organizationId) => {
     switchOrganization(organizationId, {
       onCompleted: onOrganizationSelected
@@ -291,7 +262,7 @@ const NavBar = React.memo((props) => {
         )}
         <BufferLogo />
         <NavBarVerticalRule />
-        <NavBarProducts products={productsArray} activeProduct={activeProduct} />
+        <NavBarProducts activeProduct={activeProduct} />
       </NavBarLeft>
       <NavBarRight>
         {helpMenuItems && (
