@@ -22,13 +22,13 @@ export function getUserAvatar(user) {
 /** NavBar Menu component used by the Select component to show a custom User name and avatar
  *  button */
 const NavBarMenu = (props) => {
-  const { user, isImpersonation } = props;
+  const { user } = props;
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
     <NavBarStyled {...props}>
       <NavBarUser>
-        {isImpersonation && (
+        {user.isImpersonation && (
           <NavBarImpersonating
             user={user}
             aria-label="You are impersonating a user"
@@ -50,14 +50,9 @@ const NavBarMenu = (props) => {
 NavBarMenu.propTypes = {
   /** User Name and Email to be shown in the NavBar */
   user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  isImpersonation: PropTypes.bool,
-};
-
-NavBarMenu.defaultProps = {
-  isImpersonation: false,
 };
 
 export default NavBarMenu;

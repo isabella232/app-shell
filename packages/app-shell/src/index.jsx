@@ -1,70 +1,74 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
 
-import {
-  AppShellStyled,
-  Wrapper,
-  SidebarWrapper,
-  ContentWrapper,
-} from './style';
-
-const products = [
-  {
-    id: 'publish',
-    label: 'Publishing',
-    isNew: false
-  },
-  {
-    id: 'analyze',
-    label: 'Analytics',
-    isNew: false
-  },
-  {
-    id: 'engage',
-    label: 'Engagement',
-    isNew: true
-  }
-];
+import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
+import { UserContext } from './User';
+import useOrgSwitcher from './useOrgSwitcher';
+import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
  */
 const AppShell = ({
-  featureFlips,
   activeProduct,
-  user,
   helpMenuItems,
   sidebar,
   content,
   bannerOptions,
   onLogout,
   displaySkipLink,
-  orgSwitcher,
-  isImpersonation,
-}) => (
-  <AppShellStyled>
-    {/* <GlobalStyles /> */}
-    <NavBar
-      products={products}
-      activeProduct={activeProduct}
-      user={user}
-      helpMenuItems={helpMenuItems}
-      onLogout={onLogout}
-      displaySkipLink={displaySkipLink}
-      orgSwitcher={orgSwitcher}
-      isImpersonation={isImpersonation}
-    />
-    {bannerOptions && <Banner {...bannerOptions} />}
-    <Wrapper>
-      {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-      <ContentWrapper>{content}</ContentWrapper>
-    </Wrapper>
-  </AppShellStyled>
-);
+  onOrganizationSelected,
+  menuItems,
+  ignoreMenuItems,
+  apolloClient,
+  channels
+}) => {
+  const graphqlConfig = apolloClient ? {
+    client: apolloClient
+  } : {}
+  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig)
+
+  const user = loading ? {
+    name: '...',
+    email: '...',
+    products: [],
+    featureFlips: [],
+    organizations: [],
+    currentOrganization: {},
+    isImpersonation: false,
+  } : {
+    name: '',
+    ...data.account,
+  };
+
+  return (
+    <AppShellStyled>
+      <UserContext.Provider value={user}>
+        <NavBar
+          activeProduct={activeProduct}
+          helpMenuItems={helpMenuItems}
+          menuItems={menuItems}
+          ignoreMenuItems={ignoreMenuItems}
+          onLogout={onLogout}
+          displaySkipLink={displaySkipLink}
+          onOrganizationSelected={onOrganizationSelected}
+          graphqlConfig={graphqlConfig}
+          channels={channels}
+        />
+        {bannerOptions && <Banner {...bannerOptions} />}
+        <Wrapper>
+          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+          <ContentWrapper>{content}</ContentWrapper>
+        </Wrapper>
+      </UserContext.Provider>
+    </AppShellStyled>
+  );
+};
 
 AppShell.propTypes = {
   /** The list of features enabled for the user */
@@ -72,25 +76,6 @@ AppShell.propTypes = {
 
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
-
-  /** The current user object */
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    avatar: PropTypes.string,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        component: PropTypes.func,
-        hasDivider: PropTypes.bool,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
-  }).isRequired,
 
   /** Menu items to show in the help menu */
   helpMenuItems: PropTypes.arrayOf(
@@ -139,6 +124,14 @@ AppShell.propTypes = {
       })
     ).isRequired,
   }),
+  onOrganizationSelected: PropTypes.func,
+  apolloClient: PropTypes.instanceOf('ApolloClient'),
+  channels: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    service: PropTypes.string.isRequired,
+    organizationId: PropTypes.string.isRequired,
+  }))
 };
 
 AppShell.defaultProps = {
@@ -151,6 +144,13 @@ AppShell.defaultProps = {
   isImpersonation: false,
   displaySkipLink: false,
   orgSwitcher: undefined,
+  onOrganizationSelected: () => {},
+  apolloClient: undefined,
+  channels: [],
 };
 
 export default AppShell;
+
+export { UserContext, useUser } from './User';
+
+export { default as useOrgSwitcher } from './useOrgSwitcher';

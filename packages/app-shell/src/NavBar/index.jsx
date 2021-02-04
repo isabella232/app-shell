@@ -11,16 +11,17 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
+import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 
 import {
-  gray,
   blueDarker,
+  gray,
+  grayDark,
   grayLight,
   grayLighter,
-  grayDark,
 } from '@bufferapp/ui/style/colors';
 
-import { fontWeightMedium, fontFamily } from '@bufferapp/ui/style/fonts';
+import { fontFamily, fontWeightMedium } from '@bufferapp/ui/style/fonts';
 
 import Link from '@bufferapp/ui/Link';
 import DropdownMenu from '@bufferapp/ui/DropdownMenu';
@@ -28,6 +29,8 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
+import { useUser } from '../User';
+import useOrgSwitcher from '../useOrgSwitcher';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -170,16 +173,44 @@ function getNetworkIcon(item) {
       return <PinterestIcon size="medium" />;
     case 'linkedin':
       return <LinkedInIcon size="medium" />;
+    case 'shopify':
+      return <ShopifyIcon size="medium" />;
     default:
       break;
   }
   return null;
 }
 
-export function appendOrgSwitcher(orgSwitcher) {
-  if (!orgSwitcher || !orgSwitcher.menuItems) {
+function buildOrgSwitcher(user, selectOrganization, channels) {
+  if (user.organizations.length === 1) {
     return [];
   }
+  const orgSwitcher = {
+    title: 'Organizations',
+    menuItems: user.organizations.map((org, index) => {
+      const isCurrentOrganization = user.currentOrganization
+        ? user.currentOrganization.id === org.id
+        : index === 0;
+      return {
+        id: org.id,
+        title: org.name,
+        selected: isCurrentOrganization,
+        hasDivider: index === 0,
+        subItems: channels
+          .filter((channel) => channel.organizationId === org.id)
+          .map((channel) => ({
+            id: channel.id,
+            title: channel.name,
+            network: channel.service,
+          })),
+        onItemClick: () => {
+          if (!isCurrentOrganization) {
+            selectOrganization(org.id);
+          }
+        },
+      };
+    }),
+  };
 
   return orgSwitcher.menuItems.map((item, index) => {
     // Adds social icon to each channel
@@ -204,145 +235,113 @@ export function appendOrgSwitcher(orgSwitcher) {
 /**
  * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
  */
-class NavBar extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const { user, isImpersonation, products, orgSwitcher } = this.props;
-    return (
-      nextProps.user.name !== user.name ||
-      nextProps.user.email !== user.email ||
-      nextProps.isImpersonation !== isImpersonation ||
-      nextProps.products !== products ||
-      nextProps.orgSwitcher !== orgSwitcher
-    );
-  }
+const NavBar = React.memo((props) => {
+  const {
+    activeProduct,
+    helpMenuItems,
+    onLogout,
+    displaySkipLink,
+    onOrganizationSelected,
+    menuItems,
+    ignoreMenuItems,
+    channels,
+  } = props;
 
-  render() {
-    const {
-      products,
-      activeProduct,
-      user,
-      helpMenuItems,
-      onLogout,
-      displaySkipLink,
-      isImpersonation,
-      orgSwitcher,
-    } = this.props;
+  const user = useUser();
+  const switchOrganization = useOrgSwitcher();
 
-    const orgSwitcherHasItems =
-      orgSwitcher && orgSwitcher.menuItems && orgSwitcher.menuItems.length > 0;
+  const selectOrganization = (organizationId) => {
+    switchOrganization(organizationId, {
+      onCompleted: onOrganizationSelected,
+    });
+  };
+  const organizations = buildOrgSwitcher(user, selectOrganization, channels);
 
-    return (
-      <NavBarStyled aria-label="Main menu">
-        <NavBarLeft>
-          {displaySkipLink && (
-            <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
-          )}
-          <BufferLogo />
-          <NavBarVerticalRule />
-          <NavBarProducts products={products} activeProduct={activeProduct} />
-        </NavBarLeft>
-        <NavBarRight>
-          {helpMenuItems && (
-            <DropdownMenu
-              xPosition="right"
-              ariaLabel="Help Menu"
-              ariaLabelPopup="Help"
-              menubarItem={
-                <NavBarHelp>
-                  <InfoIcon />
-                  <NavBarHelpText>Help</NavBarHelpText>
-                </NavBarHelp>
-              }
-              items={helpMenuItems}
-            />
-          )}
-          <NavBarVerticalRule />
+  return (
+    <NavBarStyled aria-label="Main menu">
+      <NavBarLeft>
+        {displaySkipLink && (
+          <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
+        )}
+        <BufferLogo />
+        <NavBarVerticalRule />
+        <NavBarProducts activeProduct={activeProduct} />
+      </NavBarLeft>
+      <NavBarRight>
+        {helpMenuItems && (
           <DropdownMenu
             xPosition="right"
-            ariaLabel="Account Menu"
-            ariaLabelPopup="Account"
-            horizontalOffset="-16px"
-            isImpersonation={isImpersonation}
+            ariaLabel="Help Menu"
+            ariaLabelPopup="Help"
             menubarItem={
-              <NavBarMenu user={user} isImpersonation={isImpersonation} />
+              <NavBarHelp>
+                <InfoIcon />
+                <NavBarHelpText>Help</NavBarHelpText>
+              </NavBarHelp>
             }
-            items={[
-              ...appendOrgSwitcher(orgSwitcher),
-              appendMenuItem(user.ignoreMenuItems, {
-                id: 'account',
-                title: 'Account',
-                icon: <PersonIcon color={gray} />,
-                hasDivider: orgSwitcherHasItems,
-                onItemClick: () => {
-                  window.location.assign(
-                    getAccountUrl(window.location.href, user)
-                  );
-                },
-              }),
-              ...user.menuItems,
-              appendMenuItem(
-                user.ignoreMenuItems,
-                isImpersonation
-                  ? {
-                      id: 'Stop Impersonation',
-                      title: 'Stop Impersonation',
-                      icon: <Cross color={gray} />,
-                      hasDivider: user.menuItems && user.menuItems.length > 0,
-                      onItemClick: () => {
-                        window.location.assign(getStopImpersonationUrl());
-                      },
-                    }
-                  : {
-                      id: 'logout',
-                      title: 'Logout',
-                      icon: <ArrowLeft color={gray} />,
-                      hasDivider: user.menuItems && user.menuItems.length > 0,
-                      onItemClick: () => {
-                        if (typeof onLogout === 'function') onLogout();
-                        window.location.assign(
-                          getLogoutUrl(window.location.href)
-                        );
-                      },
-                    }
-              ),
-            ].filter((e) => e)}
+            items={helpMenuItems}
           />
-        </NavBarRight>
-      </NavBarStyled>
-    );
-  }
-}
+        )}
+        <NavBarVerticalRule />
+        <DropdownMenu
+          xPosition="right"
+          ariaLabel="Account Menu"
+          ariaLabelPopup="Account"
+          horizontalOffset="-16px"
+          isImpersonation={user.isImpersonation}
+          menubarItem={
+            <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
+          }
+          items={[
+            ...organizations,
+            appendMenuItem(ignoreMenuItems, {
+              id: 'account',
+              title: 'Account',
+              icon: <PersonIcon color={gray} />,
+              hasDivider: organizations.length > 1,
+              onItemClick: () => {
+                window.location.assign(
+                  getAccountUrl(window.location.href, user)
+                );
+              },
+            }),
+            ...menuItems,
+            appendMenuItem(
+              ignoreMenuItems,
+              user.isImpersonation
+                ? {
+                    id: 'Stop Impersonation',
+                    title: 'Stop Impersonation',
+                    icon: <Cross color={gray} />,
+                    hasDivider: menuItems && menuItems.length > 0,
+                    onItemClick: () => {
+                      window.location.assign(getStopImpersonationUrl());
+                    },
+                  }
+                : {
+                    id: 'logout',
+                    title: 'Logout',
+                    icon: <ArrowLeft color={gray} />,
+                    hasDivider: menuItems && menuItems.length > 0,
+                    onItemClick: () => {
+                      if (typeof onLogout === 'function') onLogout();
+                      window.location.assign(
+                        getLogoutUrl(window.location.href)
+                      );
+                    },
+                  }
+            ),
+          ].filter((e) => e)}
+        />
+      </NavBarRight>
+    </NavBarStyled>
+  );
+});
 
 NavBar.propTypes = {
-  /** The list of available products */
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      isNew: PropTypes.bool,
-      href: PropTypes.string,
-    })
-  ),
-
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
 
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    avatar: PropTypes.string,
-    /** If missing we will use Gravatar to get the user avatar by email */
-    ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        component: PropTypes.func,
-        hasDivider: PropTypes.bool,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
-  }).isRequired,
   helpMenuItems: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -352,7 +351,6 @@ NavBar.propTypes = {
       onItemClick: PropTypes.func,
     })
   ),
-  isImpersonation: PropTypes.bool,
 
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,
@@ -369,16 +367,33 @@ NavBar.propTypes = {
       })
     ).isRequired,
   }),
+  onOrganizationSelected: PropTypes.func,
+  menuItems: PropTypes.array,
+  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
+  graphqlConfig: PropTypes.shape({
+    client: PropTypes.instanceOf('ApolloClient'),
+  }),
+  channels: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      organizationId: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      service: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 NavBar.defaultProps = {
-  products: [],
   activeProduct: undefined,
   helpMenuItems: null,
-  isImpersonation: false,
   onLogout: undefined,
   displaySkipLink: false,
   orgSwitcher: undefined,
+  onOrganizationSelected: () => {},
+  menuItems: [],
+  ignoreMenuItems: [],
+  graphqlConfig: {},
+  channels: [],
 };
 
 export default NavBar;
