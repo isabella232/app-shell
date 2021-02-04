@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0] - 2021-02-04
+- Add global organization switcher
+- Breaking change: Added dependency with Apollo: now the AppShell needs to be 
+  rendered within 
+  an `ApolloProvider` compotent to be able to trigger its own queries and 
+  mutations.
+
 ## [1.1.1] - 2021-01-21
 - Update `Engagement` URL.
 
