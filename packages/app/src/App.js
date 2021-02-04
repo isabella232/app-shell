@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import AppShell, { UserContext, useOrgSwitcher } from '@bufferapp/app-shell';
+import React from 'react';
+import AppShell, { useOrgSwitcher, useUser } from '@bufferapp/app-shell';
 
 const AnotherComponentRenderingUserData = () => {
-  const user = useContext(UserContext);
+  const user = useUser();
   const switchOrganization = useOrgSwitcher()
   return (
     <>

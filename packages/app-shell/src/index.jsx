@@ -151,6 +151,6 @@ AppShell.defaultProps = {
 
 export default AppShell;
 
-export { UserContext } from './User';
+export { UserContext, useUser } from './User';
 
 export { default as useOrgSwitcher } from './useOrgSwitcher';

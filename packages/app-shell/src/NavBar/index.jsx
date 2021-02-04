@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -13,7 +13,13 @@ import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 
-import { blueDarker, gray, grayDark, grayLight, grayLighter } from '@bufferapp/ui/style/colors';
+import {
+  blueDarker,
+  gray,
+  grayDark,
+  grayLight,
+  grayLighter,
+} from '@bufferapp/ui/style/colors';
 
 import { fontFamily, fontWeightMedium } from '@bufferapp/ui/style/fonts';
 
@@ -23,10 +29,8 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
-import { UserContext } from '../User';
+import { useUser } from '../User';
 import useOrgSwitcher from '../useOrgSwitcher';
-
-const ENABLE_ENGAGE_URL = 'https://login.buffer.com/signup?product=engage';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -184,30 +188,29 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
   const orgSwitcher = {
     title: 'Organizations',
     menuItems: user.organizations.map((org, index) => {
-      const isCurrentOrganization = user.currentOrganization ?
-          user.currentOrganization.id === org.id
-          : index === 0
-      return ({
+      const isCurrentOrganization = user.currentOrganization
+        ? user.currentOrganization.id === org.id
+        : index === 0;
+      return {
         id: org.id,
         title: org.name,
         selected: isCurrentOrganization,
         hasDivider: index === 0,
         subItems: channels
-          .filter(channel => channel.organizationId === org.id)
-          .map(channel => ({
+          .filter((channel) => channel.organizationId === org.id)
+          .map((channel) => ({
             id: channel.id,
             title: channel.name,
             network: channel.service,
-          }))
-        ,
+          })),
         onItemClick: () => {
           if (!isCurrentOrganization) {
             selectOrganization(org.id);
           }
         },
-      });
-    })
-  }
+      };
+    }),
+  };
 
   return orgSwitcher.menuItems.map((item, index) => {
     // Adds social icon to each channel
@@ -244,15 +247,15 @@ const NavBar = React.memo((props) => {
     channels,
   } = props;
 
-  const user = useContext(UserContext);
-  const switchOrganization = useOrgSwitcher()
+  const user = useUser();
+  const switchOrganization = useOrgSwitcher();
 
   const selectOrganization = (organizationId) => {
     switchOrganization(organizationId, {
-      onCompleted: onOrganizationSelected
-    })
-  }
-  const organizations = buildOrgSwitcher(user, selectOrganization, channels)
+      onCompleted: onOrganizationSelected,
+    });
+  };
+  const organizations = buildOrgSwitcher(user, selectOrganization, channels);
 
   return (
     <NavBarStyled aria-label="Main menu">
@@ -333,7 +336,7 @@ const NavBar = React.memo((props) => {
       </NavBarRight>
     </NavBarStyled>
   );
-})
+});
 
 NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
@@ -370,12 +373,14 @@ NavBar.propTypes = {
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf('ApolloClient'),
   }),
-  channels: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    organizationId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired,
-  }))
+  channels: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      organizationId: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      service: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 NavBar.defaultProps = {
