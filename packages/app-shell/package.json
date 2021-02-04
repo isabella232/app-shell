@@ -12,7 +12,7 @@
     "prettier": "prettier --write ./src",
     "publish": "npm publish --access public",
     "watch": "cross-env NODE_ENV=production babel src --out-dir lib --watch",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:watch": "jest --watch"
   },
   "keywords": [],
