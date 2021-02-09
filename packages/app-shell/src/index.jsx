@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/client';
+import { useQuery, NetworkStatus } from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
@@ -31,9 +31,12 @@ const AppShell = ({
   const graphqlConfig = apolloClient ? {
     client: apolloClient
   } : {}
-  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig)
+  const { data, loading, networkStatus } = useQuery(QUERY_ACCOUNT, {
+    ...graphqlConfig,
+    notifyOnNetworkStatusChange: true,
+  })
 
-  const user = loading ? {
+  const user = loading && networkStatus !== NetworkStatus.refetch ? {
     name: '...',
     email: '...',
     products: [],
@@ -41,9 +44,11 @@ const AppShell = ({
     organizations: [],
     currentOrganization: {},
     isImpersonation: false,
+    loading,
   } : {
     name: '',
     ...data.account,
+    loading,
   };
 
   return (
