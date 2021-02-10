@@ -16,7 +16,7 @@ function useOrgSwitcher() {
         organizationId,
       },
     });
-    userQuery.refetch();
+    await userQuery.refetch();
     if (options.onCompleted) {
       options.onCompleted(organizationId);
     }
