@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "2.0.0",
+  "version": "2.0.1-alpha.1+221c17e",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
   "files": [
@@ -10,10 +10,13 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "prettier": "prettier --write ./src",
-    "publish": "npm publish --access public",
+    "prepublish": "npm build",
     "watch": "cross-env NODE_ENV=production babel src --out-dir lib --watch",
     "test": "jest",
     "test:watch": "jest --watch"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "browserslist": [
@@ -57,5 +60,5 @@
     "@apollo/client": "^3.3.4",
     "graphql-tag": "^2.11.0"
   },
-  "gitHead": "29cc1e0b448417d26aa0bf47eb4eda466641e4bf"
+  "gitHead": "221c17eddcd1a89b1b9e58e600df2b999d9042c1"
 }
