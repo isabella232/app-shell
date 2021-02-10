@@ -1,27 +1,26 @@
-import { useMutation, useApolloClient } from '@apollo/client'
-import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from './graphql/account';
+import { useContext } from 'react';
+import { useApolloClient, useMutation } from '@apollo/client';
+import { SET_CURRENT_ORGANIZATION } from './graphql/account';
+import { UserQuery } from './index';
 
 function useOrgSwitcher() {
-  const apolloClient = useApolloClient()
-  const [setCurrentOrganization] = useMutation(
-    SET_CURRENT_ORGANIZATION, {
-      client: apolloClient,
-      refetchQueries: [{
-        query: QUERY_ACCOUNT,
-      }],
-    }
-  )
+  const apolloClient = useApolloClient();
+  const userQuery = useContext(UserQuery);
+  const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION, {
+    client: apolloClient,
+  });
 
   return async (organizationId, options = {}) => {
     await setCurrentOrganization({
       variables: {
         organizationId,
-      }
-    })
+      },
+    });
+    userQuery.refetch();
     if (options.onCompleted) {
-      options.onCompleted(organizationId)
+      options.onCompleted(organizationId);
     }
-  }
+  };
 }
 
-export default useOrgSwitcher
+export default useOrgSwitcher;

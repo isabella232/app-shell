@@ -1,15 +1,26 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, NetworkStatus } from '@apollo/client';
+import {
+  useApolloClient,
+  useLazyQuery,
+  useQuery,
+  NetworkStatus,
+} from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
 
-import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
+import {
+  AppShellStyled,
+  ContentWrapper,
+  SidebarWrapper,
+  Wrapper,
+} from './style';
 import { UserContext } from './User';
-import useOrgSwitcher from './useOrgSwitcher';
 import { QUERY_ACCOUNT } from './graphql/account';
+
+export const UserQuery = React.createContext({});
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
@@ -26,50 +37,58 @@ const AppShell = ({
   menuItems,
   ignoreMenuItems,
   apolloClient,
-  channels
+  channels,
 }) => {
-  const graphqlConfig = apolloClient ? {
-    client: apolloClient
-  } : {}
-  const { data, loading, networkStatus } = useQuery(QUERY_ACCOUNT, {
+  const graphqlConfig = apolloClient
+    ? {
+        client: apolloClient,
+      }
+    : {};
+
+  const { data, loading, networkStatus, refetch } = useQuery(QUERY_ACCOUNT, {
     ...graphqlConfig,
     notifyOnNetworkStatusChange: true,
-  })
+  });
 
-  const user = loading && networkStatus !== NetworkStatus.refetch ? {
-    name: '...',
-    email: '...',
-    products: [],
-    featureFlips: [],
-    organizations: [],
-    currentOrganization: {},
-    isImpersonation: false,
-    loading,
-  } : {
-    name: '',
-    ...data.account,
-    loading,
-  };
+  const user =
+    loading && networkStatus !== NetworkStatus.refetch
+      ? {
+          name: '...',
+          email: '...',
+          products: [],
+          featureFlips: [],
+          organizations: [],
+          currentOrganization: {},
+          isImpersonation: false,
+          loading,
+        }
+      : {
+          name: '',
+          ...data.account,
+          loading,
+        };
 
   return (
     <AppShellStyled>
       <UserContext.Provider value={user}>
-        <NavBar
-          activeProduct={activeProduct}
-          helpMenuItems={helpMenuItems}
-          menuItems={menuItems}
-          ignoreMenuItems={ignoreMenuItems}
-          onLogout={onLogout}
-          displaySkipLink={displaySkipLink}
-          onOrganizationSelected={onOrganizationSelected}
-          graphqlConfig={graphqlConfig}
-          channels={channels}
-        />
-        {bannerOptions && <Banner {...bannerOptions} />}
-        <Wrapper>
-          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-          <ContentWrapper>{content}</ContentWrapper>
-        </Wrapper>
+        <UserQuery.Provider value={{ loading, networkStatus, refetch }}>
+          <NavBar
+            activeProduct={activeProduct}
+            helpMenuItems={helpMenuItems}
+            menuItems={menuItems}
+            ignoreMenuItems={ignoreMenuItems}
+            onLogout={onLogout}
+            displaySkipLink={displaySkipLink}
+            onOrganizationSelected={onOrganizationSelected}
+            graphqlConfig={graphqlConfig}
+            channels={channels}
+          />
+          {bannerOptions && <Banner {...bannerOptions} />}
+          <Wrapper>
+            {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+            <ContentWrapper>{content}</ContentWrapper>
+          </Wrapper>
+        </UserQuery.Provider>
       </UserContext.Provider>
     </AppShellStyled>
   );
@@ -131,12 +150,14 @@ AppShell.propTypes = {
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf('ApolloClient'),
-  channels: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired,
-    organizationId: PropTypes.string.isRequired,
-  }))
+  channels: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      service: PropTypes.string.isRequired,
+      organizationId: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 AppShell.defaultProps = {
