@@ -40,10 +40,11 @@ const AppShell = ({
       }
     : {};
 
-  const { data, loading, networkStatus, refetch } = useQuery(QUERY_ACCOUNT, {
+  const { data, loading, networkStatus, refetch, error } = useQuery(QUERY_ACCOUNT, {
     ...graphqlConfig,
     notifyOnNetworkStatusChange: true,
   });
+  console.log(data, loading, error);
 
   const user =
     loading && networkStatus !== NetworkStatus.refetch
