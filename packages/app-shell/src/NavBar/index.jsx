@@ -182,7 +182,7 @@ function getNetworkIcon(item) {
 }
 
 function buildOrgSwitcher(user, selectOrganization, channels) {
-  if (user?.organizations?.length === 1) {
+  if (user?.organizations?.length <= 1) {
     return [];
   }
   const orgSwitcher = {
