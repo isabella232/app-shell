@@ -182,7 +182,7 @@ function getNetworkIcon(item) {
 }
 
 function buildOrgSwitcher(user, selectOrganization, channels) {
-  if (user?.organizations?.length <= 1) {
+  if (user.organizations.length === 1) {
     return [];
   }
   const orgSwitcher = {
@@ -255,7 +255,7 @@ const NavBar = React.memo((props) => {
       onCompleted: onOrganizationSelected,
     });
   };
-  const organizations = buildOrgSwitcher(user, selectOrganization, channels);
+  const organizations = user.loading ? [] : buildOrgSwitcher(user, selectOrganization, channels);
 
   return (
     <NavBarStyled aria-label="Main menu">
