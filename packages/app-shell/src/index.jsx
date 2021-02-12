@@ -1,12 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  useApolloClient,
-  useLazyQuery,
-  useQuery,
-  NetworkStatus,
-} from '@apollo/client';
+import { NetworkStatus, useQuery } from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
@@ -64,7 +59,7 @@ const AppShell = ({
         }
       : {
           name: '',
-          ...data.account,
+          ...data?.account,
           loading,
         };
 
