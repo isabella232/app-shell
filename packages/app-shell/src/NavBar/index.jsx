@@ -250,8 +250,8 @@ const NavBar = React.memo((props) => {
   const user = useUser();
   const switchOrganization = useOrgSwitcher();
 
-  const selectOrganization = (organizationId) => {
-    switchOrganization(organizationId, {
+  const selectOrganization = async (organizationId) => {
+    await switchOrganization(organizationId, {
       onCompleted: onOrganizationSelected,
     });
   };

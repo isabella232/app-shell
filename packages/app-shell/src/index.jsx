@@ -62,6 +62,7 @@ const AppShell = ({
           name: '',
           ...data?.account,
           loading,
+          refetching: networkStatus === NetworkStatus.refetch,
         };
 
   return (
