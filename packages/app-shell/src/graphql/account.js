@@ -28,6 +28,11 @@ export const QUERY_ACCOUNT = gql`
       organizations {
         id
         name
+        billing {
+          canAccessAnalytics
+          canAccessEngagement
+          canAccessPublishing
+        }
       }
       products {
         name
