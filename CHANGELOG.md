@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0] - 2021-02-04
+- Add canAccess* flags to the organizations an account belongs to:
+  - `canAccessAnalytics`
+  - `canAccessEngagement`
+  - `canAccessPublishing`
+
 ## [2.0.0] - 2021-02-04
 - Add global organization switcher
 - Breaking change: Added dependency with Apollo: now the AppShell needs to be 
