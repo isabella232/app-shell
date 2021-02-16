@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 
@@ -45,6 +45,15 @@ const AppShell = ({
     name: '',
     ...data.account,
   };
+
+  const switchOrganization = useOrgSwitcher()
+  useEffect(() => {
+    window._appShell = {
+      ...window.appShell,
+      user,
+      switchOrganization,
+    }
+  }, [user])
 
   return (
     <AppShellStyled>

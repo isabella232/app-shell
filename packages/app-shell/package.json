@@ -1,6 +1,6 @@
 {
   "name": "@bufferapp/app-shell",
-  "version": "2.0.0",
+  "version": "2.0.1-alpha.10",
   "description": "Buffer's Smart AppShell",
   "main": "lib/index.js",
   "files": [
@@ -57,5 +57,5 @@
     "@apollo/client": "^3.3.4",
     "graphql-tag": "^2.11.0"
   },
-  "gitHead": "29cc1e0b448417d26aa0bf47eb4eda466641e4bf"
+  "gitHead": "a5d6ed74b9fccfa3570cb15cfe05ed791f25be2a"
 }
