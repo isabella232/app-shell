@@ -1,10 +1,10 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 export const SET_CURRENT_ORGANIZATION = gql`
   mutation AccountSetCurrentOrganization($organizationId: String) {
     accountSetCurrentOrganization(organizationId: $organizationId)
   }
-`
+`;
 
 export const QUERY_ACCOUNT = gql`
   query GetAccount {
@@ -23,6 +23,9 @@ export const QUERY_ACCOUNT = gql`
       organizations {
         id
         name
+        canEdit
+        role
+        createdAt
       }
       products {
         name
