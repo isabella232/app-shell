@@ -29,7 +29,7 @@ function useOrgSwitcher() {
       update: (client) => updateCache(organizationId, client),
     });
 
-    // Needed, as the onCompleted is not triggered when passed as an option in the mutate function
+    // Needed, as the onCompleted is not triggered when passed as an option in the mutate function.
     if (options.onCompleted) {
       options.onCompleted(organizationId);
     }
