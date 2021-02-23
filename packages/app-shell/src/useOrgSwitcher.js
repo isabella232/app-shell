@@ -5,7 +5,6 @@ function useOrgSwitcher() {
   const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION);
 
   const updateCache = (organizationId, client) => {
-    debugger;
     const previousData = client.readQuery({ query: QUERY_ACCOUNT });
     const organizationSelected = previousData?.account?.organizations?.filter(
       (organization) => organization.id === organizationId
