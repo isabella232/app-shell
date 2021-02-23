@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "HTTPS=true HOST='appshell.local.buffer.com' react-scripts start"
+    "watch": "HTTPS=true HOST='0.0.0.0' react-scripts start"
   },
   "eslintConfig": {
     "extends": [
