@@ -53,9 +53,6 @@
     "react-dom": ">= 16.8.0",
     "styled-components": ">= 5.0.1"
   },
-  "dependencies": {
-    "@apollo/client": "^3.3.4",
-    "graphql-tag": "^2.11.0"
-  },
-  "gitHead": "29cc1e0b448417d26aa0bf47eb4eda466641e4bf"
+  "dependencies": {},
+  "gitHead": "b9b2161a7fe7db7b43726e412105c1da1526cf01"
 }
