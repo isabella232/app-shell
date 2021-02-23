@@ -252,7 +252,7 @@ const NavBar = React.memo((props) => {
 
   const selectOrganization = (organizationId) => {
     switchOrganization(organizationId, {
-      onCompleted: onOrganizationSelected,
+      onCompleted: () => onOrganizationSelected(organizationId),
     });
   };
   const organizations = buildOrgSwitcher(user, selectOrganization, channels);

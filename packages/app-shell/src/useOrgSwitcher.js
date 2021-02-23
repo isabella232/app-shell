@@ -1,12 +1,12 @@
-import { useMutation, useApolloClient } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from './graphql/account';
 
 function useOrgSwitcher() {
-  const apolloClient = useApolloClient();
   const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION);
 
-  const updateCache = (organizationId) => {
-    const previousData = apolloClient.readQuery({ query: QUERY_ACCOUNT });
+  const updateCache = (organizationId, client) => {
+    debugger;
+    const previousData = client.readQuery({ query: QUERY_ACCOUNT });
     const organizationSelected = previousData?.account?.organizations?.filter(
       (organization) => organization.id === organizationId
     )[0];
@@ -16,7 +16,7 @@ function useOrgSwitcher() {
         currentOrganization: organizationSelected,
       },
     };
-    apolloClient.writeQuery({
+    client.writeQuery({
       query: QUERY_ACCOUNT,
       data: updatedData,
     });
@@ -27,9 +27,13 @@ function useOrgSwitcher() {
       variables: {
         organizationId,
       },
-      update: () => updateCache(organizationId),
-      onCompleted: () => options.onCompleted(organizationId),
+      update: (client) => updateCache(organizationId, client),
     });
+
+    // Needed, as the onCompleted is not triggered when passed as an option in the mutate function
+    if (options.onCompleted) {
+      options.onCompleted(organizationId);
+    }
   };
 }
 
