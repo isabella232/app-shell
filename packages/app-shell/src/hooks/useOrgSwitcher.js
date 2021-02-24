@@ -1,5 +1,5 @@
 import { useMutation, useApolloClient } from '@apollo/client'
-import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from './graphql/account';
+import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account';
 
 function useOrgSwitcher() {
   const apolloClient = useApolloClient()

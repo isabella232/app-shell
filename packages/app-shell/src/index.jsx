@@ -7,8 +7,8 @@ import NavBar from './NavBar';
 import Banner from './Banner';
 
 import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
-import { UserContext } from './User';
-import useOrgSwitcher from './useOrgSwitcher';
+import { UserContext } from './context/User';
+import useOrgSwitcher from './hooks/useOrgSwitcher';
 import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
@@ -151,6 +151,7 @@ AppShell.defaultProps = {
 
 export default AppShell;
 
-export { UserContext, useUser } from './User';
+export { UserContext, useUser } from './context/User';
 
-export { default as useOrgSwitcher } from './useOrgSwitcher';
+export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
+export { default as useModal } from './hooks/useModal';
