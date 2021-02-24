@@ -12,7 +12,7 @@ function useModal() {
     const { hash } = window.location
     const matchingModal = Object.keys(MODALS).find(k => k === hash.replace('#', ''))
     if (matchingModal) {
-      window.history.pushState({}, '', '');
+      window.location.hash = '';
       setModal(matchingModal)
     }
   }, [])
