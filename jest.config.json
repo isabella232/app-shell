@@ -3,5 +3,6 @@
   "moduleNameMapper": {
     "\\.(css|less)$": "identity-obj-proxy"
   },
-  "coverageDirectory": "<rootDir>/coverage/"
+  "coverageDirectory": "<rootDir>/coverage/",
+  "modulePathIgnorePatterns": ["app-shell/lib"]
 }
