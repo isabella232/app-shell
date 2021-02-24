@@ -17,14 +17,14 @@ function useModal() {
     }
   }, [])
 
-  const updateModal = useCallback((modalKey) => {
+  const openModal = useCallback((modalKey) => {
     const matchingModal = Object.keys(MODALS).find(k => k === modalKey)
     if (matchingModal) {
       setModal(matchingModal)
     }
   }, [])
 
-  return { modal, updateModal }
+  return { modal, openModal }
 }
 
 export default useModal

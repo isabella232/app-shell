@@ -70,6 +70,7 @@ const AppShell = ({
             {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
             <ContentWrapper>{content}</ContentWrapper>
           </Wrapper>
+          {modal.modal && <div>{modal.modal}</div>}
         </ModalContext.Provider>
       </UserContext.Provider>
     </AppShellStyled>
@@ -161,4 +162,4 @@ export { UserContext, useUser } from './context/User';
 export { ModalContext } from './context/Modal';
 
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
-export { default as useModal } from './hooks/useModal';
+export { MODALS } from './hooks/useModal';

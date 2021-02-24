@@ -41,7 +41,7 @@ describe('useModal', () => {
     it('does not set an undefined modal', () => {
       const { result } = renderHook(() => useModal())
       act(() => {
-        result.current.updateModal('foo')
+        result.current.openModal('foo')
       })
       expect(result.current.modal).toBeNull()
     })
@@ -49,7 +49,7 @@ describe('useModal', () => {
     it('set a modal', () => {
       const { result } = renderHook(() => useModal())
       act(() => {
-        result.current.updateModal(MODALS.planSelector)
+        result.current.openModal(MODALS.planSelector)
       })
 
       expect(result.current.modal).toEqual(MODALS.planSelector)
