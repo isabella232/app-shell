@@ -8,7 +8,9 @@ import Banner from './Banner';
 
 import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
 import { UserContext } from './context/User';
+import { ModalContext } from './context/Modal';
 import useOrgSwitcher from './hooks/useOrgSwitcher';
+import useModal from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
@@ -46,25 +48,29 @@ const AppShell = ({
     ...data.account,
   };
 
+  const modal = useModal()
+
   return (
     <AppShellStyled>
       <UserContext.Provider value={user}>
-        <NavBar
-          activeProduct={activeProduct}
-          helpMenuItems={helpMenuItems}
-          menuItems={menuItems}
-          ignoreMenuItems={ignoreMenuItems}
-          onLogout={onLogout}
-          displaySkipLink={displaySkipLink}
-          onOrganizationSelected={onOrganizationSelected}
-          graphqlConfig={graphqlConfig}
-          channels={channels}
-        />
-        {bannerOptions && <Banner {...bannerOptions} />}
-        <Wrapper>
-          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-          <ContentWrapper>{content}</ContentWrapper>
-        </Wrapper>
+        <ModalContext.Provider value={modal}>
+          <NavBar
+            activeProduct={activeProduct}
+            helpMenuItems={helpMenuItems}
+            menuItems={menuItems}
+            ignoreMenuItems={ignoreMenuItems}
+            onLogout={onLogout}
+            displaySkipLink={displaySkipLink}
+            onOrganizationSelected={onOrganizationSelected}
+            graphqlConfig={graphqlConfig}
+            channels={channels}
+          />
+          {bannerOptions && <Banner {...bannerOptions} />}
+          <Wrapper>
+            {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+            <ContentWrapper>{content}</ContentWrapper>
+          </Wrapper>
+        </ModalContext.Provider>
       </UserContext.Provider>
     </AppShellStyled>
   );
@@ -152,6 +158,7 @@ AppShell.defaultProps = {
 export default AppShell;
 
 export { UserContext, useUser } from './context/User';
+export { ModalContext } from './context/Modal';
 
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { default as useModal } from './hooks/useModal';
