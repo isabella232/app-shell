@@ -10,8 +10,20 @@ import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
 import useOrgSwitcher from './hooks/useOrgSwitcher';
-import useModal from './hooks/useModal';
+import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
+import PaymentMethod from './PaymentMethod';
+
+const Modal = ({ modal }) => {
+  switch (modal) {
+    case MODALS.paymentMethod:
+      return (<PaymentMethod />);
+    case MODALS.planSelector:
+      return (<div> Plan Selector </div>);
+    default:
+      return null;
+  }
+}
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
@@ -70,7 +82,7 @@ const AppShell = ({
             {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
             <ContentWrapper>{content}</ContentWrapper>
           </Wrapper>
-          {modal.modal && <div>{modal.modal}</div>}
+          {modal.modal && <Modal {...modal} />}
         </ModalContext.Provider>
       </UserContext.Provider>
     </AppShellStyled>
