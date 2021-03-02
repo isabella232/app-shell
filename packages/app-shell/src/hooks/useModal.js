@@ -7,6 +7,7 @@ export const MODALS = {
 
 function useModal() {
   const [modal, setModal] = useState(null)
+  const [data, setData] = useState(null)
 
   useEffect(() => {
     const { hash } = window.location
@@ -17,16 +18,19 @@ function useModal() {
     }
   }, [])
 
-  const openModal = useCallback((modalKey) => {
+  const openModal = useCallback((modalKey, modalData = null) => {
     const matchingModal = Object.keys(MODALS).find(k => k === modalKey)
     if (matchingModal) {
       setModal(matchingModal)
+      if (modalData) {
+        setData(modalData)
+      }
     } else {
       setModal(null)
     }
   }, [])
 
-  return { modal, openModal }
+  return { data, modal, openModal }
 }
 
 export default useModal

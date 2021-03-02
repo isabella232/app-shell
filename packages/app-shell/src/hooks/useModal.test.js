@@ -54,5 +54,15 @@ describe('useModal', () => {
 
       expect(result.current.modal).toEqual(MODALS.planSelector)
     })
+
+    it('set a modal with data', () => {
+      const { result } = renderHook(() => useModal())
+      const data = { foo: 'bar' }
+      act(() => {
+        result.current.openModal(MODALS.planSelector, data)
+      })
+
+      expect(result.current.data).toEqual(data)
+    })
   })
 })
