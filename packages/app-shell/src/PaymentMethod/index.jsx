@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import {loadStripe} from '@stripe/stripe-js';
 import {
@@ -6,14 +6,12 @@ import {
   useStripe,
   useElements,
   CardNumberElement,
-  CardCvcElement,
-  CardExpiryElement
 } from "@stripe/react-stripe-js";
+
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 import LockIcon from '@bufferapp/ui/Icon/Icons/Locked';
-import { gray } from '@bufferapp/ui/style/colors';
 
 import { MODALS } from '../hooks/useModal';
 import { UserContext } from '../context/User';
@@ -21,63 +19,46 @@ import { ModalContext } from '../context/Modal';
 import { CREATE_SETUP_INTENT } from '../graphql/billing';
 import {
   DoubleFields,
-  Field,
   Footer,
   Form,
-  Input,
   LeftSide,
   RightSide,
+  Error,
 } from './style'
+
+import Field from './components/Field'
 
 const Content = ({ openPlans }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const options = useMemo(() => ({
-    style: {
-      base: {
-        color: "#636363",
-        fontSize: "18px",
-        fontFamily: "Source Code Pro, monospace",
-        letterSpacing: "0.025em",
-        "::placeholder": {
-          color: "#aab7c4"
-        }
-      },
-      invalid: {
-        color: "#9e2146"
-      }
-    }
-  }), []);
+  const [stripeResponse, setStripeResponse] = useState(null);
 
   const submit = async () => {
     if (!stripe || !elements) {
       return;
     }
 
-    const payload = await stripe.createPaymentMethod({
+    await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardNumberElement)
-    });
-
-    console.log("[PaymentMethod]", payload);
+    })
+      .then((response) => setStripeResponse(response));
   };
+
+  useEffect(() => {
+    console.log(stripeResponse);
+  }, [stripeResponse])
 
   return (<Form>
     <LeftSide>
       <Text type='h2'>Billing Details</Text>
-      <Field><Text type='label' >
-        Credit Card number
-        <Input><CardNumberElement options={options} /></Input>
-      </Text></Field>
+      {stripeResponse && stripeResponse.error && stripeResponse.error.type === "invalid_request_error" &&
+        <><Error error={stripeResponse.error} /><br/></>
+      }
+      <Field label="Credit card number" />
       <DoubleFields>
-        <Field><Text type='label' >
-          Expiration date
-          <Input><CardExpiryElement options={options} /></Input>
-        </Text></Field>
-        <Field><Text type='label' >
-          CVC
-          <Input><CardCvcElement options={options} /></Input>
-        </Text></Field>
+        <Field label="Expiration date" />
+        <Field label="CVC" />
       </DoubleFields>
       <Footer>
         <Button
@@ -121,7 +102,14 @@ const StripeProvider = ({ user, openPlans }) => {
     }
   }, [setupIntent])
 
-  return (<Elements stripe={stripe}>
+  return (<Elements
+    stripe={stripe}
+    options={{
+      fonts: [{
+        cssSrc: 'https://fonts.googleapis.com/css?family=Roboto',
+      }],
+    }}
+  >
     <Content openPlans={openPlans} />
   </Elements>)
 }
