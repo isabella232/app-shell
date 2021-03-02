@@ -10,12 +10,15 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production babel src --out-dir lib",
     "prettier": "prettier --write ./src",
-    "publish": "npm publish --access public",
+    "prepublish": "npm build",
     "watch": "cross-env NODE_ENV=production babel src --out-dir lib --watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "browserslist": [
