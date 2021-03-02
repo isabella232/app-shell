@@ -1,71 +1,116 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useMutation } from '@apollo/client';
 import {loadStripe} from '@stripe/stripe-js';
 import {
   Elements,
   useStripe,
   useElements,
-  CardElement,
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement
 } from "@stripe/react-stripe-js";
+import Text from '@bufferapp/ui/Text';
+import Button from '@bufferapp/ui/Button';
+import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
+import LockIcon from '@bufferapp/ui/Icon/Icons/Locked';
+import { gray } from '@bufferapp/ui/style/colors';
 
+import { MODALS } from '../hooks/useModal';
 import { UserContext } from '../context/User';
+import { ModalContext } from '../context/Modal';
 import { CREATE_SETUP_INTENT } from '../graphql/billing';
+import {
+  DoubleFields,
+  Field,
+  Footer,
+  Form,
+  Input,
+  LeftSide,
+  RightSide,
+} from './style'
 
-const Form = () => {
+const Content = ({ openPlans }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const options = useMemo(() => ({
+    style: {
+      base: {
+        color: "#636363",
+        fontSize: "18px",
+        fontFamily: "Source Code Pro, monospace",
+        letterSpacing: "0.025em",
+        "::placeholder": {
+          color: "#aab7c4"
+        }
+      },
+      invalid: {
+        color: "#9e2146"
+      }
+    }
+  }), []);
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-
+  const submit = async () => {
     if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
       return;
     }
 
     const payload = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: elements.getElement(CardNumberElement)
     });
 
     console.log("[PaymentMethod]", payload);
   };
 
-  return (<form onSubmit={handleSubmit}>
-    <label>
-      Card details
-      <CardElement
-        onReady={() => {
-          console.log("CardElement [ready]");
-        }}
-        onChange={event => {
-          console.log("CardElement [change]", event);
-        }}
-        onBlur={() => {
-          console.log("CardElement [blur]");
-        }}
-        onFocus={() => {
-          console.log("CardElement [focus]");
-        }}
-      />
-    </label>
-    <button type="submit" disabled={!stripe}>
-      Pay
-    </button>
-  </form>)
+  return (<Form>
+    <LeftSide>
+      <Text type='h2'>Billing Details</Text>
+      <Field><Text type='label' >
+        Credit Card number
+        <Input><CardNumberElement options={options} /></Input>
+      </Text></Field>
+      <DoubleFields>
+        <Field><Text type='label' >
+          Expiration date
+          <Input><CardExpiryElement options={options} /></Input>
+        </Text></Field>
+        <Field><Text type='label' >
+          CVC
+          <Input><CardCvcElement options={options} /></Input>
+        </Text></Field>
+      </DoubleFields>
+      <Footer>
+        <Button
+          type="text"
+          onClick={openPlans}
+          label="Go back to plans"
+          icon={<ArrowLeftIcon />}
+        />
+        <Text type="p">
+          <LockIcon size="medium" /> Payments are securely provided by Stripe
+        </Text>
+      </Footer>
+    </LeftSide>
+    <RightSide>
+      <Footer>
+        <Button type="primary" onClick={submit} disabled={!stripe} label="Confirm Payment" fullWidth />
+      </Footer>
+    </RightSide>
+  </Form>)
 }
 
-const StripeProvider = ({ user }) => {
+const StripeProvider = ({ user, openPlans }) => {
   const [createSetupIntent, { data:setupIntent, error:setupIntentError }] = useMutation(CREATE_SETUP_INTENT);
   //Get setup intent
   useEffect(() => {
-    createSetupIntent({
-      variables: {
-        organizationId: user.currentOrganization.id
-      }
-    });
-  }, [])
+    if (user.currentOrganization && user.currentOrganization.id) {
+      createSetupIntent({
+        variables: {
+          organizationId: user.currentOrganization.id
+        }
+      });
+    }
+  }, [user])
 
   // Setup Stripe
   const [stripe, setStripe] = useState(null)
@@ -77,14 +122,16 @@ const StripeProvider = ({ user }) => {
   }, [setupIntent])
 
   return (<Elements stripe={stripe}>
-    <Form />
+    <Content openPlans={openPlans} />
   </Elements>)
 }
 
 const PaymentMethod = () => {
   return (
     <UserContext.Consumer>{user => (
-      <StripeProvider user={user} />
+      <ModalContext.Consumer>{modal => (
+        <StripeProvider user={user} openPlans={() => {modal.openModal(MODALS.planSelector)}}/>
+      ) }</ModalContext.Consumer>
     ) }</UserContext.Consumer>
   )
 }

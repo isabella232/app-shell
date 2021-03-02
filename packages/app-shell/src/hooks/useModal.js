@@ -21,6 +21,8 @@ function useModal() {
     const matchingModal = Object.keys(MODALS).find(k => k === modalKey)
     if (matchingModal) {
       setModal(matchingModal)
+    } else {
+      setModal(null)
     }
   }, [])
 
