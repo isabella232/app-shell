@@ -20,7 +20,7 @@ import { CREATE_SETUP_INTENT } from '../graphql/billing';
 import {
   DoubleFields,
   Footer,
-  Form,
+  Form as StyledForm,
   LeftSide,
   RightSide,
   Error,
@@ -28,12 +28,17 @@ import {
 
 import Field from './components/Field'
 
-const Content = ({ openPlans }) => {
+// production = pk_dGKqAIFsUQonSYGPBM9Rek71IHOcL
+// test = pk_test_CvOaedJTBPQLmI0YSnQsitzN
+const STRIPE_PUBLIC_KEY = 'pk_test_CvOaedJTBPQLmI0YSnQsitzN';
+
+const Form = ({ openPlans, setupIntent }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [stripeResponse, setStripeResponse] = useState(null);
 
-  const submit = async () => {
+  const submit = async (e) => {
+    e.preventDefault();
     if (!stripe || !elements) {
       return;
     }
@@ -43,13 +48,15 @@ const Content = ({ openPlans }) => {
       card: elements.getElement(CardNumberElement)
     })
       .then((response) => setStripeResponse(response));
+      // TODO add paymentMethod to org
+      // TODO change plan
   };
 
   useEffect(() => {
     console.log(stripeResponse);
   }, [stripeResponse])
 
-  return (<Form>
+  return (<StyledForm>
     <LeftSide>
       <Text type='h2'>Billing Details</Text>
       {stripeResponse && stripeResponse.error && stripeResponse.error.type === "invalid_request_error" &&
@@ -77,7 +84,7 @@ const Content = ({ openPlans }) => {
         <Button type="primary" onClick={submit} disabled={!stripe} label="Confirm Payment" fullWidth />
       </Footer>
     </RightSide>
-  </Form>)
+  </StyledForm>)
 }
 
 const StripeProvider = ({ user, openPlans }) => {
@@ -97,10 +104,10 @@ const StripeProvider = ({ user, openPlans }) => {
   const [stripe, setStripe] = useState(null)
   useEffect(() => {
     // extra check to make sure we are not accidentally recreating stripe instance
-    if (setupIntent && !stripe) {
-      setStripe(loadStripe(setupIntent.billingCreateSetupIntent))
+    if (!stripe) {
+      setStripe(loadStripe(STRIPE_PUBLIC_KEY))
     }
-  }, [setupIntent])
+  }, [])
 
   return (<Elements
     stripe={stripe}
@@ -110,7 +117,7 @@ const StripeProvider = ({ user, openPlans }) => {
       }],
     }}
   >
-    <Content openPlans={openPlans} />
+    <Form openPlans={openPlans} setupIntent={setupIntent} />
   </Elements>)
 }
 

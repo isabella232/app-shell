@@ -28,7 +28,7 @@ export const StyledError = styled.div`
 
 export const Error = ({ error }) => (
   <StyledError>
-    <WarningIcon /> <Text>{error.message}</Text>
+    <WarningIcon /><Text>{error.message}</Text>
   </StyledError>
 )
 
