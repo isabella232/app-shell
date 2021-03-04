@@ -37,7 +37,7 @@ const AppShell = ({
 
   console.log('merp', loading, data, error)
 
-  const user = loading ? {
+  const user = loading || !data ? {
     name: '...',
     email: '...',
     products: [],
@@ -46,7 +46,6 @@ const AppShell = ({
     currentOrganization: {},
     isImpersonation: false,
   } : {
-    name: '',
     ...data.account,
   };
 
