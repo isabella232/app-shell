@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Text from '@bufferapp/ui/Text';
 import PlaceholderIcon from '@bufferapp/ui/Icon/Icons/Placeholder';
 
@@ -13,6 +12,8 @@ import {
   Field as StyledField,
   Input,
   Error,
+  ImgWrapper,
+  CardWrapper,
 } from '../style'
 
 import {
@@ -36,30 +37,6 @@ const options ={
     }
   }
 };
-
-const ImgWrapper = styled.div`
-  height: 18px;
-  overflow: hidden;
-  img {
-    position: relative;
-    top: -7px;
-  }
-`;
-
-const CardWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
-  > div {
-    margin-left: 16px;
-    width: 100%;
-  }
-
-  ${ImgWrapper} {
-    width: 32px;
-    margin-left: 0px;
-  }
-`;
 
 const Card = ({ brand }) => {
   switch(brand) {

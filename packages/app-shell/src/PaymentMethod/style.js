@@ -146,3 +146,27 @@ export const RightSide = styled.div`
     padding: 24px 20px;
   }
 `;
+
+export const ImgWrapper = styled.div`
+  height: 18px;
+  overflow: hidden;
+  img {
+    position: relative;
+    top: -7px;
+  }
+`;
+
+export const CardWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  > div {
+    margin-left: 16px;
+    width: 100%;
+  }
+
+  ${ImgWrapper} {
+    width: 32px;
+    margin-left: 0px;
+  }
+`;
