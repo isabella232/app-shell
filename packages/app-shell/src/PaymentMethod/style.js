@@ -13,11 +13,14 @@ import {
 import WarningIcon from '@bufferapp/ui/Icon/Icons/Warning';
 import Text from '@bufferapp/ui/Text';
 
-export const StyledError = styled.div`
-  color: ${redDark};
-  margin-top: 8px;
+export const StyledError = styled.p`
+  margin: 0px;
   display: inline-flex;
   align-items: center;
+
+  span {
+    color: ${redDark};
+  }
 
   svg {
     color: ${redDark};
@@ -27,8 +30,8 @@ export const StyledError = styled.div`
 `;
 
 export const Error = ({ error }) => (
-  <StyledError>
-    <WarningIcon /><Text>{error.message}</Text>
+  <StyledError aria-live="polite">
+    {error && <><WarningIcon /><Text>{error.message}</Text></>}
   </StyledError>
 )
 
@@ -37,6 +40,12 @@ export const Form = styled.form`
   height: 415px;
   width: 920px;
   box-sizing: border-box;
+
+  background: url(https://buffer-ui.s3.amazonaws.com/Billing+Screen+-+Background.png);
+  background-size: 39%;
+  background-repeat: no-repeat;
+  background-position-x: 55%;
+  }
 `;
 
 export const Footer = styled.div`
@@ -56,7 +65,7 @@ export const Footer = styled.div`
 `;
 
 export const Field = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   label {
     overflow: visible;
     height: fit-content;
@@ -64,6 +73,7 @@ export const Field = styled.div`
 `;
 
 export const Input = styled.div`
+  background: #ffffff;
   box-sizing: border-box;
   border: 1px solid ${({ focus, hasError }) => {
       if (focus) {
@@ -86,6 +96,7 @@ export const Input = styled.div`
   transition-property: border-color, box-shadow;
   transition-duration: 0.1s;
   transition-timing-function: ease-in;
+  margin-bottom: 8px;
 
   svg {
     color: ${({ hasError }) => hasError ? redDark : grayLight}
@@ -100,6 +111,8 @@ export const DoubleFields = styled.div`
 
   ${Field} {
     width: calc(50% - 8px);
+    overflow: hidden;
+    margin-bottom: 0px;
   }
 `;
 

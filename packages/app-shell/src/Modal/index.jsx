@@ -9,6 +9,8 @@ const ModalContent = ({ modal }) => {
       return (<PaymentMethod />);
     case MODALS.planSelector:
       return (<div> Plan Selector </div>);
+    case MODALS.success:
+      return (<div> Success </div>);
     default:
       return null;
   }

@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 export const MODALS = {
   paymentMethod: 'paymentMethod',
   planSelector: 'planSelector',
+  success: 'success',
 }
 
 function useModal() {

@@ -37,6 +37,15 @@ const options ={
   }
 };
 
+const ImgWrapper = styled.div`
+  height: 18px;
+  overflow: hidden;
+  img {
+    position: relative;
+    top: -7px;
+  }
+`;
+
 const CardWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -45,28 +54,33 @@ const CardWrapper = styled.div`
     margin-left: 16px;
     width: 100%;
   }
+
+  ${ImgWrapper} {
+    width: 32px;
+    margin-left: 0px;
+  }
 `;
 
 const Card = ({ brand }) => {
   switch(brand) {
     case 'visa':
-      return ('visa');
+      return (<ImgWrapper><img alt='visa' src='https://buffer-ui.s3.amazonaws.com/card-icon-visa.png' /></ImgWrapper>);
     case 'amex':
-      return ('amex');
+      return (<ImgWrapper><img alt='amex' src='https://buffer-ui.s3.amazonaws.com/card-icon-amex.png' /></ImgWrapper>);
     case 'diners_club':
-      return ('diners_club');
+      return (<ImgWrapper><img alt='diners_club' src='https://buffer-ui.s3.amazonaws.com/card-icon-diners.png' /></ImgWrapper>);
     case 'discover':
-      return ('discover');
+      return (<ImgWrapper><img alt='discover' src='https://buffer-ui.s3.amazonaws.com/card-icon-discover.png' /></ImgWrapper>);
     case 'jcb':
-      return ('jcb');
+      return (<ImgWrapper><img alt='jcb' src='https://buffer-ui.s3.amazonaws.com/card-icon-jcb.png' /></ImgWrapper>);
     case 'mastercard':
-      return ('mastercard');
+      return (<ImgWrapper><img alt='mastercard' src='https://buffer-ui.s3.amazonaws.com/card-icon-mastercard.png' /></ImgWrapper>);
     default:
       return (<PlaceholderIcon size="medium" />);
   }
 }
 
-const Field = ({ label }) => {
+const Field = ({ label, enableSubmit }) => {
   const [focus, setFocus] = useState(false);
   const [data, setData] = useState({});
 
@@ -78,7 +92,7 @@ const Field = ({ label }) => {
           <CardNumberElement
               onFocus={() => setFocus(true)}
               onBlur={() => setFocus(false)}
-              onChange={(value) => {setData(value)}}
+              onChange={(value) => { enableSubmit(); setData(value); }}
               options={options}
           />
         </CardWrapper>}
@@ -95,7 +109,7 @@ const Field = ({ label }) => {
           onChange={(value) => {setData(value)}}
         />}
       </Input>
-      {!!data.error && <Error error={data.error} />}
+      <Error error={data.error} />
     </Text>
   </StyledField>);
 }
