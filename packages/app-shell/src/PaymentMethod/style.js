@@ -15,8 +15,11 @@ import Text from '@bufferapp/ui/Text';
 
 export const StyledError = styled.p`
   margin: 0px;
-  display: inline-flex;
+  display: inline-block;
   align-items: center;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   span {
     color: ${redDark};
@@ -26,6 +29,8 @@ export const StyledError = styled.p`
     color: ${redDark};
     height: 12px;
     margin-right: 4px;
+    position: relative;
+    top: 1px;
   }
 `;
 
@@ -111,7 +116,6 @@ export const DoubleFields = styled.div`
 
   ${Field} {
     width: calc(50% - 8px);
-    overflow: hidden;
     margin-bottom: 0px;
   }
 `;

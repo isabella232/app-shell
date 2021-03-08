@@ -6,11 +6,17 @@ function useSetupIntent(user) {
   const [createSetupIntent, { data, error }] = useMutation(CREATE_SETUP_INTENT)
 
   useEffect(() => {
+    if (!user) {
+      return null;
+    }
+
     if (user.currentOrganization && user.currentOrganization.id) {
       createSetupIntent({
         variables: {
           organizationId: user.currentOrganization.id
         }
+      }).catch((e) => {
+        console.error(e)
       })
     }
   }, [user])
