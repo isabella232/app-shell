@@ -2,5 +2,6 @@
   "verbose": true,
   "moduleNameMapper": {
     "\\.(css|less)$": "identity-obj-proxy"
-  }
+  },
+  "modulePathIgnorePatterns": ["lib"]
 }

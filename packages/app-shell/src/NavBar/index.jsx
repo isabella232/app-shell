@@ -29,8 +29,8 @@ import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 import BufferLogo from './BufferLogo';
 import NavBarMenu from './NavBarMenu/NavBarMenu';
 import NavBarProducts from './NavBarProducts/NavBarProducts';
-import { useUser } from '../User';
-import useOrgSwitcher from '../useOrgSwitcher';
+import { useUser } from '../context/User';
+import useOrgSwitcher from '../hooks/useOrgSwitcher';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
