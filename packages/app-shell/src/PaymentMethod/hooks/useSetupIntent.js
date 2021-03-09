@@ -7,7 +7,7 @@ function useSetupIntent(user) {
 
   useEffect(() => {
     if (!user) {
-      return null;
+      return;
     }
 
     if (user.currentOrganization && user.currentOrganization.id) {

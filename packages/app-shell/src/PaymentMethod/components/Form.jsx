@@ -17,9 +17,17 @@ import Field from './Field'
 import useSetupIntent from '../hooks/useSetupIntent';
 import useCreatePaymentMethod from '../hooks/useCreatePaymentMethod';
 import useUpdateUserPaymentMethod from '../hooks/useUpdateUserPaymentMethod';
+import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
 
-const Form = ({ user, openPlans, openSuccess }) => {
+const Form = ({
+  user,
+  openPlans,
+  openSuccess,
+  plan,
+  interval,
+}) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
+  const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
 
   const { setupIntent } = useSetupIntent(user)
   const {
@@ -34,12 +42,25 @@ const Form = ({ user, openPlans, openSuccess }) => {
     paymentMethod,
   })
 
+  const { data:newPlan } = useUpdateSubscriptionPlan({
+    user,
+    paymentMethod,
+    plan,
+    interval,
+    hasPaymentMethod,
+  })
+
   useEffect(() => {
-    // TODO confirm plan if present
     if (paymentMethod) {
-      openSuccess(userPaymentMethod)
+      setHasPaymentMethod(true)
     }
   }, [userPaymentMethod])
+
+  useEffect(() => {
+    if (newPlan) {
+      openSuccess(userPaymentMethod)
+    }
+  }, [newPlan])
 
   return (<StyledForm>
     <LeftSide>

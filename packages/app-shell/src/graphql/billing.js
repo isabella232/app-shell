@@ -21,3 +21,17 @@ export const UPDATE_PAYMENT_METHOD = gql`
     )
   }
 `;
+
+export const UPDATE_SUBSCRIPTION_PLAN = gql`
+  mutation updatePlan(
+    $organizationId: String,
+    $plan: OBPlanId,
+    $interval: BillingInterval
+  ) {
+    billingUpdateSubscriptionPlan(
+      organizationId:$organizationId,
+      plan:$plan,
+      interval:$interval
+    )
+  }
+`;
