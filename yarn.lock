@@ -1380,10 +1380,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bufferapp/ui@^5.6":
-  version "5.60.0"
-  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.60.0.tgz#e0a1be3a408af82261d5fcb64c664199832eecf8"
-  integrity sha512-aW1rYzKFVnRqcMxElo1nWmm4Si/zG1UnOY9LFh+49fVFUzHRL/vmEpf/e6ggaojRLxyVoN3sfyoFBG8E6YtwAw==
+"@bufferapp/ui@^5.60":
+  version "5.60.1"
+  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.60.1.tgz#8e4b27b0b99f8a721a6e5e48d1dbc80b8416d0d9"
+  integrity sha512-p51Hclpai/XalCwCNm4TaFu7ccE1x6xvEc8KoaPI5d06G1ZEmp286KlHivzqohoe/tgKePHXaWGie2WTONzJ7g==
   dependencies:
     "@reach/tooltip" "0.6.2"
     immutability-helper "^2.9.0"
