@@ -19,6 +19,11 @@ export const QUERY_ACCOUNT = gql`
         canEdit
         role
         createdAt
+        billing {
+          canAccessAnalytics
+          canAccessEngagement
+          canAccessPublishing
+        }
       }
       organizations {
         id
@@ -26,6 +31,11 @@ export const QUERY_ACCOUNT = gql`
         canEdit
         role
         createdAt
+        billing {
+          canAccessAnalytics
+          canAccessEngagement
+          canAccessPublishing
+        }
       }
       products {
         name

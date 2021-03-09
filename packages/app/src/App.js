@@ -1,5 +1,5 @@
 import React from 'react';
-import AppShell, { useOrgSwitcher, useUser } from '@bufferapp/app-shell';
+import AppShell, { useOrgSwitcher, useUser, ModalContext, MODALS } from '@bufferapp/app-shell';
 
 const AnotherComponentRenderingUserData = () => {
   const user = useUser();
@@ -18,6 +18,15 @@ const AnotherComponentRenderingUserData = () => {
   );
 }
 
+const ModalTesting = () => (<ModalContext.Consumer>
+    {modal => (
+      <>
+        <h2>Render Modal</h2>
+        <button onClick={() => {modal.openModal(MODALS.paymentMethod)}}>Render Modal</button>
+      </>
+    )}
+</ModalContext.Consumer>)
+
 const App = () => (
   <div className="App">
     <AppShell
@@ -26,6 +35,7 @@ const App = () => (
       content={
         <>
           <AnotherComponentRenderingUserData/>
+          <ModalTesting/>
         </>
       }
     >
