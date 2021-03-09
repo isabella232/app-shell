@@ -1380,7 +1380,7 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bufferapp/ui@^5.60":
+"@bufferapp/ui@^5.60.1":
   version "5.60.1"
   resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.60.1.tgz#8e4b27b0b99f8a721a6e5e48d1dbc80b8416d0d9"
   integrity sha512-p51Hclpai/XalCwCNm4TaFu7ccE1x6xvEc8KoaPI5d06G1ZEmp286KlHivzqohoe/tgKePHXaWGie2WTONzJ7g==
