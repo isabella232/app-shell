@@ -3,7 +3,7 @@ import {
   useStripe,
   useElements,
   CardNumberElement,
-} from "@stripe/react-stripe-js";
+} from '@stripe/react-stripe-js';
 
 function useCreatePaymentMethod(setupIntent) {
   const stripe = useStripe();
@@ -60,6 +60,8 @@ function useCreatePaymentMethod(setupIntent) {
   }, [processing])
 
   return {
+    // _confirmCardSetup is exposed for simpler testing
+    _confirmCardSetup: confirmCardSetup,
     error: processingError,
     paymentMethod: result,
     processing,
