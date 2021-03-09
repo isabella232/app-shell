@@ -6,9 +6,13 @@ import { useQuery } from '@apollo/client';
 import NavBar from './NavBar';
 import Banner from './Banner';
 
-import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
+import {
+  AppShellStyled,
+  ContentWrapper,
+  SidebarWrapper,
+  Wrapper,
+} from './style';
 import { UserContext } from './User';
-import useOrgSwitcher from './useOrgSwitcher';
 import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
@@ -26,25 +30,30 @@ const AppShell = ({
   menuItems,
   ignoreMenuItems,
   apolloClient,
-  channels
+  channels,
 }) => {
-  const graphqlConfig = apolloClient ? {
-    client: apolloClient
-  } : {}
-  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig)
+  const graphqlConfig = apolloClient
+    ? {
+        client: apolloClient,
+      }
+    : {};
+  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig);
 
-  const user = loading ? {
-    name: '...',
-    email: '...',
-    products: [],
-    featureFlips: [],
-    organizations: [],
-    currentOrganization: {},
-    isImpersonation: false,
-  } : {
-    name: '',
-    ...data.account,
-  };
+  const user = loading
+    ? {
+        name: '...',
+        email: '...',
+        products: [],
+        featureFlips: [],
+        organizations: [],
+        currentOrganization: {},
+        isImpersonation: false,
+        loading: true,
+      }
+    : {
+        name: '',
+        ...data.account,
+      };
 
   return (
     <AppShellStyled>
@@ -126,12 +135,14 @@ AppShell.propTypes = {
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf('ApolloClient'),
-  channels: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired,
-    organizationId: PropTypes.string.isRequired,
-  }))
+  channels: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      service: PropTypes.string.isRequired,
+      organizationId: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 AppShell.defaultProps = {
