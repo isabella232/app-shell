@@ -1,4 +1,7 @@
 # Changelog
+## [2.1.0] - 2021-03-09
+- Update @bufferapp/ui to 5.60.1
+- add PaymentMethod modal
 
 ## [2.1.0] - 2021-02-04
 - Add canAccess* flags to the organizations an account belongs to:

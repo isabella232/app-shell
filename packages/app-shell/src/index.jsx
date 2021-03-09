@@ -5,12 +5,13 @@ import { useQuery } from '@apollo/client';
 
 import NavBar from './NavBar';
 import Banner from './Banner';
+import Modal from './Modal/index';
 
 import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
 import useOrgSwitcher from './hooks/useOrgSwitcher';
-import useModal from './hooks/useModal';
+import useModal  from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
@@ -70,7 +71,7 @@ const AppShell = ({
             {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
             <ContentWrapper>{content}</ContentWrapper>
           </Wrapper>
-          {modal.modal && <div>{modal.modal}</div>}
+          <Modal {...modal} />
         </ModalContext.Provider>
       </UserContext.Provider>
     </AppShellStyled>
