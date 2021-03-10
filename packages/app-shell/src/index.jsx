@@ -34,9 +34,9 @@ const AppShell = ({
   const graphqlConfig = apolloClient ? {
     client: apolloClient
   } : {}
-  const { data, loading } = useQuery(QUERY_ACCOUNT, graphqlConfig)
+  const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig)
 
-  const user = loading ? {
+  const user = loading || !data ? {
     name: '...',
     email: '...',
     products: [],
@@ -45,7 +45,6 @@ const AppShell = ({
     currentOrganization: {},
     isImpersonation: false,
   } : {
-    name: '',
     ...data.account,
   };
 

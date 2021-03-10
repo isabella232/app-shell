@@ -1,34 +1,111 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Text from '@bufferapp/ui/Text';
+import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+import {
+  Wrapper,
+  CardContainer,
+  CardHeader,
+  CardFooter,
+  CurrentLabel,
+  Recommended,
+  RadioButton,
+  Price,
+  BenefitList,
+  Benefit,
+} from '../style';
 
-/**
- * Primary UI component for user interaction
- */
-export const SelectionScreen = ({ children }) => {
-  return <div>{children}</div>;
+const Card = ({
+  planId,
+  planName,
+  planInterval,
+  description,
+  highlights,
+  currency,
+  basePrice,
+  priceNote,
+  summary,
+  isCurrentPlan,
+  updateSelectedPlan,
+  selectedPlan,
+  recommended,
+}) => {
+  return (
+    <Wrapper
+      tabIndex="0"
+      onClick={(e) => {
+        updateSelectedPlan(e.currentTarget.id);
+      }}
+      id={`${planId}_${planInterval}`}
+      selectedPlan={selectedPlan === planId}
+      aria-label={selectedPlan === planId ? 'checked' : 'unchecked'}
+    >
+      {recommended && <Recommended>Recommended</Recommended>}
+      <CardHeader>
+        <Text type="h3">{planName}</Text>
+        {isCurrentPlan && <CurrentLabel>Current</CurrentLabel>}
+      </CardHeader>
+      <RadioButton selectedPlan={selectedPlan === planId}>
+        <CheckmarkIcon size="large" />
+      </RadioButton>
+
+      <Text type="p">{description}</Text>
+
+      <CardFooter>
+        <BenefitList>
+          {highlights.map((benefit) => (
+            <Benefit key={benefit}>
+              <CheckmarkIcon />
+              <Text type="p">{benefit}</Text>
+            </Benefit>
+          ))}
+        </BenefitList>
+        <Price>
+          <sup>{currency}</sup>
+          <Text type="h2" as="p">
+            {basePrice}
+          </Text>
+          <sup
+            aria-label={
+              summary.intervalUnit === 'mo' ? 'per month' : 'per year'
+            }
+          >
+            /{summary.intervalUnit}
+          </sup>
+        </Price>
+        <Text htmlFor="foo" type="label" color="grayDark">
+          {priceNote}
+        </Text>
+      </CardFooter>
+    </Wrapper>
+  );
 };
 
-SelectionScreen.propTypes = {
-  //   /**
-  //    * Is this the principal call to action on the page?
-  //    */
-  //   primary: PropTypes.bool,
-  //   /**
-  //    * What background color to use
-  //    */
-  //   backgroundColor: PropTypes.string,
-  //   /**
-  //    * How large should the button be?
-  //    */
-  //   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  //   /**
-  //    * Button contents
-  //    */
-  //   label: PropTypes.string.isRequired,
-  //   /**
-  //    * Optional click handler
-  //    */
-  //   onClick: PropTypes.func,
+export const SelectionScreen = ({
+  planOptions,
+  selectedPlan,
+  updateSelectedPlan,
+  monthlyBilling,
+}) => {
+  return (
+    <CardContainer>
+      {planOptions
+        .filter((option) => {
+          if (monthlyBilling) {
+            return option.planInterval === 'month';
+          } else {
+            return option.planInterval === 'year';
+          }
+        })
+        .map((option) => (
+          <Card
+            {...option}
+            isCurrentPlan={option.isCurrentPlan}
+            key={`${option.planId}_${option.planInterval}`}
+            updateSelectedPlan={updateSelectedPlan}
+            selectedPlan={selectedPlan.planId}
+            recommended={option.isRecommended}
+          />
+        ))}
+    </CardContainer>
+  );
 };
-
-SelectionScreen.defaultProps = {};
