@@ -53,10 +53,10 @@ export const PlanSelectorContainer = ({
   }, [selectedPlan]);
 
   useEffect(() => {
-    if (data?.billingUpdateSubscriptionPlan){
+    if (data?.billingUpdateSubscriptionPlan) {
       //openSuccess modal
     }
-  }, [data])
+  }, [data]);
 
   return (
     <Container>
