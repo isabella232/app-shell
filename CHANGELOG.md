@@ -1,5 +1,6 @@
 # Changelog
-
+## [2.3.1] - 2021-03-11
+- add a loading state to Plan Selector in case user info isn't there yet
 ## [2.3.0] - 2021-03-10
 - Update @bufferapp/ui to 5.62.3
 - add PlanSelector modal
