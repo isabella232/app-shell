@@ -12,6 +12,8 @@ const ModalContent = ({ modal }) => {
       return (<PlanSelector />);
     case MODALS.success:
       return (<div> Success </div>);
+    case MODALS.startTrial:
+      return (<div> Start Trial </div>);
     default:
       return null;
   }
