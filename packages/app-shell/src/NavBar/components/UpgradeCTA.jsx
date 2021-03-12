@@ -24,17 +24,16 @@ const UpgradeCTA = () => {
     <UserContext.Consumer>
       {({ currentOrganization }) => {
         if (currentOrganization.billing) {
-          const { canStartTrial, subscription } = currentOrganization.billing
+          const { subscription, canStartTrial } = currentOrganization.billing
           const isFree = subscription.plan.id === 'free'
 
           return (<ModalContext.Consumer>{({ openModal }) => (<>
             {isFree && <Cta>
               <Button
               type="text"
-              onClick={() => {
-                canStartTrial ?
-                  openModal(MODALS.startTrial) :
-                  openModal(MODALS.planSelector)
+              onClick={() => {canStartTrial ?
+                openModal(MODALS.startTrial) :
+                openModal(MODALS.planSelector)
               }}
               icon={<FlashIcon />}
               label={canStartTrial ? 'Start a 14-day free trial' : 'Upgrade'}
