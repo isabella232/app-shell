@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { MODALS } from '../hooks/useModal';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PaymentMethod from '../PaymentMethod';
-import { MODALS } from '../hooks/useModal';
 import PlanSelector from '../PlanSelector';
+import StartTrial from '../StartTrial';
 
 const ModalContent = ({ modal }) => {
   switch (modal) {
@@ -12,6 +13,8 @@ const ModalContent = ({ modal }) => {
       return (<PlanSelector />);
     case MODALS.success:
       return (<div> Success </div>);
+    case MODALS.startTrial:
+      return (<StartTrial />);
     default:
       return null;
   }

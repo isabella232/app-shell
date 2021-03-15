@@ -38,6 +38,9 @@ export const QUERY_ACCOUNT = gql`
                 isActive
                 remainingDays
               }
+              plan {
+                id
+              }
             }
             changePlanOptions {
               planId

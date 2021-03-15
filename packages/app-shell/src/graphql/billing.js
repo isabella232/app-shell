@@ -35,3 +35,17 @@ export const UPDATE_SUBSCRIPTION_PLAN = gql`
     )
   }
 `;
+
+export const START_TRIAL = gql`
+  mutation startTrial(
+    $organizationId:String,
+    $plan:OBPlanId,
+    $interval:BillingInterval
+  ) {
+    billingStartTrial(
+      organizationId:$organizationId, 
+      plan:$plan, 
+      interval:$interval
+    )
+  }
+`

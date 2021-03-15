@@ -4,6 +4,7 @@ export const MODALS = {
   paymentMethod: 'paymentMethod',
   planSelector: 'planSelector',
   success: 'success',
+  startTrial: 'startTrial',
 }
 
 function useModal() {
