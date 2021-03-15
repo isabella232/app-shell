@@ -4,8 +4,7 @@ import { MODALS } from '../hooks/useModal';
 import { UserContext } from '../context/User';
 import { ModalContext } from '../context/Modal';
 import { PlanSelectorContainer } from './components/PlanSelectorContainer';
-import Loader from '@bufferapp/ui/Loader';
-import { LoadingContainer } from './style';
+import Loading from './components/Loader';
 
 const PlanSelector = () => {
   return (
@@ -14,11 +13,7 @@ const PlanSelector = () => {
         <ModalContext.Consumer>
           {(modal) => {
             if (!user.currentOrganization.billing) {
-              return (
-                <LoadingContainer>
-                  <Loader />
-                </LoadingContainer>
-              );
+              return <Loading />;
             }
             return (
               <PlanSelectorContainer

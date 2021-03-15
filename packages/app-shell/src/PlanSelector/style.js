@@ -1,5 +1,5 @@
 import { grayLighter, blue, grayDark, white } from '@bufferapp/ui/style/colors';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -7,11 +7,6 @@ export const Container = styled.div`
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
-`;
-
-export const LoadingContainer = styled(Container)`
-  width: 700px;
-  justify-content: center;
 `;
 
 export const Left = styled.div`
@@ -26,6 +21,12 @@ export const Left = styled.div`
   background-repeat: no-repeat;
   background-size: 400px;
   background-position-y: 0px;
+
+  ${(props) =>
+    props.loading &&
+    css`
+      width: 600px;
+    `}
 `;
 
 export const Right = styled.div`
@@ -258,4 +259,33 @@ export const Benefit = styled.li`
     fill: ${blue};
     margin-right: 8px;
   }
+`;
+
+export const LoadingSummary = styled.div`
+  width: 255px;
+  background-color: #fcfcfc;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: inset 1px 0px 0px #bdbdbd;
+  height: 100%;
+  padding: 70px 0 24px 20px;
+  box-sizing: border-box;
+  position: relative;
+`;
+
+const pulse = keyframes`
+ from {
+    width: 50px;
+  }
+
+  to {
+    width: 150px;
+  }`;
+
+export const LoadingText = styled.div`
+  width: 50px;
+  height: 20px;
+  background-color: ${grayLighter};
+  border-radius: 8px;
+  animation: ${pulse} 2s linear infinite;
 `;
