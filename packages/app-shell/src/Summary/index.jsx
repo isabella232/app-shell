@@ -13,7 +13,7 @@ import {
 } from './style';
 import { UserContext } from '../context/User';
 
-const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
+export const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
   const selectedPlanString = selectedPlan
