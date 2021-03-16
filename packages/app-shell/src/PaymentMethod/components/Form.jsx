@@ -11,6 +11,7 @@ import {
   LeftSide,
   RightSide,
   Error,
+  ButtonContainer
 } from '../style'
 import Field from './Field'
 import Summary from '../../Summary'
@@ -51,17 +52,19 @@ const Form = ({
 
   useEffect(() => {
     if (paymentMethod) {
-      setHasPaymentMethod(true)
+      if (!plan) {
+        openSuccess({onlyUpdatedCardDetails: true})
+      } else {
+        setHasPaymentMethod(true)
+      }
     }
   }, [userPaymentMethod])
 
   useEffect(() => {
     if (newPlan) {
-      openSuccess(userPaymentMethod)
+      openSuccess({selectedPlan: plan})
     }
   }, [newPlan])
-
-  console.log('plan', plan)
 
   return (<StyledForm>
     <LeftSide>
@@ -86,9 +89,9 @@ const Form = ({
     </LeftSide>
     <RightSide>
       {plan && <Summary selectedPlan={plan}/>}
-      <Footer>
-        <Button type="primary" onClick={submit} disabled={!submitEnabled || processing} label={processing ? "Processing..." : "Confirm Payment"} fullWidth />
-      </Footer>
+      <ButtonContainer>
+        <Button type="primary" onClick={submit} disabled={!submitEnabled || processing} label={processing ? "Processing..." : plan ? "Confirm Payment" : 'Update Payment Details'} fullWidth />
+      </ButtonContainer>
     </RightSide>
   </StyledForm>)
 }

@@ -32,8 +32,11 @@ const PlanSelector = () => {
                     .hasPaymentDetails
                 }
                 isActiveTrial={
-                  user.currentOrganization.billing.subscription.trial.isActive
+                  user.currentOrganization.billing.subscription.trial?.isActive
                 }
+                openSuccess={(newData) => {
+                  modal.openModal(MODALS.success, newData);
+                }}
               />
             );
           }}

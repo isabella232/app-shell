@@ -16,6 +16,7 @@ import {
   Left,
   Container,
 } from '../style';
+import useInterval from '../hooks/useInterval';
 
 export const PlanSelectorContainer = ({
   planOptions,
@@ -23,9 +24,9 @@ export const PlanSelectorContainer = ({
   openPaymentMethod,
   hasPaymentDetails,
   isActiveTrial,
+  openSuccess,
 }) => {
-  const [monthlyBilling, setBillingInterval] = useState(true);
-
+  const { monthlyBilling, setBillingInterval } = useInterval(planOptions);
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(planOptions);
   const {
     updateSubscriptionPlan: updatePlan,
@@ -54,7 +55,7 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan) {
-      //openSuccess modal
+      openSuccess({ selectedPlan });
     }
   }, [data]);
 
@@ -83,7 +84,7 @@ export const PlanSelectorContainer = ({
         />
       </Left>
       <Right>
-        <Summary planOptions={planOptions} selectedPlan={selectedPlan} />
+        <Summary selectedPlan={selectedPlan} fromPlanSelector={true}/>
         <ButtonContainer>
           <Button
             type="primary"
