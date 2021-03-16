@@ -1,4 +1,6 @@
 # Changelog
+## [2.4.0] - 2021-03-16
+- add confirmation screen
 ## [2.3.1] - 2021-03-11
 - add a loading state to Plan Selector in case user info isn't there yet
 ## [2.3.0] - 2021-03-10
