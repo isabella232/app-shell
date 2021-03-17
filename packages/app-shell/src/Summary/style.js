@@ -1,5 +1,5 @@
 import { blue } from '@bufferapp/ui/style/colors';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const SummaryContainer = styled.div`
   width: 255px;
@@ -38,14 +38,16 @@ export const DetailList = styled.ul`
 
   p {
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 0;
     display: inline-block;
+    font-weight: 600;
   }
 `;
 
 export const Detail = styled.li`
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  margin-bottom: 8px;
 
   :before {
     content: '';
@@ -55,7 +57,17 @@ export const Detail = styled.li`
     border: 2px solid ${blue};
     display: inline-block;
     margin-right: 8px;
+    box-sizing: content-box;
   }
+
+  ${(props) =>
+    props.changing &&
+    css`
+      p {
+        font-weight: 800;
+        color: ${blue};
+      }
+    `}
 `;
 
 export const DiscountReminder = styled.div`
@@ -115,5 +127,30 @@ export const TotalPrice = styled(Price)`
     margin: 0 2px;
     font-size: 30px;
     line-height: 30px;
+  }
+`;
+
+export const BoldPrice = styled.span`
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0px;
+`;
+
+export const Notice = styled.div`
+  border: 2px solid rgb(240, 233, 195);
+  background: rgb(255, 252, 235) none repeat scroll 0% 0%;
+  border-radius: 4px;
+  padding: 16px 16px;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+
+  span {
+    color: #625920;
+    font-size: 14px;
+    line-height: 1.25;
   }
 `;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: 550px;
+  height: 580px;
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
@@ -44,6 +44,7 @@ export const PlanSelectorHeader = styled.header`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 
   h2 {
     margin-top: 20px;
@@ -91,7 +92,7 @@ export const ButtonContainer = styled.div`
 
 export const Wrapper = styled.div`
   border: ${(props) =>
-    props.selectedPlan ? `1px solid ${blue}` : '1px solid #b8b8b8'};
+    props.selectedPlan ? `2px solid ${blue}` : '2px solid rgb(224, 224, 224)'};
   border-radius: 3px;
   height: 420px;
   position: relative;
@@ -113,12 +114,12 @@ export const Wrapper = styled.div`
   }
 
   &:focus {
-    border: 1px solid ${blue};
+    border: 2px solid ${blue};
     outline: none;
   }
 
   &:hover {
-    border: 1px solid ${blue};
+    border: 2px solid ${blue};
     outline: none;
   }
 `;
@@ -127,6 +128,7 @@ export const CardContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  margin-bottom: 25px;
 
   div:last-child {
     margin-right: 0;
@@ -189,13 +191,15 @@ export const RadioButton = styled.div`
   background-color: ${(props) =>
     props.selectedPlan ? `${blue}` : 'transparent'};
 
-  border: 1.5px solid #e0e0e0;
+  border: ${(props) =>
+    props.selectedPlan ? `2px solid ${blue}` : '2px solid rgb(224, 224, 224)'};
   transition: 0.2s all linear;
   margin-right: 5px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: content-box;
 
   svg {
     fill: ${white};
@@ -227,6 +231,7 @@ export const Price = styled.div`
     color: black;
     margin-left: 2px;
     margin-right: 2px;
+    font-weight: 600;
   }
 `;
 

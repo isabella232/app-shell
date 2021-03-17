@@ -1,6 +1,5 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
-import Notice from '@bufferapp/ui/Notice';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
 import {
   DiscountReminder,
@@ -10,10 +9,17 @@ import {
   Bottom,
   Body,
   SummaryContainer,
+  BoldPrice,
+  Notice
 } from './style';
 import { UserContext } from '../context/User';
 
-const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
+const Summary = ({
+  planOptions,
+  isActiveTrial,
+  selectedPlan,
+  fromPlanSelector,
+}) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
   const selectedPlanString = selectedPlan
@@ -21,13 +27,39 @@ const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
     : '';
 
   const getStatus = () => {
-    if (currentPlanString === selectedPlanString) {
-      return `Currently on the ${currentPlan.planName} plan`;
+    const [currentPlanId, currentPlanInterval] = currentPlanString.split('_');
+    const [selectedPlanId, selectedPlanInterval] = selectedPlanString.split(
+      '_'
+    );
+    let planStatus;
+    let billingIntervalStatus;
+    let changing;
+    if (currentPlanId === selectedPlanId) {
+      const type = isActiveTrial ? 'trial' : 'plan';
+      planStatus = `Currently on the ${currentPlan.planName} ${type}`;
     } else {
       const indefiniteArticle =
         selectedPlan?.planName == 'Individual' ? 'an' : 'a';
-      return `Changing to ${indefiniteArticle} ${selectedPlan?.planName} plan`;
+      planStatus = `Changing to ${indefiniteArticle} ${selectedPlan?.planName} plan`;
+      changing = true;
     }
+
+    if (currentPlanInterval !== selectedPlanInterval) {
+      billingIntervalStatus = `Changing to ${selectedPlanInterval}ly billing`;
+    }
+
+    return (
+      <>
+        <Detail changing={changing}>
+          <Text type="p">{planStatus}</Text>
+        </Detail>
+        {billingIntervalStatus && (
+          <Detail>
+            <Text type="p">{billingIntervalStatus}</Text>
+          </Detail>
+        )}
+      </>
+    );
   };
 
   const shouldShowDowngradeWarning = () => {
@@ -49,9 +81,7 @@ const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
         <Text type="h2">Summary</Text>
         {fromPlanSelector ? (
           <DetailList>
-            <Detail>
-              <Text type="p">{getStatus()}</Text>
-            </Detail>
+            {getStatus()}
             {selectedPlan.summary.details.map((detail) => (
               <Detail key={detail}>
                 <Text type="p">{detail}</Text>
@@ -72,7 +102,7 @@ const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
           </DetailList>
         )}
         {shouldShowDowngradeWarning() && (
-          <Notice type="warning">
+          <Notice>
             <Text>{selectedPlan.summary.warning}</Text>
           </Notice>
         )}
@@ -97,9 +127,13 @@ const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
               {/* this ends up reading: # social channels x base price */}
               {`${selectedPlan.channelsQuantity} social channel${
                 selectedPlan.channelsQuantity > 1 ? 's' : ''
-              } x ${selectedPlan.currency}${
-                selectedPlan.summary.intervalBasePrice
-              }`}
+              } x `}
+              {
+                <BoldPrice>
+                  {selectedPlan.currency}
+                  {selectedPlan.summary.intervalBasePrice}
+                </BoldPrice>
+              }
             </Text>
           ) : (
             <Text type="label" color="grayDark">
@@ -121,13 +155,18 @@ const Summary = ({ planOptions, selectedPlan, fromPlanSelector }) => {
 const SummaryProvider = ({ selectedPlan, fromPlanSelector }) => {
   return (
     <UserContext.Consumer>
-      {(user) => (
-        <Summary
-          planOptions={user.currentOrganization.billing.changePlanOptions}
-          selectedPlan={selectedPlan}
-          fromPlanSelector={fromPlanSelector}
-        />
-      )}
+      {(user) => {
+        return (
+          <Summary
+            planOptions={user.currentOrganization.billing.changePlanOptions}
+            isActiveTrial={
+              user.currentOrganization.billing.subscription.trial?.isActive
+            }
+            selectedPlan={selectedPlan}
+            fromPlanSelector={fromPlanSelector}
+          />
+        );
+      }}
     </UserContext.Consumer>
   );
 };
