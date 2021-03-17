@@ -1,4 +1,11 @@
 # Changelog
+## [2.4.2] - 2021-03-17
+- Plan selector QA fixes:
+  - open selector properly if on free plan
+  - billing and confirmation header margins
+  - bigger, bolder price in summary
+  - blue highlight if interval is chaning
+  - higher res confirmation image background
 ## [2.4.1] - 2021-03-17
 - Plan selector QA fixes:
   - add if plan is plan or trial
