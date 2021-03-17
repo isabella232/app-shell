@@ -10,17 +10,21 @@ import {
   Body,
   SummaryContainer,
   BoldPrice,
-  Notice
+  Notice,
 } from './style';
 import { UserContext } from '../context/User';
+import { freePlan } from '../mocks/freePlan';
 
 const Summary = ({
   planOptions,
   isActiveTrial,
   selectedPlan,
   fromPlanSelector,
+  isFreePlan,
 }) => {
-  const currentPlan = planOptions.find((option) => option.isCurrentPlan);
+  const currentPlan = isFreePlan
+    ? freePlan
+    : planOptions.find((option) => option.isCurrentPlan);
   const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
   const selectedPlanString = selectedPlan
     ? `${selectedPlan.planId}_${selectedPlan.planInterval}`
@@ -33,7 +37,8 @@ const Summary = ({
     );
     let planStatus;
     let billingIntervalStatus;
-    let changing;
+    let planChanging;
+    let billingIntervalChanging;
     if (currentPlanId === selectedPlanId) {
       const type = isActiveTrial ? 'trial' : 'plan';
       planStatus = `Currently on the ${currentPlan.planName} ${type}`;
@@ -41,20 +46,21 @@ const Summary = ({
       const indefiniteArticle =
         selectedPlan?.planName == 'Individual' ? 'an' : 'a';
       planStatus = `Changing to ${indefiniteArticle} ${selectedPlan?.planName} plan`;
-      changing = true;
+      planChanging = true;
     }
 
     if (currentPlanInterval !== selectedPlanInterval) {
       billingIntervalStatus = `Changing to ${selectedPlanInterval}ly billing`;
+      billingIntervalChanging = true;
     }
 
     return (
       <>
-        <Detail changing={changing}>
+        <Detail changing={planChanging}>
           <Text type="p">{planStatus}</Text>
         </Detail>
         {billingIntervalStatus && (
-          <Detail>
+          <Detail changing={billingIntervalChanging}>
             <Text type="p">{billingIntervalStatus}</Text>
           </Detail>
         )}
@@ -122,23 +128,29 @@ const Summary = ({
               /{selectedPlan.summary.intervalUnit}
             </sup>
           </TotalPrice>
-          {fromPlanSelector ? (
-            <Text type="label" color="grayDark">
-              {/* this ends up reading: # social channels x base price */}
-              {`${selectedPlan.channelsQuantity} social channel${
-                selectedPlan.channelsQuantity > 1 ? 's' : ''
-              } x `}
-              {
-                <BoldPrice>
-                  {selectedPlan.currency}
-                  {selectedPlan.summary.intervalBasePrice}
-                </BoldPrice>
-              }
-            </Text>
+          {!selectedPlan.channelsQuantity ? (
+            ''
           ) : (
-            <Text type="label" color="grayDark">
-              Includes tax
-            </Text>
+            <>
+              {fromPlanSelector ? (
+                <Text type="label" color="grayDark">
+                  {/* this ends up reading: # social channels x base price */}
+                  {`${selectedPlan.channelsQuantity} social channel${
+                    selectedPlan.channelsQuantity > 1 ? 's' : ''
+                  } x `}
+                  {
+                    <BoldPrice>
+                      {selectedPlan.currency}
+                      {selectedPlan.summary.intervalBasePrice}
+                    </BoldPrice>
+                  }
+                </Text>
+              ) : (
+                <Text type="label" color="grayDark">
+                  Includes tax
+                </Text>
+              )}
+            </>
           )}
           {selectedPlan.planInterval === 'year' && (
             <DiscountReminder>
@@ -161,6 +173,9 @@ const SummaryProvider = ({ selectedPlan, fromPlanSelector }) => {
             planOptions={user.currentOrganization.billing.changePlanOptions}
             isActiveTrial={
               user.currentOrganization.billing.subscription.trial?.isActive
+            }
+            isFreePlan={
+              user.currentOrganization.billing.subscription.plan?.id === 'free'
             }
             selectedPlan={selectedPlan}
             fromPlanSelector={fromPlanSelector}
