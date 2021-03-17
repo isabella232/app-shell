@@ -1,4 +1,13 @@
 # Changelog
+## [2.4.1] - 2021-03-17
+- Plan selector QA fixes:
+  - add if plan is plan or trial
+  - recognize when billing interval changes
+  - bolder fonts
+  - thicker borders
+  - fixes alignment
+  - fixes summary bullet points
+  - updates the downgrade notice
 ## [2.4.0] - 2021-03-16
 - add confirmation screen
 ## [2.3.1] - 2021-03-11
