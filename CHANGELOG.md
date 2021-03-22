@@ -1,4 +1,30 @@
 # Changelog
+## [2.4.2] - 2021-03-17
+- Plan selector QA fixes:
+  - open selector properly if on free plan
+  - billing and confirmation header margins
+  - bigger, bolder price in summary
+  - blue highlight if interval is chaning
+  - higher res confirmation image background
+## [2.4.1] - 2021-03-17
+- Plan selector QA fixes:
+  - add if plan is plan or trial
+  - recognize when billing interval changes
+  - bolder fonts
+  - thicker borders
+  - fixes alignment
+  - fixes summary bullet points
+  - updates the downgrade notice
+## [2.4.0] - 2021-03-16
+- add confirmation screen
+## [2.3.1] - 2021-03-11
+- add a loading state to Plan Selector in case user info isn't there yet
+## [2.3.0] - 2021-03-10
+- Update @bufferapp/ui to 5.62.3
+- add PlanSelector modal
+## [2.2.0] - 2021-03-09
+- Update @bufferapp/ui to 5.60.1
+- add PaymentMethod modal
 
 ## [2.1.0] - 2021-02-04
 - Add canAccess* flags to the organizations an account belongs to:

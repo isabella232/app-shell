@@ -26,9 +26,10 @@ import { fontFamily, fontWeightMedium } from '@bufferapp/ui/style/fonts';
 import Link from '@bufferapp/ui/Link';
 import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 
-import BufferLogo from './BufferLogo';
-import NavBarMenu from './NavBarMenu/NavBarMenu';
-import NavBarProducts from './NavBarProducts/NavBarProducts';
+import BufferLogo from './components/BufferLogo';
+import NavBarMenu from './components/NavBarMenu/NavBarMenu';
+import NavBarProducts from './components/NavBarProducts/NavBarProducts';
+import UpgradeCTA from './components/UpgradeCTA';
 import { useUser } from '../context/User';
 import useOrgSwitcher from '../hooks/useOrgSwitcher';
 
@@ -268,6 +269,7 @@ const NavBar = React.memo((props) => {
         <NavBarProducts activeProduct={activeProduct} />
       </NavBarLeft>
       <NavBarRight>
+        <UpgradeCTA />
         {helpMenuItems && (
           <DropdownMenu
             xPosition="right"

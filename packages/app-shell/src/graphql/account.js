@@ -19,10 +19,52 @@ export const QUERY_ACCOUNT = gql`
         canEdit
         role
         createdAt
+        isOneBufferOrganization
         billing {
           canAccessAnalytics
           canAccessEngagement
           canAccessPublishing
+          paymentDetails {
+            hasPaymentDetails
+          }
+          ... on MPBilling {
+            billingRedirectUrl
+          }
+          ... on OBBilling {
+            canAccessAnalytics
+            canStartTrial
+            subscription {
+              trial {
+                isActive
+                remainingDays
+              }
+              plan {
+                id
+              }
+            }
+            changePlanOptions {
+              planId
+              planName
+              planInterval
+              channelsQuantity
+              description
+              isCurrentPlan
+              highlights
+              currency
+              basePrice
+              totalPrice
+              discountPercentage
+              discountNote
+              priceNote
+              summary {
+                details
+                warning
+                intervalBasePrice
+                intervalUnit
+              }
+              isRecommended
+            }
+          }
         }
       }
       organizations {
