@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../context/User';
 import { ModalContext } from '../context/Modal';
 import getCopy from './getCopy';
@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import { black } from '@bufferapp/ui/style/colors';
+import { useTrackPageViewed } from '../hooks/useSegmentTracking';
 
 const ScreenContainer = styled.div`
   display: flex;
@@ -54,6 +55,17 @@ const Screen = ({
     onlyUpdatedCardDetails,
     startedTrial,
   });
+
+  const currentUser = useContext(UserContext);
+  useEffect(() => {
+    useTrackPageViewed({
+      payload: {
+        name: 'Confirmation',
+        title: 'Plan selector',
+      },
+      user: currentUser,
+    });
+  }, []);
 
   return (
     <ScreenContainer>

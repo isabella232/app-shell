@@ -8,7 +8,10 @@ import useSelectedPlan from '../hooks/useSelectedPlan';
 import useButtonOptions from '../hooks/useButtonOptions';
 import useHeaderLabel from '../hooks/useHeaderLabel';
 import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
-import { useTrackPlanSelectorViewed } from '../hooks/useSegmentTracking';
+import {
+  useTrackPlanSelectorViewed,
+  useTrackPageViewed,
+} from '../../hooks/useSegmentTracking';
 import {
   ButtonContainer,
   SwitchContainer,
@@ -60,6 +63,14 @@ export const PlanSelectorContainer = ({
       payload: {
         currentPlan: `${selectedPlan.planId}_${selectedPlan.planInterval}`,
         screenName: headerLabel,
+      },
+      user,
+    });
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Plan selection',
+        title: 'Plan selector',
       },
       user,
     });
