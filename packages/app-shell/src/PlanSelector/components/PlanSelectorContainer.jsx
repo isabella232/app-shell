@@ -8,6 +8,7 @@ import useSelectedPlan from '../hooks/useSelectedPlan';
 import useButtonOptions from '../hooks/useButtonOptions';
 import useHeaderLabel from '../hooks/useHeaderLabel';
 import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
+import { useTrackPlanSelectorViewed } from '../hooks/useSegmentTracking';
 import {
   ButtonContainer,
   SwitchContainer,
@@ -53,6 +54,16 @@ export const PlanSelectorContainer = ({
     planOptions,
     isFreePlan
   );
+
+  useEffect(() => {
+    useTrackPlanSelectorViewed({
+      payload: {
+        currentPlan: `${selectedPlan.planId}_${selectedPlan.planInterval}`,
+        screenName: headerLabel,
+      },
+      user,
+    });
+  }, []);
 
   useEffect(() => {
     const newInterval = monthlyBilling ? 'month' : 'year';
