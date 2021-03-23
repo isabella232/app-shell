@@ -7,7 +7,12 @@ import NavBar from './NavBar';
 import Banner from './Banner';
 import Modal from './Modal/index';
 
-import { AppShellStyled, ContentWrapper, SidebarWrapper, Wrapper } from './style';
+import {
+  AppShellStyled,
+  ContentWrapper,
+  SidebarWrapper,
+  Wrapper,
+} from './style';
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
 import useOrgSwitcher from './hooks/useOrgSwitcher';
@@ -29,7 +34,7 @@ const AppShell = ({
   menuItems,
   ignoreMenuItems,
   apolloClient,
-  channels
+  channels,
 }) => {
   const graphqlConfig = apolloClient ? {
     client: apolloClient
@@ -44,6 +49,7 @@ const AppShell = ({
     organizations: [],
     currentOrganization: {},
     isImpersonation: false,
+    loading: true,
   } : {
     ...data.account,
   };
@@ -133,12 +139,14 @@ AppShell.propTypes = {
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf('ApolloClient'),
-  channels: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired,
-    organizationId: PropTypes.string.isRequired,
-  }))
+  channels: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      service: PropTypes.string.isRequired,
+      organizationId: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 AppShell.defaultProps = {

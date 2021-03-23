@@ -69,6 +69,9 @@ export const QUERY_ACCOUNT = gql`
       organizations {
         id
         name
+        canEdit
+        role
+        createdAt
         billing {
           canAccessAnalytics
           canAccessEngagement
