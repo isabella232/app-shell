@@ -39,13 +39,15 @@ const Summary = ({
     let billingIntervalStatus;
     let planChanging;
     let billingIntervalChanging;
+    const type = isActiveTrial ? 'trial' : 'plan';
     if (currentPlanId === selectedPlanId) {
-      const type = isActiveTrial ? 'trial' : 'plan';
-      planStatus = `Currently on the ${currentPlan.planName} ${type}`;
+      const indefiniteArticle =
+        currentPlanId.planName == 'Individual' ? 'an' : 'a';
+      planStatus = `Currently on ${indefiniteArticle} ${currentPlan.planName} ${type}`;
     } else {
       const indefiniteArticle =
         selectedPlan?.planName == 'Individual' ? 'an' : 'a';
-      planStatus = `Changing to ${indefiniteArticle} ${selectedPlan?.planName} plan`;
+      planStatus = `Changing to ${indefiniteArticle} ${selectedPlan?.planName} ${type}`;
       planChanging = true;
     }
 
@@ -68,16 +70,31 @@ const Summary = ({
     );
   };
 
-  const shouldShowDowngradeWarning = () => {
-    if (!fromPlanSelector) {
-      return false;
-    }
-    if (
-      (currentPlan.planId === 'team' && selectedPlan.planId === 'individual') ||
-      (currentPlan.planId === 'team' && selectedPlan.planId === 'free') ||
-      (currentPlan.planId === 'individual' && selectedPlan.planId === 'free')
-    ) {
-      return true;
+  const getPriceFooter = () => {
+    if (fromPlanSelector) {
+      if (selectedPlan.planId === 'free') {
+        return null;
+      }
+      return (
+        <Text type="label" color="grayDark">
+          {/* this ends up reading: # social channels x base price */}
+          {`${selectedPlan.channelsQuantity} social channel${
+            selectedPlan.channelsQuantity > 1 ? 's' : ''
+          } x `}
+          {
+            <BoldPrice>
+              {selectedPlan.currency}
+              {selectedPlan.summary.intervalBasePrice}
+            </BoldPrice>
+          }
+        </Text>
+      );
+    } else {
+      return (
+        <Text type="label" color="grayDark">
+          Includes tax
+        </Text>
+      );
     }
   };
 
@@ -107,11 +124,7 @@ const Summary = ({
             </Detail>
           </DetailList>
         )}
-        {shouldShowDowngradeWarning() && (
-          <Notice>
-            <Text>{selectedPlan.summary.warning}</Text>
-          </Notice>
-        )}
+
         <Bottom>
           <TotalPrice>
             <sup>{selectedPlan.currency}</sup>
@@ -125,33 +138,12 @@ const Summary = ({
                   : 'per year'
               }
             >
-              /{selectedPlan.summary.intervalUnit}
+              {selectedPlan.planId === 'free'
+                ? ''
+                : `/${selectedPlan.summary.intervalUnit}`}
             </sup>
           </TotalPrice>
-          {!selectedPlan.channelsQuantity ? (
-            ''
-          ) : (
-            <>
-              {fromPlanSelector ? (
-                <Text type="label" color="grayDark">
-                  {/* this ends up reading: # social channels x base price */}
-                  {`${selectedPlan.channelsQuantity} social channel${
-                    selectedPlan.channelsQuantity > 1 ? 's' : ''
-                  } x `}
-                  {
-                    <BoldPrice>
-                      {selectedPlan.currency}
-                      {selectedPlan.summary.intervalBasePrice}
-                    </BoldPrice>
-                  }
-                </Text>
-              ) : (
-                <Text type="label" color="grayDark">
-                  Includes tax
-                </Text>
-              )}
-            </>
-          )}
+          {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
           {selectedPlan.planInterval === 'year' && (
             <DiscountReminder>
               <Coupon />
