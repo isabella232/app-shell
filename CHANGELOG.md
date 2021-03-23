@@ -1,4 +1,8 @@
 # Changelog
+## [2.5.0] - 2021-03-23
+- Remove Apollo Client from dependencies
+- Change SetCurrentOrganization to update cache manually
+
 ## [2.4.3] - 2021-03-23
 - Plan selector QA fixes:
   - updates header, CTA and summary status during trial
