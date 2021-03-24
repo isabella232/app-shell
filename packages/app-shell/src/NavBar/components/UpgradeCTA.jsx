@@ -25,7 +25,7 @@ const UpgradeCTA = () => {
       {({ currentOrganization }) => {
         if (currentOrganization.billing) {
           const { subscription, canStartTrial } = currentOrganization.billing
-          const isFree = subscription.plan.id === 'free'
+          const isFree = subscription?.plan.id === 'free'
 
           return (<ModalContext.Consumer>{({ openModal }) => (<>
             {isFree && <Cta>

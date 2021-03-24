@@ -31,7 +31,6 @@ export const QUERY_ACCOUNT = gql`
             billingRedirectUrl
           }
           ... on OBBilling {
-            canAccessAnalytics
             canStartTrial
             subscription {
               trial {
@@ -76,6 +75,45 @@ export const QUERY_ACCOUNT = gql`
           canAccessAnalytics
           canAccessEngagement
           canAccessPublishing
+          paymentDetails {
+            hasPaymentDetails
+          }
+          ... on MPBilling {
+            billingRedirectUrl
+          }
+          ... on OBBilling {
+            canStartTrial
+            subscription {
+              trial {
+                isActive
+                remainingDays
+              }
+              plan {
+                id
+              }
+            }
+            changePlanOptions {
+              planId
+              planName
+              planInterval
+              channelsQuantity
+              description
+              isCurrentPlan
+              highlights
+              currency
+              basePrice
+              totalPrice
+              discountPercentage
+              discountNote
+              priceNote
+              summary {
+                details
+                intervalBasePrice
+                intervalUnit
+              }
+              isRecommended
+            }
+          }
         }
       }
       products {
