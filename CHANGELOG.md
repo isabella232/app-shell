@@ -1,4 +1,23 @@
 # Changelog
+
+## [2.5.1] - 2021-03-24
+- Add missing fields in account query
+
+## [2.5.0] - 2021-03-23
+- Remove Apollo Client from dependencies
+- Change SetCurrentOrganization to update cache manually
+
+## [2.4.3] - 2021-03-23
+- Plan selector QA fixes:
+  - updates header, CTA and summary status during trial
+  - update button copy considering payment detail availability
+  - update confirmation modal cta message
+  - update header label copy
+  - update card footer copy
+  - removes price footer from free plans
+  - makes plan cards narrower
+  - billing interval toggle disappears on free plan
+  - stop requesting summary warning
 ## [2.4.2] - 2021-03-17
 - Plan selector QA fixes:
   - open selector properly if on free plan
