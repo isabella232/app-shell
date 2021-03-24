@@ -10,11 +10,16 @@ import { useTrackPageViewed } from '../hooks/useSegmentTracking';
 
 const PaymentMethod = () => {
   const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
   useEffect(() => {
+    const cta = data && data.cta ? data.cta : null;
     useTrackPageViewed({
       payload: {
         name: 'Payment method',
         title: 'Plan selector',
+        cta,
+        ctaButton: cta,
+        ctaView: data && data.ctaView ? data.ctaView : null,
       },
       user: currentUser,
     });
@@ -24,7 +29,7 @@ const PaymentMethod = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data }) => {
+          {({ openModal, data, modal }) => {
             return (
               <StripeProvider>
                 <Form
@@ -32,7 +37,11 @@ const PaymentMethod = () => {
                     openModal(MODALS.planSelector);
                   }}
                   openSuccess={(newData) => {
-                    openModal(MODALS.success, newData);
+                    openModal(MODALS.success, {
+                      ...newData,
+                      cta: 'Confirm Payment',
+                      ctaView: modal,
+                    });
                   }}
                   user={user}
                   plan={data ? data.plan : null}

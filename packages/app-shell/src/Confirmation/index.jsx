@@ -57,11 +57,16 @@ const Screen = ({
   });
 
   const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
   useEffect(() => {
+    const cta = data && data.cta ? data.cta : null;
     useTrackPageViewed({
       payload: {
         name: 'Confirmation',
         title: 'Plan selector',
+        cta,
+        ctaButton: cta,
+        ctaView: data && data.ctaView ? data.ctaView : null,
       },
       user: currentUser,
     });

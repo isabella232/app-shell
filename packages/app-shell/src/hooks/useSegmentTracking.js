@@ -18,10 +18,10 @@ export const useTrackPlanSelectorViewed = ({ payload, user }) => {
     currentPlan: null,
     ctaLocation: 'app-shell',
     screenName: null, // Human readable name of the section of the plan selector viewed (e.g., ""plans"", ""billing_info"", etc.)
-    
     cta: null, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
+    ctaButton: null, // What is the name or action of the CTA?  In many cases it makes sense to describe the intended result of the CTA, like `proTrial` or `publishPro`,
+
     ctaView: null, // What website page or app view is the CTA located?  Examples would be, `composer` or `analyticsOverview` for Publish, and `pricingPublish` for the Publish pricing page on the Buffer marketing site
-    ctaButton: null, // What is the name or action of the CTA?  In many cases it makes sense to describe the intended result of the CTA, like `proTrial` or `publishPro`
     
     ...payload,
   };
@@ -50,6 +50,8 @@ export const useTrackPageViewed = ({ payload, user }) => {
     ctaLocation: 'app-shell',
     title: null,
     name: null, // Human readable name of the page (e.g., ""overview"", ""posts"", etc.)
+    cta: null, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
+    ctaButton: null, // What is the name or action of the CTA?  In many cases it makes sense to describe the intended result of the CTA, like `proTrial` or `publishPro`
 
     channel: null, // Channel of the page, if applicable (e.g., ""facebook"", ""instagram"", etc.)
     channelId: null, // The database id for the channel document
@@ -57,9 +59,7 @@ export const useTrackPageViewed = ({ payload, user }) => {
     channelType: null, // What is the type of channel? ex. "page", "group"
     platform: null, // The platform on which the page view occurred (e.g. ""classic"", ""new_publish"", ""marketing"", ""ios"")
     referrer: null, // The address of the webpage which is linked to the resource being requested. By checking the referrer, the new webpage can see where the request originated.
-    cta: null, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
     ctaView: null, // What website page or app view is the CTA located?  Examples would be, `composer` or `analyticsOverview` for Publish, and `pricingPublish` for the Publish pricing page on the Buffer marketing site
-    ctaButton: null, // What is the name or action of the CTA?  In many cases it makes sense to describe the intended result of the CTA, like `proTrial` or `publishPro`
     
     ...payload,
   };

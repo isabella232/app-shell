@@ -24,28 +24,43 @@ const UpgradeCTA = () => {
     <UserContext.Consumer>
       {({ currentOrganization }) => {
         if (currentOrganization.billing) {
-          const { subscription, canStartTrial } = currentOrganization.billing
-          const isFree = subscription?.plan.id === 'free'
+          const { subscription, canStartTrial } = currentOrganization.billing;
+          const isFree = subscription?.plan.id === 'free';
 
-          return (<ModalContext.Consumer>{({ openModal }) => (<>
-            {isFree && <Cta>
-              <Button
-              type="text"
-              onClick={() => {canStartTrial ?
-                openModal(MODALS.startTrial) :
-                openModal(MODALS.planSelector)
-              }}
-              icon={<FlashIcon />}
-              label={canStartTrial ? 'Start a 14-day free trial' : 'Upgrade'}
-              />
-            </Cta>}
-          </>)}</ModalContext.Consumer>)
+          return (
+            <ModalContext.Consumer>
+              {({ openModal }) => (
+                <>
+                  {isFree && (
+                    <Cta>
+                      <Button
+                        type="text"
+                        onClick={() => {
+                          canStartTrial
+                            ? openModal(MODALS.startTrial, {
+                                cta: 'Start a 14-day free trial',
+                              })
+                            : openModal(MODALS.planSelector, { cta: 'Ugrade' });
+                        }}
+                        icon={<FlashIcon />}
+                        label={
+                          canStartTrial
+                            ? 'Start a 14-day free trial'
+                            : 'Upgrade'
+                        }
+                      />
+                    </Cta>
+                  )}
+                </>
+              )}
+            </ModalContext.Consumer>
+          );
         }
 
-        return null
+        return null;
       }}
     </UserContext.Consumer>
-  )
-}
+  );
+};
 
-export default UpgradeCTA
+export default UpgradeCTA;
