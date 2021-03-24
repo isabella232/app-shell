@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [2.6.0] - 2021-03-24
+- Redirect account 400 error to login
+
 ## [2.5.1] - 2021-03-24
 - Add missing fields in account query
 

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 
-import NavBar from './NavBar';
+import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
 import Modal from './Modal/index';
 
@@ -15,7 +15,6 @@ import {
 } from './style';
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
-import useOrgSwitcher from './hooks/useOrgSwitcher';
 import useModal  from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 
@@ -53,6 +52,10 @@ const AppShell = ({
   } : {
     ...data.account,
   };
+
+  if (error?.networkError?.statusCode === 400) {
+    window.location.assign(getLogoutUrl(window.location.href));
+  }
 
   const modal = useModal()
 
