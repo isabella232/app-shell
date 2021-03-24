@@ -1,4 +1,8 @@
 # Changelog
+
+## [2.5.1] - 2021-03-24
+- Add missing fields in account query
+
 ## [2.5.0] - 2021-03-23
 - Remove Apollo Client from dependencies
 - Change SetCurrentOrganization to update cache manually
