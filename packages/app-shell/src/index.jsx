@@ -53,7 +53,7 @@ const AppShell = ({
     ...data.account,
   };
 
-  if (error?.networkError?.statusCode === 400) {
+  if (error?.networkError?.statusCode === 401) {
     window.location.assign(getLogoutUrl(window.location.href));
   }
 
