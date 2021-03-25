@@ -1,5 +1,8 @@
 # Changelog
 
+
+## [2.6.3] - 2021-03-25
+- Change account redirect error from 400 to 401
 ## [2.6.2] - 2021-03-25
 - Add missing field in account query
 ## [2.6.0] - 2021-03-24
