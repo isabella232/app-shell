@@ -16,6 +16,6 @@
     "app-shell": "lerna exec --scope @bufferapp/app-shell -- yarn watch",
     "app": "lerna exec --scope app -- yarn watch",
     "test": "jest",
-    "test:watch": "jest -w"
+    "test:watch": "jest --watch"
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
@@ -9,6 +9,10 @@ import useButtonOptions from '../hooks/useButtonOptions';
 import useHeaderLabel from '../hooks/useHeaderLabel';
 import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
 import {
+  useTrackPlanSelectorViewed,
+  useTrackPageViewed,
+} from '../../hooks/useSegmentTracking';
+import {
   ButtonContainer,
   SwitchContainer,
   PlanSelectorHeader,
@@ -17,6 +21,7 @@ import {
   Container,
 } from '../style';
 import useInterval from '../hooks/useInterval';
+import { ModalContext } from '../../context/Modal';
 
 export const PlanSelectorContainer = ({
   planOptions,
@@ -27,6 +32,7 @@ export const PlanSelectorContainer = ({
   openSuccess,
   isFreePlan,
 }) => {
+  const { data: modalData, modal } = useContext(ModalContext);
   const { monthlyBilling, setBillingInterval } = useInterval(
     planOptions,
     isFreePlan
@@ -53,6 +59,29 @@ export const PlanSelectorContainer = ({
     planOptions,
     isFreePlan
   );
+
+  useEffect(() => {
+    const cta = modalData && modalData.cta ? modalData.cta : null;
+    useTrackPlanSelectorViewed({
+      payload: {
+        currentPlan: `${selectedPlan.planId}_${selectedPlan.planInterval}`,
+        screenName: headerLabel,
+        cta,
+        ctaButton: cta,
+      },
+      user,
+    });
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Plan selection',
+        title: 'Plan selector',
+        cta,
+        ctaButton: cta,
+      },
+      user,
+    });
+  }, []);
 
   useEffect(() => {
     const newInterval = monthlyBilling ? 'month' : 'year';
@@ -101,7 +130,9 @@ export const PlanSelectorContainer = ({
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={() => action({ plan: selectedPlan })}
+            onClick={() =>
+              action({ plan: selectedPlan, cta: label, ctaView: modal })
+            }
             label={processing ? 'Processing...' : label}
             fullWidth
             disabled={label === 'Stay On My Current Plan' || processing}
