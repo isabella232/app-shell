@@ -71,6 +71,7 @@ export const QUERY_ACCOUNT = gql`
         canEdit
         role
         createdAt
+        isOneBufferOrganization
         billing {
           canAccessAnalytics
           canAccessEngagement
