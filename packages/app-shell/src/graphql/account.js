@@ -6,6 +6,13 @@ export const SET_CURRENT_ORGANIZATION = gql`
   }
 `;
 
+/**
+ * IMPORTANT: since our cache is being updated manually for the
+ * setCurrentOrganization mutation, make sure that when you add,
+ * change or delete fields inside the currentOrganization in this
+ * query, you also do the same inside the organizations.
+ */
+
 export const QUERY_ACCOUNT = gql`
   query GetAccount {
     account {
