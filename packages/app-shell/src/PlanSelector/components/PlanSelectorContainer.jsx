@@ -19,27 +19,41 @@ import {
   Right,
   Left,
   Container,
+  AbsoluteSavings,
+  HeaderLeft,
 } from '../style';
 import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../context/Modal';
 
 export const PlanSelectorContainer = ({
-  planOptions,
+  changePlanOptions,
   user,
   openPaymentMethod,
   hasPaymentDetails,
-  isActiveTrial,
+  trialInfo,
   openSuccess,
   isFreePlan,
+  isUpgradeIntent,
 }) => {
+  const filterPlanOptions = (changePlanOptions) => {
+    if (isUpgradeIntent) {
+      return changePlanOptions.filter((option) => option.planId !== 'free');
+    }
+    return changePlanOptions;
+  };
+
+  const [planOptions, setPlanOptions] = useState(
+    filterPlanOptions(changePlanOptions)
+  );
+
   const { data: modalData, modal } = useContext(ModalContext);
   const { monthlyBilling, setBillingInterval } = useInterval(
     planOptions,
-    isFreePlan
+    isUpgradeIntent
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isFreePlan
+    isUpgradeIntent
   );
   const {
     updateSubscriptionPlan: updatePlan,
@@ -52,10 +66,11 @@ export const PlanSelectorContainer = ({
     updatePlan,
     openPaymentMethod,
     hasPaymentDetails,
-    isActiveTrial,
+    isActiveTrial: trialInfo?.isActive,
+    isAwaitingUserAction: trialInfo?.isAwaitingUserAction,
   });
   const { headerLabel } = useHeaderLabel(
-    isActiveTrial,
+    trialInfo?.isActive,
     planOptions,
     isFreePlan
   );
@@ -105,17 +120,18 @@ export const PlanSelectorContainer = ({
         <PlanSelectorHeader>
           <Text type="h2">{headerLabel}</Text>
           {selectedPlan.planId !== 'free' && (
-            <SwitchContainer>
-              <Switch
-                isOn={!monthlyBilling}
-                handleSwitch={() => setBillingInterval(!monthlyBilling)}
-                label="Monthly"
-                id="switch-off"
-              />
-              <p>
-                Yearly <span>20% discount</span>
-              </p>
-            </SwitchContainer>
+            <HeaderLeft>
+              <SwitchContainer>
+                <Switch
+                  isOn={!monthlyBilling}
+                  handleSwitch={() => setBillingInterval(!monthlyBilling)}
+                  label="Monthly"
+                  id="switch-off"
+                />
+                <p>Yearly</p>
+              </SwitchContainer>
+              <AbsoluteSavings>{selectedPlan.absoluteSavings}</AbsoluteSavings>
+            </HeaderLeft>
           )}
         </PlanSelectorHeader>
         <SelectionScreen
@@ -126,12 +142,21 @@ export const PlanSelectorContainer = ({
         />
       </Left>
       <Right>
-        <Summary selectedPlan={selectedPlan} fromPlanSelector={true} />
+        <Summary
+          selectedPlan={selectedPlan}
+          fromPlanSelector={true}
+          isUpgradeIntent={isUpgradeIntent}
+        />
         <ButtonContainer>
           <Button
             type="primary"
             onClick={() =>
-              action({ plan: selectedPlan, cta: label, ctaView: modal })
+              action({
+                plan: selectedPlan,
+                cta: label,
+                ctaView: modal,
+                isUpgradeIntent,
+              })
             }
             label={processing ? 'Processing...' : label}
             fullWidth

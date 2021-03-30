@@ -40,9 +40,13 @@ export const QUERY_ACCOUNT = gql`
           ... on OBBilling {
             canStartTrial
             subscription {
+              periodEnd
               trial {
                 isActive
                 remainingDays
+                isAwaitingUserAction
+                startDate
+                endDate
               }
               plan {
                 id
@@ -62,6 +66,7 @@ export const QUERY_ACCOUNT = gql`
               discountPercentage
               discountNote
               priceNote
+              absoluteSavings
               summary {
                 details
                 intervalBasePrice
@@ -92,9 +97,13 @@ export const QUERY_ACCOUNT = gql`
           ... on OBBilling {
             canStartTrial
             subscription {
+              periodEnd
               trial {
                 isActive
                 remainingDays
+                isAwaitingUserAction
+                startDate
+                endDate
               }
               plan {
                 id
@@ -114,6 +123,7 @@ export const QUERY_ACCOUNT = gql`
               discountPercentage
               discountNote
               priceNote
+              absoluteSavings
               summary {
                 details
                 intervalBasePrice

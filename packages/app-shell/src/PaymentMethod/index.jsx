@@ -33,8 +33,8 @@ const PaymentMethod = () => {
             return (
               <StripeProvider>
                 <Form
-                  openPlans={() => {
-                    openModal(MODALS.planSelector);
+                  openPlans={(isUpgradeIntent) => {
+                    openModal(MODALS.planSelector, { isUpgradeIntent });
                   }}
                   openSuccess={(newData) => {
                     openModal(MODALS.success, {
@@ -45,6 +45,11 @@ const PaymentMethod = () => {
                   }}
                   user={user}
                   plan={data ? data.plan : null}
+                  isTrial={
+                    user.currentOrganization.billing.subscription?.trial
+                      ?.isActive
+                  }
+                  isUpgradeIntent={data.isUpgradeIntent}
                 />
               </StripeProvider>
             );
