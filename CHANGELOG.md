@@ -1,4 +1,6 @@
 # Changelog
+## [2.6.5] - 2021-03-29
+- adds isUpgradeIntent to upgrade CTA in navbar
 ## [2.6.4] - 2021-03-29
 - Plan selector QA fixes:
   - if isAwaitingUserAction allow the user to confirm a free plan
