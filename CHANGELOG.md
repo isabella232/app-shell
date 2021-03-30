@@ -1,6 +1,11 @@
 # Changelog
-
-
+## [2.6.4] - 2021-03-29
+- Plan selector QA fixes:
+  - if isAwaitingUserAction allow the user to confirm a free plan
+  - summary tweaks on the plan selector and payment method
+  - adds absolute savings to toggle
+  - copy tweaks and trial tweaks
+  - renders 2 planOptions if the intent is to upgrade
 ## [2.6.3] - 2021-03-25
 - Change account redirect error from 400 to 401
 ## [2.6.2] - 2021-03-25
