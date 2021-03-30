@@ -193,6 +193,7 @@ function buildOrgSwitcher(
   }
   const orgSwitcher = {
     title: 'Organizations',
+    hideTooltips: hideOrgSwitcherTooltips,
     menuItems: user.organizations.map((org, index) => {
       const isCurrentOrganization = user.currentOrganization
         ? user.currentOrganization.id === org.id
@@ -202,7 +203,6 @@ function buildOrgSwitcher(
         title: org.name,
         selected: isCurrentOrganization,
         hasDivider: index === 0,
-        hideTooltips: hideOrgSwitcherTooltips,
         subItems: channels
           .filter((channel) => channel.organizationId === org.id)
           .map((channel) => ({
