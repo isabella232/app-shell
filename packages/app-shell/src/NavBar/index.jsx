@@ -182,7 +182,12 @@ function getNetworkIcon(item) {
   return null;
 }
 
-function buildOrgSwitcher(user, selectOrganization, channels) {
+function buildOrgSwitcher(
+  user,
+  selectOrganization,
+  channels,
+  hideOrgSwitcherTooltips = false
+) {
   if (user.organizations.length === 1) {
     return [];
   }
@@ -197,6 +202,7 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
         title: org.name,
         selected: isCurrentOrganization,
         hasDivider: index === 0,
+        hideTooltips: hideOrgSwitcherTooltips,
         subItems: channels
           .filter((channel) => channel.organizationId === org.id)
           .map((channel) => ({
@@ -246,6 +252,7 @@ const NavBar = React.memo((props) => {
     menuItems,
     ignoreMenuItems,
     channels,
+    hideOrgSwitcherTooltips,
   } = props;
 
   const user = useUser();
@@ -256,7 +263,12 @@ const NavBar = React.memo((props) => {
       onCompleted: () => onOrganizationSelected(organizationId),
     });
   };
-  const organizations = buildOrgSwitcher(user, selectOrganization, channels);
+  const organizations = buildOrgSwitcher(
+    user,
+    selectOrganization,
+    channels,
+    hideOrgSwitcherTooltips
+  );
 
   return (
     <NavBarStyled aria-label="Main menu">
@@ -369,6 +381,7 @@ NavBar.propTypes = {
       })
     ).isRequired,
   }),
+  hideOrgSwitcherTooltips: PropTypes.bool,
   onOrganizationSelected: PropTypes.func,
   menuItems: PropTypes.array,
   ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
@@ -396,6 +409,7 @@ NavBar.defaultProps = {
   ignoreMenuItems: [],
   graphqlConfig: {},
   channels: [],
+  hideOrgSwitcherTooltips: false,
 };
 
 export default NavBar;

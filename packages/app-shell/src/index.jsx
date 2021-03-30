@@ -34,6 +34,7 @@ const AppShell = ({
   ignoreMenuItems,
   apolloClient,
   channels,
+  hideOrgSwitcherTooltips,
 }) => {
   const graphqlConfig = apolloClient ? {
     client: apolloClient
@@ -73,6 +74,7 @@ const AppShell = ({
             onOrganizationSelected={onOrganizationSelected}
             graphqlConfig={graphqlConfig}
             channels={channels}
+            hideOrgSwitcherTooltips={hideOrgSwitcherTooltips}
           />
           {bannerOptions && <Banner {...bannerOptions} />}
           <Wrapper>
@@ -128,6 +130,9 @@ AppShell.propTypes = {
 
   displaySkipLink: PropTypes.bool,
 
+  /** (Optional) Hide tool tips (for example: connected channels) when hovering over an organization name in the org switcher */
+  hideOrgSwitcherTooltips: PropTypes.bool,
+
   /** Optional menu for selecting the user's organization */
   orgSwitcher: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -165,6 +170,7 @@ AppShell.defaultProps = {
   onOrganizationSelected: () => {},
   apolloClient: undefined,
   channels: [],
+  hideOrgSwitcherTooltips: false,
 };
 
 export default AppShell;
