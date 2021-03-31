@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
+import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
 import useSelectedPlan from '../hooks/useSelectedPlan';
@@ -21,6 +22,7 @@ import {
   Container,
   AbsoluteSavings,
   HeaderLeft,
+  DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../context/Modal';
@@ -134,6 +136,12 @@ export const PlanSelectorContainer = ({
             </HeaderLeft>
           )}
         </PlanSelectorHeader>
+        {selectedPlan.downgradedMessage && (
+          <DowngradeMessage>
+            <Checkmark />
+            <Text>{selectedPlan.downgradedMessage}</Text>
+          </DowngradeMessage>
+        )}
         <SelectionScreen
           planOptions={planOptions}
           selectedPlan={selectedPlan}
