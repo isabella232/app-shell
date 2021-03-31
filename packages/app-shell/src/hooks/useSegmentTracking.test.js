@@ -1,6 +1,20 @@
 import { useTrackPageViewed, useTrackPlanSelectorViewed } from './useSegmentTracking';
 
 describe('useSegmentTracking hooks', () => {
+  const oldWindowLocation = window.location;
+    
+  beforeAll(() => {
+    delete window.location;
+    window.location = {
+        href: '',
+        origin: ''
+    };
+  });
+
+  afterAll(() => {
+    window.location = oldWindowLocation;
+  });
+
   describe('useTrackPlanSelectorViewed', () => {
     it('should return undefined on impersonation', () => {
       const result = useTrackPlanSelectorViewed({
@@ -23,10 +37,11 @@ describe('useSegmentTracking hooks', () => {
       expect(result).toBeUndefined();
     });
 
-    it('should track the plan selector viewed event without PRODUCT_TRACKING_KEY', () => {
+    it('should track the plan selector viewed event', () => {
       window.analytics = {
         track: jest.fn(),
       };
+      window.location.origin = 'https://analyze.buffer.com';
       useTrackPlanSelectorViewed({
         payload: {
           screenName: 'Change My Plan',
@@ -44,41 +59,7 @@ describe('useSegmentTracking hooks', () => {
         'Plan Selector Viewed',
         {
           organizationId: '123-test-org',
-          ctaApp: null,
-          ctaVersion: 1,
-          currentPlan: 'individual_month',
-          screenName: 'Change My Plan',
-          ctaLocation: 'app-shell',
-          cta: null,
-          ctaView: null,
-          ctaButton: null,
-        }
-      );
-    });
-
-    it('should track the plan selector viewed event with PRODUCT_TRACKING_KEY', () => {
-      window.analytics = {
-        track: jest.fn(),
-      };
-      window.PRODUCT_TRACKING_KEY = 'account';
-      useTrackPlanSelectorViewed({
-        payload: {
-          screenName: 'Change My Plan',
-          currentPlan: 'individual_month',
-        },
-        user: {
-          isImpersonation: false,
-          currentOrganization: {
-            id: '123-test-org',
-          },
-        },
-      });
-
-      expect(window.analytics.track).toHaveBeenCalledWith(
-        'Plan Selector Viewed',
-        {
-          organizationId: '123-test-org',
-          ctaApp: 'account',
+          ctaApp: 'analyze',
           ctaVersion: 1,
           currentPlan: 'individual_month',
           screenName: 'Change My Plan',
@@ -92,19 +73,6 @@ describe('useSegmentTracking hooks', () => {
   });
 
   describe('useTrackPageViewed', () => {
-    const oldWindowLocation = window.location;
-    
-    beforeAll(() => {
-      delete window.location;
-      window.location = {
-          href: '',
-      };
-    });
-
-    afterAll(() => {
-      window.location = oldWindowLocation;
-    });
-
     it('should return undefined on impersonation', () => {
       const result = useTrackPageViewed({
         payload: {},
@@ -130,10 +98,10 @@ describe('useSegmentTracking hooks', () => {
       window.analytics = {
         track: jest.fn(),
       };
-      window.PRODUCT_TRACKING_KEY = 'account';
       window.location.href = 'http://localhost/the-path?query=the-query';
       window.location.pathname = '/the-path';
       window.location.search = '?query=the-query';
+      window.location.origin = 'https://account.buffer.com';
 
       useTrackPageViewed({
         payload: {

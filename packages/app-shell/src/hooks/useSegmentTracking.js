@@ -1,3 +1,5 @@
+import { getProductPath } from '../NavBar';
+
 /**
  *
  */
@@ -11,9 +13,11 @@ export const useTrackPlanSelectorViewed = ({ payload, user }) => {
     return;
   }
 
+
+  const baseUrl = window.location.origin;
   const eventData = {
     organizationId: organization.id,
-    ctaApp: window.PRODUCT_TRACKING_KEY || null,
+    ctaApp: getProductPath(baseUrl),
     ctaVersion: 1,
     currentPlan: null,
     ctaLocation: 'app-shell',
@@ -39,11 +43,13 @@ export const useTrackPageViewed = ({ payload, user }) => {
     return;
   }
 
+  const baseUrl = window.location.origin;
+  const product = getProductPath(baseUrl);
   const eventData = {
     organizationId: organization.id,
-    ctaApp: window.PRODUCT_TRACKING_KEY || null,
+    ctaApp: product,
     ctaVersion: 1,
-    product: window.PRODUCT_TRACKING_KEY || null,
+    product,
     url: window.location.href || null,
     search: window.location.search || null,
     path: window.location.pathname || null, // The path typically refers to a file or directory on the web server.
