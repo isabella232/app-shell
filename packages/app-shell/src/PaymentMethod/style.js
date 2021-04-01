@@ -19,8 +19,9 @@ export const StyledError = styled.p`
   display: inline-block;
   align-items: center;
   width: 100%;
-  overflow: hidden;
+  overflow: ${({ isInline }) => isInline ? 'hidden' : ''};
   text-overflow: ellipsis;
+  font-size: 14px;
 
   span {
     color: ${redDark};
@@ -35,8 +36,8 @@ export const StyledError = styled.p`
   }
 `;
 
-export const Error = ({ error }) => (
-  <StyledError aria-live="polite">
+export const Error = ({ isInline, error }) => (
+  <StyledError isInline={isInline} aria-live="polite">
     {error && (
       <>
         <WarningIcon />
