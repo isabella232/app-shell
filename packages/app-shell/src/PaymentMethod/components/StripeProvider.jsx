@@ -11,7 +11,7 @@ const StripeProvider = ({ children }) => {
     // test Stripe Publishable Key
     'pk_test_CvOaedJTBPQLmI0YSnQsitzN' :
     // production Stripe Publishable Key
-    'pk_dGKqAIFsUQonSYGPBM9Rek71IHOcL'
+    window.STRIPE_PUBLISHABLE_KEY
     ;
 
   const [stripe, setStripe] = useState(null)
