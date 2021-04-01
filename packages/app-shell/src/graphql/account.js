@@ -73,6 +73,7 @@ export const QUERY_ACCOUNT = gql`
                 intervalUnit
               }
               isRecommended
+              downgradedMessage
             }
           }
         }
@@ -130,6 +131,7 @@ export const QUERY_ACCOUNT = gql`
                 intervalUnit
               }
               isRecommended
+              downgradedMessage
             }
           }
         }

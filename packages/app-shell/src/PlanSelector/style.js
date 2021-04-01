@@ -272,3 +272,22 @@ export const Benefit = styled.li`
     margin-right: 8px;
   }
 `;
+
+export const DowngradeMessage = styled.li`
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: -10px;
+  max-width: 610px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: ${blue};
+
+  svg {
+    fill: ${blue};
+    height: 22px;
+    width: 22px;
+    margin-top: -4px;
+    margin-right: 5px;
+  }
+`;
