@@ -1,4 +1,14 @@
 # Changelog
+
+## [2.6.8] - 2021-04-01
+- default to global Stripe Key
+## [2.6.7] - 2021-04-01
+- Stripe production key
+- rendering plan selector from URL
+- rendering payment method from URL
+- payment method top level error style
+## [2.6.6] - 2021-04-01
+- Dislpay downgraded to Free plan message in the plan selector
 ## [2.6.5] - 2021-03-29
 - adds isUpgradeIntent to upgrade CTA in navbar
 ## [2.6.4] - 2021-03-29

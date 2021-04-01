@@ -86,7 +86,7 @@ const Field = ({ label, enableSubmit }) => {
           onChange={(value) => {setData(value)}}
         />}
       </Input>
-      <Error error={data.error} />
+      <Error isInline error={data.error} />
     </Text>
   </StyledField>);
 }
