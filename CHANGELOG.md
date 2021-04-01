@@ -1,4 +1,7 @@
 # Changelog
+
+## [2.6.6] - 2021-04-01
+- Dislpay downgraded to Free plan message in the plan selector
 ## [2.6.5] - 2021-03-29
 - adds isUpgradeIntent to upgrade CTA in navbar
 ## [2.6.4] - 2021-03-29
