@@ -15,8 +15,8 @@ const PaymentMethod = () => {
     const cta = data && data.cta ? data.cta : null;
     useTrackPageViewed({
       payload: {
-        name: 'Payment method',
-        title: 'Plan selector',
+        name: 'addPaymentDetails',
+        title: 'planSelector',
         cta,
         ctaButton: cta,
         ctaView: data && data.ctaView ? data.ctaView : null,
@@ -34,12 +34,17 @@ const PaymentMethod = () => {
               <StripeProvider>
                 <Form
                   openPlans={(isUpgradeIntent) => {
-                    openModal(MODALS.planSelector, { isUpgradeIntent });
+                    openModal(MODALS.planSelector, {
+                      isUpgradeIntent,
+                      cta: 'planSelection',
+                      ctaButton: 'goBackToPlanSelection',
+                      ctaView: modal,
+                    });
                   }}
                   openSuccess={(newData) => {
                     openModal(MODALS.success, {
                       ...newData,
-                      cta: 'Confirm Payment',
+                      cta: 'addPaymentDetails',
                       ctaView: modal,
                     });
                   }}

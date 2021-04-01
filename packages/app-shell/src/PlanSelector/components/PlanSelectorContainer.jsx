@@ -12,6 +12,7 @@ import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
 import {
   useTrackPlanSelectorViewed,
   useTrackPageViewed,
+  formatCTAString,
 } from '../../hooks/useSegmentTracking';
 import {
   ButtonContainer,
@@ -63,7 +64,7 @@ export const PlanSelectorContainer = ({
     error,
     processing,
   } = useUpdateSubscriptionPlan({ user, selectedPlan });
-  const { label, action, updateButton } = useButtonOptions({
+  const { label, action, updateButton, ctaButton } = useButtonOptions({
     selectedPlan,
     updatePlan,
     openPaymentMethod,
@@ -81,20 +82,22 @@ export const PlanSelectorContainer = ({
     const cta = modalData && modalData.cta ? modalData.cta : null;
     useTrackPlanSelectorViewed({
       payload: {
-        currentPlan: `${selectedPlan.planId}_${selectedPlan.planInterval}`,
+        currentPlan: formatCTAString(
+          `${selectedPlan.planId} ${selectedPlan.planInterval}`
+        ),
         screenName: headerLabel,
         cta,
-        ctaButton: cta,
+        ctaButton: ctaButton,
       },
       user,
     });
 
     useTrackPageViewed({
       payload: {
-        name: 'Plan selection',
-        title: 'Plan selector',
+        name: 'planSelection',
+        title: 'planSelector',
         cta,
-        ctaButton: cta,
+        ctaButton: ctaButton,
       },
       user,
     });

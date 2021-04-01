@@ -44,8 +44,9 @@ describe('useSegmentTracking hooks', () => {
       window.location.origin = 'https://analyze.buffer.com';
       useTrackPlanSelectorViewed({
         payload: {
-          screenName: 'Change My Plan',
-          currentPlan: 'individual_month',
+          screenName: 'changeMyPlan',
+          currentPlan: 'individualMonth',
+          cta: 'upgradePlan',
         },
         user: {
           isImpersonation: false,
@@ -60,11 +61,11 @@ describe('useSegmentTracking hooks', () => {
         {
           organizationId: '123-test-org',
           ctaApp: 'analyze',
-          ctaVersion: 1,
-          currentPlan: 'individual_month',
-          screenName: 'Change My Plan',
-          ctaLocation: 'app-shell',
-          cta: null,
+          ctaVersion: '1',
+          currentPlan: 'individualMonth',
+          screenName: 'changeMyPlan',
+          ctaLocation: 'appShell',
+          cta: 'analyze-upgradePlan-planSelectorViewed',
           ctaView: null,
           ctaButton: null,
         }
@@ -105,8 +106,9 @@ describe('useSegmentTracking hooks', () => {
 
       useTrackPageViewed({
         payload: {
-          name: 'The Page',
-          title: 'Page title',
+          name: 'thePage',
+          title: 'pageTitle',
+          cta: 'addPaymentMethod'
         },
         user: {
           isImpersonation: false,
@@ -121,15 +123,15 @@ describe('useSegmentTracking hooks', () => {
         {
           organizationId: '123-test-org',
           ctaApp: 'account',
-          ctaVersion: 1,
-          name: 'The Page',
-          title: 'Page title',
-          ctaLocation: 'app-shell',
+          ctaVersion: '1',
+          name: 'thePage',
+          title: 'pageTitle',
+          ctaLocation: 'appShell',
           product: 'account',
           url: 'http://localhost/the-path?query=the-query',
           path: '/the-path',
           search: '?query=the-query',
-          cta: null,
+          cta: 'account-addPaymentMethod-planSelector',
           ctaView: null,
           ctaButton: null,
           channel: null,
