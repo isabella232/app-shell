@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.6.9] - 2021-04-05
+- show trial banner only for OB users
 ## [2.6.8] - 2021-04-01
 - default to global Stripe Key
 ## [2.6.7] - 2021-04-01
