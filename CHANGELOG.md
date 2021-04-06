@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.6.10] - 2021-04-06
+- Render plan selector when awaiting user action
+- Use camel case names for tracking CTAs
+- Extract app CTA from url
 ## [2.6.9] - 2021-04-05
 - show trial banner only for OB users
 ## [2.6.8] - 2021-04-01
