@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { formatCTAString } from '../../hooks/useSegmentTracking'
 
 const useButtonOptions = ({
   selectedPlan,
@@ -50,6 +51,7 @@ const useButtonOptions = ({
     label,
     action,
     updateButton,
+    ctaButton: formatCTAString(label)
   };
 };
 

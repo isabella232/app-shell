@@ -9,17 +9,17 @@ import Confirmation from '../Confirmation';
 const ModalContent = ({ modal }) => {
   switch (modal) {
     case MODALS.paymentMethod:
-      return (<PaymentMethod />);
+      return <PaymentMethod />;
     case MODALS.planSelector:
-      return (<PlanSelector />);
+      return <PlanSelector />;
     case MODALS.success:
-      return (<Confirmation />);
+      return <Confirmation />;
     case MODALS.startTrial:
-      return (<StartTrial />);
+      return <StartTrial />;
     default:
       return null;
   }
-}
+};
 
 const Modal = ({ modal, openModal, isAwaitingUserAction }) => {
   const [hasModal, setHasModal] = useState(!!modal);
@@ -27,7 +27,7 @@ const Modal = ({ modal, openModal, isAwaitingUserAction }) => {
   useEffect(() => {
     if (isAwaitingUserAction) {
       openModal(MODALS.planSelector, {
-        cta: 'Render Modal',
+        cta: 'awaitingUserAction',
         isUpgradeIntent: false,
       });
     }
@@ -37,13 +37,19 @@ const Modal = ({ modal, openModal, isAwaitingUserAction }) => {
     setHasModal(!!modal);
   }, [modal]);
 
-  return (<>
-    {hasModal && <SimpleModal closeAction={() => {
-      openModal(null);
-    }}>
-      <ModalContent modal={modal} />
-    </SimpleModal>}
-  </>)
-}
+  return (
+    <>
+      {hasModal && (
+        <SimpleModal
+          closeAction={() => {
+            openModal(null);
+          }}
+        >
+          <ModalContent modal={modal} />
+        </SimpleModal>
+      )}
+    </>
+  );
+};
 
 export default Modal;

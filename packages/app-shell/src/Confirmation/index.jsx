@@ -62,11 +62,10 @@ const Screen = ({
     const cta = data && data.cta ? data.cta : null;
     useTrackPageViewed({
       payload: {
-        name: 'Confirmation',
-        title: 'Plan selector',
+        name: 'confirmation',
+        title: 'planSelector',
         cta,
         ctaButton: cta,
-        ctaView: data && data.ctaView ? data.ctaView : null,
       },
       user: currentUser,
     });
