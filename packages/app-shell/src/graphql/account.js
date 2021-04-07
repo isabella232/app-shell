@@ -27,6 +27,7 @@ export const QUERY_ACCOUNT = gql`
         role
         createdAt
         isOneBufferOrganization
+        featureFlips
         billing {
           canAccessAnalytics
           canAccessEngagement
@@ -36,6 +37,10 @@ export const QUERY_ACCOUNT = gql`
           }
           ... on MPBilling {
             billingRedirectUrl
+            subscriptions {
+              plan
+              product
+            }
           }
           ... on OBBilling {
             canStartTrial
@@ -86,6 +91,7 @@ export const QUERY_ACCOUNT = gql`
         role
         createdAt
         isOneBufferOrganization
+        featureFlips
         billing {
           canAccessAnalytics
           canAccessEngagement
@@ -95,6 +101,10 @@ export const QUERY_ACCOUNT = gql`
           }
           ... on MPBilling {
             billingRedirectUrl
+            subscriptions {
+              plan
+              product
+            }
           }
           ... on OBBilling {
             canStartTrial
