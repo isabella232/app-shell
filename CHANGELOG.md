@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.7.1] - 2021-04-07
+- Fetches the organization feature flips and MP subscriptions
 ## [2.7.0] - 2021-04-06
 - Returns typed errors for billing mutations
 ## [2.6.10] - 2021-04-06
