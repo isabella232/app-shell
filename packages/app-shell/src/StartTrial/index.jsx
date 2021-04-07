@@ -41,12 +41,12 @@ const StartTrial = ({ user, openModal }) => {
   );
 
   useEffect(() => {
-    if (trial.billingStartTrial.success) {
+    if (trial?.billingStartTrial.success) {
       openModal(MODALS.success, { startedTrial: true });
     } else if (mutationError) {
       setError(mutationError);
-    } else if (trial.billingStartTrial.userFriendlyMessage) {
-      setError(trial.billingStartTrial.userFriendlyMessage);
+    } else if (trial?.billingStartTrial.userFriendlyMessage) {
+      setError(trial?.billingStartTrial.userFriendlyMessage);
     }
   }, [trial, mutationError]);
 
