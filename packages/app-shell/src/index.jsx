@@ -53,7 +53,8 @@ const AppShell = ({
     ...data.account,
   };
 
-  if (error?.networkError?.statusCode === 401) {
+  const networkErrors = error?.networkError?.result?.errors;
+  if (networkErrors?.some(err => err.extensions?.code === 'UNAUTHENTICATED')) {
     window.location.assign(getLogoutUrl(window.location.href));
   }
 
