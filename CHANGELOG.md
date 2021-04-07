@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.7.3] - 2021-04-07
+- fix: No error message displayed when the very first API call (createSetupIntent) errors
+- fix: Confirm Payment Details CTA remains disabled after an error
+- fix: Uncaught TypeError: Cannot read property 'billingStartTrial' of undefined
 ## [2.7.2] - 2021-04-07
 - Only redirects to login if account has unauthenticated error
 ## [2.7.1] - 2021-04-07
