@@ -17,6 +17,7 @@ import { Holder, Content, Ctas } from './style';
 const StartTrial = ({ user, openModal }) => {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
   const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState(null);
   useEffect(() => {
     if (user) {
       let plan = user.currentOrganization.billing.changePlanOptions.find(
@@ -32,15 +33,22 @@ const StartTrial = ({ user, openModal }) => {
     }
   }, [user]);
 
-  const [startTrial, { data: trial, error }] = useMutation(START_TRIAL, {
-    refetchQueries: [{ query: QUERY_ACCOUNT }],
-  });
+  const [startTrial, { data: trial, error: mutationError }] = useMutation(
+    START_TRIAL,
+    {
+      refetchQueries: [{ query: QUERY_ACCOUNT }],
+    }
+  );
 
   useEffect(() => {
-    if (trial) {
+    if (trial.billingStartTrial.success) {
       openModal(MODALS.success, { startedTrial: true });
+    } else if (mutationError) {
+      setError(mutationError);
+    } else if (trial.billingStartTrial.userFriendlyMessage) {
+      setError(trial.billingStartTrial.userFriendlyMessage);
     }
-  }, [trial]);
+  }, [trial, mutationError]);
 
   return (
     <Holder>
@@ -101,7 +109,7 @@ const StartTrial = ({ user, openModal }) => {
           error={
             error
               ? {
-                  message: "We can't start your trial, please contact support.",
+                  message: error.message,
                 }
               : null
           }
