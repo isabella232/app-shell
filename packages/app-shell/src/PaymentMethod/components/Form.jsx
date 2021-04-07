@@ -32,9 +32,10 @@ const Form = ({
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
   const [error, setError] = useState(null);
+  const [processing, setProcessing] = useState(false);
 
-  const { setupIntent } = useSetupIntent(user);
-  const { error:newPaymentMethodError, paymentMethod, processing, submit } = useCreatePaymentMethod(
+  const { setupIntent, error:setupIntentError } = useSetupIntent(user);
+  const { error:newPaymentMethodError, paymentMethod, submit } = useCreatePaymentMethod(
     setupIntent
   );
 
@@ -61,6 +62,9 @@ const Form = ({
   }, [userPaymentMethod]);
 
   useEffect(() => {
+    //re-enable form submit in case of errors
+    setProcessing(false);
+
     if(updatePaymentMethodError ){
       setError(updatePaymentMethodError)
     }
@@ -70,7 +74,10 @@ const Form = ({
     if(subscriptionPlanError){
       setError(subscriptionPlanError)
     }
-  }, [updatePaymentMethodError, newPaymentMethodError, subscriptionPlanError])
+    if(setupIntentError){
+      setError(setupIntentError)
+    }
+  }, [updatePaymentMethodError, newPaymentMethodError, subscriptionPlanError, setupIntentError])
 
   useEffect(() => {
     if (newPlan?.billingUpdateSubscriptionPlan.success) {
@@ -126,7 +133,10 @@ const Form = ({
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={submit}
+            onClick={(e) => {
+              setProcessing(true)
+              submit(e)
+            }}
             disabled={!submitEnabled || processing}
             label={getButtonLabel()}
             fullWidth

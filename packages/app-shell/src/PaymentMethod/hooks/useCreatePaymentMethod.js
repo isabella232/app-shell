@@ -30,6 +30,7 @@ function useCreatePaymentMethod(setupIntent) {
       .then(({ error }) => {
         if (error) {
           setProcessingError(error);
+          setProcessing(false);
           return;
         }
 
