@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.5] - 2021-04-12
+- Plan selector QA fixes:
+  - fix spacing and button copy in Start Trial modal
+  - tweaks to the trial banner display logic (show on trial, to admins, when there's not billing info)
+  - style tweaks to the plan selector cards and summary
+  - summary logic tweaks to summary note
+  - small copy fixes
 ## [2.7.4] - 2021-04-12
 - fix: Default null data to avoid failing during cache update
 ## [2.7.3] - 2021-04-07
