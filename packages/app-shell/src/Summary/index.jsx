@@ -96,7 +96,7 @@ const Summary = ({
         return null;
       }
       return (
-        <Text type="label" color="grayDark">
+        <Text type="label" color="grayDarker">
           {/* this ends up reading: # social channels x base price */}
           {`${selectedPlan.channelsQuantity} social channel${
             selectedPlan.channelsQuantity > 1 ? 's' : ''
@@ -111,7 +111,7 @@ const Summary = ({
       );
     } else {
       return (
-        <Text type="label" color="grayDark">
+        <Text type="label" color="grayDarker">
           Includes tax
         </Text>
       );
@@ -135,6 +135,26 @@ const Summary = ({
   const intervalInWords =
     selectedPlan.planInterval === 'month' ? '30 days' : 'year';
 
+  const getSummaryNote = () => {
+    if (isUpgradeIntent && trialInfo?.isActive) {
+      return (
+        <Text type="p">
+          You won't be charged until the end of your trial on{' '}
+          <span>{formattedTrialEndDate}</span>
+        </Text>
+      );
+    } else if (selectedPlan.planId === 'free' && subscriptionEndDate) {
+      return (
+        <Text type="p">
+          Changing to Free will occur at the end of your next billing cycle on{' '}
+          <span>{formattedSubscriptionEndDate}</span>
+        </Text>
+      );
+    } else if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
+      return <Text type="p">Upgrade your plan at anytime</Text>;
+    } else return <Text type="p">Cancel your plan at anytime</Text>;
+  };
+
   return (
     <SummaryContainer>
       <Body>
@@ -150,16 +170,7 @@ const Summary = ({
               ))}
             </DetailList>
             <Separator />
-            <SummaryNote>
-              {selectedPlan.planId === 'free' ? (
-                <Text type="p">
-                  Changing to Free will occur at the end of your next billing
-                  cycle on <span>{formattedSubscriptionEndDate}</span>
-                </Text>
-              ) : (
-                <Text type="p">Cancel your plan at anytime</Text>
-              )}
-            </SummaryNote>
+            <SummaryNote>{getSummaryNote()}</SummaryNote>
           </>
         ) : (
           <>
