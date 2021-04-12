@@ -98,8 +98,17 @@ const Form = ({
     return 'Update Payment Details';
   };
 
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if(submitEnabled || !processing) {
+      setProcessing(true)
+      submit()
+    }
+  }
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={handleSubmit}>
       <LeftSide>
         <Text type="h2">Billing Details</Text>
         <Error
@@ -133,10 +142,7 @@ const Form = ({
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={(e) => {
-              setProcessing(true)
-              submit(e)
-            }}
+            onClick={handleSubmit}
             disabled={!submitEnabled || processing}
             label={getButtonLabel()}
             fullWidth
