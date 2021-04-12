@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.8.3] - 2021-04-12
+- fix payment method modal submit on Enter key press
 ## [2.8.2] - 2021-04-12
 - Show all trial users the summary note that they won't be charged till the end of their trial
 - fix stripe copy in payment method
