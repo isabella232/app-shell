@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.7.4] - 2021-04-12
+- fix: Default null data to avoid failing during cache update
 ## [2.7.3] - 2021-04-07
 - fix: No error message displayed when the very first API call (createSetupIntent) errors
 - fix: Confirm Payment Details CTA remains disabled after an error
