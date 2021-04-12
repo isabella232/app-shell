@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.8.0] - 2021-04-12
+- moves the start trial logic to a hook and exposes it on the app-shell for 1 click trial starts
 ## [2.7.5] - 2021-04-12
 - Plan selector QA fixes:
   - fix spacing and button copy in Start Trial modal
