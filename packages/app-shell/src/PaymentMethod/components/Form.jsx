@@ -103,7 +103,7 @@ const Form = ({
 
     if(submitEnabled || !processing) {
       setProcessing(true)
-      submit(e)
+      submit()
     }
   }
 
