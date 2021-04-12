@@ -1,5 +1,8 @@
 # Changelog
 
+## [2.8.2] - 2021-04-12
+- Show all trial users the summary note that they won't be charged till the end of their trial
+- fix stripe copy in payment method
 ## [2.8.1] - 2021-04-12
 - Rename individual plan to essentials
 ## [2.8.0] - 2021-04-12
