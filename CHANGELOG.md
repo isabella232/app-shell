@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.8.1] - 2021-04-12
+- Rename individual plan to essentials
 ## [2.8.0] - 2021-04-12
 - moves the start trial logic to a hook and exposes it on the app-shell for 1 click trial starts
 ## [2.7.5] - 2021-04-12
