@@ -72,8 +72,7 @@ const AppShell = ({
   //in human: is OB, is admin, doesn't have payment details
   if (
     user.currentOrganization?.isOneBufferOrganization &&
-    user.currentOrganization?.canEdit &&
-    !user.currentOrganization?.billing.paymentDetails.hasPaymentDetails
+    user.currentOrganization?.canEdit
   ) {
     isActiveTrial =
       user.currentOrganization?.billing?.subscription?.trial?.isActive;
@@ -84,7 +83,12 @@ const AppShell = ({
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
       trialBannerString = `You are on the ${planName} trial with ${daysRemaining} ${
         daysRemaining === 1 ? 'day' : 'days'
-      } left. Add a billing method to keep access after your trial expires.`;
+      } left.`
+      if (!user.currentOrganization?.billing.paymentDetails.hasPaymentDetails) {
+        trialBannerString = `${trialBannerString}. Add a billing method to keep access after your trial expires.`;
+      } else {
+        trialBannerString = `${trialBannerString}. You are all setup. The first charge will occur at the end of your trial.`;
+      }
     }
   }
 
