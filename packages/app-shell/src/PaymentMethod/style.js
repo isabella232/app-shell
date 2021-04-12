@@ -148,6 +148,7 @@ export const RightSide = styled.div`
   flex-direction: column;
   height: 100%;
   position: relative;
+  width: 256px;
 
   h2 {
     margin-top: 0;
