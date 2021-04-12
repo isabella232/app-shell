@@ -45,7 +45,7 @@ describe('useSegmentTracking hooks', () => {
       useTrackPlanSelectorViewed({
         payload: {
           screenName: 'changeMyPlan',
-          currentPlan: 'individualMonth',
+          currentPlan: 'essentialsMonth',
           cta: 'upgradePlan',
         },
         user: {
@@ -62,7 +62,7 @@ describe('useSegmentTracking hooks', () => {
           organizationId: '123-test-org',
           ctaApp: 'analyze',
           ctaVersion: '1',
-          currentPlan: 'individualMonth',
+          currentPlan: 'essentialsMonth',
           screenName: 'changeMyPlan',
           ctaLocation: 'appShell',
           cta: 'analyze-upgradePlan-planSelectorViewed',

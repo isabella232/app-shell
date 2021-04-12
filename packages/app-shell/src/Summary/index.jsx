@@ -17,7 +17,6 @@ import {
   SummaryNote,
 } from './style';
 import { UserContext } from '../context/User';
-import { freePlan } from '../mocks/freePlan';
 
 const Summary = ({
   planOptions,
@@ -34,7 +33,7 @@ const Summary = ({
     : '';
 
   const isDowngrading = (currentPlanId, selectedPlanId) => {
-    if (currentPlanId === 'individual') {
+    if (currentPlanId === 'essentials') {
       return selectedPlanId === 'free' ? true : false;
     }
     if (currentPlanId === 'team') {

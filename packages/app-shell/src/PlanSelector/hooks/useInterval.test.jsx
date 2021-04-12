@@ -14,7 +14,7 @@ describe('useInterval', () => {
   });
   it("should set the initial interval to month if it's a free plan", () => {
     const planOptions = [
-      { planId: 'individual', planInterval: 'month', isCurrentPlan: false },
+      { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
       { planId: 'team', planInterval: 'month', isCurrentPlan: false },
     ];
 

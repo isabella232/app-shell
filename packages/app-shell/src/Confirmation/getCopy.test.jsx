@@ -2,7 +2,7 @@ import getCopy, { SUCCESS_CTA } from './getCopy';
 import { renderHook } from '@testing-library/react-hooks';
 
 describe('getCopy', () => {
-  it('should return label, description and buttonCopy for a team/individual plan change', () => {
+  it('should return label, description and buttonCopy for a team/essentials plan change', () => {
     const planName = 'Team';
 
     const { result } = renderHook(() => getCopy({ planName }));
