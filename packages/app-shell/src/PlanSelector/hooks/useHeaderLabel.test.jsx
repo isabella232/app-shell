@@ -10,7 +10,7 @@ describe('useHeaderLabel', () => {
   });
   it("should set the header label to 'Change my plan' when a user changes plan", () => {
     const isActiveTrial = false;
-    const planOptions = [{ planId: 'individual', isCurrentPlan: true }];
+    const planOptions = [{ planId: 'essentials', isCurrentPlan: true }];
     const { result } = renderHook(() =>
       useHeaderLabel(isActiveTrial, planOptions)
     );

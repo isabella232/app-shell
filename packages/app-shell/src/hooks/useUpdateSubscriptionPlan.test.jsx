@@ -33,7 +33,7 @@ describe('useUpdateSubscriptionPlan', () => {
     },
   };
   const plan = {
-    planId: 'individual',
+    planId: 'essentials',
     planInterval: 'year',
   };
   const userWithError = {

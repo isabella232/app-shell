@@ -161,7 +161,7 @@ describe('useButtonOptions', () => {
     };
 
     const newPlan = {
-      planId: 'individual',
+      planId: 'essentials',
       isCurrentPlan: false,
     };
 

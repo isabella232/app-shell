@@ -42,8 +42,8 @@ export default {
               isRecommended: false,
             },
             {
-              planId: 'individual',
-              planName: 'Individual',
+              planId: 'essentials',
+              planName: 'Essentials',
               planInterval: 'month',
               channelsQuantity: 1,
               description:
@@ -117,8 +117,8 @@ export default {
               isRecommended: false,
             },
             {
-              planId: 'individual',
-              planName: 'Individual',
+              planId: 'essentials',
+              planName: 'Essentials',
               planInterval: 'year',
               channelsQuantity: 1,
               description:

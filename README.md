@@ -52,7 +52,7 @@ const ModalTesting = () => (
 In the method above, you'll notice that openModal accepts an object as a second paramater. The cta property is used for tracking. Use it when possible to allow for accurate tracking in Segment
 
 #### Using intentions
-Some places in our apps, the user's intent is to upgrade from Trial or from Free. For that, we only want to show 2 plan options (Individual and Team) instead of 3. For these CTAs, pass in `isUpgradeIntent : true` as part of the second paramater in openModal:
+Some places in our apps, the user's intent is to upgrade from Trial or from Free. For that, we only want to show 2 plan options (Essentials and Team) instead of 3. For these CTAs, pass in `isUpgradeIntent : true` as part of the second paramater in openModal:
 ```
 <button onClick={
     () => {modal.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'upgradePlan', isUpgradeIntent: true })}
