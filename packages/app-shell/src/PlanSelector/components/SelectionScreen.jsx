@@ -51,9 +51,6 @@ const Card = ({
       <CardHeader>
         <Text type="h3">{planName}</Text>
       </CardHeader>
-      <RadioButton selectedPlan={selectedPlan === planId}>
-        <CheckmarkIcon size="large" />
-      </RadioButton>
 
       <Text type="p">{description}</Text>
 

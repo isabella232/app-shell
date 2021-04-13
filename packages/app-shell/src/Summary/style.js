@@ -155,7 +155,7 @@ export const SummaryNote = styled.div`
     margin: 0;
   }
 
-  span {
+  b {
     font-weight: 600;
     color: ${grayDarker};
   }
