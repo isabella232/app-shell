@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.8.5] - 2021-04-13
+- fix: Plan Selector → Design feedback tweaks
+- fix: Billing Screen → The summary box is looking pretty squashed here compared to the plan selector screen
+- fix: vertical centering of the modals
 ## [2.8.4] - 2021-04-13
 - fix borders in plan selector to prevent jumping
 - change images for confirmation modal
