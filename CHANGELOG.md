@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.8.4] - 2021-04-13
+- fix borders in plan selector to prevent jumping
+- change images for confirmation modal
+- start trial and confirmation modal copy changes
 ## [2.8.3] - 2021-04-12
 - fix payment method modal submit on Enter key press
 ## [2.8.2] - 2021-04-12
