@@ -99,7 +99,6 @@ export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  box-shadow: inset 1px 0px 0px #bdbdbd;
 `;
 
 //SELECTION SCREEN STYLES
