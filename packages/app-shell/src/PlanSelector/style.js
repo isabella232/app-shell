@@ -2,6 +2,7 @@ import {
   grayLighter,
   blue,
   grayDark,
+  grayDarker,
   white,
   grayLight,
   blueLighter,
@@ -24,7 +25,7 @@ export const LoadingContainer = styled(Container)`
 export const Left = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 28px 24px 24px;
+  padding: 24px 24px 0px 24px ;
   height: 100%;
   justify-content: center;
   box-sizing: border-box;
@@ -43,7 +44,7 @@ export const Right = styled.div`
 
   h2 {
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 19px;
   }
 `;
 
@@ -69,7 +70,7 @@ export const SwitchContainer = styled.div`
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `;
 
@@ -86,12 +87,11 @@ export const AbsoluteSavings = styled.span`
   line-height: 16px;
   letter-spacing: 0px;
   color: ${blue};
-  min-width: 112px;
   text-align: right;
+  width: 110px;
 `;
 
 export const ButtonContainer = styled.div`
-  background: #f5f5f5;
   border-bottom-right-radius: 8px;
   height: 88px;
   padding: 24px 20px;
@@ -99,14 +99,13 @@ export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  box-shadow: inset 1px 0px 0px #bdbdbd;
 `;
 
 //SELECTION SCREEN STYLES
 
 export const Wrapper = styled.div`
   border: ${(props) =>
-    props.selectedPlan ? 'none' : `1.5px solid ${grayLight}`};
+    props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${grayLight}`};
   box-shadow: ${(props) =>
     props.selectedPlan
       ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
@@ -121,6 +120,10 @@ export const Wrapper = styled.div`
   background: ${white};
   cursor: pointer;
   width: 285px;
+
+  transition-property: border-color;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
 
   p {
     font-weight: 500;
@@ -138,7 +141,7 @@ export const Wrapper = styled.div`
   &:focus,
   &:hover {
     border: ${(props) =>
-      props.selectedPlan ? 'none' : `1.5px solid ${blueLighter}`};
+      props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${blueLighter}`};
     outline: none;
   }
 `;
@@ -147,7 +150,7 @@ export const CardContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 8px;
   margin-top: 20px;
 
   div:last-child {
@@ -186,7 +189,7 @@ export const CurrentLabel = styled.label`
   font-size: 12px;
   line-height: 140%;
   letter-spacing: 0.4px;
-  color: ${grayDark};
+  color: ${grayDarker};
   text-transform: uppercase;
   margin-left: 12px;
   box-sizing: border-box;
@@ -277,6 +280,9 @@ export const BenefitList = styled.ul`
   list-style: none;
   padding: 0;
   margin-bottom: 32px;
+  p {
+    color: ${grayDark};
+  }
 `;
 
 export const Benefit = styled.li`
