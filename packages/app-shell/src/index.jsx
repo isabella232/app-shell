@@ -82,7 +82,7 @@ const AppShell = ({
         user.currentOrganization?.billing?.subscription?.plan?.name;
       const daysRemaining =
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
-      trialBannerString = `You are on the ${planName} trial with ${daysRemaining} ${
+      trialBannerString = `You are on the ${planName === 'Team' ? 'Essentials + Team Pack' : planName} trial with ${daysRemaining} ${
         daysRemaining === 1 ? 'day' : 'days'
       } left. Add a billing method to keep access after your trial expires.`;
     }
