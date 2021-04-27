@@ -1,5 +1,7 @@
 # Changelog
 
+## [2.9.0-beta] - 2021-04-27
+- add `avatar` field to account query
 ## [2.8.5] - 2021-04-13
 - fix: Plan Selector → Design feedback tweaks
 - fix: Billing Screen → The summary box is looking pretty squashed here compared to the plan selector screen
@@ -120,9 +122,9 @@
 
 ## [2.0.0] - 2021-02-04
 - Add global organization switcher
-- Breaking change: Added dependency with Apollo: now the AppShell needs to be 
-  rendered within 
-  an `ApolloProvider` compotent to be able to trigger its own queries and 
+- Breaking change: Added dependency with Apollo: now the AppShell needs to be
+  rendered within
+  an `ApolloProvider` compotent to be able to trigger its own queries and
   mutations.
 
 ## [1.1.1] - 2021-01-21
