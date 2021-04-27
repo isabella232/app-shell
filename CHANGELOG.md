@@ -1,4 +1,6 @@
 # Changelog
+## [2.8.6] - 2021-04-27
+- fix: update copy in Trial banner to read 'Essentials + Team Pack' instead of Team
 
 ## [2.8.5] - 2021-04-13
 - fix: Plan Selector → Design feedback tweaks
