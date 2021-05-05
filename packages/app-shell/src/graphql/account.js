@@ -18,6 +18,7 @@ export const QUERY_ACCOUNT = gql`
     account {
       id
       email
+      createdAt
       featureFlips
       isImpersonation
       currentOrganization {
@@ -39,12 +40,17 @@ export const QUERY_ACCOUNT = gql`
             billingRedirectUrl
             subscriptions {
               plan
+              interval
               product
+              trial {
+                isActive
+              }
             }
           }
           ... on OBBilling {
             canStartTrial
             subscription {
+              interval
               periodEnd
               trial {
                 isActive

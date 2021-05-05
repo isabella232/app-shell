@@ -1,3 +1,4 @@
+import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
 import { getProductPath } from '../NavBar';
 
 export const formatCTAString = (str) => {
@@ -36,7 +37,7 @@ export const useTrackPlanSelectorViewed = ({ payload, user }) => {
     cta: `${product}-${payload.cta}-planSelectorViewed`, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
   };
 
-  window.analytics && window.analytics.track('Plan Selector Viewed', eventData);
+  BufferTracker.planSelectorViewed(eventData);
 };
 
 export const useTrackPageViewed = ({ payload, user }) => {
@@ -76,5 +77,5 @@ export const useTrackPageViewed = ({ payload, user }) => {
     cta: `${product}-${payload.cta}-planSelector`, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
   };
 
-  window.analytics && window.analytics.track('Page Viewed', eventData);
+  BufferTracker.pageViewed(eventData);
 };

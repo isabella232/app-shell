@@ -1324,10 +1324,17 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bufferapp/ui@^5.63.2":
-  version "5.63.2"
-  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.63.2.tgz#77425ae2469c135f3b4be33fd917c2626f4ec8ca"
-  integrity sha512-IjqlJuLgXqQoy/Yi8dimn2bGPs0dyHuGUsPGpaIdnAYVSW3feqLWq448gcbuMpzXB+q7edODdn7BAlCnBohmDg==
+"@bufferapp/buffer-tracking-browser-ts@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@bufferapp/buffer-tracking-browser-ts/-/buffer-tracking-browser-ts-0.0.21.tgz#c887baf014da165b1595a89950be5b6ff6056dc9"
+  integrity sha512-XUR/oDSi281qbnRmwnAoROcIRPiM9S7Ns+vqJSsID47OVjICLtUCjlyr2b20nikDm17rzKTbXxZANjVG9F7I3g==
+  dependencies:
+    "@types/segment-analytics" "0.0.33"
+
+"@bufferapp/ui@^5.66.0":
+  version "5.66.0"
+  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.66.0.tgz#bcbcb0b530b1aaa77a7cdb03984e58e21c1cfaf8"
+  integrity sha512-ecYDOlXWE46zvALYttFPfmCszXHfAwl5UZ+boGZIB61po1vTDyP/Y8V2xk4mkwgZSFaimOOJ8D0dpqqeCg+ljQ==
   dependencies:
     "@reach/tooltip" "0.6.2"
     immutability-helper "^2.9.0"
@@ -3831,6 +3838,11 @@
   integrity sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
   dependencies:
     "@types/node" "*"
+
+"@types/segment-analytics@0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/segment-analytics/-/segment-analytics-0.0.33.tgz#7580723d3978993126636e2f293d5831c8e9585b"
+  integrity sha512-8OB3OhKGuIkItHeQxgQpzldyaL1dVKzJQF9ujfVLmO0MJyIhXZTiOIZtkSHF6jhptEQZqm8EyTuceIAR36OS3A==
 
 "@types/source-list-map@*":
   version "0.1.2"
