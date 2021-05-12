@@ -1,5 +1,49 @@
 # Changelog
+## [2.8.6] - 2021-04-27
+- fix: update copy in Trial banner to read 'Essentials + Team Pack' instead of Team
 
+## [2.8.5] - 2021-04-13
+- fix: Plan Selector → Design feedback tweaks
+- fix: Billing Screen → The summary box is looking pretty squashed here compared to the plan selector screen
+- fix: vertical centering of the modals
+## [2.8.4] - 2021-04-13
+- fix borders in plan selector to prevent jumping
+- change images for confirmation modal
+- start trial and confirmation modal copy changes
+## [2.8.3] - 2021-04-12
+- fix payment method modal submit on Enter key press
+## [2.8.2] - 2021-04-12
+- Show all trial users the summary note that they won't be charged till the end of their trial
+- fix stripe copy in payment method
+## [2.8.1] - 2021-04-12
+- Rename individual plan to essentials
+## [2.8.0] - 2021-04-12
+- moves the start trial logic to a hook and exposes it on the app-shell for 1 click trial starts
+## [2.7.5] - 2021-04-12
+- Plan selector QA fixes:
+  - fix spacing and button copy in Start Trial modal
+  - tweaks to the trial banner display logic (show on trial, to admins, when there's not billing info)
+  - style tweaks to the plan selector cards and summary
+  - summary logic tweaks to summary note
+  - small copy fixes
+## [2.7.4] - 2021-04-12
+- fix: Default null data to avoid failing during cache update
+## [2.7.3] - 2021-04-07
+- fix: No error message displayed when the very first API call (createSetupIntent) errors
+- fix: Confirm Payment Details CTA remains disabled after an error
+- fix: Uncaught TypeError: Cannot read property 'billingStartTrial' of undefined
+## [2.7.2] - 2021-04-07
+- Only redirects to login if account has unauthenticated error
+## [2.7.1] - 2021-04-07
+- Fetches the organization feature flips and MP subscriptions
+## [2.7.0] - 2021-04-06
+- Returns typed errors for billing mutations
+## [2.6.10] - 2021-04-06
+- Render plan selector when awaiting user action
+- Use camel case names for tracking CTAs
+- Extract app CTA from url
+## [2.6.9] - 2021-04-05
+- show trial banner only for OB users
 ## [2.6.8] - 2021-04-01
 - default to global Stripe Key
 ## [2.6.7] - 2021-04-01

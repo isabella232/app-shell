@@ -19,7 +19,7 @@ import Summary from '../../Summary';
 import useSetupIntent from '../hooks/useSetupIntent';
 import useCreatePaymentMethod from '../hooks/useCreatePaymentMethod';
 import useUpdateUserPaymentMethod from '../hooks/useUpdateUserPaymentMethod';
-import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
+import useUpdateSubscriptionPlan from '../../hooks/useUpdateSubscriptionPlan';
 
 const Form = ({
   user,
@@ -31,22 +31,24 @@ const Form = ({
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
+  const [error, setError] = useState(null);
+  const [processing, setProcessing] = useState(false);
 
-  const { setupIntent } = useSetupIntent(user);
-  const { error, paymentMethod, processing, submit } = useCreatePaymentMethod(
+  const { setupIntent, error:setupIntentError } = useSetupIntent(user);
+  const { error:newPaymentMethodError, paymentMethod, submit } = useCreatePaymentMethod(
     setupIntent
   );
 
-  const { data: userPaymentMethod } = useUpdateUserPaymentMethod({
+  const { userPaymentMethod, error:updatePaymentMethodError } = useUpdateUserPaymentMethod({
     user,
     paymentMethod,
   });
 
-  const { data: newPlan } = useUpdateSubscriptionPlan({
+  const { data: newPlan , error:subscriptionPlanError} = useUpdateSubscriptionPlan({
     user,
-    paymentMethod,
     plan,
     hasPaymentMethod,
+    alreadyProcessing: processing
   });
 
   useEffect(() => {
@@ -60,7 +62,25 @@ const Form = ({
   }, [userPaymentMethod]);
 
   useEffect(() => {
-    if (newPlan) {
+    //re-enable form submit in case of errors
+    setProcessing(false);
+
+    if(updatePaymentMethodError ){
+      setError(updatePaymentMethodError)
+    }
+    if(newPaymentMethodError){
+      setError(newPaymentMethodError)
+    }
+    if(subscriptionPlanError){
+      setError(subscriptionPlanError)
+    }
+    if(setupIntentError){
+      setError(setupIntentError)
+    }
+  }, [updatePaymentMethodError, newPaymentMethodError, subscriptionPlanError, setupIntentError])
+
+  useEffect(() => {
+    if (newPlan?.billingUpdateSubscriptionPlan.success) {
       openSuccess({ selectedPlan: plan });
     }
   }, [newPlan]);
@@ -78,8 +98,17 @@ const Form = ({
     return 'Update Payment Details';
   };
 
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    if(submitEnabled || !processing) {
+      setProcessing(true)
+      submit()
+    }
+  }
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={handleSubmit}>
       <LeftSide>
         <Text type="h2">Billing Details</Text>
         <Error
@@ -104,7 +133,7 @@ const Form = ({
             icon={<ArrowLeftIcon />}
           />
           <Text type="p">
-            <LockIcon size="medium" /> Payments are securely provided by Stripe
+            <LockIcon size="medium" /> Payments securely processed by Stripe
           </Text>
         </Footer>
       </LeftSide>
@@ -113,7 +142,7 @@ const Form = ({
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={submit}
+            onClick={handleSubmit}
             disabled={!submitEnabled || processing}
             label={getButtonLabel()}
             fullWidth

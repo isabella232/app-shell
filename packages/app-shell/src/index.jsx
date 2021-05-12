@@ -15,7 +15,7 @@ import {
 } from './style';
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
-import useModal  from './hooks/useModal';
+import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 
 /**
@@ -35,29 +35,58 @@ const AppShell = ({
   apolloClient,
   channels,
 }) => {
-  const graphqlConfig = apolloClient ? {
-    client: apolloClient
-  } : {}
-  const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig)
+  const graphqlConfig = apolloClient
+    ? {
+        client: apolloClient,
+      }
+    : {};
+  const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig);
 
-  const user = loading || !data ? {
-    name: '...',
-    email: '...',
-    products: [],
-    featureFlips: [],
-    organizations: [],
-    currentOrganization: {},
-    isImpersonation: false,
-    loading: true,
-  } : {
-    ...data.account,
-  };
+  const user =
+    loading || !data
+      ? {
+          name: '...',
+          email: '...',
+          products: [],
+          featureFlips: [],
+          organizations: [],
+          currentOrganization: {},
+          isImpersonation: false,
+          loading: true,
+        }
+      : {
+          ...data.account,
+        };
 
-  if (error?.networkError?.statusCode === 401) {
+  const networkErrors = error?.networkError?.result?.errors;
+  if (
+    networkErrors?.some((err) => err.extensions?.code === 'UNAUTHENTICATED')
+  ) {
     window.location.assign(getLogoutUrl(window.location.href));
   }
 
-  const modal = useModal()
+  const modal = useModal();
+
+  let isActiveTrial;
+  let trialBannerString;
+  //in human: is OB, is admin, doesn't have payment details
+  if (
+    user.currentOrganization?.isOneBufferOrganization &&
+    user.currentOrganization?.canEdit &&
+    !user.currentOrganization?.billing.paymentDetails.hasPaymentDetails
+  ) {
+    isActiveTrial =
+      user.currentOrganization?.billing?.subscription?.trial?.isActive;
+    if (isActiveTrial) {
+      const planName =
+        user.currentOrganization?.billing?.subscription?.plan?.name;
+      const daysRemaining =
+        user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
+      trialBannerString = `You are on the ${planName === 'Team' ? 'Essentials + Team Pack' : planName} trial with ${daysRemaining} ${
+        daysRemaining === 1 ? 'day' : 'days'
+      } left. Add a billing method to keep access after your trial expires.`;
+    }
+  }
 
   return (
     <AppShellStyled>
@@ -74,12 +103,33 @@ const AppShell = ({
             graphqlConfig={graphqlConfig}
             channels={channels}
           />
+          {isActiveTrial && (
+            <Banner
+              text={trialBannerString}
+              actionButton={{
+                label: "Let's do this",
+                action: () =>
+                  modal.openModal(MODALS.planSelector, {
+                    cta: 'Render Modal',
+                    isUpgradeIntent: true,
+                  }),
+              }}
+            />
+          )}
           {bannerOptions && <Banner {...bannerOptions} />}
           <Wrapper>
             {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
             <ContentWrapper>{content}</ContentWrapper>
           </Wrapper>
-          <Modal {...modal} />
+          <Modal
+            {...modal}
+            isAwaitingUserAction={
+              data
+                ? data.account.currentOrganization.billing.subscription?.trial
+                    ?.isAwaitingUserAction
+                : null
+            }
+          />
         </ModalContext.Provider>
       </UserContext.Provider>
     </AppShellStyled>
@@ -171,6 +221,6 @@ export default AppShell;
 
 export { UserContext, useUser } from './context/User';
 export { ModalContext } from './context/Modal';
-
+export { default as useStartTrial } from './hooks/useStartTrial';
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { MODALS } from './hooks/useModal';

@@ -24,27 +24,16 @@ jest.mock('@stripe/react-stripe-js', () => ({
 
 describe('useCreatePaymentMethod', () => {
   const setupIntent = 'fooSetupIntent';
-  const event = {
-    preventDefault: jest.fn(),
-  }
-
   beforeEach(() => {
       jest.clearAllMocks()
   })
 
   describe('submit', () => {
-    it('event preventDefault', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
-      act(() => {
-        result.current.submit(event)
-      })
-      await expect(event.preventDefault).toHaveBeenCalled()
-    })
 
     it('set processing to true', async () => {
       const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
       act(() => {
-        result.current.submit(event)
+        result.current.submit()
       })
       await expect(result.current.processing).toBeTruthy()
     })
@@ -54,7 +43,7 @@ describe('useCreatePaymentMethod', () => {
     it('call stripe.createPaymentMethod with card element', async () => {
       const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
       act(() => {
-        result.current.submit(event)
+        result.current.submit()
       })
       await expect(mockGetElement).toHaveBeenCalled()
       await expect(mockCreatePaymentMethod).toHaveBeenCalled()

@@ -8,10 +8,11 @@ import Summary from '../../Summary';
 import useSelectedPlan from '../hooks/useSelectedPlan';
 import useButtonOptions from '../hooks/useButtonOptions';
 import useHeaderLabel from '../hooks/useHeaderLabel';
-import useUpdateSubscriptionPlan from '../hooks/useUpdateSubscriptionPlan';
+import useUpdateSubscriptionPlan from '../../hooks/useUpdateSubscriptionPlan';
 import {
   useTrackPlanSelectorViewed,
   useTrackPageViewed,
+  formatCTAString,
 } from '../../hooks/useSegmentTracking';
 import {
   ButtonContainer,
@@ -26,6 +27,7 @@ import {
 } from '../style';
 import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../context/Modal';
+import { Error } from '../../PaymentMethod/style';
 
 export const PlanSelectorContainer = ({
   changePlanOptions,
@@ -44,9 +46,9 @@ export const PlanSelectorContainer = ({
     return changePlanOptions;
   };
 
-  const [planOptions, setPlanOptions] = useState(
-    filterPlanOptions(changePlanOptions)
-  );
+  const planOptions = filterPlanOptions(changePlanOptions);
+
+  const [error, setError] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { monthlyBilling, setBillingInterval } = useInterval(
@@ -60,10 +62,14 @@ export const PlanSelectorContainer = ({
   const {
     updateSubscriptionPlan: updatePlan,
     data,
-    error,
+    error: subscriptionError,
     processing,
-  } = useUpdateSubscriptionPlan({ user, selectedPlan });
-  const { label, action, updateButton } = useButtonOptions({
+  } = useUpdateSubscriptionPlan({
+    user,
+    plan: selectedPlan,
+    hasPaymentMethod: true,
+  });
+  const { label, action, updateButton, ctaButton } = useButtonOptions({
     selectedPlan,
     updatePlan,
     openPaymentMethod,
@@ -81,20 +87,22 @@ export const PlanSelectorContainer = ({
     const cta = modalData && modalData.cta ? modalData.cta : null;
     useTrackPlanSelectorViewed({
       payload: {
-        currentPlan: `${selectedPlan.planId}_${selectedPlan.planInterval}`,
+        currentPlan: formatCTAString(
+          `${selectedPlan.planId} ${selectedPlan.planInterval}`
+        ),
         screenName: headerLabel,
         cta,
-        ctaButton: cta,
+        ctaButton: ctaButton,
       },
       user,
     });
 
     useTrackPageViewed({
       payload: {
-        name: 'Plan selection',
-        title: 'Plan selector',
+        name: 'planSelection',
+        title: 'planSelector',
         cta,
-        ctaButton: cta,
+        ctaButton: ctaButton,
       },
       user,
     });
@@ -111,10 +119,13 @@ export const PlanSelectorContainer = ({
   }, [selectedPlan]);
 
   useEffect(() => {
-    if (data?.billingUpdateSubscriptionPlan) {
+    if (data?.billingUpdateSubscriptionPlan.success) {
       openSuccess({ selectedPlan });
     }
-  }, [data]);
+    if (subscriptionError) {
+      setError(subscriptionError);
+    }
+  }, [data, subscriptionError]);
 
   return (
     <Container>
@@ -142,6 +153,7 @@ export const PlanSelectorContainer = ({
             <Text>{selectedPlan.downgradedMessage}</Text>
           </DowngradeMessage>
         )}
+        {error && <Error error={error}>{error.message}</Error>}
         <SelectionScreen
           planOptions={planOptions}
           selectedPlan={selectedPlan}

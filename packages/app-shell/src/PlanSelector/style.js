@@ -1,9 +1,17 @@
-import { grayLighter, blue, grayDark, white } from '@bufferapp/ui/style/colors';
+import {
+  grayLighter,
+  blue,
+  grayDark,
+  grayDarker,
+  white,
+  grayLight,
+  blueLighter,
+} from '@bufferapp/ui/style/colors';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: 580px;
+  height: 610px;
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
@@ -17,7 +25,7 @@ export const LoadingContainer = styled(Container)`
 export const Left = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 28px 24px 24px;
+  padding: 24px 24px 0px 24px ;
   height: 100%;
   justify-content: center;
   box-sizing: border-box;
@@ -36,7 +44,7 @@ export const Right = styled.div`
 
   h2 {
     margin-top: 0;
-    margin-bottom: 0;
+    margin-bottom: 19px;
   }
 `;
 
@@ -45,7 +53,6 @@ export const PlanSelectorHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 
   h2 {
     margin-top: 20px;
@@ -63,7 +70,7 @@ export const SwitchContainer = styled.div`
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
-    margin-left: 4px;
+    margin-left: 8px;
   }
 `;
 
@@ -80,12 +87,11 @@ export const AbsoluteSavings = styled.span`
   line-height: 16px;
   letter-spacing: 0px;
   color: ${blue};
-  min-width: 100px;
   text-align: right;
+  width: 110px;
 `;
 
 export const ButtonContainer = styled.div`
-  background: #f5f5f5;
   border-bottom-right-radius: 8px;
   height: 88px;
   padding: 24px 20px;
@@ -93,16 +99,19 @@ export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  box-shadow: inset 1px 0px 0px #bdbdbd;
 `;
 
 //SELECTION SCREEN STYLES
 
 export const Wrapper = styled.div`
   border: ${(props) =>
-    props.selectedPlan ? `2px solid ${blue}` : '2px solid rgb(224, 224, 224)'};
+    props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${grayLight}`};
+  box-shadow: ${(props) =>
+    props.selectedPlan
+      ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
+      : `0px 4px 8px rgba(0, 0, 0, 0.04)`};
   border-radius: 3px;
-  height: 420px;
+  height: 450px;
   position: relative;
   padding: 21px;
   flex: 1 1 0px;
@@ -110,24 +119,29 @@ export const Wrapper = styled.div`
   box-sizing: border-box;
   background: ${white};
   cursor: pointer;
-  max-width: 250px;
+  width: 285px;
+
+  transition-property: border-color;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
 
   p {
     font-weight: 500;
     margin: 0;
   }
 
+  div + p {
+    max-width: 200px;
+  }
+
   h3 {
     margin: 0;
   }
 
-  &:focus {
-    border: 2px solid ${blue};
-    outline: none;
-  }
-
+  &:focus,
   &:hover {
-    border: 2px solid ${blue};
+    border: ${(props) =>
+      props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${blueLighter}`};
     outline: none;
   }
 `;
@@ -136,7 +150,8 @@ export const CardContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 8px;
+  margin-top: 20px;
 
   div:last-child {
     margin-right: 0;
@@ -153,6 +168,10 @@ export const CardHeader = styled.div`
 export const CardFooter = styled.div`
   position: absolute;
   bottom: 21px;
+
+  label {
+    font-weight: 700;
+  }
 `;
 
 export const CurrentLabel = styled.label`
@@ -170,7 +189,7 @@ export const CurrentLabel = styled.label`
   font-size: 12px;
   line-height: 140%;
   letter-spacing: 0.4px;
-  color: ${grayDark};
+  color: ${grayDarker};
   text-transform: uppercase;
   margin-left: 12px;
   box-sizing: border-box;
@@ -225,7 +244,7 @@ export const Price = styled.div`
 
   sup:first-child {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 100%;
   }
 
@@ -240,6 +259,7 @@ export const Price = styled.div`
     margin-left: 2px;
     margin-right: 2px;
     font-weight: 600;
+    font-size: 26px;
   }
 `;
 
@@ -260,6 +280,9 @@ export const BenefitList = styled.ul`
   list-style: none;
   padding: 0;
   margin-bottom: 32px;
+  p {
+    color: ${grayDark};
+  }
 `;
 
 export const Benefit = styled.li`

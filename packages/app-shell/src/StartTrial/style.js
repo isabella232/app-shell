@@ -7,7 +7,7 @@ import { StyledError } from '../PaymentMethod/style';
 export const Holder = styled.div`
   display: flex;
   width: 800px;
-  height: 376px;
+  height: 405px;
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
@@ -20,6 +20,11 @@ export const Holder = styled.div`
   h1 {
     color: ${black};
   }
+
+  h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 `;
 
 export const Content = styled.div`
@@ -29,12 +34,15 @@ export const Content = styled.div`
 
   p {
     margin-top: 0px;
+    margin-bottom: 0px;
     max-width: 282px;
   }
 
   ol {
     list-style: none;
     padding: 0;
+    margin-top: 16px;
+    margin-bottom: 16px;
 
     li {
       margin-bottom: 8px;
@@ -55,8 +63,7 @@ export const Content = styled.div`
 
 export const Ctas = styled.div`
   display: flex;
-    div:first-child {
-      margin-right: 8px;
-    }
+  div[type='secondary'] {
+    margin-right: 8px;
   }
 `;

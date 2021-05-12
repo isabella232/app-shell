@@ -12,8 +12,7 @@ function useCreatePaymentMethod(setupIntent) {
   const [processing, setProcessing] = useState(false);
   const [processingError, setProcessingError] = useState(null);
 
-  async function submit (event) {
-    event.preventDefault();
+  async function submit () {
     setProcessingError(null);
     setProcessing(true);
   };
@@ -30,6 +29,7 @@ function useCreatePaymentMethod(setupIntent) {
       .then(({ error }) => {
         if (error) {
           setProcessingError(error);
+          setProcessing(false);
           return;
         }
 

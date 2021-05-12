@@ -38,9 +38,14 @@ const UpgradeCTA = () => {
                         onClick={() => {
                           canStartTrial
                             ? openModal(MODALS.startTrial, {
-                                cta: 'Start a 14-day free trial',
+                                cta: 'startFreeTrial',
+                                ctaButton: 'startFreeTrial',
                               })
-                            : openModal(MODALS.planSelector, { cta: 'Ugrade', isUpgradeIntent: true });
+                            : openModal(MODALS.planSelector, {
+                                cta: 'ugradePlan',
+                                ctaButton: 'ugradePlan',
+                                isUpgradeIntent: true,
+                              });
                         }}
                         icon={<FlashIcon />}
                         label={
