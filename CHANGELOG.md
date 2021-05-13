@@ -1,4 +1,6 @@
 # Changelog
+## [2.9.0] - 2021-05-13
+- Add Segment tracking
 
 ## [2.8.7] - 2021-05-12
 
