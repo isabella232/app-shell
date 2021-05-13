@@ -40,7 +40,6 @@ export const QUERY_ACCOUNT = gql`
             billingRedirectUrl
             subscriptions {
               plan
-              interval
               product
               trial {
                 isActive
@@ -50,7 +49,6 @@ export const QUERY_ACCOUNT = gql`
           ... on OBBilling {
             canStartTrial
             subscription {
-              interval
               periodEnd
               trial {
                 isActive
