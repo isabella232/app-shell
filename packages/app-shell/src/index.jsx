@@ -17,6 +17,7 @@ import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
 import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
+import useUserTracker from './hooks/useUserTracker';
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
@@ -57,6 +58,7 @@ const AppShell = ({
       : {
           ...data.account,
         };
+  useUserTracker(user)
 
   const networkErrors = error?.networkError?.result?.errors;
   if (

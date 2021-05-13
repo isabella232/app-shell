@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/client'
 import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account';
+import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
 
 function useOrgSwitcher() {
   const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION);
@@ -27,6 +28,10 @@ function useOrgSwitcher() {
         organizationId,
       },
       update: (client) => updateCache(organizationId, client),
+    });
+
+    BufferTracker.organizationSwitched({
+      organizationId,
     });
 
     // Needed, as the onCompleted is not triggered when passed as an option in the mutate function.

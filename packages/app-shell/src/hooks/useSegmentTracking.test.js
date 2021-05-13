@@ -1,4 +1,12 @@
+import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
 import { useTrackPageViewed, useTrackPlanSelectorViewed } from './useSegmentTracking';
+
+jest.mock('@bufferapp/buffer-tracking-browser-ts', () => ({
+  BufferTracker: {
+    planSelectorViewed: jest.fn(),
+    pageViewed: jest.fn(),
+  },
+}))
 
 describe('useSegmentTracking hooks', () => {
   const oldWindowLocation = window.location;
@@ -12,6 +20,7 @@ describe('useSegmentTracking hooks', () => {
   });
 
   afterAll(() => {
+    jest.clearAllMocks();
     window.location = oldWindowLocation;
   });
 
@@ -38,9 +47,6 @@ describe('useSegmentTracking hooks', () => {
     });
 
     it('should track the plan selector viewed event', () => {
-      window.analytics = {
-        track: jest.fn(),
-      };
       window.location.origin = 'https://analyze.buffer.com';
       useTrackPlanSelectorViewed({
         payload: {
@@ -56,8 +62,7 @@ describe('useSegmentTracking hooks', () => {
         },
       });
 
-      expect(window.analytics.track).toHaveBeenCalledWith(
-        'Plan Selector Viewed',
+      expect(BufferTracker.planSelectorViewed).toHaveBeenCalledWith(
         {
           organizationId: '123-test-org',
           ctaApp: 'analyze',
@@ -96,9 +101,6 @@ describe('useSegmentTracking hooks', () => {
     });
 
     it('should track the Page Viewed event', () => {
-      window.analytics = {
-        track: jest.fn(),
-      };
       window.location.href = 'http://localhost/the-path?query=the-query';
       window.location.pathname = '/the-path';
       window.location.search = '?query=the-query';
@@ -118,8 +120,7 @@ describe('useSegmentTracking hooks', () => {
         },
       });
 
-      expect(window.analytics.track).toHaveBeenCalledWith(
-        'Page Viewed',
+      expect(BufferTracker.pageViewed).toHaveBeenCalledWith(
         {
           organizationId: '123-test-org',
           ctaApp: 'account',
@@ -138,7 +139,6 @@ describe('useSegmentTracking hooks', () => {
           channelId: null,
           channelServiceId: null,
           channelType: null,
-          
           platform: null,
           referrer: null,
         }
