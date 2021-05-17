@@ -10,6 +10,7 @@ import {
   isPayingAnalyzeOrganization,
   isPayingBufferOrganization,
   isPayingPublishOrganization,
+  isFreePlan,
   trialBillingCycle,
 } from './segmentTraitGetters';
 
@@ -80,6 +81,55 @@ describe('Segment Traits Getters', () => {
     });
   })
 
+  describe('isFreePlan', () => {
+    it('should not flag a MP user as free', () => {
+      expect(isFreePlan(MPUser)).toBeFalsy();
+    });
+
+    it('should not flag a MP user as free', () => {
+      expect(isFreePlan(OBUser)).toBeFalsy();
+    });
+
+    it('should flag a MP user', () => {
+      expect(isFreePlan({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "free", product: "publish", },
+            ]
+          },
+        },
+      })).toBeTruthy();
+    });
+
+    it('should flag a OB user', () => {
+      expect(isFreePlan({
+        currentOrganization: {
+          isOneBufferOrganization: true,
+          billing: {
+            subscription: {
+              plan: { id: "free" },
+            }
+          },
+        },
+      })).toBeTruthy();
+    });
+
+    it('should not flag a OB trialing user', () => {
+      expect(isFreePlan({
+        currentOrganization: {
+          isOneBufferOrganization: true,
+          billing: {
+            subscription: {
+              plan: { id: "free", trial: { isActive: true } },
+            }
+          },
+        },
+      })).toBeFalsy();
+    });
+  })
+
   describe('isPayingPublishOrganization', () => {
     it('should identify a Publish user', () => {
       expect(isPayingPublishOrganization(MPUser)).toBeTruthy();
@@ -99,12 +149,57 @@ describe('Segment Traits Getters', () => {
     });
 
     it('should not identify a trial user', () => {
-      expect(isPayingAnalyzeOrganization({
+      expect(isPayingPublishOrganization({
         currentOrganization: {
           isOneBufferOrganization: false,
           billing: {
             subscriptions: [
               { plan: "pro", product: "publish", trial: { isActive: true }, },
+            ]
+          },
+        },
+      })).toBeFalsy();
+    });
+
+    it('should not identify a free user', () => {
+      expect(isPayingPublishOrganization({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "free", product: "publish", trial: null, },
+            ]
+          },
+        },
+      })).toBeFalsy();
+    });
+  });
+
+  describe('isPayingAnalyzeOrganization', () => {
+    it('should identify a Analyze user', () => {
+      expect(isPayingAnalyzeOrganization(MPUser)).toBeTruthy();
+    });
+
+    it('should not identify a Publish only user', () => {
+      expect(isPayingAnalyzeOrganization({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "pro", product: "publish", },
+            ]
+          },
+        },
+      })).toBeFalsy();
+    });
+
+    it('should not identify a trial user', () => {
+      expect(isPayingAnalyzeOrganization({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "pro", product: "analyze", trial: { isActive: true }, },
             ]
           },
         },

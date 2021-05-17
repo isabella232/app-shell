@@ -15,6 +15,7 @@ export function identifyUser(user) {
         isPayingAnalyzeUser: traits.isPayingAnalyzeOrganization(user),
         isPayingBufferUser: traits.isPayingBufferOrganization(user),
         isPayingPublishUser: traits.isPayingPublishOrganization(user),
+        isFreePlan: traits.isFreePlan(user),
         organizationId: user.currentOrganization.id,
 
         isOnBufferTrial: traits.isOnBufferTrial(user),
@@ -80,7 +81,7 @@ function useUserTracker(user) {
   }, []);
 
   useEffect(() => {
-    if (window.analytics.initialized) {
+    if (window?.analytics?.initialized) {
       identifyUser(user);
       groupUser(user);
     }
