@@ -1,7 +1,11 @@
 # Changelog
+## [2.9.2] - 2021-05-17
+
+- add isFreePlan trait to identify
+
 ## [2.9.1] - 2021-05-13
 
-- fix accoutn query by removing the subscription interval field
+- fix account query by removing the subscription interval field
 
 ## [2.9.0] - 2021-05-13
 
