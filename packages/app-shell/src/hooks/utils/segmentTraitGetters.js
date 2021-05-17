@@ -8,20 +8,31 @@ export function isMultiProductCustomer({ currentOrganization }) {
   return false;
 }
 
-export function isPayingPublishOrganization({ currentOrganization }) {
+export function isFreePlan(user) {
+  const { currentOrganization } = user
+  if (currentOrganization?.billing?.subscriptions?.length > 0) {
+    return !!currentOrganization?.billing?.subscriptions?.find(
+      (sub) => sub.product === 'publish' && sub.plan === 'free'
+    )
+  }
+
+  return !isOnBufferTrial(user) && currentOrganization?.billing?.subscription?.plan.id === 'free'
+}
+
+export function isPayingPublishOrganization(user) {
+  const { currentOrganization } = user
   if (currentOrganization?.billing?.subscriptions?.length > 0) {
     return !!currentOrganization?.billing?.subscriptions
-      // TODO should also check if it's not a free user
-      .find(s => s.product === 'publish' && !s?.trial?.isActive)
+      .find(s => s.product === 'publish' && !s?.trial?.isActive && !isFreePlan(user))
   }
 
   return false;
 }
 
-export function isPayingAnalyzeOrganization({ currentOrganization }) {
+export function isPayingAnalyzeOrganization(user) {
+  const { currentOrganization } = user
   if (currentOrganization?.billing?.subscriptions?.length > 0) {
     return !!currentOrganization?.billing?.subscriptions
-      // TODO should also check if it's not a free user
       .find(s => s.product === 'analyze' && !s?.trial?.isActive)
   }
 
