@@ -42,6 +42,11 @@ const AppShell = ({
       }
     : {};
   const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig);
+  window.__userData = {
+    data,
+    loading,
+    error,
+  }
 
   const user =
     loading || !data

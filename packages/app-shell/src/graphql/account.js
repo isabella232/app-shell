@@ -41,9 +41,6 @@ export const QUERY_ACCOUNT = gql`
             subscriptions {
               plan
               product
-              trial {
-                isActive
-              }
             }
           }
           ... on OBBilling {
