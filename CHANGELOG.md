@@ -1,4 +1,8 @@
 # Changelog
+## [2.9.4] - 2021-05-17
+
+- fixes the subscription.trial, and subscription.interval fields
+
 ## [2.9.3] - 2021-05-17
 
 - remove the trial field from MPBilling, to patch the failing query
