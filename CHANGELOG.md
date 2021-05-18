@@ -1,4 +1,8 @@
 # Changelog
+## [2.9.3] - 2021-05-17
+
+- remove the trial field from MPBilling, to patch the failing query
+
 ## [2.9.2] - 2021-05-17
 
 - add isFreePlan trait to identify
