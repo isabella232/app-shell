@@ -39,13 +39,18 @@ export const QUERY_ACCOUNT = gql`
           ... on MPBilling {
             billingRedirectUrl
             subscriptions {
+              interval
               plan
               product
+              trial {
+                isActive
+              }
             }
           }
           ... on OBBilling {
             canStartTrial
             subscription {
+              interval
               periodEnd
               trial {
                 isActive
@@ -103,13 +108,18 @@ export const QUERY_ACCOUNT = gql`
           ... on MPBilling {
             billingRedirectUrl
             subscriptions {
+              interval
               plan
               product
+              trial {
+                isActive
+              }
             }
           }
           ... on OBBilling {
             canStartTrial
             subscription {
+              interval
               periodEnd
               trial {
                 isActive
