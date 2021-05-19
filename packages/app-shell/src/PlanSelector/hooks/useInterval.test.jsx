@@ -12,7 +12,7 @@ describe('useInterval', () => {
 
     expect(result.current.monthlyBilling).toBe(true);
   });
-  it("should set the initial interval to month if it's a free plan", () => {
+  it("should set the initial interval to year if it's a free plan", () => {
     const planOptions = [
       { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
       { planId: 'team', planInterval: 'month', isCurrentPlan: false },
@@ -22,7 +22,7 @@ describe('useInterval', () => {
 
     const { result } = renderHook(() => useInterval(planOptions, isFreePlan));
 
-    expect(result.current.monthlyBilling).toBe(true);
+    expect(result.current.monthlyBilling).toBeFalsy();
   });
   it('should change the current interval when updated', () => {
     const planOptions = [
