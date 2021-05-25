@@ -16,7 +16,8 @@ export function identifyUser(user) {
         isPayingBufferUser: traits.isPayingBufferOrganization(user),
         isPayingPublishUser: traits.isPayingPublishOrganization(user),
         isFreePlan: traits.isFreePlan(user),
-        organizationId: user.currentOrganization.id,
+        currentOrganizationId: user.currentOrganization.id,
+        organizationUserRole: traits.organizationUserRole(user),
 
         isOnBufferTrial: traits.isOnBufferTrial(user),
         currentBufferTrialPlan: traits.currentBufferTrialPlan(user),
