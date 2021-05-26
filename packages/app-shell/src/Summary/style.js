@@ -169,7 +169,8 @@ export const Title = styled.div`
     margin-top: 0;
     margin-bottom: 0;
     display: inline-block;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 14px;
   }
 `;
 

@@ -47,7 +47,7 @@ const Summary = ({
     }
   };
 
-  const getStatus = () => {
+  const getStatus = (fromPlanSelector) => {
     const [currentPlanId, currentPlanInterval] = currentPlanString.split('_');
     const [selectedPlanId, selectedPlanInterval] = selectedPlanString.split(
       '_'
@@ -59,7 +59,7 @@ const Summary = ({
       planStatus = `Currently on ${currentPlan.planName}`;
     } else {
       downgrade = isDowngrading(currentPlanId, selectedPlanId);
-      planStatus = `Changing to ${selectedPlan?.planName}`;
+      planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${selectedPlan?.planName}`;
     }
 
     if (isUpgradeIntent) {
@@ -138,9 +138,9 @@ const Summary = ({
       <Body>
         <Text type="h2">Summary</Text>
         <SummaryDetails>
-          {fromPlanSelector ? (
+          {
             <>
-              {getStatus()}
+              {getStatus(fromPlanSelector)}
               <DetailList>
                 {selectedPlan.summary.details.map((detail) => (
                   <Detail key={detail}>
@@ -151,30 +151,7 @@ const Summary = ({
               <Separator />
               <SummaryNote>{getSummaryNote()}</SummaryNote>
             </>
-          ) : (
-            <>
-              <DetailList>
-                <Detail noBulletPoint>
-                  <Checkmark />
-                  <Text type="p">Paying for {selectedPlan.planName}</Text>
-                </Detail>
-              </DetailList>
-              <Separator />
-              <SummaryNote>
-                {trialInfo?.isActive ? (
-                  <Text type="p">
-                    You won't be charged until the end of your trial on{' '}
-                    <b>{formattedTrialEndDate}</b>
-                  </Text>
-                ) : (
-                  <Text type="p">
-                    First payment will take place <span>today</span> and then{' '}
-                    <span>every {intervalInWords}</span>
-                  </Text>
-                )}
-              </SummaryNote>
-            </>
-          )}
+          }
         </SummaryDetails>
 
         <Bottom>
@@ -183,17 +160,6 @@ const Summary = ({
             <Text type="h2" as="p">
               {selectedPlan.totalPrice}
             </Text>
-            <sup
-              aria-label={
-                selectedPlan.summary.intervalUnit === 'mo'
-                  ? 'per month'
-                  : 'per year'
-              }
-            >
-              {selectedPlan.planId === 'free'
-                ? ''
-                : `/${selectedPlan.summary.intervalUnit}`}
-            </sup>
           </TotalPrice>
           {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
           {selectedPlan.planInterval === 'year' && (

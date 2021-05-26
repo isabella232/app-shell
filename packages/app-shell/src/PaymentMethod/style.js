@@ -48,7 +48,7 @@ export const Error = ({ isInline, error }) => (
 
 export const Form = styled.form`
   display: flex;
-  height: 415px;
+  height: 580px;
   width: 920px;
   box-sizing: border-box;
 
@@ -131,9 +131,15 @@ export const LeftSide = styled.div`
   width: 665px;
   flex-direction: column;
   ${Footer} {
+    margin-top: auto;
+
     button {
       color: ${blue};
       padding: 0px;
+    }
+
+    p {
+      margin: 0px;
     }
   }
 
@@ -156,7 +162,6 @@ export const RightSide = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  background: #f5f5f5;
   border-bottom-right-radius: 8px;
   height: 88px;
   padding: 24px 20px;
