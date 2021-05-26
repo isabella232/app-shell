@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: 610px;
+  height: ${({ downgradedMessage }) => downgradedMessage ? '660px' : '610px'};
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
