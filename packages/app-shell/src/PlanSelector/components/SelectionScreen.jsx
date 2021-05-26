@@ -1,7 +1,6 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
-import AddIcon from '@bufferapp/ui/Icon/Icons/Add';
 import {
   Wrapper,
   CardContainer,
@@ -9,10 +8,10 @@ import {
   CardFooter,
   CurrentLabel,
   Recommended,
-  RadioButton,
   Price,
   BenefitList,
   Benefit,
+  Check
 } from '../style';
 
 const ENTER_KEY = 13;
@@ -33,6 +32,7 @@ const Card = ({
   selectedPlan,
   recommended,
 }) => {
+  const isSelectedPlan = selectedPlan === planId;
   return (
     <Wrapper
       tabIndex="0"
@@ -44,34 +44,40 @@ const Card = ({
           updateSelectedPlan(e.currentTarget.id);
       }}
       id={`${planId}_${planInterval}`}
-      selectedPlan={selectedPlan === planId}
-      aria-label={selectedPlan === planId ? 'checked' : 'unchecked'}
+      isSelectedPlan={isSelectedPlan}
+      aria-label={isSelectedPlan ? 'checked' : 'unchecked'}
     >
       {recommended && <Recommended>Recommended</Recommended>}
       <CardHeader>
-        <Text type="h3">{planName}</Text>
+        <Text type="h2">{planName}</Text>
+        <Check isSelectedPlan={isSelectedPlan}><CheckmarkIcon size="medium" /></Check>
       </CardHeader>
 
       <Text type="p">{description}</Text>
 
       <CardFooter>
-        <BenefitList>
-          {highlights.map((benefit) => (
-            <Benefit key={benefit}>
-              {planId === 'team' ? <AddIcon /> : <CheckmarkIcon />}
-              <Text type="p">{benefit}</Text>
-            </Benefit>
-          ))}
-        </BenefitList>
         <Price>
           <sup>{currency}</sup>
           <Text type="h2" as="p">
             {basePrice}
           </Text>
         </Price>
-        <Text type="label" color="grayDarker">
+        <Text type="label" color="grayDark">
           {priceNote}
         </Text>
+        <BenefitList>
+          <Text type="h3">
+            Features
+          </Text>
+          <ul>
+            {highlights.map((benefit) => (
+              <Benefit key={benefit}>
+                <CheckmarkIcon />
+                <Text type="p">{benefit}</Text>
+              </Benefit>
+            ))}
+          </ul>
+        </BenefitList>
       </CardFooter>
     </Wrapper>
   );

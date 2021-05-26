@@ -105,9 +105,9 @@ export const ButtonContainer = styled.div`
 
 export const Wrapper = styled.div`
   border: ${(props) =>
-    props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${grayLight}`};
+    props.isSelectedPlan ? '1.5px solid transparent' : `1.5px solid ${grayLight}`};
   box-shadow: ${(props) =>
-    props.selectedPlan
+    props.isSelectedPlan
       ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
       : `0px 4px 8px rgba(0, 0, 0, 0.04)`};
   border-radius: 3px;
@@ -141,7 +141,7 @@ export const Wrapper = styled.div`
   &:focus,
   &:hover {
     border: ${(props) =>
-      props.selectedPlan ? '1.5px solid transparent' : `1.5px solid ${blueLighter}`};
+      props.isSelectedPlan ? '1.5px solid transparent' : `1.5px solid ${blueLighter}`};
     outline: none;
   }
 `;
@@ -163,14 +163,39 @@ export const CardHeader = styled.div`
   align-items: center;
   height: 30px;
   margin-bottom: 16px;
+
+  h2 {
+    font-size: 18px;
+    line-height: 28px;
+  }
+`;
+
+export const Check = styled.div`
+  margin-left: auto;
+  border: 1.5px solid ${({ isSelectedPlan }) => isSelectedPlan ? blue : grayLight};
+  background: ${({ isSelectedPlan }) => isSelectedPlan ? blue : white};
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    color: ${white};
+    width: 18px;
+    height: 18px;
+  }
 `;
 
 export const CardFooter = styled.div`
   position: absolute;
-  bottom: 21px;
+  top: 40%;
 
   label {
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 12px;
   }
 `;
 
@@ -276,25 +301,49 @@ export const TotalPrice = styled(Price)`
   }
 `;
 
-export const BenefitList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin-bottom: 32px;
-  p {
-    color: ${grayDark};
+export const BenefitList = styled.div`
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    p {
+      color: ${grayDark};
+    }
+  }
+
+
+  &::before {
+    content: '';
+    border-top: 1px solid ${grayLight};
+    width: 237px;
+    display: block;
+    margin-bottom: 8px;
+    margin-top: 16px;
   }
 `;
 
 export const Benefit = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
+
+  p {
+    font-size: 12px;
+    color: ${grayDark};
+  }
 
   svg {
     fill: ${blue};
     margin-right: 8px;
   }
 `;
+
 
 export const DowngradeMessage = styled.li`
   display: flex;
