@@ -12,8 +12,10 @@ import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
+import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 
 import {
+  blue,
   blueDarker,
   gray,
   grayDark,
@@ -31,6 +33,8 @@ import NavBarMenu from './components/NavBarMenu/NavBarMenu';
 import NavBarProducts from './components/NavBarProducts/NavBarProducts';
 import UpgradeCTA from './components/UpgradeCTA';
 import { useUser } from '../context/User';
+import { ModalContext } from '../context/Modal';
+import { MODALS } from '../hooks/useModal';
 import useOrgSwitcher from '../hooks/useOrgSwitcher';
 
 export function getProductPath(baseUrl) {
@@ -259,85 +263,126 @@ const NavBar = React.memo((props) => {
   };
   const organizations = buildOrgSwitcher(user, selectOrganization, channels);
 
+  let isFree = null;
+  let subscription = null;
+  let canStartTrial = false;
+  if (user.currentOrganization.billing) {
+    subscription = user?.currentOrganization?.billing?.subscription;
+    canStartTrial = user?.currentOrganization?.billing.canStartTrial;
+    isFree = subscription?.plan.id === 'free';
+  }
+
   return (
-    <NavBarStyled aria-label="Main menu">
-      <NavBarLeft>
-        {displaySkipLink && (
-          <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
-        )}
-        <BufferLogo />
-        <NavBarVerticalRule />
-        <NavBarProducts activeProduct={activeProduct} />
-      </NavBarLeft>
-      <NavBarRight>
-        <UpgradeCTA />
-        {helpMenuItems && (
-          <DropdownMenu
-            xPosition="right"
-            ariaLabel="Help Menu"
-            ariaLabelPopup="Help"
-            menubarItem={
-              <NavBarHelp>
-                <InfoIcon />
-                <NavBarHelpText>Help</NavBarHelpText>
-              </NavBarHelp>
-            }
-            items={helpMenuItems}
-          />
-        )}
-        <NavBarVerticalRule />
-        <DropdownMenu
-          xPosition="right"
-          ariaLabel="Account Menu"
-          ariaLabelPopup="Account"
-          horizontalOffset="-16px"
-          isImpersonation={user.isImpersonation}
-          menubarItem={
-            <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
-          }
-          items={[
-            ...organizations,
-            appendMenuItem(ignoreMenuItems, {
-              id: 'account',
-              title: 'Account',
-              icon: <PersonIcon color={gray} />,
-              hasDivider: organizations.length > 1,
-              onItemClick: () => {
-                window.location.assign(
-                  getAccountUrl(window.location.href, user)
-                );
-              },
-            }),
-            ...menuItems,
-            appendMenuItem(
-              ignoreMenuItems,
-              user.isImpersonation
-                ? {
-                    id: 'Stop Impersonation',
-                    title: 'Stop Impersonation',
-                    icon: <Cross color={gray} />,
-                    hasDivider: menuItems && menuItems.length > 0,
-                    onItemClick: () => {
-                      window.location.assign(getStopImpersonationUrl());
-                    },
-                  }
-                : {
-                    id: 'logout',
-                    title: 'Logout',
-                    icon: <ArrowLeft color={gray} />,
-                    hasDivider: menuItems && menuItems.length > 0,
-                    onItemClick: () => {
-                      if (typeof onLogout === 'function') onLogout();
-                      window.location.assign(
-                        getLogoutUrl(window.location.href)
-                      );
-                    },
-                  }
-            ),
-          ].filter((e) => e)}
-        />
-      </NavBarRight>
-    </NavBarStyled>
+    <ModalContext.Consumer>
+      {({ openModal }) => (
+        <NavBarStyled aria-label="Main menu">
+          <NavBarLeft>
+            {displaySkipLink && (
+              <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
+            )}
+            <BufferLogo />
+            <NavBarVerticalRule />
+            <NavBarProducts activeProduct={activeProduct} />
+          </NavBarLeft>
+          <NavBarRight>
+            <UpgradeCTA />
+            {helpMenuItems && (
+              <DropdownMenu
+                xPosition="right"
+                ariaLabel="Help Menu"
+                ariaLabelPopup="Help"
+                menubarItem={
+                  <NavBarHelp>
+                    <InfoIcon />
+                    <NavBarHelpText>Help</NavBarHelpText>
+                  </NavBarHelp>
+                }
+                items={helpMenuItems}
+              />
+            )}
+            <NavBarVerticalRule />
+            <DropdownMenu
+              xPosition="right"
+              ariaLabel="Account Menu"
+              ariaLabelPopup="Account"
+              horizontalOffset="-16px"
+              isImpersonation={user.isImpersonation}
+              menubarItem={
+                <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
+              }
+              items={[
+                ...organizations,
+                appendMenuItem(ignoreMenuItems, {
+                  id: 'account',
+                  title: 'Account',
+                  icon: <PersonIcon color={gray} />,
+                  hasDivider: organizations.length > 1,
+                  onItemClick: () => {
+                    window.location.assign(
+                      getAccountUrl(window.location.href, user)
+                    );
+                  },
+                }),
+                ...menuItems,
+                (isFree && !canStartTrial) ? {
+                  id: 'upgrade',
+                  title: 'Upgrade',
+                  icon: <FlashIcon color={blue} />,
+                  colors: { title: 'blue', iconHover: 'blueDaker' },
+                  hasDivider: true,
+                  onItemClick: () => {
+                    openModal(MODALS.planSelector, {
+                      cta: 'ugradePlan',
+                      ctaButton: 'ugradePlan',
+                      isUpgradeIntent: true,
+                    })
+                  },
+                } : null,
+                (isFree && canStartTrial) ? {
+                  id: 'start trial',
+                  title: 'Start a free trial',
+                  icon: <FlashIcon color={blue} />,
+                  colors: { title: 'blue', iconHover: 'blueDaker' },
+                  hasDivider: true,
+                  onItemClick: () => {
+                    openModal(MODALS.planSelector, {
+                      cta: 'startFreeTrial',
+                      ctaButton: 'startFreeTrial',
+                      isUpgradeIntent: true,
+                    })
+                  },
+                } : null,
+                appendMenuItem(
+                  ignoreMenuItems,
+                  user.isImpersonation
+                    ? {
+                        id: 'Stop Impersonation',
+                        title: 'Stop Impersonation',
+                        icon: <Cross color={gray} />,
+                        hasDivider: menuItems && menuItems.length > 0,
+                        onItemClick: () => {
+                          window.location.assign(getStopImpersonationUrl());
+                        },
+                      }
+                    : {
+                        id: 'logout',
+                        title: 'Logout',
+                        icon: <ArrowLeft color={gray} />,
+                        hasDivider: menuItems && menuItems.length > 0,
+                        onItemClick: () => {
+                          if (typeof onLogout === 'function') onLogout();
+                          window.location.assign(
+                            getLogoutUrl(window.location.href)
+                          );
+                        },
+                      }
+                ),
+              ].filter((e) => e)}
+            />
+          </NavBarRight>
+        </NavBarStyled>
+      )}
+    </ModalContext.Consumer>
   );
 });
 
