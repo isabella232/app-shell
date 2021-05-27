@@ -13,6 +13,7 @@ import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
+import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
 
 import {
   blue,
@@ -65,11 +66,15 @@ export function getAccountUrl(baseUrl = '', user) {
   )}&username=${encodeURI(user.name)}`;
 }
 
-export function getBillingUrl(baseUrl = '') {
-  const productPath = getProductPath(baseUrl);
-  return `https://account${
-    productPath.includes('local') ? '.local' : ''
-  }.buffer.com/billing`;
+export function getBillingUrl() {
+  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+  return `https://account.${envModifier}buffer.com/billing`;
+}
+
+export function getTeamManageUrl(user) {
+  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+  return `https://${envModifier}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
+  `
 }
 
 export const ORG_SWITCHER = 'org_switcher';
@@ -275,6 +280,7 @@ const NavBar = React.memo((props) => {
   let subscription = null;
   let canStartTrial = false;
   let isOneBufferOrganization = false;
+  const shouldDisplayInviteCTA =  user?.currentOrganization?.shouldDisplayInviteCTA;
   if (user.currentOrganization.billing) {
     subscription = user?.currentOrganization?.billing?.subscription;
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
@@ -333,6 +339,16 @@ const NavBar = React.memo((props) => {
                   },
                 }),
                 ...menuItems,
+                (shouldDisplayInviteCTA) ? {
+                  id: 'Invite Your Team',
+                  title: 'Invite Your Team',
+                  icon: <PeopleIcon color={blue} />,
+                  colors: { title: 'blue', iconHover: 'blueDaker' },
+                  hasDivider: true,
+                  onItemClick: () => {
+                    window.location = getTeamManageUrl(user)
+                  },
+                } : null,
                 (isFree && !isOneBufferOrganization) ? {
                   id: 'upgrade',
                   title: 'Upgrade',
@@ -340,7 +356,7 @@ const NavBar = React.memo((props) => {
                   colors: { title: 'blue', iconHover: 'blueDaker' },
                   hasDivider: true,
                   onItemClick: () => {
-                    window.location = getBillingUrl(window.location.href)
+                    window.location = getBillingUrl()
                   },
                 } : null,
                 (isFree && !canStartTrial && isOneBufferOrganization) ? {

@@ -28,6 +28,7 @@ export const QUERY_ACCOUNT = gql`
         role
         createdAt
         isOneBufferOrganization
+        shouldDisplayInviteCTA
         featureFlips
         billing {
           canAccessAnalytics
@@ -97,6 +98,7 @@ export const QUERY_ACCOUNT = gql`
         role
         createdAt
         isOneBufferOrganization
+        shouldDisplayInviteCTA
         featureFlips
         billing {
           canAccessAnalytics

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { blue } from '@bufferapp/ui/style/colors';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
+import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
 
 import { UserContext } from '../../context/User';
 import { ModalContext } from '../../context/Modal';
@@ -27,12 +28,26 @@ const UpgradeCTA = () => {
         const { currentOrganization } = user;
         const { isOneBufferOrganization } = currentOrganization;
         const isFree = isFreePlan(user);
-        const [hostname, envModifier] = window.location.hostname.match(/\w+(\.\w+)\.buffer\.com/) || [null, null]
+        const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
 
+
+        if (currentOrganization.shouldDisplayInviteCTA) {
+          return (
+            <Cta>
+              <Button
+                type="text"
+                onClick={() => {
+                  window.location = `https://${envModifier}buffer.com/manage/${currentOrganization.id}/team-members/invite`;
+                }}
+                icon={<PeopleIcon />}
+                label="Invite Your Team"
+              />
+            </Cta>
+          )
+        }
 
         if (currentOrganization.billing) {
           const { canStartTrial } = currentOrganization.billing;
-
           return (
             <ModalContext.Consumer>
               {({ openModal }) => (
@@ -56,7 +71,7 @@ const UpgradeCTA = () => {
                               });
                             }
                           } else {
-                            window.location = `https://account${envModifier}.buffer.com/billing`;
+                            window.location = `https://account.${envModifier}buffer.com/billing`;
                           }
                         }}
                         icon={<FlashIcon />}
