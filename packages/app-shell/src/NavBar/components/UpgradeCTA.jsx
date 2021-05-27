@@ -8,6 +8,7 @@ import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import { UserContext } from '../../context/User';
 import { ModalContext } from '../../context/Modal';
 import { MODALS } from '../../hooks/useModal';
+import { isFreePlan } from '../../hooks/utils/segmentTraitGetters'
 
 const Cta = styled.div`
   display: inline-flex;
@@ -22,10 +23,15 @@ const Cta = styled.div`
 const UpgradeCTA = () => {
   return (
     <UserContext.Consumer>
-      {({ currentOrganization }) => {
+      {(user) => {
+        const { currentOrganization } = user;
+        const { isOneBufferOrganization } = currentOrganization;
+        const isFree = isFreePlan(user);
+        const [hostname, envModifier] = window.location.hostname.match(/\w+(\.\w+)\.buffer\.com/) || [null, null]
+
+
         if (currentOrganization.billing) {
-          const { subscription, canStartTrial } = currentOrganization.billing;
-          const isFree = subscription?.plan.id === 'free';
+          const { canStartTrial } = currentOrganization.billing;
 
           return (
             <ModalContext.Consumer>
@@ -36,20 +42,26 @@ const UpgradeCTA = () => {
                       <Button
                         type="text"
                         onClick={() => {
-                          canStartTrial
-                            ? openModal(MODALS.startTrial, {
+                          if (isOneBufferOrganization) {
+                            if (canStartTrial) {
+                             openModal(MODALS.startTrial, {
                                 cta: 'startFreeTrial',
                                 ctaButton: 'startFreeTrial',
                               })
-                            : openModal(MODALS.planSelector, {
+                            } else {
+                              openModal(MODALS.planSelector, {
                                 cta: 'ugradePlan',
                                 ctaButton: 'ugradePlan',
                                 isUpgradeIntent: true,
                               });
+                            }
+                          } else {
+                            window.location = `https://account${envModifier}.buffer.com/billing`;
+                          }
                         }}
                         icon={<FlashIcon />}
                         label={
-                          canStartTrial
+                          (canStartTrial && isOneBufferOrganization)
                             ? 'Start a 14-day free trial'
                             : 'Upgrade'
                         }

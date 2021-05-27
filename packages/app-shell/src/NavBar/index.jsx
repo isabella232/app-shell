@@ -36,6 +36,7 @@ import { useUser } from '../context/User';
 import { ModalContext } from '../context/Modal';
 import { MODALS } from '../hooks/useModal';
 import useOrgSwitcher from '../hooks/useOrgSwitcher';
+import { isFreePlan } from '../hooks/utils/segmentTraitGetters'
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -62,6 +63,13 @@ export function getAccountUrl(baseUrl = '', user) {
   return `https://account.buffer.com?redirect=${getRedirectUrl(
     baseUrl
   )}&username=${encodeURI(user.name)}`;
+}
+
+export function getBillingUrl(baseUrl = '') {
+  const productPath = getProductPath(baseUrl);
+  return `https://account${
+    productPath.includes('local') ? '.local' : ''
+  }.buffer.com/billing`;
 }
 
 export const ORG_SWITCHER = 'org_switcher';
@@ -263,13 +271,14 @@ const NavBar = React.memo((props) => {
   };
   const organizations = buildOrgSwitcher(user, selectOrganization, channels);
 
-  let isFree = null;
+  let isFree = isFreePlan(user);
   let subscription = null;
   let canStartTrial = false;
+  let isOneBufferOrganization = false;
   if (user.currentOrganization.billing) {
     subscription = user?.currentOrganization?.billing?.subscription;
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
-    isFree = subscription?.plan.id === 'free';
+    isOneBufferOrganization = user?.currentOrganization?.isOneBufferOrganization;
   }
 
   return (
@@ -324,7 +333,17 @@ const NavBar = React.memo((props) => {
                   },
                 }),
                 ...menuItems,
-                (isFree && !canStartTrial) ? {
+                (isFree && !isOneBufferOrganization) ? {
+                  id: 'upgrade',
+                  title: 'Upgrade',
+                  icon: <FlashIcon color={blue} />,
+                  colors: { title: 'blue', iconHover: 'blueDaker' },
+                  hasDivider: true,
+                  onItemClick: () => {
+                    window.location = getBillingUrl(window.location.href)
+                  },
+                } : null,
+                (isFree && !canStartTrial && isOneBufferOrganization) ? {
                   id: 'upgrade',
                   title: 'Upgrade',
                   icon: <FlashIcon color={blue} />,
@@ -338,7 +357,7 @@ const NavBar = React.memo((props) => {
                     })
                   },
                 } : null,
-                (isFree && canStartTrial) ? {
+                (isFree && canStartTrial && isOneBufferOrganization) ? {
                   id: 'start trial',
                   title: 'Start a free trial',
                   icon: <FlashIcon color={blue} />,
