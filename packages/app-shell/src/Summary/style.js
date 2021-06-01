@@ -22,12 +22,13 @@ export const Body = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   position: relative;
-  height: calc(100% - 65px);
+  height: calc(100% - 40px);
 `;
 
 export const Bottom = styled.div`
   position: absolute;
-  bottom: 8px;
+  bottom: 16px;
+  margin-left: 8px;
 
   label {
     display: inline-block;

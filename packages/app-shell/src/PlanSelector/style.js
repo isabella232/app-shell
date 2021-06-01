@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: ${({ downgradedMessage }) => downgradedMessage ? '660px' : '610px'};
+  height: ${({ downgradedMessage }) => downgradedMessage ? '700px' : '650px'};
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
@@ -111,9 +111,9 @@ export const Wrapper = styled.div`
       ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
       : `0px 4px 8px rgba(0, 0, 0, 0.04)`};
   border-radius: 3px;
-  height: 450px;
+  height: 500px;
   position: relative;
-  padding: 21px;
+  padding: 32px 21px;
   flex: 1 1 0px;
   margin-right: 12px;
   box-sizing: border-box;
@@ -262,6 +262,7 @@ export const Price = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  margin-bottom: -4px;
 
   sup {
     font-family: 'Roboto', sans-serif;
@@ -284,7 +285,7 @@ export const Price = styled.div`
     margin-left: 2px;
     margin-right: 2px;
     font-weight: 600;
-    font-size: 26px;
+    font-size: 32px;
   }
 `;
 

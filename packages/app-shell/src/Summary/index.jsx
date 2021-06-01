@@ -77,30 +77,22 @@ const Summary = ({
   };
 
   const getPriceFooter = () => {
-    if (fromPlanSelector) {
-      if (selectedPlan.planId === 'free') {
-        return null;
-      }
-      return (
-        <PriceFooterWrapper>
-          <Text type="p" color="grayDark">
-            Billed {selectedPlan.planInterval}ly in USD
-          </Text>
-          <Text type="p" color="grayDark">
-            {/* this ends up reading: # social channels x base price */}
-            {`Included ${selectedPlan.channelsQuantity} social channel${
-              selectedPlan.channelsQuantity > 1 ? 's' : ''
-            }`}
-          </Text>
-        </PriceFooterWrapper>
-      );
-    } else {
-      return (
-        <Text type="label" color="grayDarker">
-          Includes tax
-        </Text>
-      );
+    if (selectedPlan.planId === 'free') {
+      return null;
     }
+    return (
+      <PriceFooterWrapper>
+        <Text type="p" color="grayDark">
+          Billed {selectedPlan.planInterval}ly in USD
+        </Text>
+        <Text type="p" color="grayDark">
+          {/* this ends up reading: # social channels x base price */}
+          {`Included ${selectedPlan.channelsQuantity} social channel${
+            selectedPlan.channelsQuantity > 1 ? 's' : ''
+          }`}
+        </Text>
+      </PriceFooterWrapper>
+    );
   };
 
   const dateOptions = {

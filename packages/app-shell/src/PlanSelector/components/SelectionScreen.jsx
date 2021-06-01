@@ -30,7 +30,6 @@ const Card = ({
   isCurrentPlan,
   updateSelectedPlan,
   selectedPlan,
-  recommended,
 }) => {
   const isSelectedPlan = selectedPlan === planId;
   return (
@@ -47,7 +46,6 @@ const Card = ({
       isSelectedPlan={isSelectedPlan}
       aria-label={isSelectedPlan ? 'checked' : 'unchecked'}
     >
-      {recommended && <Recommended>Recommended</Recommended>}
       <CardHeader>
         <Text type="h2">{planName}</Text>
         <Check isSelectedPlan={isSelectedPlan}><CheckmarkIcon size="medium" /></Check>
@@ -106,7 +104,7 @@ export const SelectionScreen = ({
             key={`${option.planId}_${option.planInterval}`}
             updateSelectedPlan={updateSelectedPlan}
             selectedPlan={selectedPlan.planId}
-            recommended={option.isRecommended}
+            recommended={false}
           />
         ))}
     </CardContainer>

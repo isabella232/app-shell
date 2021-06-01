@@ -127,7 +127,7 @@ export const DoubleFields = styled.div`
 export const LeftSide = styled.div`
   box-sizing: border-box;
   display: flex;
-  padding: 24px;
+  padding: 36px 24px 24px 24px;
   width: 665px;
   flex-direction: column;
   ${Footer} {
