@@ -154,10 +154,10 @@ const Summary = ({
             </Text>
           </TotalPrice>
           {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
-          {selectedPlan.planInterval === 'year' && (
+          {selectedPlan.planInterval === 'year' && selectedPlan.planId !== 'free' && (
             <DiscountReminder>
               <Coupon />
-              <p>20% discount</p>
+              <p>{selectedPlan.discountPercentage}% discount</p>
             </DiscountReminder>
           )}
         </Bottom>
