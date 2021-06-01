@@ -1,6 +1,7 @@
 import React from 'react';
 import Summary from './index';
 import response from '../mocks/mock';
+import { UserContext } from '../context/User';
 
 export default {
   title: 'Summary',
@@ -9,7 +10,9 @@ export default {
 
 const Template = (args) => (
   <div style={{ height: '550px' }}>
-    <Summary {...args} />
+    <UserContext.Provider value={response.data.account}>
+      <Summary {...args} />
+    </UserContext.Provider>
   </div>
 );
 

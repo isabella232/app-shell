@@ -176,10 +176,10 @@ const SummaryProvider = ({
       {(user) => {
         return (
           <Summary
-            planOptions={user.currentOrganization.billing.changePlanOptions}
-            trialInfo={user.currentOrganization.billing.subscription?.trial}
+            planOptions={user?.currentOrganization?.billing?.changePlanOptions}
+            trialInfo={user?.currentOrganization?.billing?.subscription?.trial}
             subscriptionEndDate={
-              user.currentOrganization.billing.subscription.periodEnd
+              user?.currentOrganization?.billing?.subscription?.periodEnd
             }
             selectedPlan={selectedPlan}
             fromPlanSelector={fromPlanSelector}

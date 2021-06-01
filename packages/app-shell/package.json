@@ -55,6 +55,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
+    "storybook-addon-apollo-client": "^4.0.8",
     "styled-components": "^5.2.0"
   },
   "peerDependencies": {
