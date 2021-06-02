@@ -87,7 +87,7 @@ const Summary = ({
         </Text>
         <Text type="p" color="grayDark">
           {/* this ends up reading: # social channels x base price */}
-          {`Included ${selectedPlan.channelsQuantity} social channel${
+          {`Includes ${selectedPlan.channelsQuantity} social channel${
             selectedPlan.channelsQuantity > 1 ? 's' : ''
           }`}
         </Text>
