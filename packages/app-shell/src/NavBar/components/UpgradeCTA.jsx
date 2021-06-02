@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { blue } from '@bufferapp/ui/style/colors';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
+import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
 
 import { UserContext } from '../../context/User';
 import { ModalContext } from '../../context/Modal';
 import { MODALS } from '../../hooks/useModal';
+import { isFreePlan } from '../../hooks/utils/segmentTraitGetters'
 
 const Cta = styled.div`
   display: inline-flex;
@@ -22,11 +24,30 @@ const Cta = styled.div`
 const UpgradeCTA = () => {
   return (
     <UserContext.Consumer>
-      {({ currentOrganization }) => {
-        if (currentOrganization.billing) {
-          const { subscription, canStartTrial } = currentOrganization.billing;
-          const isFree = subscription?.plan.id === 'free';
+      {(user) => {
+        const { currentOrganization } = user;
+        const { isOneBufferOrganization } = currentOrganization;
+        const isFree = isFreePlan(user);
+        const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
 
+
+        if (currentOrganization.shouldDisplayInviteCTA) {
+          return (
+            <Cta>
+              <Button
+                type="text"
+                onClick={() => {
+                  window.location = `https://${envModifier}buffer.com/manage/${currentOrganization.id}/team-members/invite`;
+                }}
+                icon={<PeopleIcon />}
+                label="Invite Your Team"
+              />
+            </Cta>
+          )
+        }
+
+        if (currentOrganization.billing) {
+          const { canStartTrial } = currentOrganization.billing;
           return (
             <ModalContext.Consumer>
               {({ openModal }) => (
@@ -36,20 +57,26 @@ const UpgradeCTA = () => {
                       <Button
                         type="text"
                         onClick={() => {
-                          canStartTrial
-                            ? openModal(MODALS.startTrial, {
+                          if (isOneBufferOrganization) {
+                            if (canStartTrial) {
+                             openModal(MODALS.startTrial, {
                                 cta: 'startFreeTrial',
                                 ctaButton: 'startFreeTrial',
                               })
-                            : openModal(MODALS.planSelector, {
+                            } else {
+                              openModal(MODALS.planSelector, {
                                 cta: 'ugradePlan',
                                 ctaButton: 'ugradePlan',
                                 isUpgradeIntent: true,
                               });
+                            }
+                          } else {
+                            window.location = `https://account.${envModifier}buffer.com/billing`;
+                          }
                         }}
                         icon={<FlashIcon />}
                         label={
-                          canStartTrial
+                          (canStartTrial && isOneBufferOrganization)
                             ? 'Start a 14-day free trial'
                             : 'Upgrade'
                         }

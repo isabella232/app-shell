@@ -12,7 +12,7 @@ const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: 376px;
+  height: ${({ planId }) => planId === 'team' ? '446px' : '376px'};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
@@ -36,11 +36,16 @@ const ScreenContainer = styled.div`
     margin-top: 0px;
     max-width: 282px;
   }
+
+  p:last-child {
+    font-style: italic;
+  }
 `;
 
 const ButtonContainer = styled.div`
   width: fit-content;
   margin-top: 32px;
+  margin-bottom: 32px;
 `;
 
 const Screen = ({
@@ -50,7 +55,7 @@ const Screen = ({
   closeModal,
 }) => {
   const planName = selectedPlan ? selectedPlan.planName : null;
-  const { label, description, buttonCopy, imageUrl } = getCopy({
+  const { label, description, buttonCopy, imageUrl, footer } = getCopy({
     planName,
     onlyUpdatedCardDetails,
     startedTrial,
@@ -72,7 +77,7 @@ const Screen = ({
   }, []);
 
   return (
-    <ScreenContainer imageUrl={imageUrl}>
+    <ScreenContainer planId={selectedPlan.planId} imageUrl={imageUrl}>
       <Text type="h1">{label}</Text>
       <Text type="p">{description}</Text>
       <ButtonContainer>
@@ -84,6 +89,7 @@ const Screen = ({
           label={buttonCopy}
         />
       </ButtonContainer>
+      {footer && footer}
     </ScreenContainer>
   );
 };

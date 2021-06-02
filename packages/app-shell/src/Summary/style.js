@@ -1,4 +1,4 @@
-import { blue, grayDark, grayDarker } from '@bufferapp/ui/style/colors';
+import { blue, grayDark, grayDarker, grayLight } from '@bufferapp/ui/style/colors';
 import styled, { css } from 'styled-components';
 
 export const SummaryContainer = styled.div`
@@ -11,18 +11,24 @@ export const SummaryContainer = styled.div`
   padding: 70px 0 24px;
   box-sizing: border-box;
   position: relative;
+
+  h2 {
+    margin-left: 8px;
+    margin-bottom: 16px;
+  }
 `;
 
 export const Body = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   position: relative;
-  height: calc(100% - 65px);
+  height: calc(100% - 40px);
 `;
 
 export const Bottom = styled.div`
   position: absolute;
-  bottom: 8px;
+  bottom: 16px;
+  margin-left: 8px;
 
   label {
     display: inline-block;
@@ -34,58 +40,37 @@ export const Bottom = styled.div`
 export const DetailList = styled.ul`
   list-style: none;
   padding: 0;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin: 0;
 
   p {
     margin-top: 0;
     margin-bottom: 0;
     display: inline-block;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;
 
 export const Detail = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-
-  svg {
-    fill: ${blue};
-    height: 14px;
-    width: 14px;
-    margin-right: 6px;
-    margin-left: -3px;
-  }
-
-  ${(props) =>
-    !props.noBulletPoint &&
-    css`
-      :before {
-        content: '';
-        height: 4px;
-        width: 4px;
-        border-radius: 50%;
-        border: 2px solid ${blue};
-        display: inline-block;
-        margin-right: 8px;
-        box-sizing: content-box;
-      }
-    `}
+  margin-bottom: 6px;
 `;
+
 
 export const DiscountReminder = styled.div`
   display: flex;
+  margin-top: 4px;
+
   p {
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: 16px;
     letter-spacing: 0px;
     color: ${blue};
-    margin-top: 0;
     margin-bottom: 0;
+    margin-top: 0;
   }
   svg {
     fill: ${blue};
@@ -158,5 +143,43 @@ export const SummaryNote = styled.div`
   b {
     font-weight: 600;
     color: ${grayDarker};
+  }
+`;
+
+export const SummaryDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: #FFFFFF;
+  border: 1px solid ${grayLight};
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 20px 16px;
+
+  ${Detail}, p {
+    font-size: 12px;
+  }
+
+`;
+
+export const Title = styled.div`
+  margin-bottom: 16px;
+
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 14px;
+  }
+`;
+
+export const PriceFooterWrapper = styled.div`
+  p {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-size: 12px;
+    font-weight: 500;
   }
 `;

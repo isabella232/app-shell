@@ -128,7 +128,7 @@ export const PlanSelectorContainer = ({
   }, [data, subscriptionError]);
 
   return (
-    <Container>
+    <Container downgradedMessage={selectedPlan?.downgradedMessage}>
       <Left>
         <PlanSelectorHeader>
           <Text type="h2">{headerLabel}</Text>

@@ -162,3 +162,6 @@ export function currentBufferTrialPlan(user) {
   return bufferPlan(user)
 }
 
+export function organizationUserRole({ currentOrganization }) {
+  return currentOrganization?.role || null
+}

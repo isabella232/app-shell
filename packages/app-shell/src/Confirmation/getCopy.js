@@ -1,3 +1,7 @@
+import React from 'react';
+import Text from '@bufferapp/ui/Text';
+import Link from '@bufferapp/ui/Link';
+
 export const SUCCESS_CTA = "Great, Let's Go!";
 const getCopy = ({ planName, startedTrial }) => {
   if (startedTrial) {
@@ -24,6 +28,7 @@ const getCopy = ({ planName, startedTrial }) => {
       description: `Your details have gone through successfully. Start using your ${planName} plan features.`,
       buttonCopy: SUCCESS_CTA,
       imageUrl: 'https://buffer-ui.s3.amazonaws.com/illustration-celebrate.png',
+      footer: (<Text type='p'>You can always access your invoices and billing information <Link href='https://account.buffer.com/billing'>here</Link>.</Text>)
     };
   }
 

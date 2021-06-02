@@ -9,8 +9,9 @@ describe('useUserTracker hooks', () => {
     id: 'fooBar',
     isImpersonation: false,
     currentOrganization: {
-      name: 'fooOrgaName',
       id: 'fooOrg',
+      name: 'fooOrgaName',
+      role: 'admin',
       isOneBufferOrganization: false,
       billing: {
         subscriptions: [
@@ -26,6 +27,7 @@ describe('useUserTracker hooks', () => {
     currentOrganization: {
       id: 'fooOrg',
       name: 'fooOrgaName',
+      role: 'admin',
       isOneBufferOrganization: true,
       billing: {
         subscription: {
@@ -78,7 +80,8 @@ describe('useUserTracker hooks', () => {
           isPayingAnalyzeUser: true,
           isPayingBufferUser: false,
           isPayingPublishUser: true,
-          organizationId: MPUser.currentOrganization.id,
+          currentOrganizationId: MPUser.currentOrganization.id,
+          organizationUserRole: 'admin',
         }))
     });
 
@@ -93,7 +96,8 @@ describe('useUserTracker hooks', () => {
           isOnBufferTrial: false,
           isOnPublishTrial: false,
           isOneBufferEnabled: true,
-          organizationId: OBUser.currentOrganization.id,
+          currentOrganizationId: OBUser.currentOrganization.id,
+          organizationUserRole: 'admin',
         }))
     });
   })

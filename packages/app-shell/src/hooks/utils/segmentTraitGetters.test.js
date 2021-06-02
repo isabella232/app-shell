@@ -12,6 +12,7 @@ import {
   isPayingPublishOrganization,
   isFreePlan,
   trialBillingCycle,
+  organizationUserRole,
 } from './segmentTraitGetters';
 
 describe('Segment Traits Getters', () => {
@@ -22,6 +23,7 @@ describe('Segment Traits Getters', () => {
     currentOrganization: {
       name: 'fooOrgaName',
       id: 'fooOrg',
+      role: 'admin',
       isOneBufferOrganization: false,
       billing: {
         subscriptions: [
@@ -37,6 +39,7 @@ describe('Segment Traits Getters', () => {
     currentOrganization: {
       id: 'fooOrg',
       name: 'fooOrgaName',
+      role: 'member',
       isOneBufferOrganization: true,
       billing: {
         subscription: {
@@ -500,4 +503,20 @@ describe('Segment Traits Getters', () => {
       expect(billingCycle(OBUser)).toEqual('month')
     });
   });
+
+  describe('organizationUserRole', () => {
+    it('should get the role for MP user', () => {
+      expect(organizationUserRole(MPUser)).toBe('admin');
+    });
+
+    it('should get the role for OB user', () => {
+      expect(organizationUserRole(OBUser)).toBe('member');
+    });
+
+    it('should return null if missing role', () => {
+      expect(organizationUserRole({
+        currentOrganization: {}
+      })).toBeNull();
+    });
+  })
 })
