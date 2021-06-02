@@ -1,4 +1,13 @@
 # Changelog
+## [2.10.0] - 2021-06-02
+
+- default plan selector to annual pricing when upgrading
+- Remove the "You will be charged after trial" message from the plan selector
+- Plan selector tweaks, depends on bufferapp/core-authentication-service#1008
+- Optimize UX for Invoice access in the Plan Selector
+- Persistent CTAs in top nav for OB/MP
+- Add Invite your Team CTA to Appshell
+
 ## [2.9.4] - 2021-05-17
 
 - fixes the subscription.trial, and subscription.interval fields
