@@ -1,4 +1,8 @@
 # Changelog
+## [2.10.1] - 2021-06-03
+
+- fix start trial menu CTA it now opens the start trial modal
+
 ## [2.10.0] - 2021-06-02
 
 - default plan selector to annual pricing when upgrading
