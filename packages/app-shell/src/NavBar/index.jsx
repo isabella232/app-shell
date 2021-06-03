@@ -380,7 +380,7 @@ const NavBar = React.memo((props) => {
                   colors: { title: 'blue', iconHover: 'blueDaker' },
                   hasDivider: true,
                   onItemClick: () => {
-                    openModal(MODALS.planSelector, {
+                    openModal(MODALS.startTrial, {
                       cta: 'startFreeTrial',
                       ctaButton: 'startFreeTrial',
                       isUpgradeIntent: true,
