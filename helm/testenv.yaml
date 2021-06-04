@@ -1,0 +1,36 @@
+name: appshell-test
+namespace: buffer
+
+# Pipeline config
+chart: buffercharts/buffer-service
+chartVersion: "1.2.0"
+cdEnabled: true
+cdBranchEnabled: true
+dockerfile: Dockerfile
+deploymentUrl: appshell.buffer.com
+channel: eng-deploys
+clusterName: kubeeast
+
+# Service config
+track: stable
+latencySensitive: true
+service:
+  enabled: true
+  externalPort: 80
+  internalPort: 3000
+ingress:
+  enabled: true
+  path: /
+  annotations:
+    kubernetes.io/ingress.class: nginx
+image:
+  repository: bufferapp/app-shell
+resources:
+  limits:
+    memory: 32Mi
+  requests:
+    cpu: 30m
+    memory: 16Mi
+replicaCount: 1
+healthcheck:
+  enabled: false
