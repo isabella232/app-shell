@@ -1,4 +1,8 @@
 # Changelog
+## [2.10.2] - 2021-06-07
+
+- fix Pubish upgrade CTAs
+
 ## [2.10.1] - 2021-06-03
 
 - fix start trial menu CTA it now opens the start trial modal
