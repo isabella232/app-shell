@@ -68,12 +68,12 @@ export function getAccountUrl(baseUrl = '', user) {
 
 export function getBillingUrl() {
   const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
-  return `https://account.${envModifier}buffer.com/billing`;
+  return `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
 }
 
 export function getTeamManageUrl(user) {
   const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
-  return `https://${envModifier}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
+  return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
   `
 }
 

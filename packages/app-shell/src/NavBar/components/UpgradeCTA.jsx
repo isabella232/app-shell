@@ -37,7 +37,7 @@ const UpgradeCTA = () => {
               <Button
                 type="text"
                 onClick={() => {
-                  window.location = `https://${envModifier}buffer.com/manage/${currentOrganization.id}/team-members/invite`;
+                  window.location = `https://${envModifier ? envModifier : ''}buffer.com/manage/${currentOrganization.id}/team-members/invite`;
                 }}
                 icon={<PeopleIcon />}
                 label="Invite Your Team"
@@ -71,7 +71,7 @@ const UpgradeCTA = () => {
                               });
                             }
                           } else {
-                            window.location = `https://account.${envModifier}buffer.com/billing`;
+                            window.location = `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
                           }
                         }}
                         icon={<FlashIcon />}
