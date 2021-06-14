@@ -1,6 +1,9 @@
 import React from 'react';
-import AppShell, { useOrgSwitcher, useUser, ModalContext, MODALS } from '@bufferapp/app-shell';
+import exposeAppShell from '@bufferapp/app-shell';
 
+window.appShell = exposeAppShell();
+
+const { AppShell, useOrgSwitcher, useUser, ModalContext, MODALS } = window.appShell;
 const AnotherComponentRenderingUserData = () => {
   const user = useUser();
   const switchOrganization = useOrgSwitcher()

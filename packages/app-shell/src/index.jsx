@@ -6,6 +6,13 @@ import { ApolloClient, useQuery } from '@apollo/client';
 import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
 import Modal from './Modal/index';
+import { UserContext, useUser } from './context/User';
+import { ModalContext } from './context/Modal';
+import useModal, { MODALS } from './hooks/useModal';
+import { QUERY_ACCOUNT } from './graphql/account';
+import useUserTracker from './hooks/useUserTracker';
+import useStartTrial from './hooks/useStartTrial';
+import useOrgSwitcher from './hooks/useOrgSwitcher';
 
 import {
   AppShellStyled,
@@ -13,16 +20,11 @@ import {
   SidebarWrapper,
   Wrapper,
 } from './style';
-import { UserContext } from './context/User';
-import { ModalContext } from './context/Modal';
-import useModal, { MODALS } from './hooks/useModal';
-import { QUERY_ACCOUNT } from './graphql/account';
-import useUserTracker from './hooks/useUserTracker';
 
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
  */
-const AppShell = ({
+export const AppShell = ({
   activeProduct,
   helpMenuItems,
   sidebar,
@@ -224,10 +226,19 @@ AppShell.defaultProps = {
   channels: [],
 };
 
-export default AppShell;
-
 export { UserContext, useUser } from './context/User';
 export { ModalContext } from './context/Modal';
 export { default as useStartTrial } from './hooks/useStartTrial';
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { MODALS } from './hooks/useModal';
+
+export default () => ({
+  AppShell,
+  UserContext,
+  useUser,
+  ModalContext,
+  useStartTrial,
+  useOrgSwitcher,
+  MODALS,
+});
+
