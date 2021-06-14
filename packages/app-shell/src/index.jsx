@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/client';
+import { ApolloClient, useQuery } from '@apollo/client';
 
 import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
@@ -198,7 +198,7 @@ AppShell.propTypes = {
     ).isRequired,
   }),
   onOrganizationSelected: PropTypes.func,
-  apolloClient: PropTypes.instanceOf('ApolloClient'),
+  apolloClient: PropTypes.instanceOf(ApolloClient),
   channels: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

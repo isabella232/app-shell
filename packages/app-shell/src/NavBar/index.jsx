@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { ApolloClient } from '@apollo/client';
 
 import Cross from '@bufferapp/ui/Icon/Icons/Cross';
 import InfoIcon from '@bufferapp/ui/Icon/Icons/Info';
@@ -454,7 +455,7 @@ NavBar.propTypes = {
   menuItems: PropTypes.array,
   ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
   graphqlConfig: PropTypes.shape({
-    client: PropTypes.instanceOf('ApolloClient'),
+    client: PropTypes.instanceOf(ApolloClient),
   }),
   channels: PropTypes.arrayOf(
     PropTypes.shape({
