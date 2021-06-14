@@ -1,4 +1,8 @@
 # Changelog
+
+## [2.10.3] - 2021-06-14
+- Fix `apolloClient` propType
+
 ## [2.10.2] - 2021-06-07
 
 - fix Pubish upgrade CTAs
