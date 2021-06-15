@@ -1,8 +1,28 @@
 {
-  "presets": ["@babel/preset-react", "@babel/preset-env"],
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 3,
+        "targets": "> 0.25%, not dead"
+      }
+    ]
+  ],
   "env": {
     "test": {
-      "plugins": ["@babel/plugin-transform-runtime"]
+      "plugins": [
+        ["@babel/plugin-transform-runtime",
+          {
+            "absoluteRuntime": false,
+            "corejs": false,
+            "helpers": true,
+            "regenerator": true,
+            "useESModules": false
+          }
+        ]
+      ]
     }
   }
 }

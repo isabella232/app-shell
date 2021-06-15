@@ -2,6 +2,25 @@
 # yarn lockfile v1
 
 
+"@apollo/client@3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.3.4.tgz#fded078222fcd9272d6e3501c7d1d76adb61da79"
+  integrity sha512-PnbkSa2gcFD6Qakn2eJCJ1RMYdCzEIlRlaHZGnUNbH+7AKOYwjDVtSVCC03nDtWeS9yWiJ15A8xGMreMKAboQQ==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.0.0"
+    "@types/zen-observable" "^0.8.0"
+    "@wry/context" "^0.5.2"
+    "@wry/equality" "^0.3.0"
+    fast-json-stable-stringify "^2.0.0"
+    graphql-tag "^2.11.0"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.13.1"
+    prop-types "^15.7.2"
+    symbol-observable "^2.0.0"
+    ts-invariant "^0.6.0"
+    tslib "^1.10.0"
+    zen-observable "^0.8.14"
+
 "@apollo/client@>=2.0.0":
   version "3.3.19"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.3.19.tgz#f1172dc9b9d7eae04c8940b047fd3b452ef92d2c"
@@ -4912,7 +4931,7 @@ apollo-link-http-common@^0.2.16:
 
 apollo-link-http@^1.5.17:
   version "1.5.17"
-  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.17.tgz"
+  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.17.tgz#499e9f1711bf694497f02c51af12d82de5d8d8ba"
   integrity sha512-uWcqAotbwDEU/9+Dm9e1/clO7hTB2kQ/94JYcGouBVLjoKmTeJTUPQKcJGpPwUjZcSqgYicbFqQSoJIW0yrFvg==
   dependencies:
     apollo-link "^1.2.14"
@@ -13037,6 +13056,13 @@ opn@^5.5.0:
   integrity sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA==
   dependencies:
     is-wsl "^1.1.0"
+
+optimism@^0.13.1:
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/optimism/-/optimism-0.13.2.tgz#002a438b69652bfe8f8754a4493ed35c2e9d9821"
+  integrity sha512-kJkpDUEs/Rp8HsAYYlDzyvQHlT6YZa95P+2GGNR8p/VvsIkt6NilAk7oeTvMRKCq7BeclB7+bmdIexog2859GQ==
+  dependencies:
+    "@wry/context" "^0.5.2"
 
 optimism@^0.14.0:
   version "0.14.0"

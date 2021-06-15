@@ -5,10 +5,6 @@ const AnotherComponentRenderingUserData = () => {
   const user = useUser();
   const switchOrganization = useOrgSwitcher()
 
-  if (!window.appShell) {
-    return null
-  }
-
   return (
     <>
       <h2>You are {user.email} with id {user.id} and you have the following feature flips</h2>
@@ -25,9 +21,6 @@ const AnotherComponentRenderingUserData = () => {
 
 const ModalTesting = () => {
   const { ModalContext, MODALS } = window.appShell;
-  if (!window.appShell) {
-    return null
-  }
 
   return (<ModalContext.Consumer>
     {modal => (
@@ -40,15 +33,9 @@ const ModalTesting = () => {
 }
 
 const App = () => {
-
-  if (!window.appShell) {
-    return null
-  }
-
-  const { AppShell } = window.appShell;
-
   return (
     <div className="App">
+      Foo
     </div>
   );
 }

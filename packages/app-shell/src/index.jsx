@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ApolloClient, useQuery } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
+import { createHttpLink } from 'apollo-link-http'
 import ReactDOM from 'react-dom';
 
 import NavBar, { getLogoutUrl } from './NavBar';
@@ -17,7 +18,6 @@ import useOrgSwitcher from './hooks/useOrgSwitcher';
 
 import {
   AppShellStyled,
-  ContentWrapper,
   SidebarWrapper,
   Wrapper,
 } from './style';
@@ -30,7 +30,6 @@ export const AppShell = ({
   activeProduct,
   helpMenuItems,
   sidebar,
-  content,
   bannerOptions,
   onLogout,
   displaySkipLink,
@@ -100,50 +99,47 @@ export const AppShell = ({
   }
 
   return (
-    <AppShellStyled>
-      <UserContext.Provider value={user}>
-        <ModalContext.Provider value={modal}>
-          <NavBar
-            activeProduct={activeProduct}
-            helpMenuItems={helpMenuItems}
-            menuItems={menuItems}
-            ignoreMenuItems={ignoreMenuItems}
-            onLogout={onLogout}
-            displaySkipLink={displaySkipLink}
-            onOrganizationSelected={onOrganizationSelected}
-            graphqlConfig={graphqlConfig}
-            channels={channels}
+    <UserContext.Provider value={user}>
+      <ModalContext.Provider value={modal}>
+        <NavBar
+          activeProduct={activeProduct}
+          helpMenuItems={helpMenuItems}
+          menuItems={menuItems}
+          ignoreMenuItems={ignoreMenuItems}
+          onLogout={onLogout}
+          displaySkipLink={displaySkipLink}
+          onOrganizationSelected={onOrganizationSelected}
+          graphqlConfig={graphqlConfig}
+          channels={channels}
+        />
+        {isActiveTrial && (
+          <Banner
+            text={trialBannerString}
+            actionButton={{
+              label: "Let's do this",
+              action: () =>
+                modal.openModal(MODALS.planSelector, {
+                  cta: 'Render Modal',
+                  isUpgradeIntent: true,
+                }),
+            }}
           />
-          {isActiveTrial && (
-            <Banner
-              text={trialBannerString}
-              actionButton={{
-                label: "Let's do this",
-                action: () =>
-                  modal.openModal(MODALS.planSelector, {
-                    cta: 'Render Modal',
-                    isUpgradeIntent: true,
-                  }),
-              }}
-            />
-          )}
-          {bannerOptions && <Banner {...bannerOptions} />}
-          <Wrapper>
-            {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-            <ContentWrapper>{content}</ContentWrapper>
-          </Wrapper>
-          <Modal
-            {...modal}
-            isAwaitingUserAction={
-              data
-                ? data.account.currentOrganization.billing.subscription?.trial
-                    ?.isAwaitingUserAction
-                : null
-            }
-          />
-        </ModalContext.Provider>
-      </UserContext.Provider>
-    </AppShellStyled>
+        )}
+        {bannerOptions && <Banner {...bannerOptions} />}
+        <Wrapper>
+          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+        </Wrapper>
+        <Modal
+          {...modal}
+          isAwaitingUserAction={
+            data
+              ? data.account.currentOrganization.billing.subscription?.trial
+                  ?.isAwaitingUserAction
+              : null
+          }
+        />
+      </ModalContext.Provider>
+    </UserContext.Provider>
   );
 };
 
@@ -167,9 +163,6 @@ AppShell.propTypes = {
 
   /** (Optional) Your sidebar component. */
   sidebar: PropTypes.node,
-
-  /** Your content component. */
-  content: PropTypes.node.isRequired,
 
   /** (Optional) Content of banner displayed below the navbar */
   bannerOptions: PropTypes.shape({
@@ -235,7 +228,21 @@ export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { MODALS } from './hooks/useModal';
 
 export default () => {
-  console.log('running')
-  ReactDOM.render(<AppShell />, document.getElementById('appShell'));
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: createHttpLink({
+      uri: 'https://graph.local.buffer.com',
+      credentials: 'include',
+    }),
+  });
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <AppShell />
+      </ApolloProvider>
+    </React.StrictMode>,
+    document.getElementById('appShell')
+  );
 }
 
