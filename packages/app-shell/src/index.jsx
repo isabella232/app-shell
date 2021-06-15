@@ -21,6 +21,7 @@ import {
   Wrapper,
 } from './style';
 
+
 /**
  * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
  */

@@ -1,3 +1,4 @@
 node_modules
 coverage
 packages/app-shell/lib
+packages/app-shell/dist

@@ -1,12 +1,13 @@
-import React from 'react';
-import exposeAppShell from '@bufferapp/app-shell';
+import React, { useEffect, useState } from 'react';
 
-window.appShell = exposeAppShell();
-
-const { AppShell, useOrgSwitcher, useUser, ModalContext, MODALS } = window.appShell;
 const AnotherComponentRenderingUserData = () => {
+  const { useUser, useOrgSwitcher } = window.appShell;
   const user = useUser();
   const switchOrganization = useOrgSwitcher()
+
+  if (!window.appShell) {
+    return null
+  }
 
   return (
     <>
@@ -22,29 +23,43 @@ const AnotherComponentRenderingUserData = () => {
   );
 }
 
-const ModalTesting = () => (<ModalContext.Consumer>
+const ModalTesting = () => {
+  const { ModalContext, MODALS } = window.appShell;
+  if (!window.appShell) {
+    return null
+  }
+
+  return (<ModalContext.Consumer>
     {modal => (
       <>
         <h2>Render Modal</h2>
         <button onClick={() => {modal.openModal(MODALS.planSelector, { cta: 'renderModal', ctaButton: 'renderModal', isUpgradeIntent: false })}}>Render Modal</button>
       </>
     )}
-</ModalContext.Consumer>)
+  </ModalContext.Consumer>)
+}
 
-const App = () => (
-  <div className="App">
+const App = () => {
+
+  if (!window.appShell) {
+    return null
+  }
+
+  const { AppShell } = window.appShell;
+
+  return (
+    <div className="App">
     <AppShell
       activeProduct={"publish"}
       onOrganizationSelected={console.info}
       content={
         <>
-          <AnotherComponentRenderingUserData/>
-          <ModalTesting/>
         </>
       }
     >
     </AppShell>
-  </div>
-);
+    </div>
+  );
+}
 
 export default App;
