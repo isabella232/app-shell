@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const AnotherComponentRenderingUserData = () => {
   const { useUser, useOrgSwitcher } = window.appShell;
@@ -49,15 +49,6 @@ const App = () => {
 
   return (
     <div className="App">
-    <AppShell
-      activeProduct={"publish"}
-      onOrganizationSelected={console.info}
-      content={
-        <>
-        </>
-      }
-    >
-    </AppShell>
     </div>
   );
 }

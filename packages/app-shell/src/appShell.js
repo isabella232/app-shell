@@ -1,4 +1,4 @@
+import React from 'react';
 import exposeAppShell from './index';
-console.log('running');
 
-window.appShell = exposeAppShell()
+exposeAppShell()

@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ApolloClient, useQuery } from '@apollo/client';
+import ReactDOM from 'react-dom';
 
 import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
@@ -233,13 +234,8 @@ export { default as useStartTrial } from './hooks/useStartTrial';
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { MODALS } from './hooks/useModal';
 
-export default () => ({
-  AppShell,
-  UserContext,
-  useUser,
-  ModalContext,
-  useStartTrial,
-  useOrgSwitcher,
-  MODALS,
-});
+export default () => {
+  console.log('running')
+  ReactDOM.render(<AppShell />, document.getElementById('appShell'));
+}
 
