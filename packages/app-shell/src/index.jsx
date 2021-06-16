@@ -9,7 +9,7 @@ import Banner from './Banner';
 import Modal from './Modal/index';
 import { UserContext, useUser } from './context/User';
 import { ModalContext } from './context/Modal';
-import useModal, { MODALS, MODAL_EVENT } from './hooks/useModal';
+import useModal, { MODALS, ACTIONS as MODAL_ACTIONS, EVENT_KEY as MODAL_EVENT_KEY } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 import useUserTracker from './hooks/useUserTracker';
 import useStartTrial from './hooks/useStartTrial';
@@ -238,12 +238,8 @@ export default () => {
   window.appshell = {
     modal: {
       MODALS,
-      openModal(modal, data) {
-        const event = new CustomEvent(MODAL_EVENT, {
-          detail: { modal, data }
-        })
-        window.dispatchEvent(event)
-      }
+      actions: MODAL_ACTIONS,
+      eventKey: MODAL_EVENT_KEY,
     }
   }
 

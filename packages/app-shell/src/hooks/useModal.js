@@ -7,7 +7,16 @@ export const MODALS = {
   startTrial: 'startTrial',
 }
 
-export const MODAL_EVENT = 'appshell__modal_event'
+export const EVENT_KEY = 'appshell__modal_event'
+
+export const ACTIONS = {
+  openModal(modalKey, modalData = null){
+    const event = new CustomEvent(EVENT_KEY, {
+      detail: { modal: modalKey, data: modalData }
+    })
+    window.dispatchEvent(event)
+  }
+}
 
 function useModal() {
   const [modal, setModal] = useState(null)
@@ -22,13 +31,6 @@ function useModal() {
     }
   }, [])
 
-  useEffect(() => {
-    window.addEventListener(MODAL_EVENT, (e) => {
-      const { modal:key, data } = e.detail
-      openModal(key, data)
-    })
-  })
-
   const openModal = useCallback((modalKey, modalData = null) => {
     const matchingModal = Object.keys(MODALS).find(k => k === modalKey)
     if (matchingModal) {
@@ -41,7 +43,18 @@ function useModal() {
     }
   }, [])
 
-  return { data, modal, openModal }
+  useEffect(() => {
+    window.addEventListener(EVENT_KEY, (e) => {
+      const { modal:modalKey, data:modalData } = e.detail
+      openModal(modalKey, modalData)
+    })
+  })
+
+  return {
+    data,
+    modal,
+    openModal,
+  }
 }
 
 export default useModal
