@@ -26,8 +26,6 @@ ingress:
 image:
   repository: bufferapp/app-shell
 resources:
-  limits:
-    memory: 32Mi
   requests:
     cpu: 30m
     memory: 16Mi
