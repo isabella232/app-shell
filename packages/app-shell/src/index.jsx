@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider, ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
 import { createHttpLink } from 'apollo-link-http'
@@ -10,7 +10,7 @@ import Banner from './Banner';
 import Modal from './Modal/index';
 import { UserContext, useUser } from './context/User';
 import { ModalContext } from './context/Modal';
-import useModal, { MODALS } from './hooks/useModal';
+import useModal, { MODALS, MODAL_EVENT } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 import useUserTracker from './hooks/useUserTracker';
 import useStartTrial from './hooks/useStartTrial';
@@ -235,6 +235,18 @@ export default () => {
       credentials: 'include',
     }),
   });
+
+  window.appshell = {
+    modal: {
+      MODALS,
+      openModal(modal, data) {
+        const event = new CustomEvent(MODAL_EVENT, {
+          detail: { modal, data }
+        })
+        window.dispatchEvent(event)
+      }
+    }
+  }
 
   ReactDOM.render(
     <React.StrictMode>
