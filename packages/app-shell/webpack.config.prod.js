@@ -6,17 +6,9 @@ const mode = 'development';
 
 const merged = merge(common, {
   mode,
-  devServer: {
-    contentBase: './dist',
-    compress: true,
-    disableHostCheck: true,
-    https: true,
-    host: '0.0.0.0',
-    port: '8085',
-  },
   plugins: [
     new webpack.DefinePlugin({
-      GRAPHQL_API: JSON.stringify('https://graph.local.buffer.com'),
+      GRAPHQL_API: JSON.stringify('https://graph.buffer.com'),
     }),
   ],
 });

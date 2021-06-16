@@ -230,8 +230,7 @@ export default () => {
   const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      //uri: API_GATEWAY,
-      uri: 'https://graph.local.buffer.com',
+      uri: GRAPHQL_API,
       credentials: 'include',
     }),
   });

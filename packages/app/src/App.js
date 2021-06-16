@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ModalTesting = () => {
-  const { MODALS, openModal } = window.appshell.modal;
+  const { MODALS, openModal } = window?.appshell?.modal || {};
 
   return (<>
       <h2>Render Plan Selector</h2>
