@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ApolloProvider, ApolloClient, InMemoryCache, useQuery } from '@apollo/client';
-import { createHttpLink } from 'apollo-link-http'
+import { ApolloProvider, ApolloClient, InMemoryCache, useQuery, HttpLink } from '@apollo/client';
 import ReactDOM from 'react-dom';
 
 import NavBar, { getLogoutUrl } from './NavBar';
@@ -230,7 +229,8 @@ export { MODALS } from './hooks/useModal';
 export default () => {
   const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: createHttpLink({
+    link: new HttpLink({
+      //uri: API_GATEWAY,
       uri: 'https://graph.local.buffer.com',
       credentials: 'include',
     }),

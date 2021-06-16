@@ -5,8 +5,6 @@ import { renderHook } from '@testing-library/react-hooks'
 import { CREATE_SETUP_INTENT } from '../../graphql/billing'
 import useSetupIntent from './useSetupIntent'
 
-
-
 describe('useSetupIntent', () => {
   const mockMutation = jest.fn(() => ({
     data: {
