@@ -32,3 +32,14 @@ resources:
 replicaCount: 1
 healthcheck:
   enabled: false
+env:
+- name: AWS_ACCESS_KEY_ID
+  valueFrom:
+    secretKeyRef:
+      key: aws-access-key-id
+      name: core-secrets
+- name: AWS_SECRET_ACCESS_KEY
+  valueFrom:
+    secretKeyRef:
+      key: aws-secret-key
+      name: core-secrets
