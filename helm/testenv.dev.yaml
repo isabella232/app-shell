@@ -1,0 +1,4 @@
+namespace: dev
+track: staging
+replicaCount: 1
+deploymentUrl: "appshell.dev.buffer.com"
