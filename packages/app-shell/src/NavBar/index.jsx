@@ -99,7 +99,6 @@ const NavBarStyled = styled.nav`
   height: 56px;
   justify-content: space-between;
   position: relative;
-  width: 100vw;
 `;
 
 const NavBarLeft = styled.div`
