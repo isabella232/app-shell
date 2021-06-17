@@ -1,6 +1,10 @@
 import { useMutation } from '@apollo/client'
-import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account';
 import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
+
+import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account'
+import eventDispatcher from './utils/eventDispatcher'
+
+export const EVENT_KEY = 'appshell__organization_event'
 
 function useOrgSwitcher() {
   const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION);
@@ -29,6 +33,11 @@ function useOrgSwitcher() {
       },
       update: (client) => updateCache(organizationId, client),
     });
+
+    eventDispatcher(
+      EVENT_KEY,
+      { organizationId }
+    )
 
     BufferTracker.organizationSwitched({
       organizationId,

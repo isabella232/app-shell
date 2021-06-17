@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ModalTesting = () => {
   const { MODALS, actions:modalActions } = window?.appshell?.modal || {};
@@ -10,6 +10,21 @@ const ModalTesting = () => {
 }
 
 const App = () => {
+
+  function handleOrgSwitch(e) {
+    console.log(e.detail);
+  }
+
+  useEffect(() => {
+    const { eventKey:organizationEventKey } = window?.appshell?.organization || {};
+
+    window.addEventListener(organizationEventKey, handleOrgSwitch)
+
+    return function cleanup() {
+      window.removeEventListener(organizationEventKey, handleOrgSwitch)
+    };
+  }, [])
+
   return (
     <div className="App">
       <ModalTesting />

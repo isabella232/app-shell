@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider, ApolloClient, InMemoryCache, useQuery, HttpLink } from '@apollo/client';
 import ReactDOM from 'react-dom';
@@ -7,16 +7,13 @@ import ReactDOM from 'react-dom';
 import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
 import Modal from './Modal/index';
-import { UserContext, useUser } from './context/User';
+import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
-import useModal, { MODALS, ACTIONS as MODAL_ACTIONS, EVENT_KEY as MODAL_EVENT_KEY } from './hooks/useModal';
+import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 import useUserTracker from './hooks/useUserTracker';
-import useStartTrial from './hooks/useStartTrial';
-import useOrgSwitcher from './hooks/useOrgSwitcher';
 
 import {
-  AppShellStyled,
   SidebarWrapper,
   Wrapper,
 } from './style';
@@ -235,14 +232,6 @@ export default () => {
     }),
   });
 
-  window.appshell = {
-    modal: {
-      MODALS,
-      actions: MODAL_ACTIONS,
-      eventKey: MODAL_EVENT_KEY,
-    }
-  }
-
   ReactDOM.render(
     <React.StrictMode>
       <ApolloProvider client={client}>
@@ -252,4 +241,3 @@ export default () => {
     document.getElementById('appShell')
   );
 }
-

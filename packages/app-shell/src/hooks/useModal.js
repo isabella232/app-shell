@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import eventDispatcher from './utils/eventDispatcher'
+
 export const MODALS = {
   paymentMethod: 'paymentMethod',
   planSelector: 'planSelector',
@@ -11,10 +13,10 @@ export const EVENT_KEY = 'appshell__modal_event'
 
 export const ACTIONS = {
   openModal(modalKey, modalData = null){
-    const event = new CustomEvent(EVENT_KEY, {
-      detail: { modal: modalKey, data: modalData }
-    })
-    window.dispatchEvent(event)
+    eventDispatcher(
+      EVENT_KEY,
+      { modal: modalKey, data: modalData }
+    )
   }
 }
 
