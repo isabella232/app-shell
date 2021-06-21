@@ -251,13 +251,9 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
   });
 }
 
-/**
- * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
- */
 const NavBar = React.memo((props) => {
   const {
     activeProduct,
-    helpMenuItems,
     onLogout,
     displaySkipLink,
     onOrganizationSelected,
@@ -287,6 +283,42 @@ const NavBar = React.memo((props) => {
     isOneBufferOrganization = user?.currentOrganization?.isOneBufferOrganization;
   }
 
+  const helpMenuItems = [
+    {
+      id: 'Help Center',
+      title: 'Visit Help Center',
+      onItemClick: () => { window.open(
+        'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
+        '_blank'
+      ); },
+    },
+    {
+      id: 'Quick Help',
+      title: 'Quick Help',
+      onItemClick: () => {
+        if (window.zE) {
+          window.zE('webWidget', 'show');
+          window.zE('webWidget', 'open');
+        }
+      },
+    },
+    {
+      id: 'Status',
+      title: 'Status',
+      onItemClick: () => { window.location.assign('https://status.buffer.com/'); },
+    },
+    {
+      id: 'Pricing & Plans',
+      title: 'Pricing & Plans',
+      onItemClick: () => { window.location.assign('https://buffer.com/pricing'); },
+    },
+    {
+      id: 'Wishlist',
+      title: 'Wishlist',
+      onItemClick: () => { window.location.assign('https://buffer.com/feature-request'); },
+    },
+  ]
+
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
@@ -301,20 +333,18 @@ const NavBar = React.memo((props) => {
           </NavBarLeft>
           <NavBarRight>
             <UpgradeCTA />
-            {helpMenuItems && (
-              <DropdownMenu
-                xPosition="right"
-                ariaLabel="Help Menu"
-                ariaLabelPopup="Help"
-                menubarItem={
-                  <NavBarHelp>
-                    <InfoIcon />
-                    <NavBarHelpText>Help</NavBarHelpText>
-                  </NavBarHelp>
-                }
-                items={helpMenuItems}
-              />
-            )}
+            <DropdownMenu
+              xPosition="right"
+              ariaLabel="Help Menu"
+              ariaLabelPopup="Help"
+              menubarItem={
+                <NavBarHelp>
+                  <InfoIcon />
+                  <NavBarHelpText>Help</NavBarHelpText>
+                </NavBarHelp>
+              }
+              items={helpMenuItems}
+            />
             <NavBarVerticalRule />
             <DropdownMenu
               xPosition="right"
@@ -425,16 +455,6 @@ NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
 
-  helpMenuItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      component: PropTypes.node,
-      hasDivider: PropTypes.bool,
-      onItemClick: PropTypes.func,
-    })
-  ),
-
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,
 
@@ -468,7 +488,6 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   activeProduct: undefined,
-  helpMenuItems: null,
   onLogout: undefined,
   displaySkipLink: false,
   orgSwitcher: undefined,
