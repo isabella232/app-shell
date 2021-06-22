@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "REACT_APP_PATH='https://static.buffer.com/appshell/' REACT_APP_FILE_NAME=$(ls ../app-shell/build | grep 'js$') react-scripts build",
+    "build": "REACT_APP_PATH='/static/js/' REACT_APP_FILE_NAME='appshell.js' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch": "HTTPS=true HOST='0.0.0.0' REACT_APP_PATH='https://appshell.local.buffer.com:8085/' REACT_APP_FILE_NAME='main.js' react-scripts start"

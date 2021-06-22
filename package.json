@@ -14,7 +14,7 @@
   "scripts": {
     "app": "lerna exec --scope app -- yarn watch",
     "app-shell": "lerna exec --scope @bufferapp/app-shell -- yarn watch",
-    "build": "npm-run-all --serial build:app-shell build:app",
+    "build": "npm-run-all --serial build:app build:app-shell",
     "build:app": "lerna exec --scope app -- yarn build",
     "build:app-shell": "lerna exec --scope @bufferapp/app-shell -- yarn build",
     "serve": "serve -l 3000 ./packages/app/build",

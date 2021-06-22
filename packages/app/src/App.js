@@ -17,11 +17,13 @@ const Wrapper = styled.div`
 `
 
 const ModalTesting = () => {
-  const { MODALS, actions:modalActions } = window?.appshell?.modal || {};
 
   return (<Wrapper>
       <h3>Render Plan Selector</h3>
-      <button onClick={() => {modalActions.openModal(MODALS.planSelector, { cta: 'renderModal', ctaButton: 'renderModal', isUpgradeIntent: false })}}>Render Modal</button>
+      <button onClick={() => {
+        const { MODALS, actions:modalActions } = window?.appshell?.modal || {};
+        modalActions.openModal(MODALS.planSelector, { cta: 'renderModal', ctaButton: 'renderModal', isUpgradeIntent: false })
+      }}>Render Modal</button>
     </Wrapper>)
 }
 

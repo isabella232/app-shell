@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js",
-    "postbuild": "sh ./uploadStatic.sh",
+    "postbuild": "cp ./build/main.js ../app/build/static/js/appshell.js",
     "prettier": "prettier --write ./src",
     "prepublish": "npm build",
     "watch": "webpack serve --config ./webpack.config.dev.js",

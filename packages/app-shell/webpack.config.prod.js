@@ -10,7 +10,7 @@ const mode = 'production';
 const merged = merge(common, {
   mode,
   output: {
-    filename: './[name].[fullhash].js',
+    filename: './[name].js',
     clean: true,
     path: PATH_BUILD,
   },
