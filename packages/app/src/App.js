@@ -21,8 +21,8 @@ const ModalTesting = () => {
   return (<Wrapper>
       <h3>Render Plan Selector</h3>
       <button onClick={() => {
-        const { MODALS, actions:modalActions } = window?.appshell?.modal || {};
-        modalActions.openModal(MODALS.planSelector, { cta: 'renderModal', ctaButton: 'renderModal', isUpgradeIntent: false })
+        const { MODALS, actions } = window?.appshell || {};
+        actions.openModal(MODALS.planSelector, { cta: 'renderModal', ctaButton: 'renderModal', isUpgradeIntent: false })
       }}>Render Modal</button>
     </Wrapper>)
 }

@@ -2,17 +2,17 @@ import { grayLighter } from '@bufferapp/ui/style/colors';
 
 import render from './index';
 import { MODALS, ACTIONS as MODAL_ACTIONS, EVENT_KEY as MODAL_EVENT_KEY } from './hooks/useModal';
-import { EVENT_KEY as ORGS_EVENT_KEY } from './hooks/useOrgSwitcher';
+import { EVENT_KEY as ORGANIZATION_EVENT_KEY } from './hooks/useOrgSwitcher';
 
 window.appshell = {
-  modal: {
-    MODALS,
-    actions: MODAL_ACTIONS,
-    eventKey: MODAL_EVENT_KEY,
+  eventKeys: {
+    ORGANIZATION_EVENT_KEY,
+    MODAL_EVENT_KEY,
   },
-  organization: {
-    eventKey: ORGS_EVENT_KEY,
-  }
+  actions: {
+    ...MODAL_ACTIONS,
+  },
+  MODALS,
 }
 
 function injectLayoutStyle() {
