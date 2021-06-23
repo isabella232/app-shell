@@ -169,14 +169,6 @@ const SkipToMainLink = styled(Link)`
   }
 `;
 
-export function appendMenuItem(ignoreMenuItems, menuItem) {
-  if (!ignoreMenuItems) {
-    return menuItem;
-  }
-
-  return ignoreMenuItems.includes(menuItem.id) ? null : menuItem;
-}
-
 function getNetworkIcon(item) {
   if (!item.network) return null;
 
@@ -257,8 +249,6 @@ const NavBar = React.memo((props) => {
     onLogout,
     displaySkipLink,
     onOrganizationSelected,
-    menuItems,
-    ignoreMenuItems,
     channels,
   } = props;
 
@@ -282,6 +272,9 @@ const NavBar = React.memo((props) => {
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
     isOneBufferOrganization = user?.currentOrganization?.isOneBufferOrganization;
   }
+
+  const menuItems = [
+  ]
 
   const helpMenuItems = [
     {
@@ -357,7 +350,7 @@ const NavBar = React.memo((props) => {
               }
               items={[
                 ...organizations,
-                appendMenuItem(ignoreMenuItems, {
+                {
                   id: 'account',
                   title: 'Account',
                   icon: <PersonIcon color={gray} />,
@@ -367,7 +360,7 @@ const NavBar = React.memo((props) => {
                       getAccountUrl(window.location.href, user)
                     );
                   },
-                }),
+                },
                 ...menuItems,
                 (shouldDisplayInviteCTA) ? {
                   id: 'Invite Your Team',
@@ -417,31 +410,28 @@ const NavBar = React.memo((props) => {
                     })
                   },
                 } : null,
-                appendMenuItem(
-                  ignoreMenuItems,
-                  user.isImpersonation
-                    ? {
-                        id: 'Stop Impersonation',
-                        title: 'Stop Impersonation',
-                        icon: <Cross color={gray} />,
-                        hasDivider: menuItems && menuItems.length > 0,
-                        onItemClick: () => {
-                          window.location.assign(getStopImpersonationUrl());
-                        },
-                      }
-                    : {
-                        id: 'logout',
-                        title: 'Logout',
-                        icon: <ArrowLeft color={gray} />,
-                        hasDivider: menuItems && menuItems.length > 0,
-                        onItemClick: () => {
-                          if (typeof onLogout === 'function') onLogout();
-                          window.location.assign(
-                            getLogoutUrl(window.location.href)
-                          );
-                        },
-                      }
-                ),
+                user.isImpersonation
+                  ? {
+                      id: 'Stop Impersonation',
+                      title: 'Stop Impersonation',
+                      icon: <Cross color={gray} />,
+                      hasDivider: menuItems && menuItems.length > 0,
+                      onItemClick: () => {
+                        window.location.assign(getStopImpersonationUrl());
+                      },
+                    }
+                  : {
+                      id: 'logout',
+                      title: 'Logout',
+                      icon: <ArrowLeft color={gray} />,
+                      hasDivider: menuItems && menuItems.length > 0,
+                      onItemClick: () => {
+                        if (typeof onLogout === 'function') onLogout();
+                        window.location.assign(
+                          getLogoutUrl(window.location.href)
+                        );
+                      },
+                    },
               ].filter((e) => e)}
             />
           </NavBarRight>
@@ -458,21 +448,8 @@ NavBar.propTypes = {
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,
 
-  /** Optional menu for selecting the user's organization */
-  orgSwitcher: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
-  }),
   onOrganizationSelected: PropTypes.func,
   menuItems: PropTypes.array,
-  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf(ApolloClient),
   }),
@@ -490,10 +467,7 @@ NavBar.defaultProps = {
   activeProduct: undefined,
   onLogout: undefined,
   displaySkipLink: false,
-  orgSwitcher: undefined,
   onOrganizationSelected: () => {},
-  menuItems: [],
-  ignoreMenuItems: [],
   graphqlConfig: {},
   channels: [],
 };

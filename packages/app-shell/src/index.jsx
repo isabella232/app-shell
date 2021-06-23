@@ -27,8 +27,6 @@ export const Navigator = ({
   onLogout,
   displaySkipLink,
   onOrganizationSelected,
-  menuItems,
-  ignoreMenuItems,
   apolloClient,
   channels,
 }) => {
@@ -97,8 +95,6 @@ export const Navigator = ({
         <NavBar
           activeProduct={activeProduct}
           helpMenuItems={helpMenuItems}
-          menuItems={menuItems}
-          ignoreMenuItems={ignoreMenuItems}
           onLogout={onLogout}
           displaySkipLink={displaySkipLink}
           onOrganizationSelected={onOrganizationSelected}
@@ -178,14 +174,6 @@ Navigator.propTypes = {
   /** Optional menu for selecting the user's organization */
   orgSwitcher: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf(ApolloClient),
