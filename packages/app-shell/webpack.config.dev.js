@@ -6,6 +6,7 @@ const mode = 'development';
 
 const merged = merge(common, {
   mode,
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
     compress: true,
@@ -13,8 +14,10 @@ const merged = merge(common, {
     https: true,
     host: '0.0.0.0',
     port: '8085',
+    hot: true,
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       GRAPHQL_API: JSON.stringify('https://graph.local.buffer.com'),
     }),
