@@ -18,14 +18,6 @@ window.appshell = {
 function injectLayoutStyle() {
   const style = document.createElement('style');
   style.textContent = `
-    #root {
-      background-color: ${grayLighter};
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      margin: 0;
-      overflow: auto;
-    }
   `
   document.head.append(style);
 }

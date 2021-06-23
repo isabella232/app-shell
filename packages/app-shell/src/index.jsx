@@ -19,10 +19,7 @@ import {
 } from './style';
 
 
-/**
- * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
- */
-export const AppShell = ({
+export const Navigator = ({
   activeProduct,
   helpMenuItems,
   sidebar,
@@ -139,7 +136,7 @@ export const AppShell = ({
   );
 };
 
-AppShell.propTypes = {
+Navigator.propTypes = {
   /** The list of features enabled for the user */
   featureFlips: PropTypes.arrayOf(PropTypes.string),
 
@@ -202,7 +199,7 @@ AppShell.propTypes = {
   ),
 };
 
-AppShell.defaultProps = {
+Navigator.defaultProps = {
   featureFlips: [],
   sidebar: null,
   activeProduct: undefined,
@@ -235,9 +232,9 @@ export default () => {
   ReactDOM.render(
     <React.StrictMode>
       <ApolloProvider client={client}>
-        <AppShell />
+        <Navigator />
       </ApolloProvider>
     </React.StrictMode>,
-    document.getElementById('appShell')
+    document.getElementById('navigator')
   );
 }

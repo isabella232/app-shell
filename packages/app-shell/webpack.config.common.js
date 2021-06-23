@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/appShell.js',
+  entry: './src/navigator.js',
   output: {
     filename: './[name].js',
     clean: true,

@@ -34,12 +34,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    const { eventKey:organizationEventKey } = window?.appshell?.organization || {};
+    const { ORGANIZATION_EVENT_KEY } = window.appshell?.eventKeys || {};
 
-    window.addEventListener(organizationEventKey, handleOrgSwitch)
+    window.addEventListener(ORGANIZATION_EVENT_KEY, handleOrgSwitch)
 
     return function cleanup() {
-      window.removeEventListener(organizationEventKey, handleOrgSwitch)
+      window.removeEventListener(ORGANIZATION_EVENT_KEY, handleOrgSwitch)
     };
   }, [])
 
