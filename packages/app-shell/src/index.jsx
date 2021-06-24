@@ -214,6 +214,9 @@ export default () => {
     link: new HttpLink({
       uri: GRAPHQL_API,
       credentials: 'include',
+      headers: {
+        'x-buffer-client-id': 'webapp-account',
+      },
     }),
   });
 

@@ -19,6 +19,10 @@ const merged = merge(common, {
       GRAPHQL_API: JSON.stringify('https://graph.buffer.com'),
     }),
   ],
+  optimization: {
+    usedExports: true,
+    sideEffects: true,
+  },
 });
 
 module.exports = merged;

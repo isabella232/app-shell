@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ChevronDown } from '@bufferapp/ui/Icon';
+import ChevronDownIcon from '@bufferapp/ui/Icon/Icons/ChevronDown';
+
 import {
   NavBarStyled,
   NavBarEmail,
@@ -41,7 +42,7 @@ const NavBarMenu = (props) => {
       </NavBarUser>
       <NavBarAvatar avatar={getUserAvatar(user)} />
       <NavBarChavron>
-        <ChevronDown color="grayLight" size="large" />
+        <ChevronDownIcon color="grayLight" size="large" />
       </NavBarChavron>
     </NavBarStyled>
   );
