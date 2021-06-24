@@ -15,6 +15,8 @@ import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
+import GearIcon from '@bufferapp/ui/Icon/Icons/Gear';
+import ChannelsIcon from '@bufferapp/ui/Icon/Icons/Channels';
 
 import {
   blue,
@@ -67,15 +69,31 @@ export function getAccountUrl(baseUrl = '', user) {
   )}&username=${encodeURI(user.name)}`;
 }
 
-export function getBillingUrl() {
+function getUrlEnvModifier() {
   const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+  return envModifier
+}
+
+export function getBillingUrl() {
+  const envModifier = getUrlEnvModifier()
   return `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
 }
 
-export function getTeamManageUrl(user) {
-  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+export function getTeamInviteUrl(user) {
+  const envModifier = getUrlEnvModifier()
   return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
   `
+}
+
+export function getTeamManageUrl(user) {
+  const envModifier = getUrlEnvModifier()
+  return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members
+  `
+}
+
+function getManageChannelsURL(baseUrl) {
+  const envModifier = getUrlEnvModifier()
+  return `https://account.${envModifier ? envModifier : ''}buffer.com/channels`;
 }
 
 export const ORG_SWITCHER = 'org_switcher';
@@ -274,6 +292,31 @@ const NavBar = React.memo((props) => {
   }
 
   const menuItems = [
+    // This is only needed for Publish
+    (window.location.href.match(/publish/)) ? {
+      id: 'preferences',
+      title: 'My Preferences',
+      icon: <GearIcon color={gray} />,
+      onItemClick: () => {
+        window.location.pathname  = '/preferences/general'
+      },
+    } : null,
+    {
+      id: 'channels',
+      title: 'Channels',
+      icon: <ChannelsIcon color={gray} />,
+      onItemClick: () => {
+        window.location.assign(getManageChannelsURL());
+      },
+    },
+    {
+      id: 'openTeam',
+      title: 'Team',
+      icon: <PeopleIcon color={gray} />,
+      onItemClick: () => {
+        window.location.assign(getTeamManageUrl(user));
+      },
+    },
   ]
 
   const helpMenuItems = [
@@ -369,7 +412,7 @@ const NavBar = React.memo((props) => {
                   colors: { title: 'blue', iconHover: 'blueDaker' },
                   hasDivider: true,
                   onItemClick: () => {
-                    window.location = getTeamManageUrl(user)
+                    window.location = getTeamInviteUrl(user)
                   },
                 } : null,
                 (isFree && !isOneBufferOrganization) ? {
