@@ -1,8 +1,4 @@
 name: Upload Navigator to components.buffer.com
-on:
-  push:
-      branches:
-        - main
 on: [ push ]
 env:
   aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -20,4 +16,4 @@ jobs:
       - run: yarn install
       - run: yarn build
       - run: aws s3 cp ./packages/app-shell/build/main.js s3://$aws_s3_bucket/navigator.js
-      - run: aws cloudfront create-invalidation --distribution-id E3OT8GXWMK37LP --paths "/navigator.js"
+      - run: aws cloudfront create-invalidation --distribution-id E7WI0MX948C1G --paths "/navigator.js"
