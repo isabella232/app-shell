@@ -1,5 +1,8 @@
 name: Upload Navigator to components.buffer.com
-on: [ push ]
+on:
+  push:
+      branches:
+        - main
 env:
   aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
   aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
