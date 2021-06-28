@@ -11,13 +11,6 @@ const flexRow = css`
   flex-direction: row;
 `;
 
-export const AppShellStyled = styled.div`
-  ${flexColumn}
-  height: 100vh;
-  overflow: auto;
-  background-color: ${grayLighter};
-`;
-
 export const Wrapper = styled.div`
   ${flexRow}
   flex: 1;
@@ -27,11 +20,4 @@ export const Wrapper = styled.div`
 export const SidebarWrapper = styled.div`
   ${flexColumn}
   width: 248px;
-`;
-
-export const ContentWrapper = styled.div`
-  ${flexColumn}
-  align-items: center;
-  flex: 1;
-  overflow: auto;
 `;

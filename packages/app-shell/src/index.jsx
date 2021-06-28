@@ -1,38 +1,32 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ApolloClient, useQuery } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, useQuery, HttpLink } from '@apollo/client';
+import ReactDOM from 'react-dom';
 
 import NavBar, { getLogoutUrl } from './NavBar';
 import Banner from './Banner';
 import Modal from './Modal/index';
-
-import {
-  AppShellStyled,
-  ContentWrapper,
-  SidebarWrapper,
-  Wrapper,
-} from './style';
 import { UserContext } from './context/User';
 import { ModalContext } from './context/Modal';
 import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 import useUserTracker from './hooks/useUserTracker';
 
-/**
- * The AppShell component is a general purpose wrapper for all of our applications. At the moment it's primarily a wrapper for the `NavBar` component. Check out the example below to see how to integrate it into your app.
- */
-const AppShell = ({
+import {
+  SidebarWrapper,
+  Wrapper,
+} from './style';
+
+
+export const Navigator = ({
   activeProduct,
   helpMenuItems,
   sidebar,
-  content,
   bannerOptions,
   onLogout,
   displaySkipLink,
   onOrganizationSelected,
-  menuItems,
-  ignoreMenuItems,
   apolloClient,
   channels,
 }) => {
@@ -96,54 +90,49 @@ const AppShell = ({
   }
 
   return (
-    <AppShellStyled>
-      <UserContext.Provider value={user}>
-        <ModalContext.Provider value={modal}>
-          <NavBar
-            activeProduct={activeProduct}
-            helpMenuItems={helpMenuItems}
-            menuItems={menuItems}
-            ignoreMenuItems={ignoreMenuItems}
-            onLogout={onLogout}
-            displaySkipLink={displaySkipLink}
-            onOrganizationSelected={onOrganizationSelected}
-            graphqlConfig={graphqlConfig}
-            channels={channels}
+    <UserContext.Provider value={user}>
+      <ModalContext.Provider value={modal}>
+        <NavBar
+          activeProduct={activeProduct}
+          helpMenuItems={helpMenuItems}
+          onLogout={onLogout}
+          displaySkipLink={displaySkipLink}
+          onOrganizationSelected={onOrganizationSelected}
+          graphqlConfig={graphqlConfig}
+          channels={channels}
+        />
+        {isActiveTrial && (
+          <Banner
+            text={trialBannerString}
+            actionButton={{
+              label: "Let's do this",
+              action: () =>
+                modal.openModal(MODALS.planSelector, {
+                  cta: 'Render Modal',
+                  isUpgradeIntent: true,
+                }),
+            }}
           />
-          {isActiveTrial && (
-            <Banner
-              text={trialBannerString}
-              actionButton={{
-                label: "Let's do this",
-                action: () =>
-                  modal.openModal(MODALS.planSelector, {
-                    cta: 'Render Modal',
-                    isUpgradeIntent: true,
-                  }),
-              }}
-            />
-          )}
-          {bannerOptions && <Banner {...bannerOptions} />}
-          <Wrapper>
-            {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-            <ContentWrapper>{content}</ContentWrapper>
-          </Wrapper>
-          <Modal
-            {...modal}
-            isAwaitingUserAction={
-              data
-                ? data.account.currentOrganization.billing.subscription?.trial
-                    ?.isAwaitingUserAction
-                : null
-            }
-          />
-        </ModalContext.Provider>
-      </UserContext.Provider>
-    </AppShellStyled>
+        )}
+        {bannerOptions && <Banner {...bannerOptions} />}
+        <Wrapper>
+          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
+        </Wrapper>
+        <Modal
+          {...modal}
+          isAwaitingUserAction={
+            data
+              ? data.account.currentOrganization.billing.subscription?.trial
+                  ?.isAwaitingUserAction
+              : null
+          }
+        />
+      </ModalContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-AppShell.propTypes = {
+Navigator.propTypes = {
   /** The list of features enabled for the user */
   featureFlips: PropTypes.arrayOf(PropTypes.string),
 
@@ -163,9 +152,6 @@ AppShell.propTypes = {
 
   /** (Optional) Your sidebar component. */
   sidebar: PropTypes.node,
-
-  /** Your content component. */
-  content: PropTypes.node.isRequired,
 
   /** (Optional) Content of banner displayed below the navbar */
   bannerOptions: PropTypes.shape({
@@ -188,14 +174,6 @@ AppShell.propTypes = {
   /** Optional menu for selecting the user's organization */
   orgSwitcher: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
   }),
   onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf(ApolloClient),
@@ -209,7 +187,7 @@ AppShell.propTypes = {
   ),
 };
 
-AppShell.defaultProps = {
+Navigator.defaultProps = {
   featureFlips: [],
   sidebar: null,
   activeProduct: undefined,
@@ -224,10 +202,30 @@ AppShell.defaultProps = {
   channels: [],
 };
 
-export default AppShell;
-
 export { UserContext, useUser } from './context/User';
 export { ModalContext } from './context/Modal';
 export { default as useStartTrial } from './hooks/useStartTrial';
 export { default as useOrgSwitcher } from './hooks/useOrgSwitcher';
 export { MODALS } from './hooks/useModal';
+
+export default () => {
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: new HttpLink({
+      uri: window.API_GATEWAY_URL,
+      credentials: 'include',
+      headers: {
+        'x-buffer-client-id': 'webapp-account',
+      },
+    }),
+  });
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <Navigator />
+      </ApolloProvider>
+    </React.StrictMode>,
+    document.getElementById('navigator')
+  );
+}

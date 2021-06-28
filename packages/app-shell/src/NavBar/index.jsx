@@ -15,6 +15,8 @@ import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
+import GearIcon from '@bufferapp/ui/Icon/Icons/Gear';
+import ChannelsIcon from '@bufferapp/ui/Icon/Icons/Channels';
 
 import {
   blue,
@@ -67,15 +69,31 @@ export function getAccountUrl(baseUrl = '', user) {
   )}&username=${encodeURI(user.name)}`;
 }
 
-export function getBillingUrl() {
+function getUrlEnvModifier() {
   const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+  return envModifier
+}
+
+export function getBillingUrl() {
+  const envModifier = getUrlEnvModifier()
   return `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
 }
 
-export function getTeamManageUrl(user) {
-  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
+export function getTeamInviteUrl(user) {
+  const envModifier = getUrlEnvModifier()
   return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
   `
+}
+
+export function getTeamManageUrl(user) {
+  const envModifier = getUrlEnvModifier()
+  return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members
+  `
+}
+
+function getManageChannelsURL(baseUrl) {
+  const envModifier = getUrlEnvModifier()
+  return `https://account.${envModifier ? envModifier : ''}buffer.com/channels`;
 }
 
 export const ORG_SWITCHER = 'org_switcher';
@@ -99,7 +117,6 @@ const NavBarStyled = styled.nav`
   height: 56px;
   justify-content: space-between;
   position: relative;
-  width: 100vw;
 `;
 
 const NavBarLeft = styled.div`
@@ -169,14 +186,6 @@ const SkipToMainLink = styled(Link)`
     margin-left: 10px;
   }
 `;
-
-export function appendMenuItem(ignoreMenuItems, menuItem) {
-  if (!ignoreMenuItems) {
-    return menuItem;
-  }
-
-  return ignoreMenuItems.includes(menuItem.id) ? null : menuItem;
-}
 
 function getNetworkIcon(item) {
   if (!item.network) return null;
@@ -252,18 +261,12 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
   });
 }
 
-/**
- * The NavBar is not consumed alone, but instead is used by the AppShell component. Go check out the AppShell component to learn more.
- */
 const NavBar = React.memo((props) => {
   const {
     activeProduct,
-    helpMenuItems,
     onLogout,
     displaySkipLink,
     onOrganizationSelected,
-    menuItems,
-    ignoreMenuItems,
     channels,
   } = props;
 
@@ -288,6 +291,70 @@ const NavBar = React.memo((props) => {
     isOneBufferOrganization = user?.currentOrganization?.isOneBufferOrganization;
   }
 
+  const menuItems = [
+    // This is only needed for Publish
+    (window.location.href.match(/publish/)) ? {
+      id: 'preferences',
+      title: 'My Preferences',
+      icon: <GearIcon color={gray} />,
+      onItemClick: () => {
+        window.location.pathname  = '/preferences/general'
+      },
+    } : null,
+    {
+      id: 'channels',
+      title: 'Channels',
+      icon: <ChannelsIcon color={gray} />,
+      onItemClick: () => {
+        window.location.assign(getManageChannelsURL());
+      },
+    },
+    {
+      id: 'openTeam',
+      title: 'Team',
+      icon: <PeopleIcon color={gray} />,
+      onItemClick: () => {
+        window.location.assign(getTeamManageUrl(user));
+      },
+    },
+  ]
+
+  const helpMenuItems = [
+    {
+      id: 'Help Center',
+      title: 'Visit Help Center',
+      onItemClick: () => { window.open(
+        'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
+        '_blank'
+      ); },
+    },
+    {
+      id: 'Quick Help',
+      title: 'Quick Help',
+      onItemClick: () => {
+        if (window.zE) {
+          window.zE('webWidget', 'show');
+          window.zE('webWidget', 'open');
+        }
+      },
+    },
+    {
+      id: 'Status',
+      title: 'Status',
+      onItemClick: () => { window.location.assign('https://status.buffer.com/'); },
+    },
+    {
+      id: 'Pricing & Plans',
+      title: 'Pricing & Plans',
+      onItemClick: () => { window.location.assign('https://buffer.com/pricing'); },
+    },
+    {
+      id: 'Wishlist',
+      title: 'Wishlist',
+      onItemClick: () => { window.location.assign('https://buffer.com/feature-request'); },
+    },
+  ]
+
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
@@ -302,20 +369,18 @@ const NavBar = React.memo((props) => {
           </NavBarLeft>
           <NavBarRight>
             <UpgradeCTA />
-            {helpMenuItems && (
-              <DropdownMenu
-                xPosition="right"
-                ariaLabel="Help Menu"
-                ariaLabelPopup="Help"
-                menubarItem={
-                  <NavBarHelp>
-                    <InfoIcon />
-                    <NavBarHelpText>Help</NavBarHelpText>
-                  </NavBarHelp>
-                }
-                items={helpMenuItems}
-              />
-            )}
+            <DropdownMenu
+              xPosition="right"
+              ariaLabel="Help Menu"
+              ariaLabelPopup="Help"
+              menubarItem={
+                <NavBarHelp>
+                  <InfoIcon />
+                  <NavBarHelpText>Help</NavBarHelpText>
+                </NavBarHelp>
+              }
+              items={helpMenuItems}
+            />
             <NavBarVerticalRule />
             <DropdownMenu
               xPosition="right"
@@ -328,7 +393,7 @@ const NavBar = React.memo((props) => {
               }
               items={[
                 ...organizations,
-                appendMenuItem(ignoreMenuItems, {
+                {
                   id: 'account',
                   title: 'Account',
                   icon: <PersonIcon color={gray} />,
@@ -338,7 +403,7 @@ const NavBar = React.memo((props) => {
                       getAccountUrl(window.location.href, user)
                     );
                   },
-                }),
+                },
                 ...menuItems,
                 (shouldDisplayInviteCTA) ? {
                   id: 'Invite Your Team',
@@ -347,7 +412,7 @@ const NavBar = React.memo((props) => {
                   colors: { title: 'blue', iconHover: 'blueDaker' },
                   hasDivider: true,
                   onItemClick: () => {
-                    window.location = getTeamManageUrl(user)
+                    window.location = getTeamInviteUrl(user)
                   },
                 } : null,
                 (isFree && !isOneBufferOrganization) ? {
@@ -388,31 +453,28 @@ const NavBar = React.memo((props) => {
                     })
                   },
                 } : null,
-                appendMenuItem(
-                  ignoreMenuItems,
-                  user.isImpersonation
-                    ? {
-                        id: 'Stop Impersonation',
-                        title: 'Stop Impersonation',
-                        icon: <Cross color={gray} />,
-                        hasDivider: menuItems && menuItems.length > 0,
-                        onItemClick: () => {
-                          window.location.assign(getStopImpersonationUrl());
-                        },
-                      }
-                    : {
-                        id: 'logout',
-                        title: 'Logout',
-                        icon: <ArrowLeft color={gray} />,
-                        hasDivider: menuItems && menuItems.length > 0,
-                        onItemClick: () => {
-                          if (typeof onLogout === 'function') onLogout();
-                          window.location.assign(
-                            getLogoutUrl(window.location.href)
-                          );
-                        },
-                      }
-                ),
+                user.isImpersonation
+                  ? {
+                      id: 'Stop Impersonation',
+                      title: 'Stop Impersonation',
+                      icon: <Cross color={gray} />,
+                      hasDivider: menuItems && menuItems.length > 0,
+                      onItemClick: () => {
+                        window.location.assign(getStopImpersonationUrl());
+                      },
+                    }
+                  : {
+                      id: 'logout',
+                      title: 'Logout',
+                      icon: <ArrowLeft color={gray} />,
+                      hasDivider: menuItems && menuItems.length > 0,
+                      onItemClick: () => {
+                        if (typeof onLogout === 'function') onLogout();
+                        window.location.assign(
+                          getLogoutUrl(window.location.href)
+                        );
+                      },
+                    },
               ].filter((e) => e)}
             />
           </NavBarRight>
@@ -426,34 +488,11 @@ NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
 
-  helpMenuItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      component: PropTypes.node,
-      hasDivider: PropTypes.bool,
-      onItemClick: PropTypes.func,
-    })
-  ),
-
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,
 
-  /** Optional menu for selecting the user's organization */
-  orgSwitcher: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    menuItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        selected: PropTypes.bool.isRequired,
-        onItemClick: PropTypes.func,
-      })
-    ).isRequired,
-  }),
   onOrganizationSelected: PropTypes.func,
   menuItems: PropTypes.array,
-  ignoreMenuItems: PropTypes.arrayOf(PropTypes.string),
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf(ApolloClient),
   }),
@@ -469,13 +508,9 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   activeProduct: undefined,
-  helpMenuItems: null,
   onLogout: undefined,
   displaySkipLink: false,
-  orgSwitcher: undefined,
   onOrganizationSelected: () => {},
-  menuItems: [],
-  ignoreMenuItems: [],
   graphqlConfig: {},
   channels: [],
 };

@@ -1,10 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import eventDispatcher from './utils/eventDispatcher'
+
 export const MODALS = {
   paymentMethod: 'paymentMethod',
   planSelector: 'planSelector',
   success: 'success',
   startTrial: 'startTrial',
+}
+
+export const EVENT_KEY = 'appshell__modal_event'
+
+export const ACTIONS = {
+  openModal(modalKey, modalData = null){
+    eventDispatcher(
+      EVENT_KEY,
+      { modal: modalKey, data: modalData }
+    )
+  }
 }
 
 function useModal() {
@@ -32,7 +45,18 @@ function useModal() {
     }
   }, [])
 
-  return { data, modal, openModal }
+  useEffect(() => {
+    window.addEventListener(EVENT_KEY, (e) => {
+      const { modal:modalKey, data:modalData } = e.detail
+      openModal(modalKey, modalData)
+    })
+  })
+
+  return {
+    data,
+    modal,
+    openModal,
+  }
 }
 
 export default useModal

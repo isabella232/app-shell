@@ -1,0 +1,22 @@
+name: Upload Navigator to components.buffer.com
+on:
+  push:
+      branches:
+        - main
+env:
+  aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  aws_s3_bucket: components.buffer.com
+jobs:
+  Upload:
+    runs-on: ubuntu-latest
+    steps:
+      - run: aws configure set aws_access_key_id $aws_key_id
+      - run: aws configure set aws_secret_access_key $aws_secret_access_key
+      - run: aws configure set default.region us-east-1
+      - name: Build
+        uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn build
+      - run: aws s3 cp ./packages/app-shell/build/main.js s3://$aws_s3_bucket/navigator.js
+      - run: aws cloudfront create-invalidation --distribution-id E7WI0MX948C1G --paths "/navigator.js"

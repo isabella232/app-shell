@@ -24,13 +24,30 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style type="text/css">
+      #navigator {
+        min-height: 57px;
+      }
+
+      #root {
+        background-color: #F5F5F5;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin: 0;
+        overflow: auto;
+      }
+    </style>
     <title>React App</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script type="text/javaScript">
-      window.SEGMENT_KEY = "OhmZAyohIduyqmRaNXHDg3QwC6vLjgEK";
+      // This is used only by the App Shell on dev and staging
+      window.SEGMENT_KEY = "ue6pVIpurOYbMqQTDTBYulBdB57t8kAA";
+      window.API_GATEWAY_URL = "%REACT_APP_API_GATEWAY_URL%";
     </script>
+    <div id="navigator"></div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -42,5 +59,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script src="%REACT_APP_PATH%%REACT_APP_FILE_NAME%" async></script>
   </body>
 </html>
