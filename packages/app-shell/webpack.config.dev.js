@@ -18,9 +18,6 @@ const merged = merge(common, {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      GRAPHQL_API: JSON.stringify('https://graph.local.buffer.com'),
-    }),
   ],
 });
 

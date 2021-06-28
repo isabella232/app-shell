@@ -14,11 +14,7 @@ const merged = merge(common, {
     clean: true,
     path: PATH_BUILD,
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      GRAPHQL_API: JSON.stringify('https://graph.buffer.com'),
-    }),
-  ],
+  plugins: [],
   optimization: {
     usedExports: true,
     sideEffects: true,

@@ -212,7 +212,7 @@ export default () => {
   const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
-      uri: GRAPHQL_API,
+      uri: window.API_GATEWAY_URL,
       credentials: 'include',
       headers: {
         'x-buffer-client-id': 'webapp-account',
