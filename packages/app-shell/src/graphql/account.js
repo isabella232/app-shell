@@ -100,6 +100,12 @@ export const QUERY_ACCOUNT = gql`
         isOneBufferOrganization
         shouldDisplayInviteCTA
         featureFlips
+        channels {
+          id
+          name
+          service
+          organizationId
+        }
         billing {
           canAccessAnalytics
           canAccessEngagement

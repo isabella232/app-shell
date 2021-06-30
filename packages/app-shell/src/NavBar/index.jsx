@@ -209,10 +209,12 @@ function getNetworkIcon(item) {
   return null;
 }
 
-function buildOrgSwitcher(user, selectOrganization, channels) {
+function buildOrgSwitcher(user, selectOrganization) {
   if (user.organizations.length === 1) {
     return [];
   }
+
+  const channels = user?.organizations?.map(o => o.channels).flat() || [];
   const orgSwitcher = {
     title: 'Organizations',
     hideTooltips: !channels,
@@ -226,7 +228,7 @@ function buildOrgSwitcher(user, selectOrganization, channels) {
         selected: isCurrentOrganization,
         hasDivider: index === 0,
         subItems: channels
-          .filter((channel) => channel.organizationId === org.id)
+          .filter((channel) => channel?.organizationId === org.id)
           .map((channel) => ({
             id: channel.id,
             title: channel.name,
@@ -267,7 +269,6 @@ const NavBar = React.memo((props) => {
     onLogout,
     displaySkipLink,
     onOrganizationSelected,
-    channels,
   } = props;
 
   const user = useUser();
@@ -278,7 +279,7 @@ const NavBar = React.memo((props) => {
       onCompleted: () => onOrganizationSelected(organizationId),
     });
   };
-  const organizations = buildOrgSwitcher(user, selectOrganization, channels);
+  const organizations = buildOrgSwitcher(user, selectOrganization);
 
   let isFree = isFreePlan(user);
   let subscription = null;
@@ -496,14 +497,6 @@ NavBar.propTypes = {
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf(ApolloClient),
   }),
-  channels: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      organizationId: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      service: PropTypes.string.isRequired,
-    })
-  ),
 };
 
 NavBar.defaultProps = {
@@ -512,7 +505,6 @@ NavBar.defaultProps = {
   displaySkipLink: false,
   onOrganizationSelected: () => {},
   graphqlConfig: {},
-  channels: [],
 };
 
 export default NavBar;
