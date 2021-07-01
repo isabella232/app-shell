@@ -13,20 +13,16 @@ import useModal, { MODALS } from './hooks/useModal';
 import { QUERY_ACCOUNT } from './graphql/account';
 import useUserTracker from './hooks/useUserTracker';
 
-import {
-  SidebarWrapper,
-  Wrapper,
-} from './style';
+function getActiveProductFromUrl() {
+  const productUrl = window.location.hostname.split('.')[0];
+  if (['analyze', 'engage', 'publish'].includes(productUrl)) {
+    return productUrl
+  }
 
+  return null
+}
 
 export const Navigator = ({
-  activeProduct,
-  helpMenuItems,
-  sidebar,
-  bannerOptions,
-  onLogout,
-  displaySkipLink,
-  onOrganizationSelected,
   apolloClient,
   channels,
 }) => {
@@ -93,11 +89,8 @@ export const Navigator = ({
     <UserContext.Provider value={user}>
       <ModalContext.Provider value={modal}>
         <NavBar
-          activeProduct={activeProduct}
-          helpMenuItems={helpMenuItems}
-          onLogout={onLogout}
-          displaySkipLink={displaySkipLink}
-          onOrganizationSelected={onOrganizationSelected}
+          activeProduct={getActiveProductFromUrl()}
+
           graphqlConfig={graphqlConfig}
           channels={channels}
         />
@@ -114,10 +107,6 @@ export const Navigator = ({
             }}
           />
         )}
-        {bannerOptions && <Banner {...bannerOptions} />}
-        <Wrapper>
-          {sidebar && <SidebarWrapper>{sidebar}</SidebarWrapper>}
-        </Wrapper>
         <Modal
           {...modal}
           isAwaitingUserAction={
@@ -133,49 +122,6 @@ export const Navigator = ({
 };
 
 Navigator.propTypes = {
-  /** The list of features enabled for the user */
-  featureFlips: PropTypes.arrayOf(PropTypes.string),
-
-  /** The currently active (highlighted) product in the `NavBar`. */
-  activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
-
-  /** Menu items to show in the help menu */
-  helpMenuItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      component: PropTypes.node,
-      hasDivider: PropTypes.bool,
-      onItemClick: PropTypes.func,
-    })
-  ),
-
-  /** (Optional) Your sidebar component. */
-  sidebar: PropTypes.node,
-
-  /** (Optional) Content of banner displayed below the navbar */
-  bannerOptions: PropTypes.shape({
-    text: PropTypes.string,
-    actionButton: PropTypes.shape({
-      label: PropTypes.string,
-      action: PropTypes.func,
-    }),
-    customHTML: PropTypes.shape({ __html: PropTypes.string }),
-  }),
-
-  /** (Optional) Callback to be called before logout */
-  onLogout: PropTypes.func,
-
-  /** (Optional) Is the current session an impersonation session */
-  isImpersonation: PropTypes.bool,
-
-  displaySkipLink: PropTypes.bool,
-
-  /** Optional menu for selecting the user's organization */
-  orgSwitcher: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-  }),
-  onOrganizationSelected: PropTypes.func,
   apolloClient: PropTypes.instanceOf(ApolloClient),
   channels: PropTypes.arrayOf(
     PropTypes.shape({
@@ -188,16 +134,6 @@ Navigator.propTypes = {
 };
 
 Navigator.defaultProps = {
-  featureFlips: [],
-  sidebar: null,
-  activeProduct: undefined,
-  bannerOptions: null,
-  onLogout: undefined,
-  helpMenuItems: null,
-  isImpersonation: false,
-  displaySkipLink: false,
-  orgSwitcher: undefined,
-  onOrganizationSelected: () => {},
   apolloClient: undefined,
   channels: [],
 };
