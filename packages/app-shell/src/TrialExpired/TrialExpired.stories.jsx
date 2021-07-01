@@ -1,16 +1,21 @@
-import React from 'react';
-import { Modal as TrialExpired } from './index';
-import response from '../mocks/mock';
+import React from 'react'
+import { Modal as TrialExpired } from './index'
+import { UserContext } from '../context/User'
+import response from '../mocks/trialExpiredMock'
 
 export default {
   title: 'Trial Expired Modal',
   component: TrialExpired,
-};
+}
 
-const Template = (args) => <TrialExpired {...args} />;
+const Template = (args) => (
+  <UserContext.Provider value={response.data.account}>
+    <TrialExpired {...args} />
+  </UserContext.Provider>
+)
 
-export const OneExample = Template.bind({});
+export const OneExample = Template.bind({})
 OneExample.args = {
-  plan: response.data.account.currentOrganization.billing.changePlanOptions[0],
+  user: response.data.account,
   closeModal: () => {},
-};
+}

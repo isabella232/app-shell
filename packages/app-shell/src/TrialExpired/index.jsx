@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -49,28 +49,25 @@ const ButtonContainer = styled.div`
 `;
 
 export const Modal = ({
-  plan,
+  user,
   closeModal,
 }) => {
-  const planName = plan ? plan.planName : null;
 
-  const currentUser = useContext(UserContext);
-  const { data } = useContext(ModalContext);
   useEffect(() => {
-    // useTrackPageViewed({
-    //   payload: {
-    //     name: 'trial',
-    //     title: 'planSelector',
-    //   },
-    //   user: currentUser,
-    // });
+    useTrackPageViewed({
+      payload: {
+        name: 'trial',
+        title: 'trial expired modal',
+      },
+      user
+    });
   }, []);
 
   const imageUrl = 'https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png';
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
 
   return (
-    <ScreenContainer planId={plan.planId} imageUrl={imageUrl}>
+    <ScreenContainer imageUrl={imageUrl}>
       <Text type="h1">Your trial has expired</Text>
       <Text type="p">{description}</Text>
       <ButtonContainer>
@@ -91,9 +88,9 @@ const TrialExpired = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data }) => (
+          {({ openModal }) => (
             <Modal
-              plan={data.plan}
+              user={user}
               closeModal={() => {
                 openModal(null);
               }}
@@ -102,7 +99,7 @@ const TrialExpired = () => {
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>
-  );
+  )
 };
 
 export default TrialExpired;
