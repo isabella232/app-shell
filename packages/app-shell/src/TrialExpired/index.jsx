@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 
-import { black } from '@bufferapp/ui/style/colors';
+import { black, blue } from '@bufferapp/ui/style/colors';
 import { useTrackPageViewed } from '../hooks/useSegmentTracking';
 import { UserContext } from '../context/User';
 import { ModalContext } from '../context/Modal';
+import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+
 
 const ScreenContainer = styled.div`
   display: flex;
@@ -36,16 +38,35 @@ const ScreenContainer = styled.div`
     margin-top: 0px;
     max-width: 282px;
   }
-
-  p:last-child {
-    font-style: italic;
-  }
 `;
 
 const ButtonContainer = styled.div`
   width: fit-content;
   margin-top: 32px;
   margin-bottom: 32px;
+
+  > div:first-child {
+    margin-right: 8px;
+  }
+`;
+
+const Details = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  svg {
+    color: ${blue};
+    margin-right: 4px;
+  }
+
+  li {
+    display: flex;
+
+    p {
+      margin-bottom: 8px;
+    }
+  }
 `;
 
 export const Modal = ({
@@ -65,11 +86,19 @@ export const Modal = ({
 
   const imageUrl = 'https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png';
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
+  const planId = user?.currentOrganization?.billing?.subscription?.plan?.id
+  const planDetails = user?.currentOrganization?.billing?.changePlanOptions.find(o => o.planId === planId)?.summary.details
 
   return (
     <ScreenContainer imageUrl={imageUrl}>
       <Text type="h1">Your trial has expired</Text>
       <Text type="p">{description}</Text>
+      <Details>
+        {planDetails.map(detail => (<li>
+          <CheckmarkIcon size="medium" />
+          <Text type="p">{detail}</Text>
+        </li>))}
+      </Details>
       <ButtonContainer>
         <Button
           type="primary"
@@ -78,7 +107,15 @@ export const Modal = ({
           }}
           label="Upgrade"
         />
-      </ButtonContainer>
+      <Button
+        type="secondary"
+        onClick={() => {
+          //TODO set cookie
+          closeModal();
+        }}
+        label="No Thanks"
+      />
+    </ButtonContainer>
     </ScreenContainer>
   );
 };

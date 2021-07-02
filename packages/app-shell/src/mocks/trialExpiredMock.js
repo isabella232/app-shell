@@ -15,7 +15,12 @@ export default {
             trial: {
               isActive: false,
               remainingDays: 0,
+              isAwaitingUserAction: true,
             },
+            plan: {
+              id: 'essentials',
+              name: 'Essentials',
+            }
           },
           changePlanOptions: [
             {
@@ -57,7 +62,11 @@ export default {
               discountNote: '',
               priceNote: 'Price per social channel',
               summary: {
-                details: ['Add social channels anytime', 'Cancel at anytime'],
+                details: [
+                  'Unlimited scheduled posts',
+                  'Unlimited social channels',
+                  'One user',
+                ],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
                 intervalBasePrice: 5,
