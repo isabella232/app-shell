@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
-
 import { black, blue } from '@bufferapp/ui/style/colors';
+import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+
 import { useTrackPageViewed } from '../hooks/useSegmentTracking';
 import { UserContext } from '../context/User';
 import { ModalContext } from '../context/Modal';
-import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+import { MODALS } from '../hooks/useModal';
+import { setCookie, DATES } from '../utils/cookies'
 
 
 const ScreenContainer = styled.div`
@@ -71,7 +73,9 @@ const Details = styled.ul`
 
 export const Modal = ({
   user,
+  onDismiss,
   closeModal,
+  onUpgrade,
 }) => {
 
   useEffect(() => {
@@ -81,13 +85,17 @@ export const Modal = ({
         title: 'trial expired modal',
       },
       user
-    });
-  }, []);
+    })
+  }, [])
 
   const imageUrl = 'https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png';
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
   const planId = user?.currentOrganization?.billing?.subscription?.plan?.id
   const planDetails = user?.currentOrganization?.billing?.changePlanOptions.find(o => o.planId === planId)?.summary.details
+
+  if (!planDetails) {
+    return null
+  }
 
   return (
     <ScreenContainer imageUrl={imageUrl}>
@@ -102,17 +110,12 @@ export const Modal = ({
       <ButtonContainer>
         <Button
           type="primary"
-          onClick={() => {
-            closeModal();
-          }}
+          onClick={onUpgrade}
           label="Upgrade"
         />
       <Button
         type="secondary"
-        onClick={() => {
-          //TODO set cookie
-          closeModal();
-        }}
+        onClick={onDismiss}
         label="No Thanks"
       />
     </ButtonContainer>
@@ -128,9 +131,25 @@ const TrialExpired = () => {
           {({ openModal }) => (
             <Modal
               user={user}
-              closeModal={() => {
+              onDismiss={() => {
+                setCookie({
+                  key: 'trialOverDismissed',
+                  value: true,
+                  expires: DATES.inMonthsFromNow(2),
+                })
                 openModal(null);
               }}
+              onUpgrade={() => {
+                openModal(MODALS.planSelector, {
+                  cta: 'ugradePlan',
+                  ctaButton: 'ugradePlan',
+                  isUpgradeIntent: true,
+                })
+              }}
+              closeModal={() => {
+                openModal(null)
+              }
+              }
             />
           )}
         </ModalContext.Consumer>

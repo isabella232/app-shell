@@ -17,5 +17,6 @@ const Template = (args) => (
 export const OneExample = Template.bind({})
 OneExample.args = {
   user: response.data.account,
-  closeModal: () => {},
+  onDismiss: () => { console.log('dimiss') },
+  onUpgrade: () => { console.log('upgrade') },
 }
