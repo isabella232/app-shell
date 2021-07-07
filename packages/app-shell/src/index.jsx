@@ -109,12 +109,6 @@ export const Navigator = ({
         )}
         <Modal
           {...modal}
-          isAwaitingUserAction={
-            data
-              ? data.account.currentOrganization.billing.subscription?.trial
-                  ?.isAwaitingUserAction
-              : null
-          }
         />
       </ModalContext.Provider>
     </UserContext.Provider>
