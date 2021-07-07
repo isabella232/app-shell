@@ -7,6 +7,7 @@ export const MODALS = {
   planSelector: 'planSelector',
   success: 'success',
   startTrial: 'startTrial',
+  paidMigration: 'paidMigration',
 }
 
 export const EVENT_KEY = 'appshell__modal_event'

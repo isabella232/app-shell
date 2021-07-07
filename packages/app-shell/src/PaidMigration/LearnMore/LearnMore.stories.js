@@ -1,0 +1,25 @@
+import React from 'react';
+import LearnMore from './index';
+import response from '../../mocks/mock';
+import { UserContext } from '../../context/User';
+
+export default {
+  title: 'Modals/Paid Migration/Learn More',
+  component: LearnMore,
+};
+
+const Template = (args) => (
+  <div style={{ height: '550px' }}>
+    <UserContext.Provider value={response.data.account}>
+      <LearnMore {...args} />
+    </UserContext.Provider>
+  </div>
+);
+
+export const LearnMoreExample = Template.bind({});
+LearnMoreExample.args = {
+  planOptions:
+    response.data.account.currentOrganization.billing.changePlanOptions,
+  selectedPlan:
+    response.data.account.currentOrganization.billing.changePlanOptions[1],
+};

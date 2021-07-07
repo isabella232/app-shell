@@ -4,6 +4,7 @@ import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PaymentMethod from '../PaymentMethod';
 import PlanSelector from '../PlanSelector';
 import StartTrial from '../StartTrial';
+import PaidMigration from '../PaidMigration';
 import Confirmation from '../Confirmation';
 
 const ModalContent = ({ modal }) => {
@@ -16,6 +17,8 @@ const ModalContent = ({ modal }) => {
       return <Confirmation />;
     case MODALS.startTrial:
       return <StartTrial />;
+    case MODALS.paidMigration:
+      return <PaidMigration />;
     default:
       return null;
   }
