@@ -1,7 +1,7 @@
 import React from 'react';
 import { PlanSelectorContainer } from './PlanSelectorContainer';
-import { UserContext } from '../../../common/context/User';
-import response from '../../../common/mocks/mock';
+import { UserContext } from '../../../../../common/context/User';
+import response from '../../../../../common/mocks/mock';
 
 export default {
   title: 'Plan Selector',

@@ -5,11 +5,11 @@ import Button from '@bufferapp/ui/Button';
 import { black, blue } from '@bufferapp/ui/style/colors';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 
-import { useTrackPageViewed } from '../../common/hooks/useSegmentTracking';
-import { UserContext } from '../../common/context/User';
-import { ModalContext } from '../../common/context/Modal';
-import { MODALS } from '../../common/hooks/useModal';
-import { setCookie, DATES } from '../../common/utils/cookies'
+import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
+import { UserContext } from '../../../../common/context/User';
+import { ModalContext } from '../../../../common/context/Modal';
+import { MODALS } from '../../../../common/hooks/useModal';
+import { setCookie, DATES } from '../../../../common/utils/cookies'
 
 
 const ScreenContainer = styled.div`

@@ -19,7 +19,7 @@ import {
   Title,
   PriceFooterWrapper,
 } from './style';
-import { UserContext } from '../../common/context/User';
+import { UserContext } from '../../../../common/context/User';
 
 const Summary = ({
   planOptions,

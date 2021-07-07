@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatCTAString } from '../../../common/hooks/useSegmentTracking';
+import { formatCTAString } from '../../../../../common/hooks/useSegmentTracking';
 
 const useButtonOptions = ({
   selectedPlan,

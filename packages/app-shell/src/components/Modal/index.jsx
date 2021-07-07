@@ -4,11 +4,11 @@ import SimpleModal from '@bufferapp/ui/SimpleModal';
 import { getCookie } from '../../common/utils/cookies'
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
-import PaymentMethod from '../PaymentMethod';
-import PlanSelector from '../PlanSelector';
-import StartTrial from '../StartTrial';
-import Confirmation from '../Confirmation';
-import TrialExpired from '../TrialExpired';
+import PaymentMethod from './modals/PaymentMethod';
+import PlanSelector from './modals/PlanSelector';
+import StartTrial from './modals/StartTrial';
+import Confirmation from './modals/Confirmation';
+import TrialExpired from './modals/TrialExpired';
 
 
 const ModalContent = ({ modal }) => {

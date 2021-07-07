@@ -1,7 +1,7 @@
 import React from 'react';
 import Summary from './index';
-import response from '../../common/mocks/mock';
-import { UserContext } from '../../common/context/User';
+import response from '../../../../common/mocks/mock';
+import { UserContext } from '../../../../common/context/User';
 
 export default {
   title: 'Summary',

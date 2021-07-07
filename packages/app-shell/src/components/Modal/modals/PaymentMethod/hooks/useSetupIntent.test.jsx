@@ -2,25 +2,22 @@ import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 import { renderHook } from '@testing-library/react-hooks'
 
-import { QUERY_ACCOUNT } from '../../../common/graphql/account'
-import { UPDATE_PAYMENT_METHOD } from '../../../common/graphql/billing'
-import useUpdateUserPaymentMethod from './useUpdateUserPaymentMethod'
+import { CREATE_SETUP_INTENT } from '../../../../../common/graphql/billing'
+import useSetupIntent from './useSetupIntent'
 
-describe('useUpdateUserPaymentMethod', () => {
-
+describe('useSetupIntent', () => {
   const mockMutation = jest.fn(() => ({
     data: {
-      billingUpdateCustomerPaymentMethod: { success: 'updatePaymentMethod' },
+      billingCreateSetupIntent: {
+        success: true,
+        clientSecret: 'fooSetupIntent',
+      },
     },
   }));
-
   const user = {
     currentOrganization: {
       id: '123FooOrganization',
     }
-  }
-  const paymentMethod = {
-      id: '123FooPaymentMethod',
   }
   const userWithError = {
     currentOrganization: {
@@ -31,37 +28,27 @@ describe('useUpdateUserPaymentMethod', () => {
   const mocks = [
     {
       request: {
-        query: UPDATE_PAYMENT_METHOD,
+        query: CREATE_SETUP_INTENT,
         variables: {
           organizationId: user.currentOrganization.id,
-          paymentMethodId: paymentMethod.id,
         },
       },
       newData: mockMutation,
     },
     {
       request: {
-        query: UPDATE_PAYMENT_METHOD,
+        query: CREATE_SETUP_INTENT,
         variables: {
           organizationId: userWithError.currentOrganization.id,
-          paymentMethodId: paymentMethod.id,
         },
       },
       error: new Error('The horror! The horror!')
-    },
-    {
-      request: {
-        query: QUERY_ACCOUNT,
-      },
-      result: {
-        data: {},
-      },
     }
   ]
 
-  function testHook(params) {
+  function testHook(argument) {
     const { result, waitForNextUpdate } = renderHook(
-      () => useUpdateUserPaymentMethod(params),
+      () => useSetupIntent(argument),
       {
         wrapper: ({ children }) => (
           <MockedProvider mocks={mocks} >
@@ -81,41 +68,22 @@ describe('useUpdateUserPaymentMethod', () => {
       jest.clearAllMocks()
   })
 
-  it('does not execute the mutation if missing user', async () => {
+  it('return null if missing user', async () => {
     const mocks = []
-    const { result } = testHook({
-      paymentMethod: {},
-      user: null,
-    })
+    const { result } = testHook(null)
     await expect(mockMutation).not.toHaveBeenCalled();
-  })
-
-  it('does not execute the mutation if missing paymentMethod', async () => {
-    const mocks = []
-    const { result } = testHook({
-      user,
-      paymentMethod: null,
-    })
-    await expect(mockMutation).not.toHaveBeenCalled();
+    expect(result.current.setupIntent).toBeNull()
   })
 
   it('run the mutation and return the setupIntent', async () => {
-    const { result, waitForNextUpdate } = testHook({
-      user,
-      paymentMethod,
-    });
+    const { result, waitForNextUpdate } = testHook(user)
     await expect(mockMutation).toHaveBeenCalled();
     await waitForNextUpdate();
-    await expect(result.current.userPaymentMethod).toEqual(
-      'updatePaymentMethod'
-    );
-  });
+    await expect(result.current.setupIntent).toEqual('fooSetupIntent');
+  })
 
   it('run the mutation and return an error', async () => {
-    const { result, waitForNextUpdate } = testHook({
-      user: userWithError,
-      paymentMethod,
-    })
+    const { result, waitForNextUpdate } = testHook(userWithError)
     await waitForNextUpdate();
     await expect(result.current.error).toEqual(mocks[1].error);
   })

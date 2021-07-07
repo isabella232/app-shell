@@ -1,6 +1,6 @@
 import { useEffect, useState} from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_SETUP_INTENT } from '../../../common/graphql/billing';
+import { CREATE_SETUP_INTENT } from '../../../../../common/graphql/billing';
 
 function useSetupIntent(user) {
   const [createSetupIntent, { data, error: mutationError }] = useMutation(

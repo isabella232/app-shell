@@ -19,7 +19,7 @@ import Summary from '../../Summary';
 import useSetupIntent from '../hooks/useSetupIntent';
 import useCreatePaymentMethod from '../hooks/useCreatePaymentMethod';
 import useUpdateUserPaymentMethod from '../hooks/useUpdateUserPaymentMethod';
-import useUpdateSubscriptionPlan from '../../../common/hooks/useUpdateSubscriptionPlan';
+import useUpdateSubscriptionPlan from '../../../../../common/hooks/useUpdateSubscriptionPlan';
 
 const Form = ({
   user,

@@ -1,7 +1,7 @@
 import { useEffect , useState} from 'react';
 import { useMutation } from '@apollo/client';
-import { UPDATE_PAYMENT_METHOD } from '../../../common/graphql/billing';
-import { QUERY_ACCOUNT } from '../../../common/graphql/account';
+import { UPDATE_PAYMENT_METHOD } from '../../../../../common/graphql/billing';
+import { QUERY_ACCOUNT } from '../../../../../common/graphql/account';
 
 function useUpdateUserPaymentMethod({ user, paymentMethod }) {
   const [updatePaymentMethod, { data, error: mutationError }] = useMutation(

@@ -1,4 +1,4 @@
-import { freePlan } from '../../../common/mocks/freePlan';
+import { freePlan } from '../../../../../common/mocks/freePlan';
 
 const useHeaderLabel = (isActiveTrial, planOptions, isFreePlan) => {
   let headerLabel;

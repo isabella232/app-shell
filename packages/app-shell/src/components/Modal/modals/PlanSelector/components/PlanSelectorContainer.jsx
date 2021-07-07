@@ -8,12 +8,12 @@ import Summary from '../../Summary';
 import useSelectedPlan from '../hooks/useSelectedPlan';
 import useButtonOptions from '../hooks/useButtonOptions';
 import useHeaderLabel from '../hooks/useHeaderLabel';
-import useUpdateSubscriptionPlan from '../../../common/hooks/useUpdateSubscriptionPlan';
+import useUpdateSubscriptionPlan from '../../../../../common/hooks/useUpdateSubscriptionPlan';
 import {
   useTrackPlanSelectorViewed,
   useTrackPageViewed,
   formatCTAString,
-} from '../../../common/hooks/useSegmentTracking';
+} from '../../../../../common/hooks/useSegmentTracking';
 import {
   ButtonContainer,
   SwitchContainer,
@@ -26,7 +26,7 @@ import {
   DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
-import { ModalContext } from '../../../common/context/Modal';
+import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
 export const PlanSelectorContainer = ({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal as TrialExpired } from './index'
-import { UserContext } from '../context/User'
-import response from '../mocks/trialExpiredMock'
+import { UserContext } from '../../../../common/context/User'
+import response from '../../../../common/mocks/trialExpiredMock'
 
 export default {
   title: 'Trial Expired Modal',

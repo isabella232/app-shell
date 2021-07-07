@@ -1,9 +1,9 @@
 import React from 'react';
 import PaymentMethod from './index';
-import { UserContext } from '../../common/context/User';
-import { ModalContext } from '../../common/context/Modal';
-import mock from '../../common/mocks/mock';
-import { CREATE_SETUP_INTENT } from '../../common/graphql/billing';
+import { UserContext } from '../../../../common/context/User';
+import { ModalContext } from '../../../../common/context/Modal';
+import mock from '../../../../common/mocks/mock';
+import { CREATE_SETUP_INTENT } from '../../../../common/graphql/billing';
 
 export default {
   title: 'Payment Method',
