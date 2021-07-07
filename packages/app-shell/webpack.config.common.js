@@ -1,5 +1,7 @@
+const path = require('path');
+
 module.exports = {
-  entry: './src/navigator.js',
+  entry: './src/exports/navigator.js',
   output: {
     filename: './[name].js',
     clean: true,
