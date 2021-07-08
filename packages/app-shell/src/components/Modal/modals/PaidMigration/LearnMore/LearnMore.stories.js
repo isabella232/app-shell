@@ -1,7 +1,7 @@
 import React from 'react';
 import LearnMore from './index';
-import response from '../../mocks/mock';
-import { UserContext } from '../../context/User';
+import response from '../../../../../common/mocks/mock';
+import { UserContext } from '../../../../../common/context/User';
 
 export default {
   title: 'Modals/Paid Migration/Learn More',
