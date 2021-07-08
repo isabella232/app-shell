@@ -65,3 +65,59 @@ export const START_TRIAL = gql`
     }
   }
 `
+export const MIGRATE_TO_OB = gql`
+  mutation BillingMigrateToOneBufferResponseMutation(
+    $billingMigrateToOneBufferOrganizationId: String!
+  ) {
+    billingMigrateToOneBuffer(
+      organizationId: $billingMigrateToOneBufferOrganizationId
+    ) {
+      ... on BillingMigrateToOneBufferResponse {
+        billing {
+          ... on OBBilling {
+            canStartTrial
+            subscription {
+              interval
+              periodEnd
+              trial {
+                isActive
+                remainingDays
+                isAwaitingUserAction
+                startDate
+                endDate
+              }
+              plan {
+                id
+                name
+              }
+            }
+            changePlanOptions {
+              planId
+              planName
+              planInterval
+              channelsQuantity
+              description
+              isCurrentPlan
+              highlights
+              currency
+              basePrice
+              totalPrice
+              discountPercentage
+              discountNote
+              priceNote
+              absoluteSavings
+              summary {
+                details
+                intervalBasePrice
+                intervalUnit
+              }
+              isRecommended
+              downgradedMessage
+            }
+          }
+        }
+      }
+      ... on BillingError { userFriendlyMessage }
+  }
+}
+`
