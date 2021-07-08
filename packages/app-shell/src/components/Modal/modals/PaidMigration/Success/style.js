@@ -12,7 +12,6 @@ export const Holder = styled.div`
   background-image: url('https://buffer-ui.s3.amazonaws.com/illustrations/success-celebration.jpg');
   background-size: 410px;
   padding: 24px;
-  border: 1px solid red;
 
   h1 {
     max-width: 308px;

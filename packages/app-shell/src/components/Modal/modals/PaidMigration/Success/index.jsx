@@ -6,7 +6,7 @@ import Link from '@bufferapp/ui/Link';
 
 import { Holder, ButtonContainer } from './style';
 
-const LearnMore = () => {
+const Success = () => {
   return (
     <Holder>
       <Text type="h1">Congrats! Welcome to the Essentials plan</Text>
@@ -30,4 +30,4 @@ const LearnMore = () => {
   );
 };
 
-export default LearnMore;
+export default Success;
