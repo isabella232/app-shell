@@ -31,6 +31,7 @@ export const QUERY_ACCOUNT = gql`
         shouldDisplayInviteCTA
         featureFlips
         billing {
+          id
           canAccessAnalytics
           canAccessEngagement
           canAccessPublishing
@@ -107,64 +108,7 @@ export const QUERY_ACCOUNT = gql`
           organizationId
         }
         billing {
-          canAccessAnalytics
-          canAccessEngagement
-          canAccessPublishing
-          paymentDetails {
-            hasPaymentDetails
-          }
-          ... on MPBilling {
-            billingRedirectUrl
-            subscriptions {
-              interval
-              plan
-              product
-              trial {
-                isActive
-              }
-            }
-          }
-          ... on OBBilling {
-            canStartTrial
-            subscription {
-              interval
-              periodEnd
-              trial {
-                isActive
-                remainingDays
-                isAwaitingUserAction
-                startDate
-                endDate
-              }
-              plan {
-                id
-                name
-              }
-            }
-            changePlanOptions {
-              planId
-              planName
-              planInterval
-              channelsQuantity
-              description
-              isCurrentPlan
-              highlights
-              currency
-              basePrice
-              totalPrice
-              discountPercentage
-              discountNote
-              priceNote
-              absoluteSavings
-              summary {
-                details
-                intervalBasePrice
-                intervalUnit
-              }
-              isRecommended
-              downgradedMessage
-            }
-          }
+          id
         }
       }
       products {

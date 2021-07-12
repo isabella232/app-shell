@@ -74,47 +74,7 @@ export const MIGRATE_TO_OB = gql`
     ) {
       ... on BillingMigrateToOneBufferResponse {
         billing {
-          ... on OBBilling {
-            canStartTrial
-            subscription {
-              interval
-              periodEnd
-              trial {
-                isActive
-                remainingDays
-                isAwaitingUserAction
-                startDate
-                endDate
-              }
-              plan {
-                id
-                name
-              }
-            }
-            changePlanOptions {
-              planId
-              planName
-              planInterval
-              channelsQuantity
-              description
-              isCurrentPlan
-              highlights
-              currency
-              basePrice
-              totalPrice
-              discountPercentage
-              discountNote
-              priceNote
-              absoluteSavings
-              summary {
-                details
-                intervalBasePrice
-                intervalUnit
-              }
-              isRecommended
-              downgradedMessage
-            }
-          }
+          id
         }
       }
       ... on BillingError { userFriendlyMessage }
