@@ -1,14 +1,28 @@
 import React from 'react';
 
 import Text from '@bufferapp/ui/Text';
-import Link from '@bufferapp/ui/Link';
 import Button from '@bufferapp/ui/Button';
-import Summary from '../../Summary';
 
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 
-import { Holder, FeaturesList, LeftColumn, RightColumn } from './style';
+import {
+  Holder,
+  FeaturesList,
+  LeftColumn,
+  RightColumn,
+  TotalPrice,
+  Detail,
+  DetailList,
+  Bottom,
+  Body,
+  SummaryContainer,
+  Separator,
+  SummaryNote,
+  SummaryDetails,
+  PriceFooterWrapper,
+  ButtonContainer,
+} from './style';
 
 const Pricing = () => {
   return (
@@ -21,39 +35,89 @@ const Pricing = () => {
         </Text>
 
         <FeaturesList>
-          {planFeatures.map((feature) => (
-            <li>
-              <FlashIcon size="large" />
-              <Text type="p">{feature}</Text>
-            </li>
-          ))}
+          <li>
+            <FlashIcon size="large" />
+            <Text type="p">Comprehensive analytics</Text>
+          </li>
+          <li>
+            <FlashIcon size="large" />
+            <Text type="p">Intelligent answers and suggestions</Text>
+          </li>
+          <li>
+            <FlashIcon size="large" />
+            <Text type="p">Advanced Instagram features</Text>
+          </li>
+          <li>
+            <FlashIcon size="large" />
+            <Text type="p">The entirety of the Buffer platform</Text>
+          </li>
         </FeaturesList>
 
-        <Button
-          type="text"
-          onClick={() => openPlans(isUpgradeIntent)}
-          label="Go back to plans"
-          icon={<ArrowLeftIcon />}
-        />
+        <ButtonContainer>
+          <Button
+            type="text"
+            onClick={() => openPlans(isUpgradeIntent)}
+            label="Go back to plans"
+            icon={<ArrowLeftIcon />}
+          />
+        </ButtonContainer>
       </LeftColumn>
 
       <RightColumn>
-        <Summary
-          selectedPlan={selectedPlan}
-          fromPlanSelector={false}
-          isUpgradeIntent={true}
-        />
+        <SummaryContainer>
+          <Body>
+            <Text type="h2">Your upgrade</Text>
+            <SummaryDetails>
+              {
+                <>
+                  <DetailList>
+                    {selectedPlan.summary.details.map((detail) => (
+                      <Detail key={detail}>
+                        <Text type="p">{detail}</Text>
+                      </Detail>
+                    ))}
+                  </DetailList>
+                  <Separator />
+                  <SummaryNote>
+                    <Text type="p">
+                      Payment made today is pro rata of new plan price until the
+                      next billing cycle begins on <b>August 3, 2021</b>
+                    </Text>
+                  </SummaryNote>
+                </>
+              }
+            </SummaryDetails>
+
+            <Bottom>
+              <TotalPrice>
+                <sup>{selectedPlan.currency}</sup>
+                <Text type="h2" as="p">
+                  {selectedPlan.totalPrice}
+                </Text>
+              </TotalPrice>
+
+              <PriceFooterWrapper>
+                <Text type="p" color="grayDark">
+                  Billed monthly in USD
+                </Text>
+                <Text type="p" color="grayDark">
+                  Includes ${selectedPlan.channelsQuantity} social channels
+                </Text>
+              </PriceFooterWrapper>
+
+              <Button
+                type="primary"
+                onClick={() => openPlans(isUpgradeIntent)}
+                label="Supercharge My Plan"
+              />
+            </Bottom>
+          </Body>
+        </SummaryContainer>
+        <div></div>
       </RightColumn>
     </Holder>
   );
 };
-
-export const planFeatures = [
-  'Comprehensive analytics',
-  'Intelligent answers and suggestions',
-  'Advanced Instagram features',
-  'The entirety of the Buffer platform',
-];
 
 export const selectedPlan = {
   planId: 'essentials',
@@ -70,7 +134,11 @@ export const selectedPlan = {
   discountNote: '',
   priceNote: 'Price per social channel',
   summary: {
-    details: ['Add social channels anytime', 'Cancel at anytime'],
+    details: [
+      'Unlimited scheduled posts',
+      'Unlimited social channels',
+      'One user',
+    ],
     warning:
       'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
     intervalBasePrice: 5,

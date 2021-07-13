@@ -7,8 +7,7 @@ export const Holder = styled.div`
   height: 376px;
   box-sizing: border-box;
   background-repeat: no-repeat;
-  background-position-x: right 48px;
-  background-position-y: center;
+  background-position: right 48px center;
   background-image: url('https://buffer-ui.s3.amazonaws.com/illustrations/success-celebration.jpg');
   background-size: 410px;
   padding: 24px;
