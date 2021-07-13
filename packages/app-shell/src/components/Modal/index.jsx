@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 
-import { getCookie } from '../../common/utils/cookies'
+import { getCookie } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
 import PaymentMethod from './modals/PaymentMethod';
@@ -9,8 +9,7 @@ import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';
 import Confirmation from './modals/Confirmation';
 import TrialExpired from './modals/TrialExpired';
-import PaidMigration from './modals/PaidMigration'
-
+import PaidMigration from './modals/PaidMigration';
 
 const ModalContent = ({ modal }) => {
   switch (modal) {
@@ -22,8 +21,8 @@ const ModalContent = ({ modal }) => {
       return <Confirmation />;
     case MODALS.startTrial:
       return <StartTrial />;
-      case MODALS.paidMigration:
-        return <PaidMigration />;
+    case MODALS.paidMigration:
+      return <PaidMigration />;
     case MODALS.trialExpired:
       return <TrialExpired />;
     default:
@@ -33,13 +32,15 @@ const ModalContent = ({ modal }) => {
 
 const Modal = ({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
-  const user = useUser()
+  const user = useUser();
 
   useEffect(() => {
-    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
-    const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
+    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' });
+    const isAwaitingUserAction =
+      user?.currentOrganization?.billing?.subscription?.trial
+        ?.isAwaitingUserAction || false;
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
-      openModal(MODALS.trialExpired)
+      openModal(MODALS.trialExpired);
     }
   }, []);
 
