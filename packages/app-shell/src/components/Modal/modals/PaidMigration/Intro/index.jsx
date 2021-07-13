@@ -8,6 +8,7 @@ import {
   IconWrapper,
   BackgroundLayerBottom,
   BackgroundLayerTop,
+  OverlayBackground,
 } from './style';
 
 const Intro = () => {
@@ -21,10 +22,12 @@ const Intro = () => {
 
       <Text type="h3">Supercharge your plan with Essentials</Text>
 
-      <ButtonContainer>
-        <Button type="text" label="Remind Me Later" onClick={() => {}} />
-        <Button type="primary" label="Learn More" onClick={() => {}} />
-      </ButtonContainer>
+      <OverlayBackground>
+        <ButtonContainer>
+          <Button type="text" label="Remind Me Later" onClick={() => {}} />
+          <Button type="primary" label="Learn More" onClick={() => {}} />
+        </ButtonContainer>
+      </OverlayBackground>
     </Holder>
   );
 };
