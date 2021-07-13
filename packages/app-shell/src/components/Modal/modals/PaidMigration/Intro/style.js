@@ -91,5 +91,10 @@ export const ButtonContainer = styled.div`
   opacity: 0;
   position: absolute;
   bottom: 25px;
+  left: 20px;
   animation: 0.6s ${SlideUp} ease-out 1.5s 1 forwards;
+
+  > div:first-child {
+    margin-right: 8px;
+  }
 `;
