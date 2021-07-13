@@ -1,13 +1,20 @@
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
-import Link from '@bufferapp/ui/Link';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 
-import { Holder, ButtonContainer, IconWrapper } from './style';
+import {
+  Holder,
+  ButtonContainer,
+  IconWrapper,
+  BackgroundLayerBottom,
+  BackgroundLayerTop,
+} from './style';
 
 const Intro = () => {
   return (
     <Holder>
+      <BackgroundLayerBottom></BackgroundLayerBottom>
+      <BackgroundLayerTop></BackgroundLayerTop>
       <IconWrapper>
         <FlashIcon size="large" />
       </IconWrapper>
