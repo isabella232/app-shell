@@ -22,7 +22,6 @@ const useMigrateToOB = ({ user }) => {
   }, [processing]);
 
   useEffect(() => {
-    console.log(data);
     if (mutationError) {
       setError(mutationError);
       setProcessing(false);
