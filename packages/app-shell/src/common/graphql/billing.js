@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { BILLING_FIELDS } from './account';
 
 export const CREATE_SETUP_INTENT = gql`
   mutation billingCreateSetupIntent(
@@ -64,4 +65,21 @@ export const START_TRIAL = gql`
       ... on BillingError { userFriendlyMessage }
     }
   }
+`
+export const MIGRATE_TO_OB = gql`
+  ${BILLING_FIELDS}
+  mutation BillingMigrateToOneBufferResponseMutation(
+    $billingMigrateToOneBufferOrganizationId: String!
+  ) {
+    billingMigrateToOneBuffer(
+      organizationId: $billingMigrateToOneBufferOrganizationId
+    ) {
+      ... on BillingMigrateToOneBufferResponse {
+        billing {
+          ...BillingFields
+        }
+      }
+      ... on BillingError { userFriendlyMessage }
+  }
+}
 `
