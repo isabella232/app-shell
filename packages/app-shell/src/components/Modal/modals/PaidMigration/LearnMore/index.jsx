@@ -4,7 +4,18 @@ import Text from '@bufferapp/ui/Text';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import { purple, white, blue, teal } from '@bufferapp/ui/style/colors';
 
-import { Holder, Content, Hero, IconWrapper, Feature, Label } from './style';
+import {
+  Holder,
+  Hero,
+  IconWrapper,
+  Feature,
+  Label,
+  InstagramPosting,
+  BufferSuite,
+  OneBuffer,
+  FreePlanBorder,
+  EssentialsPlanBorder,
+} from './style';
 
 const LearnMore = () => {
   return (
@@ -39,6 +50,8 @@ const LearnMore = () => {
           With advanced Instagram features like our Hashtag Manager, Shop Grid
           and Instagram Stories scheduling you can take things further
         </Text>
+
+        <InstagramPosting></InstagramPosting>
       </Feature>
 
       <Feature backgroundColor={blue}>
@@ -54,6 +67,8 @@ const LearnMore = () => {
           You get the full package with our comprehensive publishing, analytics
           and engagement tools to power your business
         </Text>
+
+        <BufferSuite></BufferSuite>
       </Feature>
 
       <Feature backgroundColor={teal}>
@@ -69,7 +84,49 @@ const LearnMore = () => {
           Go deeper with comprehensive cross-network analytics that will let you
           see the bigger picture and help you shape where to go next
         </Text>
+
+        <OneBuffer></OneBuffer>
       </Feature>
+
+      <TableContainer>
+        <Text type="h2">There is so much to gain</Text>
+        <Text type="p">
+          Supercharging your plan with so much more than what you have today
+        </Text>
+
+        <FreePlanBorder></FreePlanBorder>
+        <EssentialsPlanBorder></EssentialsPlanBorder>
+        <FeaturesTable>
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>
+                <span>Free</span>
+                <div>
+                  <p>$0 per social channel</p>
+                </div>
+              </th>
+              <th>
+                <span>Essentials</span>
+                <div>
+                  <p>Starts at $6/mo</p>
+                </div>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <FeatureName>
+                <div>Feature Name</div>
+                <span>Feature Description</span>
+              </FeatureName>
+              <td>{checkIfBoolean(feature.free)}</td>
+              <td>{checkIfBoolean(feature.essential)}</td>
+            </tr>
+          </tbody>
+        </FeaturesTable>
+      </TableContainer>
     </Holder>
   );
 };

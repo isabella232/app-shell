@@ -11,7 +11,7 @@ import {
 
 export const Holder = styled.div`
   width: 900px;
-  height: 540px;
+  /* height: 540px; */
   box-sizing: border-box;
   padding-top: 24px;
   overflow-y: scroll;
@@ -32,7 +32,7 @@ export const Hero = styled.div`
 
   h1 {
     margin-top: 69px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
   }
 
   p {
@@ -59,7 +59,7 @@ export const Feature = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 275px;
 
   h2 {
     margin-top: 25px;
@@ -70,6 +70,31 @@ export const Feature = styled.div`
     max-width: 430px;
     margin-top: 25px;
   }
+`;
+
+export const InstagramPosting = styled.div`
+  width: 900px;
+  height: 726px;
+  margin-bottom: -200px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/instagram-posting.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+`;
+
+export const BufferSuite = styled.div`
+  width: 900px;
+  height: 403px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/buffer-suite.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+`;
+
+export const OneBuffer = styled.div`
+  width: 900px;
+  height: 602px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/one-buffer.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 `;
 
 export const Label = styled.div`
@@ -87,9 +112,33 @@ export const Label = styled.div`
   p {
     display: inline;
     text-transform: uppercase;
-    color: ${(props) => props.color};
     letter-spacing: 1.5px;
     font-weight: 600;
     font-size: 12px;
   }
+`;
+
+export const FeaturesTable = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+  position: relative;
+  z-index: 9;
+`;
+
+export const FreePlanBorder = styled.div`
+  border: 1px solid black;
+  position: absolute;
+  height: 100%;
+  border-radius: 5px;
+  width: 32%;
+  left: 34%;
+`;
+
+export const EssentialsPlanBorder = styled.div`
+  border: 1px solid black;
+  position: absolute;
+  height: 100%;
+  border-radius: 5px;
+  width: 32%;
+  left: 67.5%;
 `;
