@@ -24,6 +24,10 @@ import {
   PlanName,
   BottomSection,
   ButtonWrapper,
+  IntroducingEssentials,
+  SectionIntro,
+  SectionOneBuffer,
+  SectionAnalytics,
 } from './style';
 
 const LearnMore = () => {
@@ -57,54 +61,60 @@ const LearnMore = () => {
         <Text type="h1">Introducing the Essentials plan</Text>
       </Hero>
 
-      <Feature>
-        <Label color={purple}>
-          <FlashIcon size="medium" verticalAlign="middle" />
-          <Text type="p">Included with Essentials</Text>
-        </Label>
+      <SectionIntro>
+        <IntroducingEssentials></IntroducingEssentials>
+        <Feature>
+          <Label color={purple}>
+            <FlashIcon size="medium" verticalAlign="middle" />
+            <Text type="p">Included with Essentials</Text>
+          </Label>
 
-        <Text type="h2">Take your posting power to the next level</Text>
-        <Text type="p">
-          With advanced Instagram features like our Hashtag Manager, Shop Grid
-          and Instagram Stories scheduling you can take things further
-        </Text>
+          <Text type="h2">Take your posting power to the next level</Text>
+          <Text type="p">
+            With advanced Instagram features like our Hashtag Manager, Shop Grid
+            and Instagram Stories scheduling you can take things further
+          </Text>
+        </Feature>
 
         <InstagramPosting></InstagramPosting>
-      </Feature>
+      </SectionIntro>
 
-      <Feature backgroundColor={blue}>
-        <Label color={white}>
-          <FlashIcon size="medium" verticalAlign="middle" />
-          <Text type="p">Included with Essentials</Text>
-        </Label>
+      <SectionOneBuffer>
+        <Feature>
+          <Label color={white}>
+            <FlashIcon size="medium" verticalAlign="middle" />
+            <Text type="p">Included with Essentials</Text>
+          </Label>
 
-        <Text type="h2" color="white">
-          Giving you the best of what we offer
-        </Text>
-        <Text type="p" color="white">
-          You get the full package with our comprehensive publishing, analytics
-          and engagement tools to power your business
-        </Text>
-
+          <Text type="h2" color="white">
+            Giving you the best of what we offer
+          </Text>
+          <Text type="p" color="white">
+            You get the full package with our comprehensive publishing,
+            analytics and engagement tools to power your business
+          </Text>
+        </Feature>
         <BufferSuite></BufferSuite>
-      </Feature>
+      </SectionOneBuffer>
 
-      <Feature backgroundColor={teal}>
-        <Label color={white}>
-          <FlashIcon size="medium" verticalAlign="middle" />
-          <Text type="p">Included with Essentials</Text>
-        </Label>
+      <SectionAnalytics>
+        <Feature>
+          <Label color={white}>
+            <FlashIcon size="medium" verticalAlign="middle" />
+            <Text type="p">Included with Essentials</Text>
+          </Label>
 
-        <Text type="h2" color="white">
-          Know where to take your business next
-        </Text>
-        <Text type="p" color="white">
-          Go deeper with comprehensive cross-network analytics that will let you
-          see the bigger picture and help you shape where to go next
-        </Text>
+          <Text type="h2" color="white">
+            Know where to take your business next
+          </Text>
+          <Text type="p" color="white">
+            Go deeper with comprehensive cross-network analytics that will let
+            you see the bigger picture and help you shape where to go next
+          </Text>
+        </Feature>
 
         <OneBuffer></OneBuffer>
-      </Feature>
+      </SectionAnalytics>
 
       <BottomSection>
         <TableContainer>

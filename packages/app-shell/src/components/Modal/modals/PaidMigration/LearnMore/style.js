@@ -10,11 +10,12 @@ import {
   grayDarker,
   purple,
   purpleLight,
+  teal,
 } from '@bufferapp/ui/style/colors';
 
 export const Holder = styled.div`
   width: 900px;
-  /* height: 540px; */
+  height: 540px;
   box-sizing: border-box;
   padding-top: 24px;
   overflow-y: scroll;
@@ -26,7 +27,8 @@ export const Hero = styled.div`
   background-image: url('https://buffer-ui.s3.amazonaws.com/shapes/wavy-gradient-bg.png');
   background-repeat: no-repeat;
   background-size: contain;
-  background-position-y: bottom;
+  background-position-y: 100%;
+  padding-bottom: 55px;
 
   img {
     margin: 0 auto 20px;
@@ -56,13 +58,37 @@ export const IconWrapper = styled.div`
   }
 `;
 
-export const Feature = styled.div`
-  text-align: center;
-  background-color: ${(props) => props.backgroundColor || '#f6f9fb'};
+export const SectionIntro = styled.div`
+  background-color: #f8fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 275px;
+`;
+
+export const SectionOneBuffer = styled.div`
+  background-color: ${blue};
+  padding-top: 200px;
+`;
+
+export const SectionAnalytics = styled.div`
+  background-color: ${teal};
+  padding-top: 150px;
+`;
+
+export const IntroducingEssentials = styled.div`
+  width: 900px;
+  height: 785px;
+  margin-top: -85px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/introducing.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+`;
+
+export const Feature = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h2 {
     margin-top: 25px;
