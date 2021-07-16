@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import {
   black,
   blue,
+  gray,
   grayDark,
+  grayLight,
+  grayLighter,
   grayDarker,
   purple,
   purpleLight,
@@ -110,6 +113,7 @@ export const Label = styled.div`
   }
 
   p {
+    color: ${(props) => props.color};
     display: inline;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -118,27 +122,146 @@ export const Label = styled.div`
   }
 `;
 
+export const BottomSection = styled.div`
+  background-color: #f8fafc;
+  padding-bottom: 150px;
+`;
+
+export const TableContainer = styled.div`
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+
+  p:first-of-type {
+    max-width: 272px;
+  }
+`;
+
 export const FeaturesTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   position: relative;
   z-index: 9;
+  margin-top: -35px;
+
+  td,
+  th {
+    padding: 10px;
+    text-align: center;
+
+    &:nth-child(2) {
+      box-shadow: inset -1em 0em #f8fafc;
+    }
+
+    &:nth-child(3) {
+      box-shadow: inset 1em 0em #f8fafc;
+    }
+
+    &:nth-child(2),
+    &:nth-child(3) {
+      background-color: white;
+      width: 174px;
+      text-align: center;
+    }
+  }
+
+  thead {
+    th {
+      padding: 10px;
+      text-align: center;
+
+      span {
+        font-size: 24px;
+      }
+
+      /* feature category name */
+      &:nth-child(1) {
+        text-align: left;
+        font-weight: 600;
+        vertical-align: bottom;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-top: 1px solid ${grayLight};
+    }
+
+    td {
+      text-align: left;
+      margin-bottom: 7px;
+      line-height: 1.2rem;
+    }
+
+    svg {
+      width: 40px;
+    }
+  }
+`;
+
+export const PlanLabel = styled.div`
+  background-color: ${(props) => (props.highlight ? blue : grayLight)};
+  width: fit-content;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 3px;
+  padding: 4px 12px;
+
+  p {
+    text-transform: uppercase;
+    color: ${(props) => (props.highlight ? 'white' : grayDark)};
+    font-size: 12px;
+
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin: 0;
+    display: inline-block;
+  }
+
+  svg {
+    color: white;
+    margin-right: 9px;
+  }
+`;
+
+export const PlanName = styled.div`
+  margin-top: 10px;
+
+  p {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 30px;
+  }
 `;
 
 export const FreePlanBorder = styled.div`
-  border: 1px solid black;
+  border: 2px solid ${gray};
   position: absolute;
   height: 100%;
   border-radius: 5px;
-  width: 32%;
-  left: 34%;
+  width: 174px;
+  left: 332px;
+  z-index: 99;
+  top: 70px;
+  pointer-events: none;
 `;
 
 export const EssentialsPlanBorder = styled.div`
-  border: 1px solid black;
+  border: 3px solid ${blue};
   position: absolute;
   height: 100%;
   border-radius: 5px;
-  width: 32%;
-  left: 67.5%;
+  width: 174px;
+  right: 2px;
+  z-index: 99;
+  top: 70px;
+  pointer-events: none;
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
 `;

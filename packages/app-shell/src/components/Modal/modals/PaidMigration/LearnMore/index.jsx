@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Text from '@bufferapp/ui/Text';
+import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
+import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white, blue, teal } from '@bufferapp/ui/style/colors';
 
 import {
@@ -15,9 +17,25 @@ import {
   OneBuffer,
   FreePlanBorder,
   EssentialsPlanBorder,
+  FeaturesTable,
+  TableContainer,
+  FeatureName,
+  PlanLabel,
+  PlanName,
+  BottomSection,
+  ButtonWrapper,
 } from './style';
 
 const LearnMore = () => {
+  const checkIfTrue = (plan) => {
+    switch (plan) {
+      case true:
+        return <CheckmarkIcon size="medium" />;
+      default:
+        return 'No';
+    }
+  };
+
   return (
     <Holder>
       <Hero>
@@ -88,47 +106,133 @@ const LearnMore = () => {
         <OneBuffer></OneBuffer>
       </Feature>
 
-      <TableContainer>
-        <Text type="h2">There is so much to gain</Text>
-        <Text type="p">
-          Supercharging your plan with so much more than what you have today
-        </Text>
+      <BottomSection>
+        <TableContainer>
+          <Text type="h2">There is so much to gain</Text>
+          <Text type="p">
+            Supercharging your plan with so much more than what you have today
+          </Text>
 
-        <FreePlanBorder></FreePlanBorder>
-        <EssentialsPlanBorder></EssentialsPlanBorder>
-        <FeaturesTable>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>
-                <span>Free</span>
-                <div>
-                  <p>$0 per social channel</p>
-                </div>
-              </th>
-              <th>
-                <span>Essentials</span>
-                <div>
-                  <p>Starts at $6/mo</p>
-                </div>
-              </th>
-            </tr>
-          </thead>
+          <FreePlanBorder></FreePlanBorder>
+          <EssentialsPlanBorder></EssentialsPlanBorder>
+          <FeaturesTable>
+            <thead>
+              <tr>
+                <th></th>
+                <th>
+                  <PlanLabel>
+                    <Text type="p">Current Plan</Text>
+                  </PlanLabel>
+                  <PlanName>
+                    <Text type="p">Free</Text>
+                  </PlanName>
+                </th>
+                <th>
+                  <PlanLabel highlight>
+                    <FlashIcon size="medium" verticalAlign="middle" />
+                    <Text type="p">New Plan</Text>
+                  </PlanLabel>
+                  <PlanName>
+                    <Text type="p">Essentials</Text>
+                  </PlanName>
+                </th>
+              </tr>
+            </thead>
 
-          <tbody>
-            <tr>
-              <FeatureName>
-                <div>Feature Name</div>
-                <span>Feature Description</span>
-              </FeatureName>
-              <td>{checkIfBoolean(feature.free)}</td>
-              <td>{checkIfBoolean(feature.essential)}</td>
-            </tr>
-          </tbody>
-        </FeaturesTable>
-      </TableContainer>
+            <tbody>
+              {PlansFeatures.map((feature) => (
+                <tr>
+                  <td>
+                    <Text type="p">
+                      <b>{feature.featureName}</b>
+                    </Text>
+                    <Text type="p">{feature.description}</Text>
+                  </td>
+                  <td>
+                    <Text type="p">{checkIfTrue(feature.publishPro)}</Text>
+                  </td>
+                  <td>
+                    <Text type="p">{checkIfTrue(feature.essentials)}</Text>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </FeaturesTable>
+        </TableContainer>
+
+        <ButtonWrapper>
+          <Button
+            type="primary"
+            label="I’m Super Interested!"
+            onClick={() => {}}
+          />
+        </ButtonWrapper>
+      </BottomSection>
     </Holder>
   );
 };
+
+export const PlansFeatures = [
+  {
+    featureName: 'Publishing tools',
+    description: 'Auto-schedule posts across multiple networks',
+    publishPro: true,
+    essentials: true,
+  },
+  {
+    featureName: 'Engagement tools',
+    description: 'Get back to your customers without delay',
+    publishPro: true,
+    essentials: true,
+  },
+  {
+    featureName: 'Comprehensive analytics',
+    description: 'Construct and schedule posts across networks',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Campaign analytics',
+    description: 'Take your campaigns further with in-depth analysis',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Customisable reports',
+    description: 'Custom-made reports out of your social media analytics',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Best time to post',
+    description: 'Know when it’s the right time to post and how',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Advanced Instagram features',
+    description: 'Schedule Instagram stories and post to first comment',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Compare organic and boosted posts',
+    description: 'See how your paid posts are performing',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Hashtag manager',
+    description: 'Don’t get lost with hashtags, manage them with ease',
+    publishPro: false,
+    essentials: true,
+  },
+  {
+    featureName: 'Per social channel pricing',
+    description: 'Pay only for what you use with the social channels you need',
+    publishPro: false,
+    essentials: true,
+  },
+];
 
 export default LearnMore;
