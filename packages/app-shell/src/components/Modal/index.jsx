@@ -10,6 +10,9 @@ import StartTrial from './modals/StartTrial';
 import Confirmation from './modals/Confirmation';
 import TrialExpired from './modals/TrialExpired';
 import PaidMigration from './modals/PaidMigration';
+import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
+import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
+import StickyModal from './modals/StickyModal';
 
 const ModalContent = ({ modal }) => {
   switch (modal) {
@@ -23,6 +26,10 @@ const ModalContent = ({ modal }) => {
       return <StartTrial />;
     case MODALS.paidMigration:
       return <PaidMigration />;
+    case MODALS.essentialsPlan:
+      return <EssentialsPlan />;
+    case MODALS.essentialsPricing:
+      return <EssentialsPricing />;
     case MODALS.trialExpired:
       return <TrialExpired />;
     default:

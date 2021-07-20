@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
@@ -25,7 +27,17 @@ const Intro = () => {
       <OverlayBackground>
         <ButtonContainer>
           <Button type="text" label="Remind Me Later" onClick={() => {}} />
-          <Button type="primary" label="Learn More" onClick={() => {}} />
+          <Button
+            type="primary"
+            label="Learn More"
+            onClick={() => {
+              const { MODALS, actions } = window?.appshell || {};
+              actions.openModal(MODALS.essentialsPlan, {
+                cta: 'renderModal',
+                ctaButton: 'renderModal',
+              });
+            }}
+          />
         </ButtonContainer>
       </OverlayBackground>
     </Holder>

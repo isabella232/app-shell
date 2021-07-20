@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { MODALS } from '../../../../../common/hooks/useModal';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
@@ -30,7 +31,7 @@ import {
   SectionAnalytics,
 } from './style';
 
-const LearnMore = () => {
+const EssentialsPlan = () => {
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
@@ -174,7 +175,14 @@ const LearnMore = () => {
           <Button
             type="primary"
             label="I’m Super Interested!"
-            onClick={() => {}}
+            onClick={() => {
+              const { MODALS, actions } = window?.appshell || {};
+              actions.openModal(MODALS.essentialsPricing, {
+                cta: 'renderModal',
+                ctaButton: 'renderModal',
+                isUpgradeIntent: false,
+              });
+            }}
           />
         </ButtonWrapper>
       </BottomSection>
@@ -245,4 +253,4 @@ export const PlansFeatures = [
   },
 ];
 
-export default LearnMore;
+export default EssentialsPlan;

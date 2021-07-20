@@ -32,6 +32,18 @@ const ModalTesting = () => {
       >
         Render Modal
       </button>
+      <button
+        onClick={() => {
+          const { MODALS, actions } = window?.appshell || {};
+          actions.openModal(MODALS.essentialsPlan, {
+            cta: 'renderModal',
+            ctaButton: 'renderModal',
+            isUpgradeIntent: false,
+          });
+        }}
+      >
+        Paid Migration
+      </button>
     </Wrapper>
   );
 };

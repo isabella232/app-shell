@@ -4,7 +4,7 @@ import response from '../../../../../common/mocks/mock';
 import { UserContext } from '../../../../../common/context/User';
 
 export default {
-  title: 'Modals/Paid Migration/Learn More',
+  title: 'Modals/Paid Migration/Essentials Plan',
   component: LearnMore,
 };
 

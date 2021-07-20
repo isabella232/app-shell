@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Intro from './Intro';
+
 const PaidMigration = () => {
-  return <p>Test</p>;
+  return <Intro />;
 };
 
 export default PaidMigration;

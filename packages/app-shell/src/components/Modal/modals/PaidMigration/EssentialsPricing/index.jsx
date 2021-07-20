@@ -24,7 +24,7 @@ import {
   ButtonContainer,
 } from './style';
 
-const Pricing = () => {
+const EssentialsPricing = () => {
   return (
     <Holder>
       <LeftColumn>
@@ -147,4 +147,4 @@ export const selectedPlan = {
   isRecommended: false,
 };
 
-export default Pricing;
+export default EssentialsPricing;
