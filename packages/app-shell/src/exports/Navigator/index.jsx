@@ -134,7 +134,11 @@ Navigator.defaultProps = {
 
 export default () => {
   const client = new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      possibleTypes: {
+        Billing: ["MPBilling", "OBBilling"],
+      },
+    }),
     link: new HttpLink({
       uri: window.API_GATEWAY_URL,
       credentials: 'include',

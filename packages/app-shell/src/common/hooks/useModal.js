@@ -48,12 +48,18 @@ function useModal() {
   }, [])
 
   // Open modal from events
+  function handleOpenModal({ detail }) {
+    const { modal:modalKey, data:modalData } = detail
+    openModal(modalKey, modalData)
+  }
+
   useEffect(() => {
-    window.addEventListener(EVENT_KEY, (e) => {
-      const { modal:modalKey, data:modalData } = e.detail
-      openModal(modalKey, modalData)
-    })
-  })
+    window.addEventListener(EVENT_KEY, handleOpenModal)
+
+    return function cleanup() {
+      window.removeEventListener(EVENT_KEY, handleOpenModal)
+    }
+  }, [])
 
   return {
     data,

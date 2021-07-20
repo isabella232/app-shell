@@ -6,14 +6,72 @@ export const SET_CURRENT_ORGANIZATION = gql`
   }
 `;
 
-/**
- * IMPORTANT: since our cache is being updated manually for the
- * setCurrentOrganization mutation, make sure that when you add,
- * change or delete fields inside the currentOrganization in this
- * query, you also do the same inside the organizations.
- */
+export const BILLING_FIELDS = gql`
+  fragment BillingFields on Billing {
+    id
+    canAccessAnalytics
+    canAccessEngagement
+    canAccessPublishing
+    paymentDetails {
+      hasPaymentDetails
+    }
+    ... on MPBilling {
+      billingRedirectUrl
+      subscriptions {
+        interval
+        plan
+        product
+        trial {
+          isActive
+        }
+      }
+    }
+    ... on OBBilling {
+      canStartTrial
+      subscription {
+        interval
+        periodEnd
+        trial {
+          isActive
+          remainingDays
+          isAwaitingUserAction
+          startDate
+          endDate
+        }
+        plan {
+          id
+          name
+        }
+      }
+      changePlanOptions {
+        planId
+        planName
+        planInterval
+        channelsQuantity
+        description
+        isCurrentPlan
+        highlights
+        currency
+        basePrice
+        totalPrice
+        discountPercentage
+        discountNote
+        priceNote
+        absoluteSavings
+        summary {
+          details
+          intervalBasePrice
+          intervalUnit
+        }
+        isRecommended
+        downgradedMessage
+      }
+    }
+  }
+`;
 
 export const QUERY_ACCOUNT = gql`
+  ${BILLING_FIELDS}
   query GetAccount {
     account {
       id
@@ -31,64 +89,7 @@ export const QUERY_ACCOUNT = gql`
         shouldDisplayInviteCTA
         featureFlips
         billing {
-          canAccessAnalytics
-          canAccessEngagement
-          canAccessPublishing
-          paymentDetails {
-            hasPaymentDetails
-          }
-          ... on MPBilling {
-            billingRedirectUrl
-            subscriptions {
-              interval
-              plan
-              product
-              trial {
-                isActive
-              }
-            }
-          }
-          ... on OBBilling {
-            canStartTrial
-            subscription {
-              interval
-              periodEnd
-              trial {
-                isActive
-                remainingDays
-                isAwaitingUserAction
-                startDate
-                endDate
-              }
-              plan {
-                id
-                name
-              }
-            }
-            changePlanOptions {
-              planId
-              planName
-              planInterval
-              channelsQuantity
-              description
-              isCurrentPlan
-              highlights
-              currency
-              basePrice
-              totalPrice
-              discountPercentage
-              discountNote
-              priceNote
-              absoluteSavings
-              summary {
-                details
-                intervalBasePrice
-                intervalUnit
-              }
-              isRecommended
-              downgradedMessage
-            }
-          }
+          ...BillingFields
         }
       }
       organizations {
@@ -107,64 +108,7 @@ export const QUERY_ACCOUNT = gql`
           organizationId
         }
         billing {
-          canAccessAnalytics
-          canAccessEngagement
-          canAccessPublishing
-          paymentDetails {
-            hasPaymentDetails
-          }
-          ... on MPBilling {
-            billingRedirectUrl
-            subscriptions {
-              interval
-              plan
-              product
-              trial {
-                isActive
-              }
-            }
-          }
-          ... on OBBilling {
-            canStartTrial
-            subscription {
-              interval
-              periodEnd
-              trial {
-                isActive
-                remainingDays
-                isAwaitingUserAction
-                startDate
-                endDate
-              }
-              plan {
-                id
-                name
-              }
-            }
-            changePlanOptions {
-              planId
-              planName
-              planInterval
-              channelsQuantity
-              description
-              isCurrentPlan
-              highlights
-              currency
-              basePrice
-              totalPrice
-              discountPercentage
-              discountNote
-              priceNote
-              absoluteSavings
-              summary {
-                details
-                intervalBasePrice
-                intervalUnit
-              }
-              isRecommended
-              downgradedMessage
-            }
-          }
+          ...BillingFields
         }
       }
       products {
