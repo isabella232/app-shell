@@ -81,14 +81,12 @@ const Modal = ({ modal, openModal }) => {
   const user = useUser();
 
   useEffect(() => {
-    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' });
-    const isAwaitingUserAction =
-      user?.currentOrganization?.billing?.subscription?.trial
-        ?.isAwaitingUserAction || false;
+    const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
+    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
       openModal(MODALS.trialExpired);
     }
-  }, []);
+  }, [user.loading]);
 
   useEffect(() => {
     setHasModal(!!modal);
