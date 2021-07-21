@@ -3,6 +3,8 @@ import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
+import { setCookie, DATES } from '../../../../../common/utils/cookies'
+import { ModalContext } from '../../../../../common/context/Modal';
 
 import {
   Holder,
@@ -15,32 +17,46 @@ import {
 
 const Intro = () => {
   return (
-    <Holder>
-      <BackgroundLayerBottom></BackgroundLayerBottom>
-      <BackgroundLayerTop></BackgroundLayerTop>
-      <IconWrapper>
-        <FlashIcon size="large" />
-      </IconWrapper>
+    <ModalContext.Consumer>
+      {({ openModal }) => (
+        <Holder>
+          <BackgroundLayerBottom></BackgroundLayerBottom>
+          <BackgroundLayerTop></BackgroundLayerTop>
+          <IconWrapper>
+            <FlashIcon size="large" />
+          </IconWrapper>
 
-      <Text type="h3">Supercharge your plan with Essentials</Text>
+          <Text type="h3">Supercharge your plan with Essentials</Text>
 
-      <OverlayBackground>
-        <ButtonContainer>
-          <Button type="text" label="Remind Me Later" onClick={() => {}} />
-          <Button
-            type="primary"
-            label="Learn More"
-            onClick={() => {
-              const { MODALS, actions } = window?.appshell || {};
-              actions.openModal(MODALS.essentialsPlan, {
-                cta: 'renderModal',
-                ctaButton: 'renderModal',
-              });
-            }}
-          />
-        </ButtonContainer>
-      </OverlayBackground>
-    </Holder>
+          <OverlayBackground>
+            <ButtonContainer>
+            <Button
+              type="text"
+              label="Remind Me Later"
+              onClick={() => {
+                const { actions } = window?.appshell || {};
+                openModal(null);
+                setCookie({
+                  key: 'migrationModalDismissed',
+                  value: true,
+                  expires: DATES.inDaysFromNow(1),
+                })
+              }} />
+              <Button
+                type="primary"
+                label="Learn More"
+                onClick={() => {
+                  openModal(MODALS.essentialsPlan, {
+                    cta: 'Migrate to OB Modal',
+                    ctaButton: 'Learn More',
+                  });
+                }}
+              />
+            </ButtonContainer>
+          </OverlayBackground>
+        </Holder>
+      )}
+    </ModalContext.Consumer>
   );
 };
 

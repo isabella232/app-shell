@@ -90,7 +90,8 @@ const Modal = ({ modal, openModal }) => {
 
     //Migrate to OB modal
     const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
-    if (canMigrateToOneBuffer) {
+    const hasDismissedMigrationModal = getCookie({ key: 'migrationModalDismissed' })
+    if (!hasDismissedMigrationModal && canMigrateToOneBuffer) {
       openModal(MODALS.paidMigration);
     }
   }, [user.loading]);

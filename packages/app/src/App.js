@@ -23,7 +23,7 @@ const ModalTesting = () => {
       <button
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
-          actions.openModal(MODALS.planSelector, {
+          actions.openModal(MODALS.startTrial, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
             isUpgradeIntent: false,
