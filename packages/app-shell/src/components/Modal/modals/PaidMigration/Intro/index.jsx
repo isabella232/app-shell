@@ -3,8 +3,9 @@ import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
-import { setCookie, DATES } from '../../../../../common/utils/cookies'
+import { setCookie, DATES } from '../../../../../common/utils/cookies';
 import { ModalContext } from '../../../../../common/context/Modal';
+import { MODALS } from '../../../../../common/hooks/useModal';
 
 import {
   Holder,
@@ -30,18 +31,19 @@ const Intro = () => {
 
           <OverlayBackground>
             <ButtonContainer>
-            <Button
-              type="text"
-              label="Remind Me Later"
-              onClick={() => {
-                const { actions } = window?.appshell || {};
-                openModal(null);
-                setCookie({
-                  key: 'migrationModalDismissed',
-                  value: true,
-                  expires: DATES.inDaysFromNow(1),
-                })
-              }} />
+              <Button
+                type="text"
+                label="Remind Me Later"
+                onClick={() => {
+                  openModal(null);
+                  setCookie({
+                    key: 'migrationModalDismissed',
+                    value: true,
+                    expires: DATES.inDaysFromNow(1),
+                  });
+                }}
+              />
+
               <Button
                 type="primary"
                 label="Learn More"

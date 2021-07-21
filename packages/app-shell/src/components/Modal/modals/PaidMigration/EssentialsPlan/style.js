@@ -72,6 +72,7 @@ export const SectionOneBuffer = styled.div`
 
 export const SectionAnalytics = styled.div`
   background-color: ${teal};
+  background: linear-gradient(0deg, white 30%, ${teal} 40%);
   padding-top: 150px;
 `;
 

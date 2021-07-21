@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ModalContext } from '../../../../../common/context/Modal';
 import { MODALS } from '../../../../../common/hooks/useModal';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -20,7 +21,6 @@ import {
   EssentialsPlanBorder,
   FeaturesTable,
   TableContainer,
-  FeatureName,
   FeatureIcon,
   DashIcon,
   PlanLabel,
@@ -44,153 +44,161 @@ const EssentialsPlan = () => {
   };
 
   return (
-    <Holder>
-      <Hero>
-        <img
-          src="https://buffer-ui.s3.amazonaws.com/avatars/avatar-joel.jpg"
-          width="117"
-          height="117"
-        />
-        <Text type="p">
-          Hey, it’s Joel the CEO here. I wanted to say that we’re embarking on a
-          new future here at Buffer that involves what we believe to be better
-          plans, better pricing that works for you and your online business.
-        </Text>
+    <ModalContext.Consumer>
+      {({ openModal }) => (
+        <Holder>
+          <Hero>
+            <img
+              src="https://buffer-ui.s3.amazonaws.com/avatars/avatar-joel.jpg"
+              width="117"
+              height="117"
+            />
+            <Text type="p">
+              Hey, it’s Joel the CEO here. I wanted to say that we’re embarking
+              on a new future here at Buffer that involves what we believe to be
+              better plans, better pricing that works for you and your online
+              business.
+            </Text>
 
-        <IconWrapper>
-          <FlashIcon size="large" />
-        </IconWrapper>
+            <IconWrapper>
+              <FlashIcon size="large" />
+            </IconWrapper>
 
-        <Text type="h1">Introducing the Essentials plan</Text>
-      </Hero>
+            <Text type="h1">Introducing the Essentials plan</Text>
+          </Hero>
 
-      <SectionIntro>
-        <IntroducingEssentials></IntroducingEssentials>
-        <Feature>
-          <Label color={purple}>
-            <FlashIcon size="medium" verticalAlign="middle" />
-            <Text type="p">Included with Essentials</Text>
-          </Label>
+          <SectionIntro>
+            <IntroducingEssentials></IntroducingEssentials>
+            <Feature>
+              <Label color={purple}>
+                <FlashIcon size="medium" verticalAlign="middle" />
+                <Text type="p">Included with Essentials</Text>
+              </Label>
 
-          <Text type="h2">Take your posting power to the next level</Text>
-          <Text type="p">
-            With advanced Instagram features like our Hashtag Manager, Shop Grid
-            and Instagram Stories scheduling you can take things further
-          </Text>
-        </Feature>
+              <Text type="h2">Take your posting power to the next level</Text>
+              <Text type="p">
+                With advanced Instagram features like our Hashtag Manager, Shop
+                Grid and Instagram Stories scheduling you can take things
+                further
+              </Text>
+            </Feature>
 
-        <InstagramPosting></InstagramPosting>
-      </SectionIntro>
+            <InstagramPosting></InstagramPosting>
+          </SectionIntro>
 
-      <SectionOneBuffer>
-        <Feature>
-          <Label color={white}>
-            <FlashIcon size="medium" verticalAlign="middle" />
-            <Text type="p">Included with Essentials</Text>
-          </Label>
+          <SectionOneBuffer>
+            <Feature>
+              <Label color={white}>
+                <FlashIcon size="medium" verticalAlign="middle" />
+                <Text type="p">Included with Essentials</Text>
+              </Label>
 
-          <Text type="h2" color="white">
-            Giving you the best of what we offer
-          </Text>
-          <Text type="p" color="white">
-            You get the full package with our comprehensive publishing,
-            analytics and engagement tools to power your business
-          </Text>
-        </Feature>
-        <BufferSuite></BufferSuite>
-      </SectionOneBuffer>
+              <Text type="h2" color="white">
+                Giving you the best of what we offer
+              </Text>
+              <Text type="p" color="white">
+                You get the full package with our comprehensive publishing,
+                analytics and engagement tools to power your business
+              </Text>
+            </Feature>
+            <BufferSuite></BufferSuite>
+          </SectionOneBuffer>
 
-      <SectionAnalytics>
-        <Feature>
-          <Label color={white}>
-            <FlashIcon size="medium" verticalAlign="middle" />
-            <Text type="p">Included with Essentials</Text>
-          </Label>
+          <SectionAnalytics>
+            <Feature>
+              <Label color={white}>
+                <FlashIcon size="medium" verticalAlign="middle" />
+                <Text type="p">Included with Essentials</Text>
+              </Label>
 
-          <Text type="h2" color="white">
-            Know where to take your business next
-          </Text>
-          <Text type="p" color="white">
-            Go deeper with comprehensive cross-network analytics that will let
-            you see the bigger picture and help you shape where to go next
-          </Text>
-        </Feature>
+              <Text type="h2" color="white">
+                Know where to take your business next
+              </Text>
+              <Text type="p" color="white">
+                Go deeper with comprehensive cross-network analytics that will
+                let you see the bigger picture and help you shape where to go
+                next
+              </Text>
+            </Feature>
 
-        <OneBuffer></OneBuffer>
-      </SectionAnalytics>
+            <OneBuffer></OneBuffer>
+          </SectionAnalytics>
 
-      <BottomSection>
-        <TableContainer>
-          <Text type="h2">There is so much to gain</Text>
-          <Text type="p">
-            Supercharging your plan with so much more than what you have today
-          </Text>
+          <BottomSection>
+            <TableContainer>
+              <Text type="h2">There is so much to gain</Text>
+              <Text type="p">
+                Supercharging your plan with so much more than what you have
+                today
+              </Text>
 
-          <FreePlanBorder></FreePlanBorder>
-          <EssentialsPlanBorder></EssentialsPlanBorder>
-          <FeaturesTable>
-            <thead>
-              <tr>
-                <th></th>
-                <th>
-                  <PlanLabel>
-                    <Text type="p">Current Plan</Text>
-                  </PlanLabel>
-                  <PlanName>
-                    <Text type="p">Free</Text>
-                  </PlanName>
-                </th>
-                <th>
-                  <PlanLabel highlight>
-                    <FlashIcon size="medium" verticalAlign="middle" />
-                    <Text type="p">New Plan</Text>
-                  </PlanLabel>
-                  <PlanName>
-                    <Text type="p">Essentials</Text>
-                  </PlanName>
-                </th>
-              </tr>
-            </thead>
+              <FreePlanBorder></FreePlanBorder>
+              <EssentialsPlanBorder></EssentialsPlanBorder>
+              <FeaturesTable>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <PlanLabel>
+                        <Text type="p">Current Plan</Text>
+                      </PlanLabel>
+                      <PlanName>
+                        <Text type="p">Free</Text>
+                      </PlanName>
+                    </th>
+                    <th>
+                      <PlanLabel highlight>
+                        <FlashIcon size="medium" verticalAlign="middle" />
+                        <Text type="p">New Plan</Text>
+                      </PlanLabel>
+                      <PlanName>
+                        <Text type="p">Essentials</Text>
+                      </PlanName>
+                    </th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              {PlansFeatures.map((feature) => (
-                <tr>
-                  <td>
-                    <Text type="p">
-                      <b>{feature.featureName}</b>
-                    </Text>
-                    <Text type="p">{feature.description}</Text>
-                  </td>
-                  <td>
-                    <FeatureIcon>{checkIfTrue(feature.publishPro)}</FeatureIcon>
-                  </td>
-                  <td>
-                    <FeatureIcon type="p">
-                      {checkIfTrue(feature.essentials)}
-                    </FeatureIcon>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </FeaturesTable>
-        </TableContainer>
+                <tbody>
+                  {PlansFeatures.map((feature, index) => (
+                    <tr key={`row-${index}`}>
+                      <td>
+                        <Text type="p">
+                          <b>{feature.featureName}</b>
+                        </Text>
+                        <Text type="p">{feature.description}</Text>
+                      </td>
+                      <td>
+                        <FeatureIcon>
+                          {checkIfTrue(feature.publishPro)}
+                        </FeatureIcon>
+                      </td>
+                      <td>
+                        <FeatureIcon type="p">
+                          {checkIfTrue(feature.essentials)}
+                        </FeatureIcon>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </FeaturesTable>
+            </TableContainer>
 
-        <ButtonWrapper>
-          <Button
-            type="primary"
-            label="I’m Super Interested!"
-            onClick={() => {
-              const { MODALS, actions } = window?.appshell || {};
-              actions.openModal(MODALS.essentialsPricing, {
-                cta: 'renderModal',
-                ctaButton: 'renderModal',
-                isUpgradeIntent: false,
-              });
-            }}
-          />
-        </ButtonWrapper>
-      </BottomSection>
-    </Holder>
+            <ButtonWrapper>
+              <Button
+                type="primary"
+                label="I’m Super Interested!"
+                onClick={() => {
+                  openModal(MODALS.essentialsPricing, {
+                    cta: 'Migrate to OB Modal',
+                    ctaButton: 'I’m Super Interested!',
+                  });
+                }}
+              />
+            </ButtonWrapper>
+          </BottomSection>
+        </Holder>
+      )}
+    </ModalContext.Consumer>
   );
 };
 
