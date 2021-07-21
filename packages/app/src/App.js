@@ -36,7 +36,7 @@ const ModalTesting = () => {
       <button
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
-          actions.openModal(MODALS.essentialsPlan, {
+          actions.openModal(MODALS.paidMigration, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
             isUpgradeIntent: false,
