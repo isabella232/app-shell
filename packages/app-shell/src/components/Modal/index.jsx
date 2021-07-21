@@ -34,11 +34,11 @@ const Modal = ({ modal, openModal }) => {
 
   useEffect(() => {
     const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
-    const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
+    const isAwaitingUserAction = true;
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
       openModal(MODALS.trialExpired)
     }
-  }, []);
+  }, [user.loading]);
 
   useEffect(() => {
     setHasModal(!!modal);
