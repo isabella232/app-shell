@@ -94,7 +94,7 @@ const Modal = ({ modal, openModal }) => {
     setHasModal(!!modal);
   }, [modal]);
 
-  return <>{hasModal && <ModalContent modal={modal} />}</>;
+  return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
 };
 
 export default Modal;
