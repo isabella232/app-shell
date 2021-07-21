@@ -81,10 +81,17 @@ const Modal = ({ modal, openModal }) => {
   const user = useUser();
 
   useEffect(() => {
+    //Trial Expired Modal
     const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
     const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
       openModal(MODALS.trialExpired);
+    }
+
+    //Migrate to OB modal
+    const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
+    if (canMigrateToOneBuffer) {
+      openModal(MODALS.paidMigration);
     }
   }, [user.loading]);
 
