@@ -21,6 +21,8 @@ import {
   FeaturesTable,
   TableContainer,
   FeatureName,
+  FeatureIcon,
+  DashIcon,
   PlanLabel,
   PlanName,
   BottomSection,
@@ -35,9 +37,9 @@ const EssentialsPlan = () => {
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
-        return <CheckmarkIcon size="medium" />;
+        return <CheckmarkIcon size="large" />;
       default:
-        return 'No';
+        return <DashIcon />;
     }
   };
 
@@ -160,10 +162,12 @@ const EssentialsPlan = () => {
                     <Text type="p">{feature.description}</Text>
                   </td>
                   <td>
-                    <Text type="p">{checkIfTrue(feature.publishPro)}</Text>
+                    <FeatureIcon>{checkIfTrue(feature.publishPro)}</FeatureIcon>
                   </td>
                   <td>
-                    <Text type="p">{checkIfTrue(feature.essentials)}</Text>
+                    <FeatureIcon type="p">
+                      {checkIfTrue(feature.essentials)}
+                    </FeatureIcon>
                   </td>
                 </tr>
               ))}

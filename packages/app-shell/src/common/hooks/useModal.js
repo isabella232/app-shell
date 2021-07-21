@@ -10,6 +10,7 @@ export const MODALS = {
   paidMigration: 'paidMigration',
   essentialsPlan: 'essentialsPlan',
   essentialsPricing: 'essentialsPricing',
+  upgradeSuccess: 'upgradeSuccess',
 };
 
 export const EVENT_KEY = 'appshell__modal_event';

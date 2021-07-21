@@ -107,7 +107,14 @@ const EssentialsPricing = () => {
 
               <Button
                 type="primary"
-                onClick={() => openPlans(isUpgradeIntent)}
+                onClick={() => {
+                  const { MODALS, actions } = window?.appshell || {};
+                  actions.openModal(MODALS.upgradeSuccess, {
+                    cta: 'renderModal',
+                    ctaButton: 'renderModal',
+                    isUpgradeIntent: false,
+                  });
+                }}
                 label="Supercharge My Plan"
               />
             </Bottom>

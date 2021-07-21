@@ -12,7 +12,7 @@ import TrialExpired from './modals/TrialExpired';
 import PaidMigration from './modals/PaidMigration';
 import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
 import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
-import StickyModal from './modals/StickyModal';
+import Success from './modals/PaidMigration/Success';
 
 const ModalContent = ({ modal }) => {
   switch (modal) {
@@ -30,6 +30,8 @@ const ModalContent = ({ modal }) => {
       return <EssentialsPlan />;
     case MODALS.essentialsPricing:
       return <EssentialsPricing />;
+    case MODALS.upgradeSuccess:
+      return <Success />;
     case MODALS.trialExpired:
       return <TrialExpired />;
     default:

@@ -32,6 +32,7 @@ const ModalTesting = () => {
       >
         Render Modal
       </button>
+      <h3>Paid Migration Flow</h3>
       <button
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
@@ -42,7 +43,7 @@ const ModalTesting = () => {
           });
         }}
       >
-        Paid Migration
+        Render Modal
       </button>
     </Wrapper>
   );
