@@ -14,7 +14,7 @@ import {
 
 export const Holder = styled.div`
   width: 900px;
-  /* height: 540px; */
+  height: 540px;
   box-sizing: border-box;
   padding-top: 24px;
   overflow-y: scroll;
