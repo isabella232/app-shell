@@ -138,15 +138,15 @@ const EssentialsPlan = () => {
                 <thead>
                   <tr>
                     <th></th>
-                    <th>
+                    <th scope="col">
                       <PlanLabel>
                         <Text type="p">Current Plan</Text>
                       </PlanLabel>
                       <PlanName>
-                        <Text type="p">Free</Text>
+                        <Text type="p">Publish Pro</Text>
                       </PlanName>
                     </th>
-                    <th>
+                    <th scope="col">
                       <PlanLabel highlight>
                         <FlashIcon size="medium" verticalAlign="middle" />
                         <Text type="p">New Plan</Text>

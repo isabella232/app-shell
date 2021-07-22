@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import {
-  black,
   blue,
   gray,
   grayDark,
@@ -15,7 +14,7 @@ import {
 
 export const Holder = styled.div`
   width: 900px;
-  height: 540px;
+  /* height: 540px; */
   box-sizing: border-box;
   padding-top: 24px;
   overflow-y: scroll;
@@ -80,6 +79,7 @@ export const IntroducingEssentials = styled.div`
   width: 900px;
   height: 785px;
   margin-top: -85px;
+  margin-bottom: -200px;
   background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/introducing.png');
   background-repeat: no-repeat;
   background-size: contain;
@@ -150,8 +150,13 @@ export const Label = styled.div`
 `;
 
 export const BottomSection = styled.div`
+  margin-top: -70px;
   background-color: #f8fafc;
-  padding-bottom: 150px;
+  padding-bottom: 100px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/shapes/gray-swirl.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-y: bottom;
 `;
 
 export const TableContainer = styled.div`
@@ -173,7 +178,7 @@ export const FeaturesTable = styled.table`
 
   td,
   th {
-    padding: 10px;
+    padding: 10px 25px;
     text-align: center;
 
     &:nth-child(2) {
@@ -187,15 +192,32 @@ export const FeaturesTable = styled.table`
     &:nth-child(2),
     &:nth-child(3) {
       background-color: white;
-      width: 174px;
+      width: 154px;
       text-align: center;
     }
   }
 
   thead {
     th {
-      padding: 10px;
+      padding: 25px;
       text-align: center;
+      position: relative;
+
+      &:last-child {
+        position: relative;
+
+        &:before {
+          content: '';
+          height: 20px;
+          background: white;
+          width: 88%;
+          display: block;
+          position: absolute;
+          top: -8px;
+          left: 10px;
+          border-radius: 4px;
+        }
+      }
 
       span {
         font-size: 24px;
@@ -207,18 +229,60 @@ export const FeaturesTable = styled.table`
         font-weight: 600;
         vertical-align: bottom;
       }
+
+      &:nth-child(2) {
+        &:before {
+          content: '';
+          display: block;
+          width: 107px;
+          height: 67px;
+          position: absolute;
+          top: -54px;
+          right: -94px;
+          transform: rotate(15deg);
+          z-index: 9;
+          background-image: url('https://buffer-ui.s3.amazonaws.com/shapes/arrow.png');
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position-y: bottom;
+        }
+      }
     }
   }
 
   tbody {
     tr {
       border-top: 1px solid ${grayLight};
+
+      &:last-child {
+        td:last-child {
+          position: relative;
+
+          &:after {
+            content: '';
+            height: 20px;
+            background: white;
+            width: 88%;
+            display: block;
+            position: absolute;
+            bottom: -8px;
+            left: 10px;
+            border-radius: 4px;
+          }
+        }
+      }
     }
 
     td {
       text-align: left;
       margin-bottom: 7px;
       line-height: 1.2rem;
+      padding: 15px 5px;
+    }
+
+    p {
+      margin-top: 5px;
+      margin-bottom: 5px;
     }
 
     svg {
@@ -256,7 +320,7 @@ export const PlanName = styled.div`
   margin-top: 10px;
 
   p {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 600;
     margin: 0;
     line-height: 30px;
@@ -282,10 +346,10 @@ export const DashIcon = styled.div`
 export const FreePlanBorder = styled.div`
   border: 2px solid ${gray};
   position: absolute;
-  height: 100%;
+  height: 94%;
   border-radius: 5px;
-  width: 165px;
-  left: 345px;
+  width: 175px;
+  left: 325px;
   z-index: 99;
   top: 70px;
   pointer-events: none;
@@ -294,17 +358,17 @@ export const FreePlanBorder = styled.div`
 export const EssentialsPlanBorder = styled.div`
   border: 3px solid ${blue};
   position: absolute;
-  height: 100%;
+  height: 95%;
   border-radius: 5px;
-  width: 165px;
+  width: 173px;
   right: 12px;
   z-index: 99;
-  top: 70px;
+  top: 65px;
   pointer-events: none;
 `;
 
 export const ButtonWrapper = styled.div`
-  margin-top: 150px;
+  margin-top: 100px;
   display: flex;
   justify-content: center;
 `;
