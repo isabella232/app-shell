@@ -124,6 +124,14 @@ export const Modal = ({
   );
 };
 
+function setTrialDismissedCookies() {
+  setCookie({
+    key: 'trialOverDismissed',
+    value: true,
+    expires: DATES.inMonthsFromNow(2),
+  })
+}
+
 const TrialExpired = () => {
   return (
     <UserContext.Consumer>
@@ -133,14 +141,11 @@ const TrialExpired = () => {
             <Modal
               user={user}
               onDismiss={() => {
-                setCookie({
-                  key: 'trialOverDismissed',
-                  value: true,
-                  expires: DATES.inMonthsFromNow(2),
-                })
+                setTrialDismissedCookies()
                 openModal(null);
               }}
               onUpgrade={() => {
+                setTrialDismissedCookies()
                 openModal(MODALS.planSelector, {
                   cta: 'ugradePlan',
                   ctaButton: 'ugradePlan',
