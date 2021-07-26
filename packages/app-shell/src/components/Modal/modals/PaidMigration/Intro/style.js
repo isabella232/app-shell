@@ -16,8 +16,8 @@ const SlideUp = keyframes`
 export const Holder = styled.div`
   display: flex;
   flex-direction: column;
-  width: 432px;
-  height: 336px;
+  width: 382px;
+  height: 286px;
   background-color: #f8fafc;
   position: relative;
   padding: 25px;
@@ -75,14 +75,14 @@ export const IconWrapper = styled.div`
 
 export const OverlayBackground = styled.div`
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 50%;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0) 80%,
+    rgba(255, 255, 255, 0) 50%,
     rgba(255, 255, 255, 1) 100%
   );
 `;
