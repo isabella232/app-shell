@@ -2,15 +2,15 @@ import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 import { renderHook, act } from '@testing-library/react-hooks';
 
-import { QUERY_ACCOUNT } from '../graphql/account';
-import { MIGRATE_TO_OB } from '../graphql/billing';
-import useMigrateToOB from './useMigrateToOB';
+import useMigrateToOB, { MIGRATE_TO_OB } from './useMigrateToOB';
 
 describe('useMigrateToOB', () => {
   const mockSuccessMutation = jest.fn(() => {
     return {
       data: {
-        billingMigrateToOneBuffer: {},
+        billingMigrateToOneBuffer: {
+          billing: {}
+        },
       },
     };
   });
@@ -57,14 +57,6 @@ describe('useMigrateToOB', () => {
       newData: mockErrorMutation,
       error: new Error('Whoops'),
     },
-    {
-      request: {
-        query: QUERY_ACCOUNT,
-      },
-      result: {
-        data: {},
-      },
-    },
   ];
 
   function testHook(params) {
@@ -96,9 +88,7 @@ describe('useMigrateToOB', () => {
   });
 
   it('run the mutation and return the migration success', async () => {
-    const { result, waitForNextUpdate } = testHook({
-      user,
-    });
+    const { result, waitForNextUpdate } = testHook(user);
     act(() => {
       result.current.migrateToOB();
     });
@@ -108,9 +98,7 @@ describe('useMigrateToOB', () => {
   });
 
   it('run the mutation and return a user friendly error', async () => {
-    const { result, waitForNextUpdate } = testHook({
-      user: userWithError,
-    });
+    const { result, waitForNextUpdate } = testHook(userWithError);
     act(() => {
       result.current.migrateToOB();
     });

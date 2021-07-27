@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { ModalContext } from '../../../../../common/context/Modal';
-import { MODALS } from '../../../../../common/hooks/useModal';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white } from '@bufferapp/ui/style/colors';
+
+import { useUser } from '../../../../../common/context/User';
+import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
+import { ModalContext } from '../../../../../common/context/Modal';
+import { MODALS } from '../../../../../common/hooks/useModal';
 
 import {
   Holder,
@@ -33,7 +36,7 @@ import {
   SectionAnalytics,
 } from './style';
 
-const EssentialsPlan = () => {
+export const EssentialsPlan = ({ features }) => {
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
@@ -160,22 +163,22 @@ const EssentialsPlan = () => {
                 </thead>
 
                 <tbody>
-                  {PlansFeatures.map((feature, index) => (
+                  {features.map((feature, index) => (
                     <tr key={`row-${index}`}>
                       <td>
                         <Text type="p">
-                          <b>{feature.featureName}</b>
+                          <b>{feature.title}</b>
                         </Text>
-                        <Text type="p">{feature.description}</Text>
+                        <Text type="p">{feature.tagline}</Text>
                       </td>
                       <td>
                         <FeatureIcon>
-                          {checkIfTrue(feature.publishPro)}
+                          {checkIfTrue(feature.currentPlan)}
                         </FeatureIcon>
                       </td>
                       <td>
                         <FeatureIcon type="p">
-                          {checkIfTrue(feature.essentials)}
+                          {checkIfTrue(feature.suggestedPlan)}
                         </FeatureIcon>
                       </td>
                     </tr>
@@ -204,67 +207,14 @@ const EssentialsPlan = () => {
   );
 };
 
-export const PlansFeatures = [
-  {
-    featureName: 'Publishing tools',
-    description: 'Auto-schedule posts across multiple networks',
-    publishPro: true,
-    essentials: true,
-  },
-  {
-    featureName: 'Engagement tools',
-    description: 'Get back to your customers without delay',
-    publishPro: true,
-    essentials: true,
-  },
-  {
-    featureName: 'Comprehensive analytics',
-    description: 'Construct and schedule posts across networks',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Campaign analytics',
-    description: 'Take your campaigns further with in-depth analysis',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Customisable reports',
-    description: 'Custom-made reports out of your social media analytics',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Best time to post',
-    description: 'Know when it’s the right time to post and how',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Advanced Instagram features',
-    description: 'Schedule Instagram stories and post to first comment',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Compare organic and boosted posts',
-    description: 'See how your paid posts are performing',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Hashtag manager',
-    description: 'Don’t get lost with hashtags, manage them with ease',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Per social channel pricing',
-    description: 'Pay only for what you use with the social channels you need',
-    publishPro: false,
-    essentials: true,
-  },
-];
-
-export default EssentialsPlan;
+export default function() {
+  const user = useUser();
+  const { data:migrationPreview } = useMigrationPlanPreview(user)
+  const planFeatures = migrationPreview?.planFeatures || [];
+  const features = planFeatures.map(feature => ({
+    ...feature,
+    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(feature.id),
+    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(feature.id),
+  }))
+  return (<EssentialsPlan features={features} />);
+};
