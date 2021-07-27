@@ -5,18 +5,15 @@ import {
   gray,
   grayDark,
   grayLight,
-  grayLighter,
-  grayDarker,
-  purple,
   purpleLight,
   teal,
 } from '@bufferapp/ui/style/colors';
 
 export const Holder = styled.div`
   width: 900px;
-  height: 540px;
+  height: 600px;
   box-sizing: border-box;
-  padding-top: 24px;
+  padding-top: 80px;
   overflow-y: scroll;
 `;
 
@@ -66,19 +63,19 @@ export const SectionIntro = styled.div`
 
 export const SectionOneBuffer = styled.div`
   background-color: ${blue};
-  padding-top: 200px;
+  padding-top: 230px;
 `;
 
 export const SectionAnalytics = styled.div`
   background-color: ${teal};
   background: linear-gradient(0deg, white 30%, ${teal} 40%);
-  padding-top: 150px;
+  padding-top: 120px;
 `;
 
 export const IntroducingEssentials = styled.div`
   width: 900px;
   height: 785px;
-  margin-top: -85px;
+  margin-top: -65px;
   margin-bottom: -200px;
   background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/introducing.png');
   background-repeat: no-repeat;
@@ -92,13 +89,13 @@ export const Feature = styled.div`
   align-items: center;
 
   h2 {
-    margin-top: 25px;
+    margin-top: 15px;
     margin-bottom: 0;
   }
 
   p {
     max-width: 430px;
-    margin-top: 25px;
+    margin-top: 15px;
   }
 `;
 
@@ -113,15 +110,17 @@ export const InstagramPosting = styled.div`
 
 export const BufferSuite = styled.div`
   width: 900px;
-  height: 403px;
+  height: 323px;
   background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/buffer-suite.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position-x: right;
 `;
 
 export const OneBuffer = styled.div`
   width: 900px;
   height: 602px;
+  margin-top: 20px;
   background-image: url('https://buffer-ui.s3.amazonaws.com/screenshots/one-buffer.png');
   background-repeat: no-repeat;
   background-size: contain;
@@ -174,7 +173,7 @@ export const FeaturesTable = styled.table`
   width: 100%;
   position: relative;
   z-index: 9;
-  margin-top: -35px;
+  margin-top: -65px;
 
   td,
   th {
@@ -283,6 +282,10 @@ export const FeaturesTable = styled.table`
     p {
       margin-top: 5px;
       margin-bottom: 5px;
+
+      &:last-of-type {
+        font-size: 12px;
+      }
     }
 
     svg {
@@ -346,24 +349,24 @@ export const DashIcon = styled.div`
 export const FreePlanBorder = styled.div`
   border: 2px solid ${gray};
   position: absolute;
-  height: 94%;
+  height: 96%;
   border-radius: 5px;
   width: 175px;
   left: 325px;
   z-index: 99;
-  top: 70px;
+  top: 40px;
   pointer-events: none;
 `;
 
 export const EssentialsPlanBorder = styled.div`
   border: 3px solid ${blue};
   position: absolute;
-  height: 95%;
+  height: 97%;
   border-radius: 5px;
   width: 173px;
   right: 12px;
   z-index: 99;
-  top: 65px;
+  top: 35px;
   pointer-events: none;
 `;
 

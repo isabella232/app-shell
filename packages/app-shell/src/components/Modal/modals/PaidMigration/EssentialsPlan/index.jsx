@@ -6,7 +6,7 @@ import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
-import { purple, white, blue, teal } from '@bufferapp/ui/style/colors';
+import { purple, white } from '@bufferapp/ui/style/colors';
 
 import {
   Holder,
@@ -134,6 +134,7 @@ const EssentialsPlan = () => {
 
               <FreePlanBorder></FreePlanBorder>
               <EssentialsPlanBorder></EssentialsPlanBorder>
+
               <FeaturesTable>
                 <thead>
                   <tr>
@@ -186,6 +187,7 @@ const EssentialsPlan = () => {
             <ButtonWrapper>
               <Button
                 type="primary"
+                size="large"
                 label="I’m Super Interested!"
                 onClick={() => {
                   openModal(MODALS.essentialsPricing, {
