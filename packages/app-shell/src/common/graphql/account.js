@@ -88,6 +88,7 @@ export const QUERY_ACCOUNT = gql`
         isOneBufferOrganization
         canMigrateToOneBuffer {
           canMigrate
+          reasons
         }
         shouldDisplayInviteCTA
         featureFlips

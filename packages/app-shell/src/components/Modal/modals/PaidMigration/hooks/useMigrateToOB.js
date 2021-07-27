@@ -1,8 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { MIGRATE_TO_OB } from '../graphql/billing';
+import gql from 'graphql-tag'
 
-const useMigrateToOB = ({ user }) => {
+import { BILLING_FIELDS } from '../../../../../common/graphql/account';
+
+export const MIGRATE_TO_OB = gql`
+  ${BILLING_FIELDS}
+  mutation BillingMigrateToOneBufferResponseMutation(
+    $organizationId: String!
+  ) {
+    billingMigrateToOneBuffer(
+      organizationId: $organizationId
+    ) {
+      ... on BillingMigrateToOneBufferResponse {
+        billing {
+          ...BillingFields
+        }
+      }
+      ... on BillingError { userFriendlyMessage }
+  }
+}
+`
+
+const useMigrateToOB = ({ currentOrganization }) => {
   const [migrateToOB, { data, error: mutationError }] = useMutation(
     MIGRATE_TO_OB,
   );
@@ -10,10 +30,10 @@ const useMigrateToOB = ({ user }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (processing && user) {
+    if (processing && currentOrganization) {
       migrateToOB({
         variables: {
-          organizationId: user.currentOrganization.id,
+          organizationId: currentOrganization.id,
         },
       }).catch((e) => {
         console.error(e);
@@ -35,7 +55,7 @@ const useMigrateToOB = ({ user }) => {
     migrateToOB: () => {
       setProcessing(true);
     },
-    success: !!data,
+    success: !!data?.billingMigrateToOneBuffer?.billing,
     error,
     processing,
   };

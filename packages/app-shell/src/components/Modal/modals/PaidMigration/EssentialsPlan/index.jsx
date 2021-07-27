@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { ModalContext } from '../../../../../common/context/Modal';
-import { MODALS } from '../../../../../common/hooks/useModal';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white } from '@bufferapp/ui/style/colors';
+
+import { useUser } from '../../../../../common/context/User';
+import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
+import { ModalContext } from '../../../../../common/context/Modal';
+import { MODALS } from '../../../../../common/hooks/useModal';
 
 import {
   Holder,
@@ -33,7 +36,7 @@ import {
   SectionAnalytics,
 } from './style';
 
-const EssentialsPlan = () => {
+export const EssentialsPlan = ({ features }) => {
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
@@ -157,22 +160,22 @@ const EssentialsPlan = () => {
                 </thead>
 
                 <tbody>
-                  {PlansFeatures.map((feature, index) => (
+                  {features.map((feature, index) => (
                     <tr key={`row-${index}`}>
                       <td>
                         <Text type="p">
-                          <b>{feature.featureName}</b>
+                          <b>{feature.title}</b>
                         </Text>
-                        <Text type="p">{feature.description}</Text>
+                        <Text type="p">{feature.tagline}</Text>
                       </td>
                       <td>
                         <FeatureIcon>
-                          {checkIfTrue(feature.publishPro)}
+                          {checkIfTrue(feature.currentPlan)}
                         </FeatureIcon>
                       </td>
                       <td>
                         <FeatureIcon type="p">
-                          {checkIfTrue(feature.essentials)}
+                          {checkIfTrue(feature.suggestedPlan)}
                         </FeatureIcon>
                       </td>
                     </tr>
@@ -264,4 +267,18 @@ export const PlansFeatures = [
   },
 ];
 
-export default EssentialsPlan;
+export default function () {
+  const user = useUser();
+  const { data: migrationPreview } = useMigrationPlanPreview(user);
+  const planFeatures = migrationPreview?.planFeatures || [];
+  const features = planFeatures.map((feature) => ({
+    ...feature,
+    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(
+      feature.id
+    ),
+    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(
+      feature.id
+    ),
+  }));
+  return <EssentialsPlan features={features} />;
+}

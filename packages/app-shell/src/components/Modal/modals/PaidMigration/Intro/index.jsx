@@ -39,7 +39,7 @@ const Intro = () => {
                   setCookie({
                     key: 'migrationModalDismissed',
                     value: true,
-                    expires: DATES.inDaysFromNow(1),
+                    expires: DATES.inDaysFromNow(7),
                   });
                 }}
               />
