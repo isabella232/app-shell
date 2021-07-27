@@ -27,7 +27,7 @@ const Intro = () => {
             <FlashIcon size="large" />
           </IconWrapper>
 
-          <Text type="h3">Supercharge your plan with Essentials</Text>
+          <Text type="h3">New plans. More features. Affordable pricing.</Text>
 
           <OverlayBackground>
             <ButtonContainer>

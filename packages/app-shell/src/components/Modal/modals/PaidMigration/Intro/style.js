@@ -25,7 +25,7 @@ export const Holder = styled.div`
 
   h3 {
     opacity: 0;
-    max-width: 183px;
+    max-width: 250px;
     margin-top: 15px;
     margin-bottom: 16px;
     text-align: center;

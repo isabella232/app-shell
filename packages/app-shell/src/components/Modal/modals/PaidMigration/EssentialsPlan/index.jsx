@@ -54,10 +54,9 @@ const EssentialsPlan = () => {
               height="117"
             />
             <Text type="p">
-              Hey, it’s Joel the CEO here. I wanted to say that we’re embarking
-              on a new future here at Buffer that involves what we believe to be
-              better plans, better pricing that works for you and your online
-              business.
+              Hey, it’s Joel the CEO here. We’re embarking on a new future here
+              at Buffer that involves what we believe to be better plans and
+              better pricing that works for you and your business.
             </Text>
 
             <IconWrapper>
@@ -77,9 +76,8 @@ const EssentialsPlan = () => {
 
               <Text type="h2">Take your posting power to the next level</Text>
               <Text type="p">
-                With advanced Instagram features like our Hashtag Manager, Shop
-                Grid and Instagram Stories scheduling you can take things
-                further
+                Save hashtags, schedule Stories, and queue up as many posts as
+                you’d like.
               </Text>
             </Feature>
 
@@ -98,7 +96,7 @@ const EssentialsPlan = () => {
               </Text>
               <Text type="p" color="white">
                 You get the full package with our comprehensive publishing,
-                analytics and engagement tools to power your business
+                analytics and engagement tools to power your business.
               </Text>
             </Feature>
             <BufferSuite></BufferSuite>
@@ -115,9 +113,9 @@ const EssentialsPlan = () => {
                 Know where to take your business next
               </Text>
               <Text type="p" color="white">
-                Go deeper with comprehensive cross-network analytics that will
-                let you see the bigger picture and help you shape where to go
-                next
+                Go deeper with comprehensive cross-network analytics that show
+                you the bigger picture and help you shape your marketing
+                strategy.
               </Text>
             </Feature>
 
@@ -128,8 +126,7 @@ const EssentialsPlan = () => {
             <TableContainer>
               <Text type="h2">There is so much to gain</Text>
               <Text type="p">
-                Supercharging your plan with so much more than what you have
-                today
+                Switch to Essentials to supercharge your social media strategy.
               </Text>
 
               <FreePlanBorder></FreePlanBorder>
@@ -188,11 +185,11 @@ const EssentialsPlan = () => {
               <Button
                 type="primary"
                 size="large"
-                label="I’m Super Interested!"
+                label="Calculate New Price"
                 onClick={() => {
                   openModal(MODALS.essentialsPricing, {
                     cta: 'Migrate to OB Modal',
-                    ctaButton: 'I’m Super Interested!',
+                    ctaButton: 'Calculate New Price',
                   });
                 }}
               />
@@ -219,19 +216,19 @@ export const PlansFeatures = [
   },
   {
     featureName: 'Comprehensive analytics',
-    description: 'Construct and schedule posts across networks',
+    description: 'Get in-depth insights and recommendations',
     publishPro: false,
     essentials: true,
   },
   {
     featureName: 'Campaign analytics',
-    description: 'Take your campaigns further with in-depth analysis',
+    description: 'Combine and review analytics across channel',
     publishPro: false,
     essentials: true,
   },
   {
     featureName: 'Customisable reports',
-    description: 'Custom-made reports out of your social media analytics',
+    description: 'Edit and export performance reports',
     publishPro: false,
     essentials: true,
   },
@@ -255,7 +252,7 @@ export const PlansFeatures = [
   },
   {
     featureName: 'Hashtag manager',
-    description: 'Don’t get lost with hashtags, manage them with ease',
+    description: 'Manage your Instagram hashtags with ease',
     publishPro: false,
     essentials: true,
   },

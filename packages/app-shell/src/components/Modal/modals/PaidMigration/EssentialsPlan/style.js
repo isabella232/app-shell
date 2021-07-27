@@ -94,7 +94,7 @@ export const Feature = styled.div`
   }
 
   p {
-    max-width: 430px;
+    max-width: 340px;
     margin-top: 15px;
   }
 `;
