@@ -61,12 +61,12 @@ const EssentialsPricing = () => {
               <Button
                 type="text"
                 onClick={() => {
-                  openModal(MODALS.planSelector, {
-                    cta: 'planSelection',
-                    ctaButton: 'Go back to plans',
+                  openModal(MODALS.essentialsPlan, {
+                    cta: 'essentialsPlan',
+                    ctaButton: 'Go back',
                   });
                 }}
-                label="Go back to plans"
+                label="Go back"
                 icon={<ArrowLeftIcon />}
               />
             </ButtonContainer>
@@ -75,7 +75,7 @@ const EssentialsPricing = () => {
           <RightColumn>
             <SummaryContainer>
               <Body>
-                <Text type="h2">Your upgrade</Text>
+                <Text type="h3">Your upgrade</Text>
                 <SummaryDetails>
                   {
                     <>
@@ -90,7 +90,8 @@ const EssentialsPricing = () => {
                       <SummaryNote>
                         <Text type="p">
                           Payment made today is pro rata of new plan price until
-                          the next billing cycle begins on <b>August 3, 2021</b>
+                          the next billing cycle begins on{' '}
+                          <span>August 3, 2021</span>
                         </Text>
                       </SummaryNote>
                     </>
@@ -115,6 +116,7 @@ const EssentialsPricing = () => {
                   </PriceFooterWrapper>
 
                   <Button
+                    fullWidth
                     type="primary"
                     onClick={() => {
                       openModal(MODALS.upgradeSuccess, {

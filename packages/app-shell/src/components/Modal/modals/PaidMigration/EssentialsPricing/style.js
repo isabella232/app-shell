@@ -8,14 +8,16 @@ import {
   grayDarker,
 } from '@bufferapp/ui/style/colors';
 
+import { fontWeightMedium } from '@bufferapp/ui/style/fonts';
+
 export const Holder = styled.div`
   display: flex;
   flex-direction: row;
   width: 710px;
-  height: 550px;
+  height: 500px;
 
   h2 {
-    max-width: 241px;
+    max-width: 270px;
     margin-top: 22px;
     margin-bottom: 16px;
   }
@@ -23,7 +25,7 @@ export const Holder = styled.div`
   p {
     margin-top: 0px;
     margin-bottom: 0;
-    max-width: 282px;
+    max-width: 250px;
   }
 `;
 
@@ -42,16 +44,21 @@ export const LeftColumn = styled.div`
   button {
     color: ${blue};
   }
+
+  p {
+    font-size: 12px;
+  }
 `;
 
 export const FeaturesList = styled.ul`
   list-style: none;
   padding: 0;
   margin-top: 35px;
+  margin-left: -4px;
 
   svg {
     color: ${purpleLight};
-    margin-right: 4px;
+    margin-right: 8px;
   }
 
   li {
@@ -59,17 +66,26 @@ export const FeaturesList = styled.ul`
 
     p {
       margin-bottom: 16px;
+      font-weight: 600;
     }
   }
 `;
 
 export const ButtonContainer = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 16px;
   padding-left: -16px;
+
+  button {
+    padding-left: 0;
+  }
 `;
 
-export const RightColumn = styled.div``;
+export const RightColumn = styled.div`
+  p {
+    font-size: 12px;
+  }
+`;
 
 export const SummaryContainer = styled.div`
   width: 285px;
@@ -95,8 +111,6 @@ export const Body = styled.div`
 `;
 
 export const Bottom = styled.div`
-  margin-left: 8px;
-
   label {
     display: inline-block;
     margin-bottom: 8px;
@@ -113,7 +127,6 @@ export const DetailList = styled.ul`
     margin-top: 0;
     margin-bottom: 0;
     display: inline-block;
-    font-weight: 500;
   }
 `;
 
@@ -172,6 +185,7 @@ export const TotalPrice = styled(Price)`
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  margin-left: 8px;
   margin-top: 20px;
   position: initial;
 
@@ -196,18 +210,18 @@ export const Separator = styled.span`
   width: 100%;
   display: block;
   background-color: #eeeeee;
-  margin-bottom: 16px;
-  margin-top: 16px;
+  margin-bottom: 12px;
+  margin-top: 5px;
 `;
 
 export const SummaryNote = styled.div`
   p {
     color: ${gray};
     margin: 0;
+    font-weight: ${fontWeightMedium};
   }
 
-  b {
-    font-weight: 600;
+  span {
     color: ${grayDarker};
   }
 `;
@@ -238,6 +252,7 @@ export const Title = styled.div`
 
 export const PriceFooterWrapper = styled.div`
   margin-bottom: 15px;
+  margin-left: 8px;
 
   p {
     margin-bottom: 0;

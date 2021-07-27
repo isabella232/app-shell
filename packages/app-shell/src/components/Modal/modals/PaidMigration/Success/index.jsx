@@ -12,12 +12,12 @@ const Success = () => {
       <Text type="h1">Congrats! Welcome to the Essentials plan</Text>
 
       <Text type="p">
-        Your details have gone through successfully. Start using your Essentials
-        plan features.
+        You're ready to take your social media strategy to the next level. We
+        can't wait to see what you do!
       </Text>
 
       <ButtonContainer>
-        <Button type="primary" label="Great, Let's go" onClick={() => {}} />
+        <Button type="primary" label="Great, Let's Go" onClick={() => {}} />
       </ButtonContainer>
 
       <Text type="p">
