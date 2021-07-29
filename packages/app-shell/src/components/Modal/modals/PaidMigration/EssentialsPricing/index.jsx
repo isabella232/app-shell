@@ -29,12 +29,7 @@ import {
   ButtonContainer,
 } from './style';
 
-export const Content = ({
-  migrationPreview,
-  handleMigrate,
-  handleDismiss,
-  processing,
-}) => (
+export const Content = ({ migrationPreview, handleMigrate, handleDismiss, processing }) => (
   <Holder>
     <LeftColumn>
       <Text type="h2">Why supercharge your plan to Essentials?</Text>
@@ -90,8 +85,8 @@ export const Content = ({
                 <Separator />
                 <SummaryNote>
                   <Text type="p">
-                    Payment made today is pro rata of new plan price until the
-                    next billing cycle begins on <b>August 3, 2021</b>
+                    Payment made today is pro rata of new plan price until
+                    the next billing cycle begins on <b>August 3, 2021</b>
                   </Text>
                 </SummaryNote>
               </>
@@ -111,8 +106,7 @@ export const Content = ({
                 Billed monthly in USD
               </Text>
               <Text type="p" color="grayDark">
-                Includes {migrationPreview.migrationSummary.channelCount} social
-                channels
+                Includes {migrationPreview.migrationSummary.channelCount} social channels
               </Text>
             </PriceFooterWrapper>
 
@@ -127,21 +121,12 @@ export const Content = ({
       </SummaryContainer>
     </RightColumn>
   </Holder>
-);
+)
 
 const EssentialsPricing = ({ openModal }) => {
   const user = useUser();
-  const {
-    data: migrationPreview,
-    loading,
-    error: previewError,
-  } = useMigrationPlanPreview(user);
-  const {
-    migrateToOB,
-    success,
-    error: migrateError,
-    processing,
-  } = useMigrateToOB(user);
+  const { data:migrationPreview, loading, error:previewError } = useMigrationPlanPreview(user)
+  const { migrateToOB, success, error:migrateError, processing } = useMigrateToOB(user)
 
   if (loading) {
     return null;
@@ -151,32 +136,30 @@ const EssentialsPricing = ({ openModal }) => {
     openModal(MODALS.upgradeSuccess, {
       cta: 'Migrate to OB Modal',
       ctaButton: 'Supercharge My Plan',
-    });
+    })
 
-    return null;
+    return null
   }
 
-  return (
-    <Content
-      migrationPreview={migrationPreview}
-      handleDismiss={() => {
-        openModal(MODALS.essentialsPlan, {
-          cta: 'planSelection',
-          ctaButton: 'Go back',
-        });
-      }}
-      handleMigrate={() => {
-        migrateToOB(user);
-      }}
-      processing={processing}
-    />
-  );
+  return ( <Content
+    migrationPreview={migrationPreview}
+    handleDismiss={() => {
+      openModal(MODALS.essentialsPlan, {
+        cta: 'planSelection',
+        ctaButton: 'Go back to plans',
+      });
+    }}
+    handleMigrate={() => {
+      migrateToOB(user)
+    }}
+    processing={processing}
+  />);
 };
 
-export default function () {
-  return (
-    <ModalContext.Consumer>
-      {({ openModal }) => <EssentialsPricing openModal={openModal} />}
-    </ModalContext.Consumer>
-  );
-}
+export default function() {
+  return (<ModalContext.Consumer>
+    {({ openModal }) => (
+      <EssentialsPricing openModal={openModal} />
+    )}
+  </ModalContext.Consumer>);
+};

@@ -181,81 +181,14 @@ export const EssentialsPlan = ({ features }) => {
   );
 };
 
-export const PlansFeatures = [
-  {
-    featureName: 'Publishing tools',
-    description: 'Auto-schedule posts across multiple networks',
-    publishPro: true,
-    essentials: true,
-  },
-  {
-    featureName: 'Engagement tools',
-    description: 'Get back to your customers without delay',
-    publishPro: true,
-    essentials: true,
-  },
-  {
-    featureName: 'Comprehensive analytics',
-    description: 'Get in-depth insights and recommendations',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Campaign analytics',
-    description: 'Combine and review analytics across channel',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Customisable reports',
-    description: 'Edit and export performance reports',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Best time to post',
-    description: 'Know when it’s the right time to post and how',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Advanced Instagram features',
-    description: 'Schedule Instagram stories and post to first comment',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Compare organic and boosted posts',
-    description: 'See how your paid posts are performing',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Hashtag manager',
-    description: 'Manage your Instagram hashtags with ease',
-    publishPro: false,
-    essentials: true,
-  },
-  {
-    featureName: 'Per social channel pricing',
-    description: 'Pay only for what you use with the social channels you need',
-    publishPro: false,
-    essentials: true,
-  },
-];
-
-export default function () {
+export default function() {
   const user = useUser();
-  const { data: migrationPreview } = useMigrationPlanPreview(user);
+  const { data:migrationPreview } = useMigrationPlanPreview(user)
   const planFeatures = migrationPreview?.planFeatures || [];
-  const features = planFeatures.map((feature) => ({
+  const features = planFeatures.map(feature => ({
     ...feature,
-    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(
-      feature.id
-    ),
-    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(
-      feature.id
-    ),
-  }));
-  return <EssentialsPlan features={features} />;
-}
+    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(feature.id),
+    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(feature.id),
+  }))
+  return (<EssentialsPlan features={features} />);
+};
