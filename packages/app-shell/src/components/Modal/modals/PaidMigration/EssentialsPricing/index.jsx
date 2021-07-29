@@ -29,7 +29,38 @@ import {
   ButtonContainer,
 } from './style';
 
-export const Content = ({ migrationPreview, handleMigrate, handleDismiss, processing }) => (
+const PeriodEndString =({ migrationPreview }) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+
+  if (migrationPreview?.currentPlan?.periodEnd) {
+    const date = new Date(migrationPreview.currentPlan.periodEnd);
+    return (<>
+      on <b>{months[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</b>
+    </>)
+  }
+
+  return null
+}
+
+export const Content = ({
+  migrationPreview,
+  handleMigrate,
+  handleDismiss,
+  processing,
+}) => (
   <Holder>
     <LeftColumn>
       <Text type="h2">Why supercharge your plan to Essentials?</Text>
@@ -85,8 +116,8 @@ export const Content = ({ migrationPreview, handleMigrate, handleDismiss, proces
                 <Separator />
                 <SummaryNote>
                   <Text type="p">
-                    Payment made today is pro rata of new plan price until
-                    the next billing cycle begins on <b>August 3, 2021</b>
+                    Payment made today is pro rata of new plan price until the
+                    next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
                   </Text>
                 </SummaryNote>
               </>
