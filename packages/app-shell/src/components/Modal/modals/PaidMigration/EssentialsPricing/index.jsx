@@ -30,10 +30,25 @@ import {
 } from './style';
 
 const PeriodEndString =({ migrationPreview }) => {
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ]
+
   if (migrationPreview?.currentPlan?.periodEnd) {
     const date = new Date(migrationPreview.currentPlan.periodEnd);
     return (<>
-      on <b>{date.toDateString()}</b>
+      on <b>{months[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</b>
     </>)
   }
 
