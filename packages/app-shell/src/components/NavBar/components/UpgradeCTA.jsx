@@ -71,7 +71,7 @@ const UpgradeCTA = () => {
                               });
                             }
                           } else {
-                            window.location = `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
+                            window.location = `https://publish.${envModifier ? envModifier : ''}buffer.com/plans`;
                           }
                         }}
                         icon={<FlashIcon />}
