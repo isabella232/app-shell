@@ -23,6 +23,7 @@ export const planMigrationPreview = {
             "currentPlan": {
               "interval": "month",
               "supportedFeatures": ["publishingTools", "engagementTools"],
+              "periodEnd": "2022-07-29T00:00:00.000Z",
               "__typename": "MigrationPlan",
             },
             "migrationSummary":{

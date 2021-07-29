@@ -29,6 +29,17 @@ import {
   ButtonContainer,
 } from './style';
 
+const PeriodEndString =({ migrationPreview }) => {
+  if (migrationPreview?.currentPlan?.periodEnd) {
+    const date = new Date(migrationPreview.currentPlan.periodEnd);
+    return (<>
+      on <b>{date.toDateString()}</b>
+    </>)
+  }
+
+  return null
+}
+
 export const Content = ({
   migrationPreview,
   handleMigrate,
@@ -91,7 +102,7 @@ export const Content = ({
                 <SummaryNote>
                   <Text type="p">
                     Payment made today is pro rata of new plan price until the
-                    next billing cycle begins on <b>August 3, 2021</b>
+                    next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
                   </Text>
                 </SummaryNote>
               </>
