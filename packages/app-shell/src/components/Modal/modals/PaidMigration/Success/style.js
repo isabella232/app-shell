@@ -7,13 +7,13 @@ export const Holder = styled.div`
   height: 376px;
   box-sizing: border-box;
   background-repeat: no-repeat;
-  background-position: right 48px center;
+  background-position: right 35px center;
   background-image: url('https://buffer-ui.s3.amazonaws.com/illustrations/success-celebration.jpg');
   background-size: 410px;
   padding: 24px;
 
   h1 {
-    max-width: 308px;
+    max-width: 335px;
     margin-top: 22px;
     margin-bottom: 16px;
   }

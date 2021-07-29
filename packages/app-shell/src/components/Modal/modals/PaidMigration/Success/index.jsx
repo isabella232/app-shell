@@ -7,6 +7,8 @@ import Link from '@bufferapp/ui/Link';
 import { Holder, ButtonContainer } from './style';
 
 const Success = () => {
+  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null];
+
   return (
     <Holder>
       <Text type="h1">Congrats! Welcome to the Essentials plan</Text>
@@ -23,7 +25,7 @@ const Success = () => {
       <Text type="p">
         <i>
           You can always access your invoices and billing information{' '}
-          <Link href="http://buffer.com">here</Link>
+          <Link href={`https://account.${envModifier ? envModifier : ''}buffer.com/billing`}>here</Link>
         </i>
       </Text>
     </Holder>

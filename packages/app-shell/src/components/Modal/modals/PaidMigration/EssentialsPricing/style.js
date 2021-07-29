@@ -38,7 +38,7 @@ export const LeftColumn = styled.div`
   );
   flex: 1;
   width: 440px;
-  padding: 50px;
+  padding: 40px;
   position: relative;
 
   button {
@@ -73,7 +73,7 @@ export const FeaturesList = styled.ul`
 
 export const ButtonContainer = styled.div`
   position: absolute;
-  bottom: 16px;
+  bottom: 17px;
   padding-left: -16px;
 
   button {
@@ -94,7 +94,7 @@ export const SummaryContainer = styled.div`
   border-bottom-right-radius: 8px;
   box-shadow: inset 1px 0px 0px #bdbdbd;
   height: 100%;
-  padding: 70px 0 24px;
+  padding: 60px 0 24px;
   box-sizing: border-box;
   position: relative;
 
@@ -193,6 +193,7 @@ export const TotalPrice = styled(Price)`
     margin: 0 2px;
     font-size: 40px;
     line-height: 30px;
+    font-size: 32px;
   }
 `;
 
