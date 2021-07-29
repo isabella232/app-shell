@@ -13,6 +13,7 @@ import {
   isFreePlan,
   trialBillingCycle,
   organizationUserRole,
+  paidSubscriptionAutoRenewEnabled,
 } from './segmentTraitGetters';
 
 describe('Segment Traits Getters', () => {
@@ -43,6 +44,7 @@ describe('Segment Traits Getters', () => {
       isOneBufferOrganization: true,
       billing: {
         subscription: {
+          isCanceledAtPeriodEnd: false,
           plan: { id: "team", name: "Team", interval: 'month', trial: null },
         }
       },
@@ -517,6 +519,40 @@ describe('Segment Traits Getters', () => {
       expect(organizationUserRole({
         currentOrganization: {}
       })).toBeNull();
+    });
+  })
+
+  describe('paidSubscriptionAutoRenewEnabled', () => {
+    it('return true for OB if isCanceledAtPeriodEnd is false', () => {
+      expect(paidSubscriptionAutoRenewEnabled(OBUser)).toBeTruthy();
+    });
+
+    it('return false for OB if isCanceledAtPeriodEnd is true', () => {
+      expect(paidSubscriptionAutoRenewEnabled({
+        currentOrganization: {
+          isOneBufferOrganization: true,
+          billing: {
+            subscription: {
+              isCanceledAtPeriodEnd: true,
+            }
+          },
+        },
+      })).toBeFalsy();
+    });
+
+    it('return null for OB if isCanceledAtPeriodEnd is missing', () => {
+      expect(paidSubscriptionAutoRenewEnabled({
+        currentOrganization: {
+          isOneBufferOrganization: true,
+          billing: {
+            subscription: {}
+          },
+        },
+      })).toBeNull();
+    });
+
+    it('should return null for MP user', () => {
+      expect(paidSubscriptionAutoRenewEnabled(MPUser)).toBeNull();
     });
   })
 })

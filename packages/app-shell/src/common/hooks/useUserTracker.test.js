@@ -32,6 +32,7 @@ describe('useUserTracker hooks', () => {
       billing: {
         subscription: {
           plan: { id: "team", name: "Team", interval: 'month', trial: null },
+          isCanceledAtPeriodEnd: false,
         }
       },
     },
@@ -82,6 +83,7 @@ describe('useUserTracker hooks', () => {
           isPayingPublishUser: true,
           currentOrganizationId: MPUser.currentOrganization.id,
           organizationUserRole: 'admin',
+          paidSubscriptionAutoRenewEnabled: null,
         }))
     });
 
@@ -98,6 +100,7 @@ describe('useUserTracker hooks', () => {
           isOneBufferEnabled: true,
           currentOrganizationId: OBUser.currentOrganization.id,
           organizationUserRole: 'admin',
+          paidSubscriptionAutoRenewEnabled: true,
         }))
     });
   })

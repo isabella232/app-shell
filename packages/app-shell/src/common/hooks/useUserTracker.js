@@ -30,6 +30,7 @@ export function identifyUser(user) {
 
         billingCycle: traits.billingCycle(user),
         trialBillingCycle: traits.trialBillingCycle(user),
+        paidSubscriptionAutoRenewEnabled: traits.paidSubscriptionAutoRenewEnabled(user),
       })
     }
   }
