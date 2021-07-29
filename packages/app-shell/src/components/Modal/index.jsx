@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 
-import { getCookie } from '../../common/utils/cookies';
+import { getCookie } from '../../common/utils/cookies'
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
 import PaymentMethod from './modals/PaymentMethod';
@@ -78,14 +78,14 @@ const ModalContent = ({ modal, closeAction }) => {
 
 const Modal = ({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
-  const user = useUser();
+  const user = useUser()
 
   useEffect(() => {
     //Trial Expired Modal
     const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
     const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
-      openModal(MODALS.trialExpired);
+      openModal(MODALS.trialExpired)
     }
 
     //Migrate to OB modal

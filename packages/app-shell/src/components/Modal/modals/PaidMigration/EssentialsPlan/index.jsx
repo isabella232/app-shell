@@ -11,30 +11,7 @@ import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { MODALS } from '../../../../../common/hooks/useModal';
 
-import {
-  Holder,
-  Hero,
-  IconWrapper,
-  Feature,
-  Label,
-  InstagramPosting,
-  BufferSuite,
-  OneBuffer,
-  FreePlanBorder,
-  EssentialsPlanBorder,
-  FeaturesTable,
-  TableContainer,
-  FeatureIcon,
-  DashIcon,
-  PlanLabel,
-  PlanName,
-  BottomSection,
-  ButtonWrapper,
-  IntroducingEssentials,
-  SectionIntro,
-  SectionOneBuffer,
-  SectionAnalytics,
-} from './style';
+import * as styles from './style';
 
 export const EssentialsPlan = ({ features }) => {
   const checkIfTrue = (plan) => {
@@ -42,15 +19,15 @@ export const EssentialsPlan = ({ features }) => {
       case true:
         return <CheckmarkIcon size="large" />;
       default:
-        return <DashIcon />;
+        return <styles.DashIcon />;
     }
   };
 
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
-        <Holder>
-          <Hero>
+        <styles.Holder>
+          <styles.Hero>
             <img
               src="https://buffer-ui.s3.amazonaws.com/avatars/avatar-joel.jpg"
               width="117"
@@ -62,37 +39,37 @@ export const EssentialsPlan = ({ features }) => {
               better pricing that works for you and your business.
             </Text>
 
-            <IconWrapper>
+            <styles.IconWrapper>
               <FlashIcon size="large" />
-            </IconWrapper>
+            </styles.IconWrapper>
 
             <Text type="h1">Introducing the Essentials plan</Text>
-          </Hero>
+          </styles.Hero>
 
-          <SectionIntro>
-            <IntroducingEssentials></IntroducingEssentials>
-            <Feature>
-              <Label color={purple}>
+          <styles.SectionIntro>
+            <styles.IntroducingEssentials/>
+            <styles.Feature>
+              <styles.Label color={purple}>
                 <FlashIcon size="medium" verticalAlign="middle" />
                 <Text type="p">Included with Essentials</Text>
-              </Label>
+              </styles.Label>
 
               <Text type="h2">Take your posting power to the next level</Text>
               <Text type="p">
                 Save hashtags, schedule Stories, and queue up as many posts as
                 you’d like.
               </Text>
-            </Feature>
+            </styles.Feature>
 
-            <InstagramPosting></InstagramPosting>
-          </SectionIntro>
+            <styles.InstagramPosting/>
+          </styles.SectionIntro>
 
-          <SectionOneBuffer>
-            <Feature>
-              <Label color={white}>
+          <styles.SectionOneBuffer>
+            <styles.Feature>
+              <styles.Label color={white}>
                 <FlashIcon size="medium" verticalAlign="middle" />
                 <Text type="p">Included with Essentials</Text>
-              </Label>
+              </styles.Label>
 
               <Text type="h2" color="white">
                 Giving you the best of what we offer
@@ -101,16 +78,16 @@ export const EssentialsPlan = ({ features }) => {
                 You get the full package with our comprehensive publishing,
                 analytics and engagement tools to power your business.
               </Text>
-            </Feature>
-            <BufferSuite></BufferSuite>
-          </SectionOneBuffer>
+            </styles.Feature>
+            <styles.BufferSuite/>
+          </styles.SectionOneBuffer>
 
-          <SectionAnalytics>
-            <Feature>
-              <Label color={white}>
+          <styles.SectionAnalytics>
+            <styles.Feature>
+              <styles.Label color={white}>
                 <FlashIcon size="medium" verticalAlign="middle" />
                 <Text type="p">Included with Essentials</Text>
-              </Label>
+              </styles.Label>
 
               <Text type="h2" color="white">
                 Know where to take your business next
@@ -120,41 +97,41 @@ export const EssentialsPlan = ({ features }) => {
                 you the bigger picture and help you shape your marketing
                 strategy.
               </Text>
-            </Feature>
+            </styles.Feature>
 
-            <OneBuffer></OneBuffer>
-          </SectionAnalytics>
+            <styles.OneBuffer/>
+          </styles.SectionAnalytics>
 
-          <BottomSection>
-            <TableContainer>
+          <styles.BottomSection>
+            <styles.TableContainer>
               <Text type="h2">There is so much to gain</Text>
               <Text type="p">
                 Switch to Essentials to supercharge your social media strategy.
               </Text>
 
-              <FreePlanBorder></FreePlanBorder>
-              <EssentialsPlanBorder></EssentialsPlanBorder>
+              <styles.FreePlanBorder/>
+              <styles.EssentialsPlanBorder/>
 
-              <FeaturesTable>
+              <styles.FeaturesTable>
                 <thead>
                   <tr>
                     <th></th>
                     <th scope="col">
-                      <PlanLabel>
+                      <styles.PlanLabel>
                         <Text type="p">Current Plan</Text>
-                      </PlanLabel>
-                      <PlanName>
+                      </styles.PlanLabel>
+                      <styles.PlanName>
                         <Text type="p">Publish Pro</Text>
-                      </PlanName>
+                      </styles.PlanName>
                     </th>
                     <th scope="col">
-                      <PlanLabel highlight>
+                      <styles.PlanLabel highlight>
                         <FlashIcon size="medium" verticalAlign="middle" />
                         <Text type="p">New Plan</Text>
-                      </PlanLabel>
-                      <PlanName>
+                      </styles.PlanLabel>
+                      <styles.PlanName>
                         <Text type="p">Essentials</Text>
-                      </PlanName>
+                      </styles.PlanName>
                     </th>
                   </tr>
                 </thead>
@@ -169,22 +146,22 @@ export const EssentialsPlan = ({ features }) => {
                         <Text type="p">{feature.tagline}</Text>
                       </td>
                       <td>
-                        <FeatureIcon>
+                        <styles.FeatureIcon>
                           {checkIfTrue(feature.currentPlan)}
-                        </FeatureIcon>
+                        </styles.FeatureIcon>
                       </td>
                       <td>
-                        <FeatureIcon type="p">
+                        <styles.FeatureIcon type="p">
                           {checkIfTrue(feature.suggestedPlan)}
-                        </FeatureIcon>
+                        </styles.FeatureIcon>
                       </td>
                     </tr>
                   ))}
                 </tbody>
-              </FeaturesTable>
-            </TableContainer>
+              </styles.FeaturesTable>
+            </styles.TableContainer>
 
-            <ButtonWrapper>
+            <styles.ButtonWrapper>
               <Button
                 type="primary"
                 size="large"
@@ -196,9 +173,9 @@ export const EssentialsPlan = ({ features }) => {
                   });
                 }}
               />
-            </ButtonWrapper>
-          </BottomSection>
-        </Holder>
+            </styles.ButtonWrapper>
+          </styles.BottomSection>
+        </styles.Holder>
       )}
     </ModalContext.Consumer>
   );

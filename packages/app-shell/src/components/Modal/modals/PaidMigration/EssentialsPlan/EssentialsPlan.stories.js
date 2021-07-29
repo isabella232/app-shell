@@ -1,7 +1,5 @@
 import React from 'react';
 import { EssentialsPlan } from './index';
-import response from '../../../../../common/mocks/mock';
-import { UserContext } from '../../../../../common/context/User';
 import { planMigrationPreview } from '../mocks';
 
 export default {
@@ -11,9 +9,7 @@ export default {
 
 const Template = (args) => (
   <div style={{ height: '550px' }}>
-    <UserContext.Provider value={response.data.account}>
-      <EssentialsPlan {...args} />
-    </UserContext.Provider>
+    <EssentialsPlan {...args} />
   </div>
 );
 
