@@ -7,6 +7,7 @@ export const MODALS = {
   planSelector: 'planSelector',
   success: 'success',
   startTrial: 'startTrial',
+  trialExpired: 'trialExpired',
   paidMigration: 'paidMigration',
   essentialsPlan: 'essentialsPlan',
   essentialsPricing: 'essentialsPricing',
