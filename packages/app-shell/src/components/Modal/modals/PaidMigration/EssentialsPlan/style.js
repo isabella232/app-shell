@@ -15,6 +15,7 @@ export const Holder = styled.div`
   box-sizing: border-box;
   padding-top: 80px;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const Hero = styled.div`
