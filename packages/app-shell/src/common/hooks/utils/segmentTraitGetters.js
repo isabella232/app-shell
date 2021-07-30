@@ -165,3 +165,12 @@ export function currentBufferTrialPlan(user) {
 export function organizationUserRole({ currentOrganization }) {
   return currentOrganization?.role || null
 }
+
+export function paidSubscriptionAutoRenewEnabled({ currentOrganization }) {
+  if (currentOrganization?.isOneBufferOrganization) {
+    return Object.prototype.hasOwnProperty.call(currentOrganization?.billing?.subscription, 'isCanceledAtPeriodEnd') ?
+      !currentOrganization.billing.subscription.isCanceledAtPeriodEnd :
+      null
+  }
+  return null
+}
