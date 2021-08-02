@@ -4,7 +4,6 @@ import {
   blue,
   gray,
   grayLight,
-  grayDark,
   grayDarker,
 } from '@bufferapp/ui/style/colors';
 
@@ -14,7 +13,7 @@ export const Holder = styled.div`
   display: flex;
   flex-direction: row;
   width: 710px;
-  height: 500px;
+  height: 505px;
 
   h2 {
     max-width: 270px;
@@ -73,7 +72,7 @@ export const FeaturesList = styled.ul`
 
 export const ButtonContainer = styled.div`
   position: absolute;
-  bottom: 17px;
+  bottom: 23px;
   padding-left: -16px;
 
   button {

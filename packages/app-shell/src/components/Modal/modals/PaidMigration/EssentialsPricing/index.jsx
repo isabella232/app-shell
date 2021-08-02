@@ -93,7 +93,7 @@ export const Content = ({
           type="text"
           disabled={processing}
           onClick={handleDismiss}
-          label="Go back to plans"
+          label="Go back"
           icon={<ArrowLeftIcon />}
         />
       </ButtonContainer>
@@ -142,6 +142,7 @@ export const Content = ({
             </PriceFooterWrapper>
 
             <Button
+              fullWidth
               disabled={processing}
               type="primary"
               onClick={handleMigrate}
