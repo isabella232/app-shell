@@ -1,48 +1,101 @@
 # @bufferapp/app-shell
 
-Buffer's shared App Shell for our front-end applications. 🚀
-
-## Installation
-
-```bash
-npm install @bufferapp/app-shell
-```
+Buffer's Navigator for our front-end applications.
 
 
 ## Usage
+The `Navigator` is distributed as a self contained JS file, served from `https://components.buffer.com/navigator`.
+To ensure that all the Produt Apps are running the same version the file, is automatically updated every time a new commit is pushed into the main branch.
 
-🚩 **You should be able to drop this component into your apps, replacing the old AppShell.**
+To consume the `Navigator` you will need to have a `#navigator` div right on top of the app `#root` div, and declare some style and the `API_GATEWAY_URL`.
 
-```jsx
-// ❌ Change this
-import AppShell from '@bufferapp/ui/AppShell';
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- This style reset is required for all Apps to make sure we are not seeing any glitch on load -->
+    <style type="text/css">
+      #navigator {
+        display: flex;
+        flex-direction: column;
+        min-height: 57px;
+        max-height: 105px;
+      }
 
-// ❌ Or this
-import { AppShell } from '@bufferapp/ui';
+      #root {
+        background-color: #F5F5F5;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin: 0;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- This is the div used to render the Navigator -->
+    <div id="navigator"></div>
+    <!-- This is the div used to render the App -->
+    <div id="root"></div>
 
-// ✅ To this
-import AppShell from '@bufferapp/app-shell';
+    <!-- Define the URL for the APIs Gateway used by the App Shell -->
+    <script type="text/javaScript">
+      window.API_GATEWAY_URL= "https://graph.local.buffer.com";
+    </script>
+    <script src="https://components.buffer.com/navigator.js" async></script>
+  </body>
+</html>
 ```
 
-There are no API or breaking changes.
+## Listening to Organization changes Events in a Product App
+The Navigator is dispatching custom events on the window object. The key to those events are accessible in `window.appshell.eventKeys`.
+To react to Organization changes events in the App the easiest option is to listen to those events in a React Hook
 
-For now, refer to [the old documentation for `@bufferapp/ui/AppShell`](https://bufferapp.github.io/ui/#/ui/ui/appshell) until we migrate docs here.
+```jsx
+  useEffect(() => {
+    const { ORGANIZATION_EVENT_KEY } = window?.appshell?.eventKeys || {};
 
-## Using the Plan Selector in your apps
+    function handleOrgChange({ detail }) {
+      // Action will be present if we are dispatching an organization change event from the App
+      if (!detail.action) {
+        console.log(detail.OrganizationId);
+        // handle the change in here, for example refetch the account query
+      }
+    }
+
+    window.addEventListener(ORGANIZATION_EVENT_KEY, handleOrgChange);
+
+    return function cleanup() {
+      window.removeEventListener(ORGANIZATION_EVENT_KEY, handleOrgChange);
+    };
+  }, [window?.appshell]);
+  // we are Listening for changes in the `window.appshell` object to make sure we are properly mounting even if the App is initialized before the Navigator.
+```
+
+## Change the Organization from the AppShell
+The Navigator is also exposing a series of actions in the `window.appshell.actions` object.
+One of those actions allow the Apps to trigger an Organization change.
+
+```jsx
+  const { actions } = window?.appshell || {};
+  actions.setCurrentOrganization(newOrganizationId);
+```
+
+## Opening Modals from a Product App
 
 1. Hash in the URL:
 To use the plan selector or payment method modal with a hash in the URL, include #planSelector or #paymentMethod on the URL. This will open the desired modal on page load
 
-2. Using Modal context:
-To open the modal from a CTA, use the Modal Context and on click, execute the openModal function from the modal context, like this:
-```
-import { ModalContext, MODALS } from '@bufferapp/app-shell';
+2. Using actions:
+To open the modal from a CTA, you can use actions:
+```jsx
+const { actions, MODALS } = window?.appshell || {};
 
 const ModalTesting = () => (
   <ModalContext.Consumer>
     {modal => (
       <button onClick={
-        () => {modal.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'renderModal' isUpgradeIntent: false })}
+        () => {actions.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'renderModal' isUpgradeIntent: false })}
       }>Render Modal</button>
     )}
   </ModalContext.Consumer>
@@ -53,7 +106,7 @@ In the method above, you'll notice that openModal accepts an object as a second 
 
 #### Using intentions
 Some places in our apps, the user's intent is to upgrade from Trial or from Free. For that, we only want to show 2 plan options (Essentials and Team) instead of 3. For these CTAs, pass in `isUpgradeIntent : true` as part of the second paramater in openModal:
-```
+```jsx
 <button onClick={
     () => {modal.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'upgradePlan', isUpgradeIntent: true })}
   }>
@@ -83,10 +136,19 @@ git clone git@github.com:bufferapp/app-shell.git
 
 ## Local development
 
-- You will need to run the API Gateway and login services on `buffer-dev`: `./dev up api-gateway login`
-- Run `yarn watch` in this root directory
-  -  This will watch for changes on both packages: the `app-shell` and the test `app`, and will render the test app in https://appshell.local.buffer.com:3000.
-- In the near future, we'll also add some Storybook to be able to render parts of the AppShell (or all of it) in isolation from any other logic so that we can focus purely on UI development (setup TBD).
+### Running the Navigator, in dev mode, against the local environment
+
+1. You will need to run the API Gateway and login services on `buffer-dev`: `./dev up api-gateway login`
+2. Run `yarn watch` in this root directory
+3. visit `https://appshell.local.buffer.com:3000`
+
+note: you will need to manually trust the certificate, if `navigator.js` is not loading you will also need to trust the certificate for that one, you can do that by visiting `https://appshell.local.buffer.com:8085/main.js`
+`
+
+### Running the Navigator, in dev mode, against production
+1. go to https://login.buffer.com/ and login with your production account (impersonation will also work).
+2. from the root folder run `yarn watch-production`
+3. visit `https://appshell.local.buffer.com:3000`
 
 ### Troubleshooting
 
