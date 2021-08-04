@@ -8,6 +8,7 @@ const PREVIEW_PLAN_MIGRATION = gql`
         currentPlan {
           supportedFeatures
           interval
+          periodEnd
         }
         suggestedPlan {
           name
