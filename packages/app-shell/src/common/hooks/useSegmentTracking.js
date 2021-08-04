@@ -1,5 +1,5 @@
 import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
-import { getProductPath } from '../../components/NavBar';
+import { getActiveProductFromPath } from '../utils/getProduct';
 
 export const formatCTAString = (str) => {
   const result = str.split(/\s+/).map(word => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join('');
@@ -21,8 +21,7 @@ export const useTrackPlanSelectorViewed = ({ payload, user }) => {
 
   
 
-  const baseUrl = window.location.origin;
-  const product = getProductPath(baseUrl);
+  const product = getActiveProductFromPath();
   const eventData = {
     organizationId: organization.id,
     ctaApp: product,
@@ -50,8 +49,7 @@ export const useTrackPageViewed = ({ payload, user }) => {
     return;
   }
 
-  const baseUrl = window.location.origin;
-  const product = getProductPath(baseUrl);
+  const product = getActiveProductFromPath();
   const eventData = {
     organizationId: organization.id,
     ctaApp: product,
