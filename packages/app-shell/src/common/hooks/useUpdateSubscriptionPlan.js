@@ -4,6 +4,7 @@ import { UPDATE_SUBSCRIPTION_PLAN } from '../graphql/billing';
 import { QUERY_ACCOUNT } from '../graphql/account';
 
 const useUpdateSubscriptionPlan = ({
+  cta,
   user,
   plan,
   hasPaymentMethod,
@@ -29,6 +30,7 @@ const useUpdateSubscriptionPlan = ({
           organizationId: user.currentOrganization.id,
           plan: plan.planId,
           interval: plan.planInterval,
+          attribution: { cta }
         },
       }).catch((e) => {
         console.error(e);
