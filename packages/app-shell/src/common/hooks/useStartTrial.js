@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { START_TRIAL } from '../graphql/billing';
 import { QUERY_ACCOUNT } from '../graphql/account';
 
-const useStartTrial = ({ user, plan }) => {
+const useStartTrial = ({ user, plan, attribution }) => {
   const [startTrial, { data: trial, error: mutationError }] = useMutation(
     START_TRIAL,
     {
@@ -20,6 +20,7 @@ const useStartTrial = ({ user, plan }) => {
           organizationId: user.currentOrganization.id,
           plan: plan.planId,
           interval: plan.planInterval,
+          attribution,
         },
       }).catch((e) => {
         console.error(e);

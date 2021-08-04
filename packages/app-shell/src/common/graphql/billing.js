@@ -54,11 +54,13 @@ export const START_TRIAL = gql`
     $organizationId:String,
     $plan:OBPlanId,
     $interval:BillingInterval
+    $attribution:AttributionInput
   ) {
     billingStartTrial(
       organizationId:$organizationId, 
       plan:$plan, 
-      interval:$interval
+      interval:$interval,
+      attribution:$attribution
     )
     {
       ... on BillingResponse { success }

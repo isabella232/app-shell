@@ -17,6 +17,8 @@ import { Holder, Content, Ctas } from './style';
 
 const StartTrial = ({ user, openModal, modalData }) => {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const { cta, ctaButton } = modalData || {};
+
   useEffect(() => {
     if (user) {
       let plan = user.currentOrganization?.billing?.changePlanOptions.find(
@@ -35,6 +37,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
     plan: suggestedPlan,
+    attribution: { cta },
   });
 
   useEffect(() => {
@@ -44,7 +47,6 @@ const StartTrial = ({ user, openModal, modalData }) => {
   }, [trial]);
 
   useEffect(() => {
-    const { cta, ctaButton } = modalData || {};
     useTrackPageViewed({
       payload: {
         name: 'AppShell Start Trial',
