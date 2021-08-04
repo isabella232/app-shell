@@ -9,10 +9,13 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
+import {
+  useTrackPageViewed,
+} from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
-const StartTrial = ({ user, openModal }) => {
+const StartTrial = ({ user, openModal, modalData }) => {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
   useEffect(() => {
     if (user) {
@@ -39,6 +42,18 @@ const StartTrial = ({ user, openModal }) => {
       openModal(MODALS.success, { startedTrial: true });
     }
   }, [trial]);
+
+  useEffect(() => {
+    const { cta, ctaButton } = modalData || {};
+    useTrackPageViewed({
+      payload: {
+        name: 'AppShell Start Trial',
+        cta,
+        ctaButton,
+      },
+      user,
+    });
+  }, []);
 
   return (
     <Holder>
@@ -111,7 +126,7 @@ const StartTrialProvider = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal }) => <StartTrial user={user} openModal={openModal} />}
+          {({ openModal, data:modalData }) => <StartTrial modalData={modalData} user={user} openModal={openModal} />}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>
