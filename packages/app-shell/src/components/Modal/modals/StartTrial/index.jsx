@@ -9,11 +9,16 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
+import {
+  useTrackPageViewed,
+} from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
-const StartTrial = ({ user, openModal }) => {
+const StartTrial = ({ user, openModal, modalData }) => {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const { cta, ctaButton } = modalData || {};
+
   useEffect(() => {
     if (user) {
       let plan = user.currentOrganization?.billing?.changePlanOptions.find(
@@ -32,6 +37,7 @@ const StartTrial = ({ user, openModal }) => {
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
     plan: suggestedPlan,
+    attribution: { cta },
   });
 
   useEffect(() => {
@@ -39,6 +45,17 @@ const StartTrial = ({ user, openModal }) => {
       openModal(MODALS.success, { startedTrial: true });
     }
   }, [trial]);
+
+  useEffect(() => {
+    useTrackPageViewed({
+      payload: {
+        name: 'AppShell Start Trial',
+        cta,
+        ctaButton,
+      },
+      user,
+    });
+  }, []);
 
   return (
     <Holder>
@@ -111,7 +128,7 @@ const StartTrialProvider = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal }) => <StartTrial user={user} openModal={openModal} />}
+          {({ openModal, data:modalData }) => <StartTrial modalData={modalData} user={user} openModal={openModal} />}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>

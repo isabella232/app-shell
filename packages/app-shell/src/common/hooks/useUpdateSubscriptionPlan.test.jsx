@@ -7,6 +7,7 @@ import { UPDATE_SUBSCRIPTION_PLAN } from '../graphql/billing';
 import useUpdateSubscriptionPlan from './useUpdateSubscriptionPlan';
 
 describe('useUpdateSubscriptionPlan', () => {
+  const cta = 'testCta';
   const mockSuccessMutation = jest.fn(() => {
     return {
       data: {
@@ -50,6 +51,7 @@ describe('useUpdateSubscriptionPlan', () => {
           organizationId: user.currentOrganization.id,
           plan: plan.planId,
           interval: plan.planInterval,
+          attribution: { cta },
         },
       },
       newData: mockSuccessMutation,
@@ -61,6 +63,7 @@ describe('useUpdateSubscriptionPlan', () => {
           organizationId: userWithError.currentOrganization.id,
           plan: plan.planId,
           interval: plan.planInterval,
+          attribution: { cta },
         },
       },
       newData: mockErrorMutation,
@@ -118,6 +121,7 @@ describe('useUpdateSubscriptionPlan', () => {
     const hasPaymentMethod = true;
     const alreadyProcessing = true;
     const { result, waitForNextUpdate } = testHook({
+      cta,
       user,
       plan,
       hasPaymentMethod,
@@ -138,6 +142,7 @@ describe('useUpdateSubscriptionPlan', () => {
     const hasPaymentMethod = true;
     const alreadyProcessing = true;
     const { result, waitForNextUpdate } = testHook({
+      cta,
       user: userWithError,
       plan,
       hasPaymentMethod,
