@@ -94,7 +94,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
             type="secondary"
             onClick={() => {
               openModal(MODALS.planSelector, {
-                cta: 'startTrialUpgrade',
+                cta: 'startTrialModal',
                 ctaButton: 'checkOutPaidPlans',
               });
             }}
