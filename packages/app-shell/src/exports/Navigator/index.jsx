@@ -101,7 +101,7 @@ export const Navigator = ({
               label: "Let's do this",
               action: () =>
                 modal.openModal(MODALS.planSelector, {
-                  cta: 'Render Modal',
+                  cta: 'addPaymentDetails',
                   isUpgradeIntent: true,
                 }),
             }}
