@@ -73,7 +73,7 @@ const StartTrial = ({ user, openModal }) => {
             onClick={() => {
               startTrial();
             }}
-            label={processing ? 'Processing ...' : 'Start a 14-day Free Trial'}
+            label={processing ? 'Processing ...' : 'Start a 14-day free trial'}
           />
           <Button
             type="secondary"
