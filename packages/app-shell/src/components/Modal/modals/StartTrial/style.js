@@ -7,13 +7,12 @@ import { StyledError } from '../PaymentMethod/style';
 export const Holder = styled.div`
   display: flex;
   width: 800px;
-  height: 405px;
+  height: 376px;
   box-sizing: border-box;
   background-repeat: no-repeat;
-  background-position-x: right;
-  background-position-y: bottom;
-  background-image: url('https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png');
-  background-size: 445px;
+  background-position: center right 15px;
+  background-image: url('https://buffer-ui.s3.amazonaws.com/illustrations/success-celebration.jpg');
+  background-size: 410px;
   padding: 24px;
 
   p,
@@ -41,8 +40,8 @@ export const Content = styled.div`
   ol {
     list-style: none;
     padding: 0;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
 
     li {
       margin-bottom: 8px;
@@ -63,7 +62,8 @@ export const Content = styled.div`
 
 export const Ctas = styled.div`
   display: flex;
-  div[type='secondary'] {
+
+  div[type='primary'] {
     margin-right: 8px;
   }
 `;
