@@ -434,8 +434,8 @@ const NavBar = React.memo((props) => {
                   hasDivider: true,
                   onItemClick: () => {
                     openModal(MODALS.planSelector, {
-                      cta: 'ugradePlan',
-                      ctaButton: 'ugradePlan',
+                      cta: 'upgradePlanNavigatorMenu',
+                      ctaButton: 'upgradePlan',
                       isUpgradeIntent: true,
                     })
                   },
@@ -448,8 +448,8 @@ const NavBar = React.memo((props) => {
                   hasDivider: true,
                   onItemClick: () => {
                     openModal(MODALS.startTrial, {
-                      cta: 'startFreeTrial',
-                      ctaButton: 'startFreeTrial',
+                      cta: 'startTrialNavigatorMenu',
+                      ctaButton: 'startTrial',
                       isUpgradeIntent: true,
                     })
                   },
