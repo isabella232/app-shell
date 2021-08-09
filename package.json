@@ -22,6 +22,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "npm-run-all --parallel app app-shell",
-    "watch-production": "npm-run-all --parallel app-production app-shell"
+    "watch-production": "npm-run-all --parallel app-production app-shell",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint-touched": "eslint $(git diff --name-only HEAD | grep -E \"(.*)\\.(jsx|js)$\" | xargs)"
   }
 }
