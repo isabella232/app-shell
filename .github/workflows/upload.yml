@@ -18,6 +18,5 @@ jobs:
         uses: actions/checkout@v2
       - run: yarn install
       - run: yarn build
-      - run: yarn lint-touched
       - run: aws s3 cp ./packages/app-shell/build/main.js s3://$aws_s3_bucket/navigator.js
       - run: aws cloudfront create-invalidation --distribution-id E7WI0MX948C1G --paths "/navigator.js"
