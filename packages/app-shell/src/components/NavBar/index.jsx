@@ -70,7 +70,7 @@ export function getAccountUrl(baseUrl = '', user) {
 }
 
 function getUrlEnvModifier() {
-  const [, envModifier] = window.location.hostname.match(
+  const [hostname, envModifier] = window.location.hostname.match(
     /\w+\.(\w+\.)buffer\.com/
   ) || [null, null];
   return envModifier;
