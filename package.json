@@ -1,6 +1,7 @@
 {
   "private": true,
   "devDependencies": {
+    "cypress": "^8.2.0",
     "eslint-plugin-jest-dom": "^3.6.3",
     "eslint-plugin-testing-library": "^3.10.1",
     "lerna": "^3.22.1",
