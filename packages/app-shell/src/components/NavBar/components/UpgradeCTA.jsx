@@ -33,7 +33,7 @@ const UpgradeCTA = () => {
 
         if (currentOrganization.shouldDisplayInviteCTA) {
           return (
-            <Cta>
+            <Cta id="inviteTeamCTA">
               <Button
                 type="text"
                 onClick={() => {
@@ -53,7 +53,7 @@ const UpgradeCTA = () => {
               {({ openModal }) => (
                 <>
                   {isFree && (
-                    <Cta>
+                    <Cta id="upgradeCTA">
                       <Button
                         type="text"
                         onClick={() => {
