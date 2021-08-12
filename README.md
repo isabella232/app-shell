@@ -142,13 +142,51 @@ git clone git@github.com:bufferapp/app-shell.git
 2. Run `yarn watch` in this root directory
 3. visit `https://appshell.local.buffer.com:3000`
 
-note: you will need to manually trust the certificate, if `navigator.js` is not loading you will also need to trust the certificate for that one, you can do that by visiting `https://appshell.local.buffer.com:8085/main.js`
-`
+_note: you will need to manually trust the certificate, if `navigator.js` is not loading you will also need to trust the certificate for that one, you can do that by visiting `https://appshell.local.buffer.com:8085/main.js`_
 
 ### Running the Navigator, in dev mode, against production
 1. go to https://login.buffer.com/ and login with your production account (impersonation will also work).
 2. from the root folder run `yarn watch-production`
 3. visit `https://appshell.local.buffer.com:3000`
+
+## Testing
+We have two types of testing, unit tests, and UX tests.
+Unit tests use [Jest ](https://jestjs.io/), and can be run with `yarn run test` or  `yarn run test:watch`.
+UX tests use [Cypress](https://docs.cypress.io/), and can be run with `yarn run test:ux` or `yarn run test:ux:live` for Cypress live mode.
+
+### UX testing
+UX testing are integration tests meant to ensure that the entire app behaves as expected in its entirety on all the various scenarios (Account types, billing states, …).
+![Navigator tetst](https://user-images.githubusercontent.com/992920/129117558-c4854e38-4ba2-4bc2-a4cb-be02cbf9d1f7.png)
+
+All integrations tests are contained in the `./cypress/integration` folder.
+
+#### What to test
+- We want to tests complex core flows. For example: that a specifix CTA is properly showing for a subset of users, or that the billing flow can be fully executed.
+- do not test for a specific copy. This type of tests are quite brittle, on honestly not that useful. Instead, use static `#ids` to test for the presence of a specific component
+Ex:
+```js
+    it('has an invite team CTA', () => {
+      cy.get('#inviteTeamCTA')
+        .should('exist')
+    })
+```
+
+- do not test the entire APIs flow (login, user fetching). While those tests can be very valuable (we have Synthetic tets in DD for those), they are outside of the scope of what we want to test for in a PR, also  they are more expensive to run, and cumbersome to maintain. To avoid that you can leverage `cy.intercept` and fixtures to skip APIs request and return mocked data.
+
+Ex:
+```js
+    // All GraphQL request for the tests will return the account mock
+    before(() => {
+      cy.fixture('accountObFree').then(account => {
+        cy.intercept('POST', 'https://graph.buffer.com/', {
+          status: 200,
+          body: account,
+        })
+        cy.visit('/')
+      })
+    })
+```
+_Please read Cypress's [Working with GraphQL](https://docs.cypress.io/guides/testing-strategies/working-with-graphql) guide for more details on mocking strategies._
 
 ### Troubleshooting
 
