@@ -132,7 +132,7 @@ describe('useSegmentTracking hooks', () => {
           url: 'http://localhost/the-path?query=the-query',
           path: '/the-path',
           search: '?query=the-query',
-          cta: 'account-addPaymentMethod-planSelector',
+          cta: 'account-addPaymentMethod',
           ctaView: null,
           ctaButton: null,
           channel: null,

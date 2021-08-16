@@ -11,15 +11,16 @@ import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking'
 const PaymentMethod = () => {
   const currentUser = useContext(UserContext);
   const { data } = useContext(ModalContext);
+  const { cta, ctaView, ctaButton } = data || {};
+
   useEffect(() => {
-    const cta = data && data.cta ? data.cta : null;
     useTrackPageViewed({
       payload: {
         name: 'addPaymentDetails',
         title: 'planSelector',
         cta,
-        ctaButton: cta,
-        ctaView: data && data.ctaView ? data.ctaView : null,
+        ctaButton,
+        ctaView,
       },
       user: currentUser,
     });
@@ -36,7 +37,7 @@ const PaymentMethod = () => {
                   openPlans={(isUpgradeIntent) => {
                     openModal(MODALS.planSelector, {
                       isUpgradeIntent,
-                      cta: 'planSelection',
+                      cta,
                       ctaButton: 'goBackToPlanSelection',
                       ctaView: modal,
                     });
@@ -44,7 +45,7 @@ const PaymentMethod = () => {
                   openSuccess={(newData) => {
                     openModal(MODALS.success, {
                       ...newData,
-                      cta: 'addPaymentDetails',
+                      cta,
                       ctaView: modal,
                     });
                   }}

@@ -33,7 +33,7 @@ const UpgradeCTA = () => {
 
         if (currentOrganization.shouldDisplayInviteCTA) {
           return (
-            <Cta>
+            <Cta id="inviteTeamCTA">
               <Button
                 type="text"
                 onClick={() => {
@@ -53,25 +53,25 @@ const UpgradeCTA = () => {
               {({ openModal }) => (
                 <>
                   {isFree && (
-                    <Cta>
+                    <Cta id="upgradeCTA">
                       <Button
                         type="text"
                         onClick={() => {
                           if (isOneBufferOrganization) {
                             if (canStartTrial) {
                              openModal(MODALS.startTrial, {
-                                cta: 'startFreeTrial',
-                                ctaButton: 'startFreeTrial',
+                                cta: 'startTrialNavigatorBar',
+                                ctaButton: 'startTrial',
                               })
                             } else {
                               openModal(MODALS.planSelector, {
-                                cta: 'ugradePlan',
-                                ctaButton: 'ugradePlan',
+                                cta: 'upgradePlanNavigatorBar',
+                                ctaButton: 'upgradePlan',
                                 isUpgradeIntent: true,
                               });
                             }
                           } else {
-                            window.location = `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
+                            window.location = `https://publish.${envModifier ? envModifier : ''}buffer.com/plans`;
                           }
                         }}
                         icon={<FlashIcon />}

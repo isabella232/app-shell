@@ -4,6 +4,7 @@ import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
 
 import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account'
 import eventDispatcher from './utils/eventDispatcher'
+import { getActiveProductFromPath } from '../utils/getProduct';
 
 export const EVENT_KEY = 'appshell__organization_event'
 
@@ -50,6 +51,7 @@ function useOrgSwitcher() {
 
     BufferTracker.organizationSwitched({
       organizationId,
+      product: getActiveProductFromPath(),
     });
 
     // Needed, as the onCompleted is not triggered when passed as an option in the mutate function.

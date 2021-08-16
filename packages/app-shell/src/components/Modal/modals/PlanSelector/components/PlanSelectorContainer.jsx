@@ -51,6 +51,7 @@ export const PlanSelectorContainer = ({
   const [error, setError] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
+  const { cta } = modalData || {};
   const { monthlyBilling, setBillingInterval } = useInterval(
     planOptions,
     isUpgradeIntent
@@ -65,6 +66,7 @@ export const PlanSelectorContainer = ({
     error: subscriptionError,
     processing,
   } = useUpdateSubscriptionPlan({
+    cta,
     user,
     plan: selectedPlan,
     hasPaymentMethod: true,
@@ -84,7 +86,6 @@ export const PlanSelectorContainer = ({
   );
 
   useEffect(() => {
-    const cta = modalData && modalData.cta ? modalData.cta : null;
     useTrackPlanSelectorViewed({
       payload: {
         currentPlan: formatCTAString(
@@ -173,7 +174,7 @@ export const PlanSelectorContainer = ({
             onClick={() =>
               action({
                 plan: selectedPlan,
-                cta: label,
+                cta,
                 ctaView: modal,
                 isUpgradeIntent,
               })

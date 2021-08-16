@@ -34,12 +34,14 @@ export const UPDATE_SUBSCRIPTION_PLAN = gql`
   mutation updatePlan(
     $organizationId: String,
     $plan: OBPlanId,
-    $interval: BillingInterval
+    $interval: BillingInterval,
+    $attribution:AttributionInput
   ) {
     billingUpdateSubscriptionPlan(
       organizationId: $organizationId,
       plan: $plan,
-      interval: $interval
+      interval: $interval,
+      attribution:$attribution
     )
     {
       ... on BillingResponse { success }
@@ -52,12 +54,14 @@ export const START_TRIAL = gql`
   mutation startTrial(
     $organizationId:String,
     $plan:OBPlanId,
-    $interval:BillingInterval
+    $interval:BillingInterval,
+    $attribution:AttributionInput
   ) {
     billingStartTrial(
-      organizationId:$organizationId, 
+      organizationId:$organizationId,
       plan:$plan, 
-      interval:$interval
+      interval:$interval,
+      attribution:$attribution
     )
     {
       ... on BillingResponse { success }

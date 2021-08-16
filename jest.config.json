@@ -4,5 +4,5 @@
     "\\.(css|less)$": "identity-obj-proxy"
   },
   "coverageDirectory": "<rootDir>/coverage/",
-  "modulePathIgnorePatterns": ["app-shell/lib"]
+  "modulePathIgnorePatterns": ["app-shell/lib", "cypress"]
 }

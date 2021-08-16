@@ -10,7 +10,7 @@ export const DATES = {
 }
 
 export function setCookie({ key, value, expires }) {
-  document.cookie = `appshell_${key}=${value};path=/;expires=${expires.toUTCString()}`
+  document.cookie = `appshell_${key}=${value};domain=.buffer.com;path=/;expires=${expires.toUTCString()}`
 }
 
 export function getCookie({ key }) {

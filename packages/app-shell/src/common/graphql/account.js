@@ -31,6 +31,7 @@ export const BILLING_FIELDS = gql`
       subscription {
         interval
         periodEnd
+        isCanceledAtPeriodEnd
         trial {
           isActive
           remainingDays

@@ -1,5 +1,5 @@
 import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
-import { getProductPath } from '../../components/NavBar';
+import { getActiveProductFromPath } from '../utils/getProduct';
 
 export const formatCTAString = (str) => {
   const result = str.split(/\s+/).map(word => `${word.charAt(0).toUpperCase()}${word.slice(1)}`).join('');
@@ -21,8 +21,7 @@ export const useTrackPlanSelectorViewed = ({ payload, user }) => {
 
   
 
-  const baseUrl = window.location.origin;
-  const product = getProductPath(baseUrl);
+  const product = getActiveProductFromPath();
   const eventData = {
     organizationId: organization.id,
     ctaApp: product,
@@ -50,8 +49,7 @@ export const useTrackPageViewed = ({ payload, user }) => {
     return;
   }
 
-  const baseUrl = window.location.origin;
-  const product = getProductPath(baseUrl);
+  const product = getActiveProductFromPath();
   const eventData = {
     organizationId: organization.id,
     ctaApp: product,
@@ -74,7 +72,7 @@ export const useTrackPageViewed = ({ payload, user }) => {
     referrer: null, // The address of the webpage which is linked to the resource being requested. By checking the referrer, the new webpage can see where the request originated.
     
     ...payload,
-    cta: `${product}-${payload.cta}-planSelector`, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
+    cta: `${product}-${payload.cta}`, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
   };
 
   BufferTracker.pageViewed(eventData);

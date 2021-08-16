@@ -9,11 +9,16 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
+import {
+  useTrackPageViewed,
+} from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
-const StartTrial = ({ user, openModal }) => {
+const StartTrial = ({ user, openModal, modalData }) => {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const { cta, ctaButton } = modalData || {};
+
   useEffect(() => {
     if (user) {
       let plan = user.currentOrganization?.billing?.changePlanOptions.find(
@@ -32,6 +37,7 @@ const StartTrial = ({ user, openModal }) => {
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
     plan: suggestedPlan,
+    attribution: { cta },
   });
 
   useEffect(() => {
@@ -40,13 +46,23 @@ const StartTrial = ({ user, openModal }) => {
     }
   }, [trial]);
 
+  useEffect(() => {
+    useTrackPageViewed({
+      payload: {
+        name: 'AppShell Start Trial',
+        cta,
+        ctaButton,
+      },
+      user,
+    });
+  }, []);
+
   return (
     <Holder>
       <Content>
-        <Text type="h1">Test run our paid features</Text>
+        <Text type="h1">Try it all, for free!</Text>
         <Text type="p">
-          Get faster results from your creative with our best publishing,
-          analytics, and engagement tools built for growing businesses.
+          Take your online business further with our entire suite of tools.
         </Text>
         <ol>
           <li>
@@ -57,39 +73,34 @@ const StartTrial = ({ user, openModal }) => {
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Machine-learning driven insights</Text>
+            <Text>Comprehensive analytics</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
             <Text>
-              Analytics for the best time to post and your audience demographics
+              Easy reporting for your team and clients
             </Text>
-          </li>
-          <li>
-            {' '}
-            <CheckmarkIcon size="medium" />
-            <Text>Easy, automatic reporting on growth and engagement</Text>
           </li>
         </ol>
         <Ctas>
-          <Button
-            type="secondary"
-            onClick={() => {
-              openModal(MODALS.planSelector, {
-                cta: 'planSelection',
-                ctaButton: 'checkOutPaidPlans',
-              });
-            }}
-            label="I'm ready to upgrade"
-          />
           <Button
             type="primary"
             disabled={!suggestedPlan || processing}
             onClick={() => {
               startTrial();
             }}
-            label={processing ? 'Processing ...' : 'Start my 14-day Free Trial'}
+            label={processing ? 'Processing ...' : 'Start a 14-day free trial'}
+          />
+          <Button
+            type="secondary"
+            onClick={() => {
+              openModal(MODALS.planSelector, {
+                cta: 'startTrialModal',
+                ctaButton: 'checkOutPaidPlans',
+              });
+            }}
+            label="See paid plans"
           />
         </Ctas>
         <Error
@@ -111,7 +122,7 @@ const StartTrialProvider = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal }) => <StartTrial user={user} openModal={openModal} />}
+          {({ openModal, data:modalData }) => <StartTrial modalData={modalData} user={user} openModal={openModal} />}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>
