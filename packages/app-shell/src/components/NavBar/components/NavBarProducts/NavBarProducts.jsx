@@ -141,7 +141,7 @@ const products = [
   {
     id: 'engage',
     label: 'Engagement',
-    isNew: true
+    isNew: false
   }
 ];
 
