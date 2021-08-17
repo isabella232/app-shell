@@ -4,7 +4,7 @@ import { UserContext } from '../../../../common/context/User'
 import response from '../../../../common/mocks/trialExpiredMock'
 
 export default {
-  title: 'Trial Expired Modal',
+  title: 'Modals/Trial Expired Modal',
   component: TrialExpired,
 }
 

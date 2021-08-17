@@ -8,7 +8,11 @@ export const MODALS = {
   success: 'success',
   startTrial: 'startTrial',
   trialExpired: 'trialExpired',
-}
+  paidMigration: 'paidMigration',
+  essentialsPlan: 'essentialsPlan',
+  essentialsPricing: 'essentialsPricing',
+  upgradeSuccess: 'upgradeSuccess',
+};
 
 export const EVENT_KEY = 'appshell__modal_event'
 
