@@ -352,24 +352,24 @@ export const DashIcon = styled.div`
 export const FreePlanBorder = styled.div`
   border: 2px solid ${gray};
   position: absolute;
-  height: 100%;
+  height: 96%;
   border-radius: 5px;
   width: 175px;
   left: 325px;
   z-index: 99;
-  top: 6px;
+  top: 40px;
   pointer-events: none;
 `;
 
 export const EssentialsPlanBorder = styled.div`
   border: 3px solid ${blue};
   position: absolute;
-  height: 100%;
+  height: 97%;
   border-radius: 5px;
   width: 175px;
   right: 12px;
   z-index: 99;
-  top: 0px;
+  top: 35px;
   pointer-events: none;
 `;
 
