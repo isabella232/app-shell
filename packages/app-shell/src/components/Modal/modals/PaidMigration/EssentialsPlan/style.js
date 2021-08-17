@@ -194,6 +194,8 @@ export const FeaturesTable = styled.table`
       background-color: white;
       width: 205px;
       text-align: center;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
