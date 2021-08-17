@@ -192,7 +192,7 @@ export const FeaturesTable = styled.table`
     &:nth-child(2),
     &:nth-child(3) {
       background-color: white;
-      width: 154px;
+      width: 205px;
       text-align: center;
     }
   }
@@ -210,11 +210,11 @@ export const FeaturesTable = styled.table`
           content: '';
           height: 20px;
           background: white;
-          width: 88%;
+          width: 173px;
           display: block;
           position: absolute;
           top: -8px;
-          left: 10px;
+          left: 20px;
           border-radius: 4px;
         }
       }
@@ -262,11 +262,11 @@ export const FeaturesTable = styled.table`
             content: '';
             height: 20px;
             background: white;
-            width: 88%;
+            width: 173px;
             display: block;
             position: absolute;
             bottom: -8px;
-            left: 10px;
+            left: 16px;
             border-radius: 4px;
           }
         }
@@ -350,24 +350,24 @@ export const DashIcon = styled.div`
 export const FreePlanBorder = styled.div`
   border: 2px solid ${gray};
   position: absolute;
-  height: 96%;
+  height: 100%;
   border-radius: 5px;
   width: 175px;
   left: 325px;
   z-index: 99;
-  top: 40px;
+  top: 6px;
   pointer-events: none;
 `;
 
 export const EssentialsPlanBorder = styled.div`
   border: 3px solid ${blue};
   position: absolute;
-  height: 97%;
+  height: 100%;
   border-radius: 5px;
-  width: 173px;
+  width: 175px;
   right: 12px;
   z-index: 99;
-  top: 35px;
+  top: 0px;
   pointer-events: none;
 `;
 
