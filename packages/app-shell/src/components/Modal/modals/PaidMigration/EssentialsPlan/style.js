@@ -164,8 +164,13 @@ export const TableContainer = styled.div`
   max-width: 720px;
   margin: 0 auto;
 
+  h2 {
+    margin-bottom: 15px;
+  }
+
   p:first-of-type {
     max-width: 272px;
+    margin: 0;
   }
 `;
 
@@ -174,7 +179,9 @@ export const FeaturesTable = styled.table`
   width: 100%;
   position: relative;
   z-index: 9;
-  margin-top: -30px;
+  margin-top: -45px;
+
+  
 
   td,
   th {
@@ -203,23 +210,6 @@ export const FeaturesTable = styled.table`
     th {
       padding: 25px;
       text-align: center;
-      position: relative;
-
-      &:last-child {
-        position: relative;
-
-        &:before {
-          content: '';
-          height: 20px;
-          background: white;
-          width: 173px;
-          display: block;
-          position: absolute;
-          top: -8px;
-          left: 20px;
-          border-radius: 4px;
-        }
-      }
 
       span {
         font-size: 24px;
@@ -233,14 +223,15 @@ export const FeaturesTable = styled.table`
       }
 
       &:nth-child(2) {
+
         &:before {
           content: '';
           display: block;
           width: 107px;
           height: 67px;
           position: absolute;
-          top: -54px;
-          right: -94px;
+          top: -47px;
+          right: 106px;
           transform: rotate(15deg);
           z-index: 9;
           background-image: url('https://buffer-ui.s3.amazonaws.com/shapes/arrow.png');
@@ -255,24 +246,6 @@ export const FeaturesTable = styled.table`
   tbody {
     tr {
       border-top: 1px solid ${grayLight};
-
-      &:last-child {
-        td:last-child {
-          position: relative;
-
-          &:after {
-            content: '';
-            height: 20px;
-            background: white;
-            width: 173px;
-            display: block;
-            position: absolute;
-            bottom: -8px;
-            left: 16px;
-            border-radius: 4px;
-          }
-        }
-      }
     }
 
     td {
@@ -364,12 +337,12 @@ export const FreePlanBorder = styled.div`
 export const EssentialsPlanBorder = styled.div`
   border: 3px solid ${blue};
   position: absolute;
-  height: 97%;
+  height: 96%;
   border-radius: 5px;
   width: 175px;
   right: 12px;
   z-index: 99;
-  top: 35px;
+  top: 40px;
   pointer-events: none;
 `;
 
