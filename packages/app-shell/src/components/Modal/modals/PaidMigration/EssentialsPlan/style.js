@@ -174,7 +174,7 @@ export const FeaturesTable = styled.table`
   width: 100%;
   position: relative;
   z-index: 9;
-  margin-top: -65px;
+  margin-top: -30px;
 
   td,
   th {
