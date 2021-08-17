@@ -12,6 +12,8 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'testing-library', 'jest-dom'],
-  rules: {},
+  rules: {
+    "import/prefer-default-export": "off",
+  },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
 };
