@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { gray } from '@bufferapp/ui/style/colors';
 
-const Container = styled.div`
+export const Container = styled.div`
   position: fixed;
   bottom: 37px;
   right: 37px;
@@ -12,5 +12,3 @@ const Container = styled.div`
     border-radius: 4px;
   }
 `;
-
-export default Container;

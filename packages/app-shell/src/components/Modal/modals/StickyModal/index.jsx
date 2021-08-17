@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Container from './style';
+import { Container } from './style';
 
 const StickyModal = ({ children }) => {
   return <Container>{children}</Container>;
