@@ -192,8 +192,10 @@ export const FeaturesTable = styled.table`
     &:nth-child(2),
     &:nth-child(3) {
       background-color: white;
-      width: 154px;
+      width: 205px;
       text-align: center;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
@@ -210,11 +212,11 @@ export const FeaturesTable = styled.table`
           content: '';
           height: 20px;
           background: white;
-          width: 88%;
+          width: 173px;
           display: block;
           position: absolute;
           top: -8px;
-          left: 10px;
+          left: 20px;
           border-radius: 4px;
         }
       }
@@ -262,11 +264,11 @@ export const FeaturesTable = styled.table`
             content: '';
             height: 20px;
             background: white;
-            width: 88%;
+            width: 173px;
             display: block;
             position: absolute;
             bottom: -8px;
-            left: 10px;
+            left: 16px;
             border-radius: 4px;
           }
         }
@@ -364,7 +366,7 @@ export const EssentialsPlanBorder = styled.div`
   position: absolute;
   height: 97%;
   border-radius: 5px;
-  width: 173px;
+  width: 175px;
   right: 12px;
   z-index: 99;
   top: 35px;
