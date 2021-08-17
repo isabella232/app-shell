@@ -8,6 +8,7 @@ export const Container = styled.div`
   border: 1px solid ${gray};
   border-radius: 4px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+  z-index: 9;
 
   > div:first-of-type {
     border-radius: 4px;
