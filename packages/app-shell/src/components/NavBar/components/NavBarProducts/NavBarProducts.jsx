@@ -131,18 +131,18 @@ const products = [
   {
     id: 'publish',
     label: 'Publishing',
-    isNew: false
+    isNew: false,
   },
   {
     id: 'analyze',
     label: 'Analytics',
-    isNew: false
+    isNew: false,
   },
   {
     id: 'engage',
     label: 'Engagement',
-    isNew: true
-  }
+    isNew: true,
+  },
 ];
 
 const getLogo = (product) => {
@@ -180,19 +180,10 @@ const NavBarProducts = ({ activeProduct }) => (
 );
 
 NavBarProducts.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      isNew: PropTypes.bool,
-      href: PropTypes.string,
-    })
-  ),
-
   activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
 };
 
 NavBarProducts.defaultProps = {
-  products: [],
   activeProduct: undefined,
 };
 
