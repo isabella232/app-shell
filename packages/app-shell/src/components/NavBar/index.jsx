@@ -40,7 +40,7 @@ import { useUser } from '../../common/context/User';
 import { ModalContext } from '../../common/context/Modal';
 import { MODALS } from '../../common/hooks/useModal';
 import useOrgSwitcher from '../../common/hooks/useOrgSwitcher';
-import { isFreePlan } from '../../common/hooks/utils/segmentTraitGetters'
+import { isFreePlan } from '../../common/hooks/utils/segmentTraitGetters';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -70,30 +70,36 @@ export function getAccountUrl(baseUrl = '', user) {
 }
 
 function getUrlEnvModifier() {
-  const [hostname, envModifier] = window.location.hostname.match(/\w+\.(\w+\.)buffer\.com/) || [null, null]
-  return envModifier
+  const [, envModifier] = window.location.hostname.match(
+    /\w+\.(\w+\.)buffer\.com/
+  ) || [null, null];
+  return envModifier;
 }
 
 export function getBillingUrl() {
-  const envModifier = getUrlEnvModifier()
-  return `https://account.${envModifier ? envModifier : ''}buffer.com/billing`;
+  const envModifier = getUrlEnvModifier();
+  return `https://account.${envModifier || ''}buffer.com/billing`;
 }
 
 export function getTeamInviteUrl(user) {
-  const envModifier = getUrlEnvModifier()
-  return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members/invite
-  `
+  const envModifier = getUrlEnvModifier();
+  return `https://${envModifier || ''}buffer.com/manage/${
+    user.currentOrganization.id
+  }/team-members/invite
+  `;
 }
 
 export function getTeamManageUrl(user) {
-  const envModifier = getUrlEnvModifier()
-  return `https://${envModifier ? envModifier : ''}buffer.com/manage/${user.currentOrganization.id}/team-members
-  `
+  const envModifier = getUrlEnvModifier();
+  return `https://${envModifier || ''}buffer.com/manage/${
+    user.currentOrganization.id
+  }/team-members
+  `;
 }
 
-function getManageChannelsURL(baseUrl) {
-  const envModifier = getUrlEnvModifier()
-  return `https://account.${envModifier ? envModifier : ''}buffer.com/channels`;
+function getManageChannelsURL() {
+  const envModifier = getUrlEnvModifier();
+  return `https://account.${envModifier || ''}buffer.com/channels`;
 }
 
 export const ORG_SWITCHER = 'org_switcher';
@@ -214,7 +220,7 @@ function buildOrgSwitcher(user, selectOrganization) {
     return [];
   }
 
-  const channels = user?.organizations?.map(o => o.channels).flat() || [];
+  const channels = user?.organizations?.map((o) => o.channels).flat() || [];
   const orgSwitcher = {
     title: 'Organizations',
     hideTooltips: !channels,
@@ -264,12 +270,8 @@ function buildOrgSwitcher(user, selectOrganization) {
 }
 
 const NavBar = React.memo((props) => {
-  const {
-    activeProduct,
-    onLogout,
-    displaySkipLink,
-    onOrganizationSelected,
-  } = props;
+  const { activeProduct, onLogout, displaySkipLink, onOrganizationSelected } =
+    props;
 
   const user = useUser();
   const switchOrganization = useOrgSwitcher();
@@ -281,27 +283,32 @@ const NavBar = React.memo((props) => {
   };
   const organizations = buildOrgSwitcher(user, selectOrganization);
 
-  let isFree = isFreePlan(user);
+  const isFree = isFreePlan(user);
   let subscription = null;
   let canStartTrial = false;
   let isOneBufferOrganization = false;
-  const shouldDisplayInviteCTA =  user?.currentOrganization?.shouldDisplayInviteCTA;
+  const shouldDisplayInviteCTA =
+    user?.currentOrganization?.shouldDisplayInviteCTA;
   if (user.currentOrganization.billing) {
+    // eslint-disable-next-line no-unused-vars
     subscription = user?.currentOrganization?.billing?.subscription;
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
-    isOneBufferOrganization = user?.currentOrganization?.isOneBufferOrganization;
+    isOneBufferOrganization =
+      user?.currentOrganization?.isOneBufferOrganization;
   }
 
   const menuItems = [
     // This is only needed for Publish
-    (window.location.href.match(/publish/)) ? {
-      id: 'preferences',
-      title: 'My Preferences',
-      icon: <GearIcon color={gray} />,
-      onItemClick: () => {
-        window.location.pathname  = '/preferences/general'
-      },
-    } : null,
+    window.location.href.match(/publish/)
+      ? {
+          id: 'preferences',
+          title: 'My Preferences',
+          icon: <GearIcon color={gray} />,
+          onItemClick: () => {
+            window.location.pathname = '/preferences/general';
+          },
+        }
+      : null,
     {
       id: 'channels',
       title: 'Channels',
@@ -318,16 +325,18 @@ const NavBar = React.memo((props) => {
         window.location.assign(getTeamManageUrl(user));
       },
     },
-  ]
+  ];
 
   const helpMenuItems = [
     {
       id: 'Help Center',
       title: 'Visit Help Center',
-      onItemClick: () => { window.open(
-        'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
-        '_blank'
-      ); },
+      onItemClick: () => {
+        window.open(
+          'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
+          '_blank'
+        );
+      },
     },
     {
       id: 'Quick Help',
@@ -342,19 +351,25 @@ const NavBar = React.memo((props) => {
     {
       id: 'Status',
       title: 'Status',
-      onItemClick: () => { window.location.assign('https://status.buffer.com/'); },
+      onItemClick: () => {
+        window.location.assign('https://status.buffer.com/');
+      },
     },
     {
       id: 'Pricing & Plans',
       title: 'Pricing & Plans',
-      onItemClick: () => { window.location.assign('https://buffer.com/pricing'); },
+      onItemClick: () => {
+        window.location.assign('https://buffer.com/pricing');
+      },
     },
     {
       id: 'Wishlist',
       title: 'Wishlist',
-      onItemClick: () => { window.location.assign('https://buffer.com/feature-request'); },
+      onItemClick: () => {
+        window.location.assign('https://buffer.com/feature-request');
+      },
     },
-  ]
+  ];
 
   return (
     <ModalContext.Consumer>
@@ -390,7 +405,10 @@ const NavBar = React.memo((props) => {
               horizontalOffset="-16px"
               isImpersonation={user.isImpersonation}
               menubarItem={
-                <NavBarMenu user={user} isImpersonation={user.isImpersonation} />
+                <NavBarMenu
+                  user={user}
+                  isImpersonation={user.isImpersonation}
+                />
               }
               items={[
                 ...organizations,
@@ -406,54 +424,62 @@ const NavBar = React.memo((props) => {
                   },
                 },
                 ...menuItems,
-                (shouldDisplayInviteCTA) ? {
-                  id: 'Invite Your Team',
-                  title: 'Invite Your Team',
-                  icon: <PeopleIcon color={blue} />,
-                  colors: { title: 'blue', iconHover: 'blueDaker' },
-                  hasDivider: true,
-                  onItemClick: () => {
-                    window.location = getTeamInviteUrl(user)
-                  },
-                } : null,
-                (isFree && !isOneBufferOrganization) ? {
-                  id: 'upgrade',
-                  title: 'Upgrade',
-                  icon: <FlashIcon color={blue} />,
-                  colors: { title: 'blue', iconHover: 'blueDaker' },
-                  hasDivider: true,
-                  onItemClick: () => {
-                    window.location = getBillingUrl()
-                  },
-                } : null,
-                (isFree && !canStartTrial && isOneBufferOrganization) ? {
-                  id: 'upgrade',
-                  title: 'Upgrade',
-                  icon: <FlashIcon color={blue} />,
-                  colors: { title: 'blue', iconHover: 'blueDaker' },
-                  hasDivider: true,
-                  onItemClick: () => {
-                    openModal(MODALS.planSelector, {
-                      cta: 'upgradePlanNavigatorMenu',
-                      ctaButton: 'upgradePlan',
-                      isUpgradeIntent: true,
-                    })
-                  },
-                } : null,
-                (isFree && canStartTrial && isOneBufferOrganization) ? {
-                  id: 'start trial',
-                  title: 'Start a free trial',
-                  icon: <FlashIcon color={blue} />,
-                  colors: { title: 'blue', iconHover: 'blueDaker' },
-                  hasDivider: true,
-                  onItemClick: () => {
-                    openModal(MODALS.startTrial, {
-                      cta: 'startTrialNavigatorMenu',
-                      ctaButton: 'startTrial',
-                      isUpgradeIntent: true,
-                    })
-                  },
-                } : null,
+                shouldDisplayInviteCTA
+                  ? {
+                      id: 'Invite Your Team',
+                      title: 'Invite Your Team',
+                      icon: <PeopleIcon color={blue} />,
+                      colors: { title: 'blue', iconHover: 'blueDaker' },
+                      hasDivider: true,
+                      onItemClick: () => {
+                        window.location = getTeamInviteUrl(user);
+                      },
+                    }
+                  : null,
+                isFree && !isOneBufferOrganization
+                  ? {
+                      id: 'upgrade',
+                      title: 'Upgrade',
+                      icon: <FlashIcon color={blue} />,
+                      colors: { title: 'blue', iconHover: 'blueDaker' },
+                      hasDivider: true,
+                      onItemClick: () => {
+                        window.location = getBillingUrl();
+                      },
+                    }
+                  : null,
+                isFree && !canStartTrial && isOneBufferOrganization
+                  ? {
+                      id: 'upgrade',
+                      title: 'Upgrade',
+                      icon: <FlashIcon color={blue} />,
+                      colors: { title: 'blue', iconHover: 'blueDaker' },
+                      hasDivider: true,
+                      onItemClick: () => {
+                        openModal(MODALS.planSelector, {
+                          cta: 'ugradePlan',
+                          ctaButton: 'ugradePlan',
+                          isUpgradeIntent: true,
+                        });
+                      },
+                    }
+                  : null,
+                isFree && canStartTrial && isOneBufferOrganization
+                  ? {
+                      id: 'start trial',
+                      title: 'Start a free trial',
+                      icon: <FlashIcon color={blue} />,
+                      colors: { title: 'blue', iconHover: 'blueDaker' },
+                      hasDivider: true,
+                      onItemClick: () => {
+                        openModal(MODALS.startTrial, {
+                          cta: 'startFreeTrial',
+                          ctaButton: 'startFreeTrial',
+                          isUpgradeIntent: true,
+                        });
+                      },
+                    }
+                  : null,
                 user.isImpersonation
                   ? {
                       id: 'Stop Impersonation',
@@ -493,7 +519,6 @@ NavBar.propTypes = {
   displaySkipLink: PropTypes.bool,
 
   onOrganizationSelected: PropTypes.func,
-  menuItems: PropTypes.array,
   graphqlConfig: PropTypes.shape({
     client: PropTypes.instanceOf(ApolloClient),
   }),
