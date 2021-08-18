@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
+import PropTypes from 'prop-types';
 
 import { getCookie } from '../../common/utils/cookies'
 import { MODALS } from '../../common/hooks/useModal';
@@ -16,6 +17,7 @@ import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
 
 const ModalContent = ({ modal, closeAction }) => {
+  console.log("here: " + typeof modal);
   switch (modal) {
     case MODALS.paymentMethod:
       return (
@@ -76,6 +78,11 @@ const ModalContent = ({ modal, closeAction }) => {
   }
 };
 
+ModalContent.propTypes = {
+  modal: PropTypes.object.isRequired,
+  closeAction: PropTypes.func.isRequired,
+};
+
 const Modal = ({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
   const user = useUser()
@@ -88,19 +95,15 @@ const Modal = ({ modal, openModal }) => {
       openModal(MODALS.trialExpired)
     }
 
+    // Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
+    const isPendoModalVisible = window.pendo && !window.pendo.isGuideShown() || !window.pendo ? false : true;
+
     //Migrate to OB modal
     const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
     const hasDismissedMigrationModal = getCookie({ key: 'migrationModalDismissed' })
-    if (!hasDismissedMigrationModal && canMigrateToOneBuffer) {
 
-      if(window.pendo && !window.pendo.isGuideShown()) {
-        openModal(MODALS.paidMigration);
-      }
-      else {
-        if (!window.pendo) {
-          openModal(MODALS.paidMigration);
-        }
-      }
+    if (!hasDismissedMigrationModal && canMigrateToOneBuffer && !isPendoModalVisible) {
+      openModal(MODALS.paidMigration);
     }
   }, [user.loading]);
 
@@ -109,6 +112,11 @@ const Modal = ({ modal, openModal }) => {
   }, [modal]);
 
   return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
+};
+
+Modal.propTypes = {
+  modal: PropTypes.object,
+  openModal: PropTypes.func.isRequired,
 };
 
 export default Modal;
