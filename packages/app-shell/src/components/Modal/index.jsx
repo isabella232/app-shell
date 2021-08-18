@@ -95,19 +95,12 @@ const Modal = ({ modal, openModal }) => {
 
       if(window.pendo && !window.pendo.isGuideShown()) {
         openModal(MODALS.paidMigration);
-        return;
       }
       else {
         if (!window.pendo) {
           openModal(MODALS.paidMigration);
         }
       }
-      // if pendo exists 
-        // then check if pendo window is open
-            // if yes then dont show modal
-            // if no show modal
-      // if pendo doesnt exists
-        // show modal 
     }
   }, [user.loading]);
 
