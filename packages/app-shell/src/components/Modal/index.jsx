@@ -17,7 +17,6 @@ import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
 
 const ModalContent = ({ modal, closeAction }) => {
-  console.log("here: " + typeof modal);
   switch (modal) {
     case MODALS.paymentMethod:
       return (
@@ -79,7 +78,7 @@ const ModalContent = ({ modal, closeAction }) => {
 };
 
 ModalContent.propTypes = {
-  modal: PropTypes.object.isRequired,
+  modal: PropTypes.objectOf(PropTypes.object).isRequired,
   closeAction: PropTypes.func.isRequired,
 };
 
@@ -95,7 +94,7 @@ const Modal = ({ modal, openModal }) => {
       openModal(MODALS.trialExpired)
     }
 
-    // Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
+    //Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
     const isPendoModalVisible = window.pendo && !window.pendo.isGuideShown() || !window.pendo ? false : true;
 
     //Migrate to OB modal
@@ -115,7 +114,7 @@ const Modal = ({ modal, openModal }) => {
 };
 
 Modal.propTypes = {
-  modal: PropTypes.object,
+  modal: PropTypes.objectOf(PropTypes.object),
   openModal: PropTypes.func.isRequired,
 };
 
