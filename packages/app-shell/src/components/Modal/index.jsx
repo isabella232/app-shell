@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
+import PropTypes from 'prop-types';
 
 import { getCookie } from '../../common/utils/cookies'
 import { MODALS } from '../../common/hooks/useModal';
@@ -76,6 +77,11 @@ const ModalContent = ({ modal, closeAction }) => {
   }
 };
 
+ModalContent.propTypes = {
+  modal: PropTypes.objectOf(PropTypes.object).isRequired,
+  closeAction: PropTypes.func.isRequired,
+};
+
 const Modal = ({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
   const user = useUser()
@@ -101,6 +107,11 @@ const Modal = ({ modal, openModal }) => {
   }, [modal]);
 
   return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
+};
+
+Modal.propTypes = {
+  modal: PropTypes.objectOf(PropTypes.object),
+  openModal: PropTypes.func.isRequired,
 };
 
 export default Modal;
