@@ -31,7 +31,7 @@ const ScreenContainer = styled.div`
   }
 
   h1 {
-    max-width: 324px;
+    max-width: 328px;
     margin-top: 22px;
     margin-bottom: 22px;
   }
@@ -92,7 +92,7 @@ export const Modal = ({
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
   const planId = user?.currentOrganization?.billing?.subscription?.plan?.id
   const changePlanOptions = user?.currentOrganization?.billing?.changePlanOptions || []
-  const planDetails = changePlanOptions.find(o => o.planId === planId)?.summary.details
+  const planDetails = changePlanOptions.find(o => o.planId === 'free')?.highlights
 
   if (!planDetails) {
     return null
@@ -102,6 +102,7 @@ export const Modal = ({
     <ScreenContainer imageUrl={imageUrl}>
       <Text type="h1">Your trial has expired</Text>
       <Text type="p">{description}</Text>
+      <Text type="p">Your free plan is limited to:</Text>
       <Details>
         {planDetails.map(detail => (<li>
           <CheckmarkIcon size="medium" />
