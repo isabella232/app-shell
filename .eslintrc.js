@@ -14,6 +14,10 @@ module.exports = {
   plugins: ['react', 'testing-library', 'jest-dom'],
   rules: {
     "import/prefer-default-export": "off",
+    "spaced-comment": "off",
+    "no-unneeded-ternary": "off",
+    "import/no-named-as-default": "off",
+    "react/require-default-props": "off"
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
 };
