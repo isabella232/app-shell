@@ -92,7 +92,7 @@ export const Modal = ({
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
   const planId = user?.currentOrganization?.billing?.subscription?.plan?.id
   const changePlanOptions = user?.currentOrganization?.billing?.changePlanOptions || []
-  const planDetails = changePlanOptions.find(o => o.planId === 'free')?.highlights
+  const planDetails = changePlanOptions.find(o => o.planId === planId)?.summary.details
 
   if (!planDetails) {
     return null
