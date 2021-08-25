@@ -18,6 +18,7 @@ module.exports = {
     "no-unneeded-ternary": "off",
     "import/no-named-as-default": "off",
     "react/require-default-props": "off",
+    "no-prototype-builtins": "off"
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
 };
