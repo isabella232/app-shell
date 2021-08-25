@@ -4,6 +4,7 @@ import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import { black, blue } from '@bufferapp/ui/style/colors';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+import PropTypes from 'prop-types';
 
 import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
 import { UserContext } from '../../../../common/context/User';
@@ -74,7 +75,6 @@ const Details = styled.ul`
 export const Modal = ({
   user,
   onDismiss,
-  closeModal,
   onUpgrade,
 }) => {
 
@@ -163,6 +163,12 @@ const TrialExpired = () => {
       )}
     </UserContext.Consumer>
   )
+};
+
+Modal.propTypes = {
+  user: PropTypes.objectOf(PropTypes.object).isRequired,
+  onDismiss: PropTypes.func,
+  onUpgrade: PropTypes.func,
 };
 
 export default TrialExpired;
