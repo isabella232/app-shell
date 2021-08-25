@@ -35,6 +35,7 @@ export const Navigator = ({ apolloClient, channels }) => {
       }
     : {};
   const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig);
+  // eslint-disable-next-line no-underscore-dangle
   window.__userData = {
     data,
     loading,
