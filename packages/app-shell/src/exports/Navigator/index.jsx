@@ -1,7 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ApolloProvider, ApolloClient, InMemoryCache, useQuery, HttpLink } from '@apollo/client';
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  useQuery,
+  HttpLink,
+} from '@apollo/client';
 import ReactDOM from 'react-dom';
 
 import NavBar, { getLogoutUrl } from '../../components/NavBar';
@@ -16,27 +22,25 @@ import useUserTracker from '../../common/hooks/useUserTracker';
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
   if (['analyze', 'engage', 'publish'].includes(productUrl)) {
-    return productUrl
+    return productUrl;
   }
 
-  return null
+  return null;
 }
 
-export const Navigator = ({
-  apolloClient,
-  channels,
-}) => {
+export const Navigator = ({ apolloClient, channels }) => {
   const graphqlConfig = apolloClient
     ? {
         client: apolloClient,
       }
     : {};
   const { data, loading, error } = useQuery(QUERY_ACCOUNT, graphqlConfig);
+  // eslint-disable-next-line no-underscore-dangle
   window.__userData = {
     data,
     loading,
     error,
-  }
+  };
 
   const user =
     loading || !data
@@ -53,7 +57,7 @@ export const Navigator = ({
       : {
           ...data.account,
         };
-  useUserTracker(user)
+  useUserTracker(user);
 
   const networkErrors = error?.networkError?.result?.errors;
   if (
@@ -79,9 +83,11 @@ export const Navigator = ({
         user.currentOrganization?.billing?.subscription?.plan?.name;
       const daysRemaining =
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
-      trialBannerString = `You are on the ${planName === 'Team' ? 'Essentials + Team Pack' : planName} trial with ${daysRemaining} ${
+      trialBannerString = `You are on the Essentials plan ${
+        planName === 'Team' ? 'with Team Pack' : ''
+      } trial with ${daysRemaining} ${
         daysRemaining === 1 ? 'day' : 'days'
-      } left. Add a billing method to keep access after your trial expires.`;
+      } left. Add your billing details now to start your subscription.`;
     }
   }
 
@@ -90,7 +96,6 @@ export const Navigator = ({
       <ModalContext.Provider value={modal}>
         <NavBar
           activeProduct={getActiveProductFromUrl()}
-
           graphqlConfig={graphqlConfig}
           channels={channels}
         />
@@ -98,7 +103,7 @@ export const Navigator = ({
           <Banner
             text={trialBannerString}
             actionButton={{
-              label: "Let's do this",
+              label: 'Start Subscription',
               action: () =>
                 modal.openModal(MODALS.planSelector, {
                   cta: 'addPaymentDetailsBanner',
@@ -107,9 +112,7 @@ export const Navigator = ({
             }}
           />
         )}
-        <Modal
-          {...modal}
-        />
+        <Modal {...modal} />
       </ModalContext.Provider>
     </UserContext.Provider>
   );
@@ -136,7 +139,7 @@ export default () => {
   const client = new ApolloClient({
     cache: new InMemoryCache({
       possibleTypes: {
-        Billing: ["MPBilling", "OBBilling"],
+        Billing: ['MPBilling', 'OBBilling'],
       },
     }),
     link: new HttpLink({
@@ -156,4 +159,4 @@ export default () => {
     </React.StrictMode>,
     document.getElementById('navigator')
   );
-}
+};
