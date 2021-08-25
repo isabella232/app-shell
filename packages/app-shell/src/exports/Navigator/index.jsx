@@ -84,7 +84,7 @@ export const Navigator = ({ apolloClient, channels }) => {
       const daysRemaining =
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
       trialBannerString = `You are on the Essentials plan ${
-        planName === 'Team' ? 'with Team Pack' : ''
+        planName === 'Essentials' ? '' : 'with Team Pack'
       } trial with ${daysRemaining} ${
         daysRemaining === 1 ? 'day' : 'days'
       } left. Add your billing details now to start your subscription.`;
