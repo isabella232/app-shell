@@ -2,8 +2,15 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    jest: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'prettier', 'prettier/react'],
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'prettier',
+    'prettier/react',
+    'plugin:cypress/recommended',
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -13,12 +20,12 @@ module.exports = {
   },
   plugins: ['react', 'testing-library', 'jest-dom'],
   rules: {
-    "import/prefer-default-export": "off",
-    "spaced-comment": "off",
-    "no-unneeded-ternary": "off",
-    "import/no-named-as-default": "off",
-    "react/require-default-props": "off",
-    "no-prototype-builtins": "off"
+    'import/prefer-default-export': 'off',
+    'spaced-comment': 'off',
+    'no-unneeded-ternary': 'off',
+    'import/no-named-as-default': 'off',
+    'react/require-default-props': 'off',
+    'no-prototype-builtins': 'off',
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
 };
