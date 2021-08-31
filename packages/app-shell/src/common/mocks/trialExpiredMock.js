@@ -30,7 +30,7 @@ export default {
               channelsQuantity: 1,
               description: 'Commit to a social media strategy before you pay.',
               isCurrentPlan: false,
-              highlights: ['3 social channels', '10 scheduled posts'],
+              highlights: ['3 social channels', '10 scheduled posts', 'One user'],
               currency: '$',
               basePrice: 0,
               totalPrice: 0,

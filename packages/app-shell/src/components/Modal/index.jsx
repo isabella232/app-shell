@@ -94,10 +94,15 @@ const Modal = ({ modal, openModal }) => {
       openModal(MODALS.trialExpired)
     }
 
+    //Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
+    const isPendoModalVisible = window.pendo && window.pendo.hasOwnProperty('isGuideShown') && window.pendo.isGuideShown();
+
     //Migrate to OB modal
     const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
     const hasDismissedMigrationModal = getCookie({ key: 'migrationModalDismissed' })
-    if (!hasDismissedMigrationModal && canMigrateToOneBuffer) {
+    const shouldShowMigrationModal = !hasDismissedMigrationModal && canMigrateToOneBuffer && !isPendoModalVisible;
+
+    if (shouldShowMigrationModal) {
       openModal(MODALS.paidMigration);
     }
   }, [user.loading]);
