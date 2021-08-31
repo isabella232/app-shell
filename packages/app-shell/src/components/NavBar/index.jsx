@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { ApolloClient } from '@apollo/client';
 
 import Cross from '@bufferapp/ui/Icon/Icons/Cross';
-import InfoIcon from '@bufferapp/ui/Icon/Icons/Info';
 import ArrowLeft from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 import PersonIcon from '@bufferapp/ui/Icon/Icons/Person';
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
@@ -18,21 +17,12 @@ import PeopleIcon from '@bufferapp/ui/Icon/Icons/People';
 import GearIcon from '@bufferapp/ui/Icon/Icons/Gear';
 import ChannelsIcon from '@bufferapp/ui/Icon/Icons/Channels';
 
-import {
-  blue,
-  blueDarker,
-  gray,
-  grayDark,
-  grayLight,
-  grayLighter,
-} from '@bufferapp/ui/style/colors';
-
-import { fontFamily, fontWeightMedium } from '@bufferapp/ui/style/fonts';
+import { white, blue, gray, grayLighter } from '@bufferapp/ui/style/colors';
 
 import Link from '@bufferapp/ui/Link';
 import DropdownMenu from '@bufferapp/ui/DropdownMenu';
 
-import BufferLogo from './components/BufferLogo';
+import BufferLogoWithWords from './components/BufferLogoWithWords';
 import NavBarMenu from './components/NavBarMenu/NavBarMenu';
 import NavBarProducts from './components/NavBarProducts/NavBarProducts';
 import UpgradeCTA from './components/UpgradeCTA';
@@ -41,6 +31,12 @@ import { ModalContext } from '../../common/context/Modal';
 import { MODALS } from '../../common/hooks/useModal';
 import useOrgSwitcher from '../../common/hooks/useOrgSwitcher';
 import { isFreePlan } from '../../common/hooks/utils/segmentTraitGetters';
+
+import NavBarDropdown from './components/NavBarDropdown';
+import {
+  getHelpDropdownItems,
+  getAppsDropdownItems,
+} from './utils/dropdown-items';
 
 export function getProductPath(baseUrl) {
   const result = baseUrl.match(/https*:\/\/(.+)\.buffer\.com/);
@@ -116,11 +112,11 @@ export function getStopImpersonationUrl() {
 }
 
 const NavBarStyled = styled.nav`
-  background: #fff;
+  background: linear-gradient(180deg, ${white} 73.44%, ${grayLighter} 100%);
   border-bottom: 1px solid ${gray};
-  box-shadow: 0 1px 10px -5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.09), inset 0px -1px 0px ${grayLighter};
   display: flex;
-  height: 56px;
+  height: 64px;
   justify-content: space-between;
   position: relative;
 `;
@@ -130,42 +126,6 @@ const NavBarLeft = styled.div`
 `;
 const NavBarRight = styled.nav`
   display: flex;
-`;
-
-const NavBarHelp = styled.a`
-  align-items: center;
-  color: #fff;
-  color: ${(props) => (props.active ? blueDarker : grayDark)};
-  display: flex;
-  font-size: 16px;
-  font-family: ${fontFamily};
-  font-weight: ${fontWeightMedium};
-  height: 100%;
-  padding: 0 24px;
-  position: relative;
-  text-decoration: none;
-  z-index: 2;
-  &:hover {
-    color: ${(props) => (props.active ? blueDarker : grayDark)};
-    background-color: ${grayLighter};
-  }
-  cursor: pointer;
-`;
-
-const NavBarHelpText = styled.span`
-  margin-left: 8px;
-`;
-
-const NavBarVerticalRule = styled.div`
-  background-color: ${grayLight};
-  height: 24px;
-  margin-left: -1px;
-  margin-right: -1px;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  z-index: 1;
 `;
 
 /**
@@ -327,50 +287,6 @@ const NavBar = React.memo((props) => {
     },
   ];
 
-  const helpMenuItems = [
-    {
-      id: 'Help Center',
-      title: 'Visit Help Center',
-      onItemClick: () => {
-        window.open(
-          'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
-          '_blank'
-        );
-      },
-    },
-    {
-      id: 'Quick Help',
-      title: 'Quick Help',
-      onItemClick: () => {
-        if (window.zE) {
-          window.zE('webWidget', 'show');
-          window.zE('webWidget', 'open');
-        }
-      },
-    },
-    {
-      id: 'Status',
-      title: 'Status',
-      onItemClick: () => {
-        window.location.assign('https://status.buffer.com/');
-      },
-    },
-    {
-      id: 'Pricing & Plans',
-      title: 'Pricing & Plans',
-      onItemClick: () => {
-        window.location.assign('https://buffer.com/pricing');
-      },
-    },
-    {
-      id: 'Wishlist',
-      title: 'Wishlist',
-      onItemClick: () => {
-        window.location.assign('https://buffer.com/feature-request');
-      },
-    },
-  ];
-
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
@@ -379,25 +295,19 @@ const NavBar = React.memo((props) => {
             {displaySkipLink && (
               <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
             )}
-            <BufferLogo />
-            <NavBarVerticalRule />
+            <BufferLogoWithWords />
             <NavBarProducts activeProduct={activeProduct} />
           </NavBarLeft>
           <NavBarRight>
             <UpgradeCTA />
-            <DropdownMenu
-              xPosition="right"
-              ariaLabel="Help Menu"
-              ariaLabelPopup="Help"
-              menubarItem={
-                <NavBarHelp>
-                  <InfoIcon />
-                  <NavBarHelpText>Help</NavBarHelpText>
-                </NavBarHelp>
-              }
-              items={helpMenuItems}
+            <NavBarDropdown
+              title="Apps"
+              dropdownItems={getAppsDropdownItems()}
             />
-            <NavBarVerticalRule />
+            <NavBarDropdown
+              title="Help"
+              dropdownItems={getHelpDropdownItems()}
+            />
             <DropdownMenu
               xPosition="right"
               ariaLabel="Account Menu"

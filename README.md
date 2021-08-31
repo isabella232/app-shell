@@ -18,7 +18,7 @@ To consume the `Navigator` you will need to have a `#navigator` div right on top
       #navigator {
         display: flex;
         flex-direction: column;
-        min-height: 57px;
+        min-height: 64px;
         max-height: 105px;
       }
 

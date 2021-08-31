@@ -53,6 +53,7 @@ NavBarMenu.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     email: PropTypes.string.isRequired,
+    isImpersonation: PropTypes.bool,
   }).isRequired,
 };
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StlyedBufferLogo = styled.div`
   width: 64px;
-  height: 56px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;

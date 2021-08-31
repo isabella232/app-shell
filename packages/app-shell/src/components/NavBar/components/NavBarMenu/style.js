@@ -67,6 +67,10 @@ export const NavBarName = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &:hover {
+    color: ${grayDarker};
+  }
 `;
 
 export const NavBarEmail = styled.div`
