@@ -84,6 +84,20 @@ describe('Segment Traits Getters', () => {
         },
       })).toBeFalsy();
     });
+
+    it('should not flag as MP user with trialing subscription', () => {
+      expect(isMultiProductCustomer({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "pro", product: "publish", interval: 'month', trial: { isActive: false } },
+              { plan: "pro", product: "publish", interval: 'month', trial: { isActive: true } },
+            ]
+          },
+        },
+      })).toBeFalsy();
+    });
   })
 
   describe('isFreePlan', () => {
