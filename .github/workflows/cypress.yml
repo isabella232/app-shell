@@ -13,7 +13,7 @@ jobs:
         run: yarn install && yarn add -W serve
       - uses: cypress-io/github-action@v2
         env:
-          CYPRESS_BASE_URL: http://0.0.0.0:3000 
+          CYPRESS_BASE_URL: http://0.0.0.0:3000
         with:
           browser: chrome
           build: yarn run build
