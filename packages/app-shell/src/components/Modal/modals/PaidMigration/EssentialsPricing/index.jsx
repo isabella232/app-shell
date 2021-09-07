@@ -12,6 +12,10 @@ import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import useMigrateToOB from '../hooks/useMigrateToOB';
 
 import {
+  useTrackPageViewed,
+} from '../../../../../common/hooks/useSegmentTracking';
+
+import {
   Holder,
   FeaturesList,
   LeftColumn,
