@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -7,7 +7,7 @@ import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 
 import { MODALS } from '../../../../../common/hooks/useModal';
 import { ModalContext } from '../../../../../common/context/Modal';
-import { useUser } from '../../../../../common/context/User';
+import { useUser, UserContext } from '../../../../../common/context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import useMigrateToOB from '../hooks/useMigrateToOB';
 
@@ -30,6 +30,22 @@ import {
 } from './style';
 
 const PeriodEndString =({ migrationPreview }) => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'OB Pricing',
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+
   const months = [
     'January',
     'February',

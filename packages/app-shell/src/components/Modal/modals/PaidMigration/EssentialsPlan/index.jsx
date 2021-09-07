@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -6,14 +6,33 @@ import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white } from '@bufferapp/ui/style/colors';
 
-import { useUser } from '../../../../../common/context/User';
+import { useUser, UserContext } from '../../../../../common/context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { MODALS } from '../../../../../common/hooks/useModal';
+import {
+  useTrackPageViewed,
+} from '../../../../../common/hooks/useSegmentTracking';
 
 import * as styles from './style';
 
 export const EssentialsPlan = ({ features }) => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'Value',
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+  
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
