@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -124,24 +125,22 @@ export const Content = ({
         <Body>
           <Text type="h2">Your upgrade</Text>
           <SummaryDetails>
-            {
-              <>
-                <DetailList>
-                  {migrationPreview.migrationSummary.details.map((detail) => (
-                    <Detail key={detail}>
-                      <Text type="p">{detail}</Text>
-                    </Detail>
-                  ))}
-                </DetailList>
-                <Separator />
-                <SummaryNote>
-                  <Text type="p">
-                    Payment made today is pro rata of new plan price until the
-                    next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
-                  </Text>
-                </SummaryNote>
-              </>
-            }
+            <>
+              <DetailList>
+                {migrationPreview.migrationSummary.details.map((detail) => (
+                  <Detail key={detail}>
+                    <Text type="p">{detail}</Text>
+                  </Detail>
+                ))}
+              </DetailList>
+              <Separator />
+              <SummaryNote>
+                <Text type="p">
+                  Payment made today is pro rata of new plan price until the
+                  next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
+                </Text>
+              </SummaryNote>
+            </>
           </SummaryDetails>
 
           <Bottom>
@@ -177,8 +176,8 @@ export const Content = ({
 
 const EssentialsPricing = ({ openModal }) => {
   const user = useUser();
-  const { data:migrationPreview, loading, error:previewError } = useMigrationPlanPreview(user)
-  const { migrateToOB, success, error:migrateError, processing } = useMigrateToOB(user)
+  const { data:migrationPreview, loading } = useMigrationPlanPreview(user)
+  const { migrateToOB, success, processing } = useMigrateToOB(user)
 
   if (loading) {
     return null;
@@ -214,4 +213,19 @@ export default function() {
       <EssentialsPricing openModal={openModal} />
     )}
   </ModalContext.Consumer>);
+};
+
+PeriodEndString.propTypes = {
+  migrationPreview: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+Content.propTypes = {
+  migrationPreview: PropTypes.objectOf(PropTypes.object).isRequired,
+  handleMigrate: PropTypes.func,
+  handleDismiss: PropTypes.func,
+  processing: PropTypes.func,
+};
+
+EssentialsPricing.propTypes = {
+  openModal: PropTypes.func.isRequired,
 };

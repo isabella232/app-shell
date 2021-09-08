@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -51,6 +52,7 @@ export const EssentialsPlan = ({ features }) => {
               src="https://buffer-ui.s3.amazonaws.com/avatars/avatar-joel.jpg"
               width="117"
               height="117"
+              alt="Joel Gascoigne avatar"
             />
             <Text type="p">
               Hey, it’s Joel the CEO here. We’re embarking on a new future here
@@ -134,7 +136,7 @@ export const EssentialsPlan = ({ features }) => {
               <styles.FeaturesTable>
                 <thead>
                   <tr>
-                    <th></th>
+                    <th aria-label="Plans features" />
                     <th scope="col">
                       <styles.PlanLabel>
                         <Text type="p">Current Plan</Text>
@@ -156,8 +158,8 @@ export const EssentialsPlan = ({ features }) => {
                 </thead>
 
                 <tbody>
-                  {features.map((feature, index) => (
-                    <tr key={`row-${index}`}>
+                  {features.map((feature) => (
+                    <tr key={`row-${feature.title}`}>
                       <td>
                         <Text type="p">
                           <b>{feature.title}</b>
@@ -210,4 +212,8 @@ export default function() {
     suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(feature.id),
   }))
   return (<EssentialsPlan features={features} />);
+};
+
+EssentialsPlan.propTypes = {
+  features: PropTypes.objectOf(PropTypes.object).isRequired,
 };

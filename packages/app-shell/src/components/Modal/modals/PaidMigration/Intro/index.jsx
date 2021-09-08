@@ -42,8 +42,8 @@ const Intro = () => {
     <ModalContext.Consumer>
       {({ openModal }) => (
         <Holder>
-          <BackgroundLayerBottom></BackgroundLayerBottom>
-          <BackgroundLayerTop></BackgroundLayerTop>
+          <BackgroundLayerBottom/>
+          <BackgroundLayerTop/>
           <IconWrapper>
             <FlashIcon size="large" />
           </IconWrapper>
