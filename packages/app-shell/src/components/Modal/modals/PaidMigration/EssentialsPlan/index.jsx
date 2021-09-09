@@ -24,13 +24,13 @@ export const EssentialsPlan = ({ features }) => {
   const { cta, ctaButton } = data || {};
 
   useEffect(() => {
-    const productFromPath = getActiveProductFromPath();
+    const product = getActiveProductFromPath();
 
     useTrackPageViewed({
       payload: {
         name: 'Migrate to OB Modal',
         title: 'Value',
-        product: productFromPath,
+        product,
         cta,
         ctaButton,
       },

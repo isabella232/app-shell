@@ -34,7 +34,6 @@ import {
   PriceFooterWrapper,
   ButtonContainer,
 } from './style';
-import { productSignup } from '@bufferapp/buffer-tracking-browser-ts';
 
 const PeriodEndString =({ migrationPreview }) => {
   const currentUser = useContext(UserContext);
@@ -42,13 +41,13 @@ const PeriodEndString =({ migrationPreview }) => {
   const { cta, ctaButton } = data || {};
 
   useEffect(() => {
-    const productFromPath = getActiveProductFromPath();
+    const product = getActiveProductFromPath();
 
     useTrackPageViewed({
       payload: {
         name: 'Migrate to OB Modal',
         title: 'OB Pricing',
-        product: productFromPath,
+        product,
         cta,
         ctaButton,
       },
