@@ -14,6 +14,7 @@ import { MODALS } from '../../../../../common/hooks/useModal';
 import {
   useTrackPageViewed,
 } from '../../../../../common/hooks/useSegmentTracking';
+import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import * as styles from './style';
 
@@ -23,10 +24,13 @@ export const EssentialsPlan = ({ features }) => {
   const { cta, ctaButton } = data || {};
 
   useEffect(() => {
+    const productFromPath = getActiveProductFromPath();
+
     useTrackPageViewed({
       payload: {
         name: 'Migrate to OB Modal',
         title: 'Value',
+        product: productFromPath,
         cta,
         ctaButton,
       },

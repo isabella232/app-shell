@@ -11,6 +11,7 @@ import { MODALS } from '../../../../../common/hooks/useModal';
 import {
   useTrackPageViewed,
 } from '../../../../../common/hooks/useSegmentTracking';
+import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import {
   Holder,
@@ -27,10 +28,13 @@ const Intro = () => {
   const { cta, ctaButton } = data || {};
 
   useEffect(() => {
+    const productFromPath = getActiveProductFromPath();
+
     useTrackPageViewed({
       payload: {
         name: 'Migrate to OB Modal',
         title: 'Intro',
+        product: productFromPath,
         cta,
         ctaButton,
       },

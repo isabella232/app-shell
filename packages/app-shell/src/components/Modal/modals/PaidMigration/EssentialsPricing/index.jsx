@@ -15,6 +15,7 @@ import useMigrateToOB from '../hooks/useMigrateToOB';
 import {
   useTrackPageViewed,
 } from '../../../../../common/hooks/useSegmentTracking';
+import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import {
   Holder,
@@ -33,6 +34,7 @@ import {
   PriceFooterWrapper,
   ButtonContainer,
 } from './style';
+import { productSignup } from '@bufferapp/buffer-tracking-browser-ts';
 
 const PeriodEndString =({ migrationPreview }) => {
   const currentUser = useContext(UserContext);
@@ -40,10 +42,13 @@ const PeriodEndString =({ migrationPreview }) => {
   const { cta, ctaButton } = data || {};
 
   useEffect(() => {
+    const productFromPath = getActiveProductFromPath();
+
     useTrackPageViewed({
       payload: {
         name: 'Migrate to OB Modal',
         title: 'OB Pricing',
+        product: productFromPath,
         cta,
         ctaButton,
       },
