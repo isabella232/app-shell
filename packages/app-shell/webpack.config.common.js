@@ -24,10 +24,10 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      components: path.resolve(__dirname, 'src/components/'),
-      context: path.resolve(__dirname, 'src/common/context/'),
-      hooks: path.resolve(__dirname, 'src/common/hooks/'),
-      utils: path.resolve(__dirname, 'src/common/utils/'),
+      components: path.resolve(__dirname, './src/components/'),
+      context: path.resolve(__dirname, './src/common/context/'),
+      hooks: path.resolve(__dirname, './src/common/hooks/'),
+      utils: path.resolve(__dirname, './src/common/utils/'),
     },
   },
 };
