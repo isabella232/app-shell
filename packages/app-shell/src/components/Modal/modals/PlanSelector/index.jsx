@@ -1,9 +1,9 @@
 import React from 'react';
 import Loader from '@bufferapp/ui/Loader';
 
-import { MODALS } from '../../../../common/hooks/useModal';
-import { UserContext } from '../../../../common/context/User';
-import { ModalContext } from '../../../../common/context/Modal';
+import { MODALS } from 'hooks/useModal';
+import { UserContext } from 'context/User';
+import { ModalContext } from 'context/Modal';
 import { PlanSelectorContainer } from './components/PlanSelectorContainer';
 import { LoadingContainer } from './style';
 

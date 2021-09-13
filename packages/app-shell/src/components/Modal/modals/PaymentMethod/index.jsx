@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 
-import { MODALS } from '../../../../common/hooks/useModal';
-import { UserContext } from '../../../../common/context/User';
-import { ModalContext } from '../../../../common/context/Modal';
+import { MODALS } from 'hooks/useModal';
+import { UserContext } from 'context/User';
+import { ModalContext } from 'context/Modal';
 
 import StripeProvider from './components/StripeProvider';
 import Form from './components/Form';
-import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
 
 const PaymentMethod = () => {
   const currentUser = useContext(UserContext);

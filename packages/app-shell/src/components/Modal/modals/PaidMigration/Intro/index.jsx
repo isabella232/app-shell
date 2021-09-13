@@ -3,9 +3,9 @@ import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
-import { setCookie, DATES } from '../../../../../common/utils/cookies';
-import { ModalContext } from '../../../../../common/context/Modal';
-import { MODALS } from '../../../../../common/hooks/useModal';
+import { setCookie, DATES } from 'utils/cookies';
+import { ModalContext } from 'context/Modal';
+import { MODALS } from 'hooks/useModal';
 
 import {
   Holder,

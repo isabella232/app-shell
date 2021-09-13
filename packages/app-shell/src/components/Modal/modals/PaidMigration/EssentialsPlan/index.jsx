@@ -6,10 +6,10 @@ import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white } from '@bufferapp/ui/style/colors';
 
-import { useUser } from '../../../../../common/context/User';
+import { useUser } from 'context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
-import { ModalContext } from '../../../../../common/context/Modal';
-import { MODALS } from '../../../../../common/hooks/useModal';
+import { ModalContext } from 'context/Modal';
+import { MODALS } from 'hooks/useModal';
 
 import * as styles from './style';
 

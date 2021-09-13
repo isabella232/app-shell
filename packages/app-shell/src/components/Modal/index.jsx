@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../../common/utils/cookies'
-import { MODALS } from '../../common/hooks/useModal';
-import { useUser } from '../../common/context/User';
+import { getCookie } from 'utils/cookies'
+import { MODALS } from 'hooks/useModal';
+import { useUser } from 'context/User';
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';

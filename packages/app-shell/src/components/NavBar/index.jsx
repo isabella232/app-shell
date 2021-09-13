@@ -26,11 +26,11 @@ import BufferLogoWithWords from './components/BufferLogoWithWords';
 import NavBarMenu from './components/NavBarMenu/NavBarMenu';
 import NavBarProducts from './components/NavBarProducts/NavBarProducts';
 import UpgradeCTA from './components/UpgradeCTA';
-import { useUser } from '../../common/context/User';
-import { ModalContext } from '../../common/context/Modal';
-import { MODALS } from '../../common/hooks/useModal';
-import useOrgSwitcher from '../../common/hooks/useOrgSwitcher';
-import { isFreePlan } from '../../common/hooks/utils/segmentTraitGetters';
+import { useUser } from 'context/User';
+import { ModalContext } from 'context/Modal';
+import { MODALS } from 'hooks/useModal';
+import useOrgSwitcher from 'hooks/useOrgSwitcher';
+import { isFreePlan } from 'hooks/utils/segmentTraitGetters';
 
 import NavBarDropdown from './components/NavBarDropdown';
 import {

@@ -5,9 +5,9 @@ import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 
-import { MODALS } from '../../../../../common/hooks/useModal';
-import { ModalContext } from '../../../../../common/context/Modal';
-import { useUser } from '../../../../../common/context/User';
+import { MODALS } from 'hooks/useModal';
+import { ModalContext } from 'context/Modal';
+import { useUser } from 'context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import useMigrateToOB from '../hooks/useMigrateToOB';
 

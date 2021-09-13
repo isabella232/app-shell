@@ -5,13 +5,13 @@ import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 
 import { Error } from '../PaymentMethod/style';
-import { MODALS } from '../../../../common/hooks/useModal';
-import { UserContext } from '../../../../common/context/User';
-import { ModalContext } from '../../../../common/context/Modal';
-import useStartTrial from '../../../../common/hooks/useStartTrial';
+import { MODALS } from 'hooks/useModal';
+import { UserContext } from 'context/User';
+import { ModalContext } from 'context/Modal';
+import useStartTrial from 'hooks/useStartTrial';
 import {
   useTrackPageViewed,
-} from '../../../../common/hooks/useSegmentTracking';
+} from 'hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 

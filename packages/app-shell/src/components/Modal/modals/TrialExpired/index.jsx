@@ -6,11 +6,11 @@ import { black, blue } from '@bufferapp/ui/style/colors';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import PropTypes from 'prop-types';
 
-import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
-import { UserContext } from '../../../../common/context/User';
-import { ModalContext } from '../../../../common/context/Modal';
-import { MODALS } from '../../../../common/hooks/useModal';
-import { setCookie, DATES } from '../../../../common/utils/cookies'
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
+import { UserContext } from 'context/User';
+import { ModalContext } from 'context/Modal';
+import { MODALS } from 'hooks/useModal';
+import { setCookie, DATES } from 'utils/cookies'
 
 
 const ScreenContainer = styled.div`

@@ -4,9 +4,9 @@ import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import { black } from '@bufferapp/ui/style/colors';
 
-import { UserContext } from '../../../../common/context/User';
-import { ModalContext } from '../../../../common/context/Modal';
-import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
+import { UserContext } from 'context/User';
+import { ModalContext } from 'context/Modal';
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
 import getCopy from './getCopy';
 
 const ScreenContainer = styled.div`
