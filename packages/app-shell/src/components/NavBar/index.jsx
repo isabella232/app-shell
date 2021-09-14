@@ -244,14 +244,11 @@ const NavBar = React.memo((props) => {
   const organizations = buildOrgSwitcher(user, selectOrganization);
 
   const isFree = isFreePlan(user);
-  let subscription = null;
   let canStartTrial = false;
   let isOneBufferOrganization = false;
   const shouldDisplayInviteCTA =
     user?.currentOrganization?.shouldDisplayInviteCTA;
   if (user.currentOrganization.billing) {
-    // eslint-disable-next-line no-unused-vars
-    subscription = user?.currentOrganization?.billing?.subscription;
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
     isOneBufferOrganization =
       user?.currentOrganization?.isOneBufferOrganization;
@@ -296,7 +293,10 @@ const NavBar = React.memo((props) => {
               <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
             )}
             <BufferLogoWithWords />
-            <NavBarProducts activeProduct={activeProduct} />
+            <NavBarProducts
+              activeProduct={activeProduct}
+              currentOrganization={user?.currentOrganization}
+            />
           </NavBarLeft>
           <NavBarRight>
             <UpgradeCTA />
@@ -423,7 +423,12 @@ const NavBar = React.memo((props) => {
 
 NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
-  activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
+  activeProduct: PropTypes.oneOf([
+    'publish',
+    'analyze',
+    'engage',
+    'start-page',
+  ]),
 
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,

@@ -21,7 +21,7 @@ import useUserTracker from '../../common/hooks/useUserTracker';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
-  if (['analyze', 'engage', 'publish'].includes(productUrl)) {
+  if (['analyze', 'engage', 'publish', 'start-page'].includes(productUrl)) {
     return productUrl;
   }
 
