@@ -1,11 +1,44 @@
 export function isMultiProductCustomer({ currentOrganization }) {
   if (!currentOrganization?.isOneBufferOrganization) {
     if (currentOrganization?.billing?.subscriptions?.length > 1) {
-      return true;
+      const activeSubscriptions = currentOrganization.billing.subscriptions
+        .filter(subscription => !subscription?.trial?.isActive);
+      return activeSubscriptions.length > 1;
     }
   }
 
   return false;
+}
+
+export function isOnBufferTrial({ currentOrganization }) {
+  return currentOrganization?.billing?.subscription?.plan?.trial?.isActive || false
+}
+
+function getMPSubscription(currentOrganization, product) {
+  if (currentOrganization?.billing?.subscriptions?.length > 0) {
+    return currentOrganization?.billing?.subscriptions
+      .find(s => s.product === product) || null
+  }
+
+  return null;
+}
+
+function getPublishSubscription(currentOrganization) {
+  return getMPSubscription(currentOrganization, 'publish');
+}
+
+function getAnalyzeSubscription(currentOrganization) {
+  return getMPSubscription(currentOrganization, 'analyze');
+}
+
+export function isOnAnalyzeTrial({ currentOrganization }) {
+    const subscription = getAnalyzeSubscription(currentOrganization)
+    return subscription?.trial?.isActive || false
+}
+
+export function isOnPublishTrial({ currentOrganization }) {
+    const subscription = getPublishSubscription(currentOrganization)
+    return subscription?.trial?.isActive || false
 }
 
 export function isFreePlan(user) {
@@ -50,37 +83,14 @@ export function isPayingBufferOrganization({ currentOrganization }) {
   return false;
 }
 
-function getMPSubscription(currentOrganization, product) {
-  if (currentOrganization?.billing?.subscriptions?.length > 0) {
-    return currentOrganization?.billing?.subscriptions
-      .find(s => s.product === product) || null
-  }
-
-  return null;
-}
-
-function getPublishSubscription(currentOrganization) {
-  return getMPSubscription(currentOrganization, 'publish');
-}
-
-function getAnalyzeSubscription(currentOrganization) {
-  return getMPSubscription(currentOrganization, 'analyze');
-}
-
 export function currentAnalyzePlan({ currentOrganization }) {
   if(!isOnAnalyzeTrial({ currentOrganization })) {
     const subscription = getAnalyzeSubscription(currentOrganization)
-    return subscription?.plan || null
+    return subscription?.plan || 'free'
   }
 
-  return null;
+  return 'free';
 }
-
-export function isOnAnalyzeTrial({ currentOrganization }) {
-    const subscription = getAnalyzeSubscription(currentOrganization)
-    return subscription?.trial?.isActive || false
-}
-
 
 export function currentAnalyzeTrialPlan({ currentOrganization }) {
   if (isOnAnalyzeTrial({ currentOrganization })) {
@@ -91,18 +101,13 @@ export function currentAnalyzeTrialPlan({ currentOrganization }) {
   return null;
 }
 
-export function isOnPublishTrial({ currentOrganization }) {
-    const subscription = getPublishSubscription(currentOrganization)
-    return subscription?.trial?.isActive || false
-}
-
 export function currentPublishPlan({ currentOrganization }) {
   if(!isOnPublishTrial({ currentOrganization })) {
     const subscription = getPublishSubscription(currentOrganization)
-    return subscription?.plan || null
+    return subscription?.plan || 'free'
   }
 
-  return null;
+  return 'free';
 }
 
 export function currentPublishTrialPlan({ currentOrganization }) {
@@ -112,10 +117,6 @@ export function currentPublishTrialPlan({ currentOrganization }) {
   }
 
   return null;
-}
-
-export function isOnBufferTrial({ currentOrganization }) {
-  return currentOrganization?.billing?.subscription?.plan?.trial?.isActive || false
 }
 
 export function billingCycle({ currentOrganization }) {

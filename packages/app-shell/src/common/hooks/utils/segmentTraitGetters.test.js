@@ -84,6 +84,20 @@ describe('Segment Traits Getters', () => {
         },
       })).toBeFalsy();
     });
+
+    it('should not flag as MP user with trialing subscription', () => {
+      expect(isMultiProductCustomer({
+        currentOrganization: {
+          isOneBufferOrganization: false,
+          billing: {
+            subscriptions: [
+              { plan: "pro", product: "publish", interval: 'month', trial: { isActive: false } },
+              { plan: "pro", product: "publish", interval: 'month', trial: { isActive: true } },
+            ]
+          },
+        },
+      })).toBeFalsy();
+    });
   })
 
   describe('isFreePlan', () => {
@@ -258,7 +272,7 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for analyze trial user', () => {
@@ -270,11 +284,11 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for OBUser', () => {
-      expect(currentAnalyzePlan(OBUser)).toBeNull();
+      expect(currentAnalyzePlan(OBUser)).toEqual('free');
     });
   });
 
@@ -326,7 +340,7 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for publish trial user', () => {
@@ -338,11 +352,11 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for OBUser', () => {
-      expect(currentPublishPlan(OBUser)).toBeNull();
+      expect(currentPublishPlan(OBUser)).toEqual('free');
     });
   });
 
