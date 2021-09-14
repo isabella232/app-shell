@@ -86,10 +86,10 @@ export function isPayingBufferOrganization({ currentOrganization }) {
 export function currentAnalyzePlan({ currentOrganization }) {
   if(!isOnAnalyzeTrial({ currentOrganization })) {
     const subscription = getAnalyzeSubscription(currentOrganization)
-    return subscription?.plan || null
+    return subscription?.plan || 'free'
   }
 
-  return null;
+  return 'free';
 }
 
 export function currentAnalyzeTrialPlan({ currentOrganization }) {
@@ -104,10 +104,10 @@ export function currentAnalyzeTrialPlan({ currentOrganization }) {
 export function currentPublishPlan({ currentOrganization }) {
   if(!isOnPublishTrial({ currentOrganization })) {
     const subscription = getPublishSubscription(currentOrganization)
-    return subscription?.plan || null
+    return subscription?.plan || 'free'
   }
 
-  return null;
+  return 'free';
 }
 
 export function currentPublishTrialPlan({ currentOrganization }) {

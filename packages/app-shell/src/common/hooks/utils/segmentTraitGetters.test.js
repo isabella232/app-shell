@@ -272,7 +272,7 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for analyze trial user', () => {
@@ -284,11 +284,11 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for OBUser', () => {
-      expect(currentAnalyzePlan(OBUser)).toBeNull();
+      expect(currentAnalyzePlan(OBUser)).toEqual('free');
     });
   });
 
@@ -340,7 +340,7 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for publish trial user', () => {
@@ -352,11 +352,11 @@ describe('Segment Traits Getters', () => {
             ]
           }
         }
-      })).toBeNull();
+      })).toEqual('free');
     });
 
     it('should return null for OBUser', () => {
-      expect(currentPublishPlan(OBUser)).toBeNull();
+      expect(currentPublishPlan(OBUser)).toEqual('free');
     });
   });
 
