@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -7,9 +8,14 @@ import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 
 import { MODALS } from '../../../../../common/hooks/useModal';
 import { ModalContext } from '../../../../../common/context/Modal';
-import { useUser } from '../../../../../common/context/User';
+import { useUser, UserContext } from '../../../../../common/context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import useMigrateToOB from '../hooks/useMigrateToOB';
+
+import {
+  useTrackPageViewed,
+} from '../../../../../common/hooks/useSegmentTracking';
+import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import {
   Holder,
@@ -30,6 +36,25 @@ import {
 } from './style';
 
 const PeriodEndString =({ migrationPreview }) => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    const product = getActiveProductFromPath();
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'OB Pricing',
+        product,
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+
   const months = [
     'January',
     'February',
@@ -104,24 +129,22 @@ export const Content = ({
         <Body>
           <Text type="h2">Your upgrade</Text>
           <SummaryDetails>
-            {
-              <>
-                <DetailList>
-                  {migrationPreview.migrationSummary.details.map((detail) => (
-                    <Detail key={detail}>
-                      <Text type="p">{detail}</Text>
-                    </Detail>
-                  ))}
-                </DetailList>
-                <Separator />
-                <SummaryNote>
-                  <Text type="p">
-                    Payment made today is pro rata of new plan price until the
-                    next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
-                  </Text>
-                </SummaryNote>
-              </>
-            }
+            <>
+              <DetailList>
+                {migrationPreview.migrationSummary.details.map((detail) => (
+                  <Detail key={detail}>
+                    <Text type="p">{detail}</Text>
+                  </Detail>
+                ))}
+              </DetailList>
+              <Separator />
+              <SummaryNote>
+                <Text type="p">
+                  Payment made today is pro rata of new plan price until the
+                  next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
+                </Text>
+              </SummaryNote>
+            </>
           </SummaryDetails>
 
           <Bottom>
@@ -157,8 +180,8 @@ export const Content = ({
 
 const EssentialsPricing = ({ openModal }) => {
   const user = useUser();
-  const { data:migrationPreview, loading, error:previewError } = useMigrationPlanPreview(user)
-  const { migrateToOB, success, error:migrateError, processing } = useMigrateToOB(user)
+  const { data:migrationPreview, loading } = useMigrationPlanPreview(user)
+  const { migrateToOB, success, processing } = useMigrateToOB(user)
 
   if (loading) {
     return null;
@@ -194,4 +217,19 @@ export default function() {
       <EssentialsPricing openModal={openModal} />
     )}
   </ModalContext.Consumer>);
+};
+
+PeriodEndString.propTypes = {
+  migrationPreview: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+Content.propTypes = {
+  migrationPreview: PropTypes.objectOf(PropTypes.object).isRequired,
+  handleMigrate: PropTypes.func,
+  handleDismiss: PropTypes.func,
+  processing: PropTypes.func,
+};
+
+EssentialsPricing.propTypes = {
+  openModal: PropTypes.func.isRequired,
 };

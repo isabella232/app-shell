@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import { setCookie, DATES } from '../../../../../common/utils/cookies';
 import { ModalContext } from '../../../../../common/context/Modal';
+import { UserContext } from '../../../../../common/context/User';
 import { MODALS } from '../../../../../common/hooks/useModal';
+
+import {
+  useTrackPageViewed,
+} from '../../../../../common/hooks/useSegmentTracking';
+import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import {
   Holder,
@@ -17,12 +23,31 @@ import {
 } from './style';
 
 const Intro = () => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    const product = getActiveProductFromPath();
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'Intro',
+        product,
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
         <Holder>
-          <BackgroundLayerBottom></BackgroundLayerBottom>
-          <BackgroundLayerTop></BackgroundLayerTop>
+          <BackgroundLayerBottom/>
+          <BackgroundLayerTop/>
           <IconWrapper>
             <FlashIcon size="large" />
           </IconWrapper>
