@@ -70,6 +70,14 @@ function getAppsDropdownItems() {
           '_blank')
       },
     },
+    {
+      id: 'Integrations',
+      title: 'Integrations',
+      onItemClick: () => {
+        window.open('https://buffer.com/extras',
+          '_blank')
+      },
+    },
   ]
 };
   
