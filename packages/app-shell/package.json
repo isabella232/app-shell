@@ -58,7 +58,6 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "storybook-addon-apollo-client": "^4.0.8",
-    "styled-components": "^5.2.0",
     "webpack": "^5.39.0",
     "webpack-cli": "^4.7.2",
     "webpack-merge": "^5.8.0"
@@ -78,7 +77,8 @@
     "babel-loader": "8.1",
     "css-loader": "^5.2.6",
     "graphql-tag": "^2.11.0",
-    "style-loader": "^2.0.0"
+    "style-loader": "^2.0.0",
+    "styled-components": "^5.3.0"
   },
   "gitHead": "29cc1e0b448417d26aa0bf47eb4eda466641e4bf"
 }

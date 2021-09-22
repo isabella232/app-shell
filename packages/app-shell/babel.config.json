@@ -12,8 +12,10 @@
   ],
   "plugins": [
     [
-      "babel-plugin-styled-components", {
-        "displayName": "true"
+      "babel-plugin-styled-components",
+      {
+        "displayName": "true",
+        "namespace": "app-shell"
       }
     ]
   ],
