@@ -8,6 +8,7 @@ const useStartTrial = ({ user, plan, attribution }) => {
     START_TRIAL,
     {
       refetchQueries: [{ query: QUERY_ACCOUNT }],
+      awaitRefetchQueries: true,
     }
   );
   const [processing, setProcessing] = useState(false);
@@ -23,7 +24,7 @@ const useStartTrial = ({ user, plan, attribution }) => {
           attribution,
         },
       }).catch((e) => {
-        console.error(e);
+        console.error(e); // eslint-disable-line no-console
       });
     }
   }, [processing]);

@@ -39,14 +39,14 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
-  const filterPlanOptions = (changePlanOptions) => {
+  const filterPlanOptions = () => {
     if (isUpgradeIntent) {
       return changePlanOptions.filter((option) => option.planId !== 'free');
     }
     return changePlanOptions;
   };
 
-  const planOptions = filterPlanOptions(changePlanOptions);
+  const planOptions = filterPlanOptions();
 
   const [error, setError] = useState(null);
 
@@ -93,7 +93,7 @@ export const PlanSelectorContainer = ({
         ),
         screenName: headerLabel,
         cta,
-        ctaButton: ctaButton,
+        ctaButton,
       },
       user,
     });
@@ -103,7 +103,7 @@ export const PlanSelectorContainer = ({
         name: 'planSelection',
         title: 'planSelector',
         cta,
-        ctaButton: ctaButton,
+        ctaButton,
       },
       user,
     });
@@ -121,7 +121,7 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
-      openSuccess({ selectedPlan });
+      openSuccess({ selectedPlan })
     }
     if (subscriptionError) {
       setError(subscriptionError);
@@ -165,7 +165,7 @@ export const PlanSelectorContainer = ({
       <Right>
         <Summary
           selectedPlan={selectedPlan}
-          fromPlanSelector={true}
+          fromPlanSelector
           isUpgradeIntent={isUpgradeIntent}
         />
         <ButtonContainer>

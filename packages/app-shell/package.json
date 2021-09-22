@@ -35,7 +35,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@bufferapp/buffer-tracking-browser-ts": "^0.0.21",
-    "@bufferapp/ui": "^5.66.0",
+    "@bufferapp/ui": "^5.75.5",
     "@storybook/addon-actions": "^6.1.19",
     "@storybook/addon-essentials": "^6.1.19",
     "@storybook/addon-links": "^6.1.19",
@@ -65,7 +65,7 @@
   },
   "peerDependencies": {
     "@bufferapp/buffer-tracking-browser-ts": "^0.0.21",
-    "@bufferapp/ui": "^5.66.0",
+    "@bufferapp/ui": "^5.75.5",
     "prop-types": ">= 15.7.2",
     "react": ">= 16.8.0",
     "react-dom": ">= 16.8.0",
