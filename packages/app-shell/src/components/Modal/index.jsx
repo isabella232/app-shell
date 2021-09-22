@@ -82,7 +82,7 @@ ModalContent.propTypes = {
   closeAction: PropTypes.func.isRequired,
 };
 
-const Modal = ({ modal, openModal }) => {
+const Modal = React.memo(({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
   const user = useUser()
 
@@ -112,7 +112,7 @@ const Modal = ({ modal, openModal }) => {
   }, [modal]);
 
   return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
-};
+});
 
 Modal.propTypes = {
   modal: PropTypes.objectOf(PropTypes.object),

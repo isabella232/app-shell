@@ -28,7 +28,7 @@ function getActiveProductFromUrl() {
   return null;
 }
 
-export const Navigator = ({ apolloClient, channels }) => {
+export const Navigator = React.memo(({ apolloClient, channels }) => {
   const graphqlConfig = apolloClient
     ? {
         client: apolloClient,
@@ -116,7 +116,7 @@ export const Navigator = ({ apolloClient, channels }) => {
       </ModalContext.Provider>
     </UserContext.Provider>
   );
-};
+});
 
 Navigator.propTypes = {
   apolloClient: PropTypes.instanceOf(ApolloClient),

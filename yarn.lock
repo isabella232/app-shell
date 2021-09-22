@@ -1385,10 +1385,10 @@
   dependencies:
     "@types/segment-analytics" "0.0.33"
 
-"@bufferapp/ui@^5.66.0":
-  version "5.67.0"
-  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.67.0.tgz#23aee42a8f706ab57df2e192d20980c207fe57bc"
-  integrity sha512-vHfyh97gkmbZWy1kNmvX/uLFdHdccYBGgByKugD6ftd4vTH+Kxc11kyqpBx/B5BheRkLmzFgklowJP8f8PG9uw==
+"@bufferapp/ui@^5.75.5":
+  version "5.75.5"
+  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.75.5.tgz#2ada9722542ec768d555fbbc46784c2be1a1719c"
+  integrity sha512-3OZZaQza2jaWhtXKvN7srWW/4/kYww88cHFyVYqvndruwAfMXDHDyximDbvJSOoBMh1WjWdyodTxeTBYtUMHNA==
   dependencies:
     "@reach/tooltip" "0.6.2"
     immutability-helper "^2.9.0"

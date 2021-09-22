@@ -17,6 +17,7 @@ const useUpdateSubscriptionPlan = ({
     UPDATE_SUBSCRIPTION_PLAN,
     {
       refetchQueries: [{ query: QUERY_ACCOUNT }],
+      awaitRefetchQueries: true,
     }
   );
 
@@ -33,7 +34,7 @@ const useUpdateSubscriptionPlan = ({
           attribution: { cta }
         },
       }).catch((e) => {
-        console.error(e);
+        console.error(e); // eslint-disable-line no-console
       });
     }
   }, [processing, hasPaymentMethod]);
