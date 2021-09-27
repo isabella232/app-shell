@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StlyedBufferLogoWithWords = styled.div`
+const StyledBufferLink = styled.a`
   width: 125px;
   height: 64px;
   display: flex;
@@ -15,7 +15,7 @@ const StlyedBufferLogoWithWords = styled.div`
 
 function BufferLogoWithWords() {
   return (
-    <StlyedBufferLogoWithWords>
+    <StyledBufferLink href="https://publish.buffer.com">
       <svg
         width="74"
         height="19"
@@ -30,7 +30,7 @@ function BufferLogoWithWords() {
           fill="black"
         />
       </svg>
-    </StlyedBufferLogoWithWords>
+    </StyledBufferLink>
   );
 }
 
