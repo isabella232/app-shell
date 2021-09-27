@@ -1403,7 +1403,7 @@
   dependencies:
     "@types/segment-analytics" "0.0.33"
 
-"@bufferapp/ui@^5.75.6":
+"@bufferapp/ui@^5.75.7":
   version "5.75.7"
   resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.75.7.tgz#636523f7e81456a7093d42d16ca03907fdbb47a7"
   integrity sha512-f0ewCirLSUJunHm78OAWgHOnmziVvVdseusMh8X/r6dTdYPLl8QNOYfTMrUH8bEX8IoXhoACKG+uQTYgBVbw2w==
