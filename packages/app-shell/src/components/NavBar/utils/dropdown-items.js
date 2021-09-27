@@ -24,21 +24,30 @@ function getHelpDropdownItems() {
       id: 'Status',
       title: 'Status',
       onItemClick: () => {
-        window.location.assign('https://status.buffer.com/');
+        window.open(
+          'https://status.buffer.com/',
+          '_blank'
+        );
       },
     },
     {
       id: 'Pricing & Plans',
       title: 'Pricing & Plans',
       onItemClick: () => {
-        window.location.assign('https://buffer.com/pricing');
+        window.open(
+          'https://buffer.com/pricing',
+          '_blank'
+        );
       },
     },
     {
       id: 'Wishlist',
       title: 'Wishlist',
       onItemClick: () => {
-        window.location.assign('https://buffer.com/feature-request');
+        window.open(
+          'https://buffer.com/feature-request',
+          '_blank'
+        );
       },
     },
   ]
