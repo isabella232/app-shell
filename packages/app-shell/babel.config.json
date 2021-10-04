@@ -12,16 +12,19 @@
   ],
   "plugins": [
     [
-      "babel-plugin-styled-components", {
-        "displayName": "true",
-        "namespace": "app-shell"
+      "babel-plugin-styled-components",
+      {
+        "namespace": "app-shell",
+        "minify": true,
+        "pure": true
       }
     ]
   ],
   "env": {
     "test": {
       "plugins": [
-        ["@babel/plugin-transform-runtime",
+        [
+          "@babel/plugin-transform-runtime",
           {
             "absoluteRuntime": false,
             "corejs": false,
