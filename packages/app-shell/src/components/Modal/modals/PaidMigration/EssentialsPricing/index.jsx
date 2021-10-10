@@ -155,13 +155,13 @@ export const Content = ({
             <TotalPrice>
               <sup>$</sup>
               <Text type="h2" as="p">
-                {migrationPreview.preview.currentPlan.interval === 'month'
+                {migrationPreview.currentPlan.interval === 'month'
                   ? migrationPreview.migrationSummary.totalPrice
                   : `${migrationPreview.migrationSummary.totalPrice}/yearly`}
               </Text>
             </TotalPrice>
             <PriceFooterWrapper>
-              {migrationPreview.preview.currentPlan.interval === 'month' && (
+              {migrationPreview.currentPlan.interval === 'month' && (
                 <Text type="p" color="grayDark">
                   Billed monthly in USD
                 </Text>
