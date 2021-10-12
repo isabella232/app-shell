@@ -12,9 +12,7 @@ import { useUser, UserContext } from '../../../../../common/context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import useMigrateToOB from '../hooks/useMigrateToOB';
 
-import {
-  useTrackPageViewed,
-} from '../../../../../common/hooks/useSegmentTracking';
+import { useTrackPageViewed } from '../../../../../common/hooks/useSegmentTracking';
 import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 
 import {
@@ -35,7 +33,7 @@ import {
   ButtonContainer,
 } from './style';
 
-const PeriodEndString =({ migrationPreview }) => {
+const PeriodEndString = ({ migrationPreview }) => {
   const currentUser = useContext(UserContext);
   const { data } = useContext(ModalContext);
   const { cta, ctaButton } = data || {};
@@ -67,18 +65,23 @@ const PeriodEndString =({ migrationPreview }) => {
     'September',
     'October',
     'November',
-    'December'
-  ]
+    'December',
+  ];
 
   if (migrationPreview?.currentPlan?.periodEnd) {
     const date = new Date(migrationPreview.currentPlan.periodEnd);
-    return (<>
-      on <b>{months[date.getMonth()]} {date.getDate()}, {date.getFullYear()}</b>
-    </>)
+    return (
+      <>
+        on{' '}
+        <b>
+          {months[date.getMonth()]} {date.getDate()}, {date.getFullYear()}
+        </b>
+      </>
+    );
   }
 
-  return null
-}
+  return null;
+};
 
 export const Content = ({
   migrationPreview,
@@ -141,7 +144,8 @@ export const Content = ({
               <SummaryNote>
                 <Text type="p">
                   Payment made today is pro rata of new plan price until the
-                  next billing cycle begins <PeriodEndString migrationPreview={migrationPreview} />
+                  next billing cycle begins{' '}
+                  <PeriodEndString migrationPreview={migrationPreview} />
                 </Text>
               </SummaryNote>
             </>
@@ -151,19 +155,23 @@ export const Content = ({
             <TotalPrice>
               <sup>$</sup>
               <Text type="h2" as="p">
-                {migrationPreview.migrationSummary.totalPrice}
+                {migrationPreview.currentPlan.interval === 'month'
+                  ? migrationPreview.migrationSummary.totalPrice
+                  : `${migrationPreview.migrationSummary.totalPrice}/yearly`}
               </Text>
             </TotalPrice>
-
             <PriceFooterWrapper>
+              {migrationPreview.currentPlan.interval === 'month' && (
+                <Text type="p" color="grayDark">
+                  Billed monthly in USD
+                </Text>
+              )}
+
               <Text type="p" color="grayDark">
-                Billed monthly in USD
-              </Text>
-              <Text type="p" color="grayDark">
-                Includes {migrationPreview.migrationSummary.channelCount} social channels
+                Includes {migrationPreview.migrationSummary.channelCount} social
+                channels
               </Text>
             </PriceFooterWrapper>
-
             <Button
               fullWidth
               disabled={processing}
@@ -176,12 +184,12 @@ export const Content = ({
       </SummaryContainer>
     </RightColumn>
   </Holder>
-)
+);
 
 const EssentialsPricing = ({ openModal }) => {
   const user = useUser();
-  const { data:migrationPreview, loading } = useMigrationPlanPreview(user)
-  const { migrateToOB, success, processing } = useMigrateToOB(user)
+  const { data: migrationPreview, loading } = useMigrationPlanPreview(user);
+  const { migrateToOB, success, processing } = useMigrateToOB(user);
 
   if (loading) {
     return null;
@@ -191,33 +199,35 @@ const EssentialsPricing = ({ openModal }) => {
     openModal(MODALS.upgradeSuccess, {
       cta: 'Migrate to OB Modal',
       ctaButton: 'Supercharge My Plan',
-    })
+    });
 
-    return null
+    return null;
   }
 
-  return ( <Content
-    migrationPreview={migrationPreview}
-    handleDismiss={() => {
-      openModal(MODALS.essentialsPlan, {
-        cta: 'planSelection',
-        ctaButton: 'Go back to plans',
-      });
-    }}
-    handleMigrate={() => {
-      migrateToOB(user)
-    }}
-    processing={processing}
-  />);
+  return (
+    <Content
+      migrationPreview={migrationPreview}
+      handleDismiss={() => {
+        openModal(MODALS.essentialsPlan, {
+          cta: 'planSelection',
+          ctaButton: 'Go back to plans',
+        });
+      }}
+      handleMigrate={() => {
+        migrateToOB(user);
+      }}
+      processing={processing}
+    />
+  );
 };
 
-export default function() {
-  return (<ModalContext.Consumer>
-    {({ openModal }) => (
-      <EssentialsPricing openModal={openModal} />
-    )}
-  </ModalContext.Consumer>);
-};
+export default function () {
+  return (
+    <ModalContext.Consumer>
+      {({ openModal }) => <EssentialsPricing openModal={openModal} />}
+    </ModalContext.Consumer>
+  );
+}
 
 PeriodEndString.propTypes = {
   migrationPreview: PropTypes.objectOf(PropTypes.object).isRequired,
