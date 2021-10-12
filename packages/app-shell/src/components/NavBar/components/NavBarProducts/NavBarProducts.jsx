@@ -90,11 +90,7 @@ const NavBarProducts = ({ activeProduct, currentOrganization }) => {
     },
   ];
 
-  const isAdmin = currentOrganization?.role === 'admin';
-  const hasStartPageFeatureFlip =
-    currentOrganization?.featureFlips?.includes('startPage');
-
-  const showStartPage = isAdmin && hasStartPageFeatureFlip;
+  const showStartPage = currentOrganization?.role === 'admin';
 
   if (showStartPage) {
     products.push({ id: 'start-page', label: 'Start Page', isNew: true });
