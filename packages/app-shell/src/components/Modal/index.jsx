@@ -119,10 +119,12 @@ const Modal = React.memo(({ modal, openModal }) => {
     }
 
     // Start free trail prompt
-    const GDEID1_FEATURE_FLIP = user?.account?.featureFlips.contains('geid1'); // TODO: Clarify what this feature flip will be
+    const GDEID1_FEATURE_FLIP = user?.account?.featureFlips.contains(
+      'geid1_free_user_trial_prompt'
+    );
     const isFreeUser =
       user?.currentOrganization?.billing?.subscription?.plan?.id === 'free';
-    const canStartFreeTrial = user?.currentOrganization?.canStartTrial;
+    const canStartFreeTrial = user?.currentOrganization?.billing?.canStartTrial;
     const hasSeenStartTrialModalExperiement = getCookie({
       key: 'startTrialPrompt',
     });
@@ -135,14 +137,14 @@ const Modal = React.memo(({ modal, openModal }) => {
       !isPendoModalVisible &&
       !hasSeenStartTrialModalExperiement;
 
-    if (shouldShowStartTrialModal) {
+    if (GDEID1_FEATURE_FLIP && shouldShowStartTrialModal) {
       openModal(MODALS.startTrial, {
         cta: 'geid1_free_user_trial_prompt',
       });
       setCookie({
         key: 'startTrialPrompt',
         value: true,
-        expires: DATES.inMonthsFromNow(3),
+        expires: DATES.inMonthsFromNow(12),
       });
     }
   }, [user.loading]);
