@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../../common/utils/cookies'
+import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
+import { getActiveProductFromPath } from '../../common/utils/getProduct';
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';
@@ -84,26 +85,58 @@ ModalContent.propTypes = {
 
 const Modal = React.memo(({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
-  const user = useUser()
+  const user = useUser();
 
   useEffect(() => {
     //Trial Expired Modal
-    const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
-    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
+    const isAwaitingUserAction =
+      user?.currentOrganization?.billing?.subscription?.trial
+        ?.isAwaitingUserAction || false;
+    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' });
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
-      openModal(MODALS.trialExpired)
+      openModal(MODALS.trialExpired);
     }
 
     //Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
-    const isPendoModalVisible = window.pendo && window.pendo.hasOwnProperty('isGuideShown') && window.pendo.isGuideShown();
+    const isPendoModalVisible =
+      window.pendo &&
+      window.pendo.hasOwnProperty('isGuideShown') &&
+      window.pendo.isGuideShown();
 
     //Migrate to OB modal
-    const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
-    const hasDismissedMigrationModal = getCookie({ key: 'migrationModalDismissed' })
-    const shouldShowMigrationModal = !hasDismissedMigrationModal && canMigrateToOneBuffer && !isPendoModalVisible;
+    const canMigrateToOneBuffer =
+      user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
+    const hasDismissedMigrationModal = getCookie({
+      key: 'migrationModalDismissed',
+    });
+    const shouldShowMigrationModal =
+      !hasDismissedMigrationModal &&
+      canMigrateToOneBuffer &&
+      !isPendoModalVisible;
 
     if (shouldShowMigrationModal) {
       openModal(MODALS.paidMigration);
+    }
+
+    const hasSeenStartTrialModalExperiement = getCookie({
+      key: 'startTrialPrompt',
+    });
+    const activeProduct = getActiveProductFromPath();
+
+    const shouldShowStartTrialModal =
+      activeProduct === 'publish' &&
+      !isPendoModalVisible &&
+      !hasSeenStartTrialModalExperiement;
+
+    if (shouldShowStartTrialModal) {
+      openModal(MODALS.startTrial, {
+        cta: 'geid1_free_user_trial_prompt',
+      });
+      setCookie({
+        key: 'startTrialPrompt',
+        value: true,
+        expires: DATES.inMonthsFromNow(3),
+      });
     }
   }, [user.loading]);
 
@@ -111,7 +144,13 @@ const Modal = React.memo(({ modal, openModal }) => {
     setHasModal(!!modal);
   }, [modal]);
 
-  return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
+  return (
+    <>
+      {hasModal && (
+        <ModalContent modal={modal} closeAction={() => openModal(null)} />
+      )}
+    </>
+  );
 });
 
 Modal.propTypes = {

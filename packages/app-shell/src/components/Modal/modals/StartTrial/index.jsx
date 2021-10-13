@@ -9,9 +9,7 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
-import {
-  useTrackPageViewed,
-} from '../../../../common/hooks/useSegmentTracking';
+import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
@@ -78,9 +76,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>
-              Easy reporting for your team and clients
-            </Text>
+            <Text>Easy reporting for your team and clients</Text>
           </li>
         </ol>
         <Ctas>
@@ -122,7 +118,13 @@ const StartTrialProvider = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data:modalData }) => <StartTrial modalData={modalData} user={user} openModal={openModal} />}
+          {({ openModal, data: modalData }) => (
+            <StartTrial
+              modalData={modalData}
+              user={user}
+              openModal={openModal}
+            />
+          )}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>
