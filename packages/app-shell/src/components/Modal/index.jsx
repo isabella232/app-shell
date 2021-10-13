@@ -135,7 +135,7 @@ const Modal = React.memo(({ modal, openModal }) => {
       !isPendoModalVisible &&
       !hasSeenStartTrialModalExperiement;
 
-    if (GDEID1_FEATURE_FLIP && shouldShowStartTrialModal) {
+    if (shouldShowStartTrialModal) {
       openModal(MODALS.startTrial, {
         cta: 'geid1_free_user_trial_prompt',
       });
