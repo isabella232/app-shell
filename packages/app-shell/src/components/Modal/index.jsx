@@ -6,6 +6,7 @@ import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
 import { getActiveProductFromPath } from '../../common/utils/getProduct';
+
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';
