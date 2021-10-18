@@ -16,6 +16,7 @@ import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
 import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
 import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
+import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
 
 const ModalContent = ({ modal, closeAction }) => {
   switch (modal) {
@@ -119,27 +120,15 @@ const Modal = React.memo(({ modal, openModal }) => {
     }
 
     // Start free trail prompt
-    const GDEID1_FEATURE_FLIP = user?.account?.featureFlips.contains(
+    const GDEID1_FEATURE_FLIP = user?.featureFlips?.includes(
       'geid1_free_user_trial_prompt'
     );
-    const isFreeUser =
-      user?.currentOrganization?.billing?.subscription?.plan?.id === 'free';
-    const canStartFreeTrial = user?.currentOrganization?.billing?.canStartTrial;
-    const hasSeenStartTrialModalExperiement = getCookie({
-      key: 'startTrialPrompt',
-    });
+
     const activeProduct = getActiveProductFromPath();
 
-    const shouldShowStartTrialModal =
-      activeProduct === 'publish' &&
-      isFreeUser &&
-      canStartFreeTrial &&
-      !isPendoModalVisible &&
-      !hasSeenStartTrialModalExperiement;
-
-    if (GDEID1_FEATURE_FLIP && shouldShowStartTrialModal) {
+    if (shouldShowStartTrialModalExperimentGDEID1(user)) {
       openModal(MODALS.startTrial, {
-        cta: 'geid1_free_user_trial_prompt',
+        cta: 'geid1_free_user_trial_prompt:recievedFreeTrialPrompt',
       });
       setCookie({
         key: 'startTrialPrompt',
