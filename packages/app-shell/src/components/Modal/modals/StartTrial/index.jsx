@@ -58,25 +58,26 @@ const StartTrial = ({ user, openModal, modalData }) => {
   return (
     <Holder>
       <Content>
-        <Text type="h1">Try it all, for free!</Text>
+        <Text type="h1">Grow your audience with the full power of Buffer.</Text>
         <Text type="p">
-          Take your online business further with our entire suite of tools.
+          Add our powerful analytics and engagement tools to drive more growth
+          for your business.
         </Text>
         <ol>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Advanced Instagram features</Text>
+            <Text>Unlimited users</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Comprehensive analytics</Text>
+            <Text>Unlimited channels</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Easy reporting for your team and clients</Text>
+            <Text>No credit card required</Text>
           </li>
         </ol>
         <Ctas>
