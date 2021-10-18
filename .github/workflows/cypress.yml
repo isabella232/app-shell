@@ -16,6 +16,7 @@ jobs:
       - uses: cypress-io/github-action@v2
         env:
           CYPRESS_BASE_URL: http://0.0.0.0:3000
+          CYPRESS_PUBLISH_URL: http://publish.local.buffer.com:3000/
         with:
           browser: chrome
           build: yarn run build

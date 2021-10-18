@@ -9,7 +9,7 @@ describe.only('Modal', () => {
           body: account,
         }).as('getAccount');
 
-        cy.visit('http://publish.local.buffer.com:3000/');
+        cy.visit(Cypress.env('PUBLISH_URL'));
         cy.wait('@getAccount').then(({ request }) => {
           cy.task('log', `Request finished. Request data: ${request}`);
         });
