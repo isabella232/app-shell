@@ -56,7 +56,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
   }, []);
 
   return (
-    <Holder id="START-TRIAL-TEST">
+    <Holder id="start-trial-modal">
       <Content>
         <Text type="h1">Grow your audience with the full power of Buffer.</Text>
         <Text type="p">

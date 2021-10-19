@@ -17,7 +17,7 @@ describe.only('Modal', () => {
     });
 
     it('should render the Start Trial Modal', () => {
-      cy.get('#START-TRIAL-TEST').should('exist');
+      cy.get('#start-trial-modal').should('exist');
     });
   });
 });
