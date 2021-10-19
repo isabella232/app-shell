@@ -19,6 +19,17 @@ import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
 import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
 
+function handleExperimentGDEID1(openModal) {
+  openModal(MODALS.startTrial, {
+    cta: 'geid1_free_user_trial_prompt:recievedFreeTrialPrompt',
+  });
+  setCookie({
+    key: 'startTrialPrompt',
+    value: true,
+    expires: DATES.inMonthsFromNow(12),
+  });
+}
+
 const ModalContent = ({ modal, closeAction }) => {
   switch (modal) {
     case MODALS.paymentMethod:
@@ -125,17 +136,11 @@ const Modal = React.memo(({ modal, openModal }) => {
       'geid1_free_user_trial_prompt'
     );
 
-    const activeProduct = getActiveProductFromPath();
-
-    if (shouldShowStartTrialModalExperimentGDEID1(user)) {
-      openModal(MODALS.startTrial, {
-        cta: 'geid1_free_user_trial_prompt:recievedFreeTrialPrompt',
-      });
-      setCookie({
-        key: 'startTrialPrompt',
-        value: true,
-        expires: DATES.inMonthsFromNow(12),
-      });
+    if (
+      GDEID1_FEATURE_FLIP &&
+      shouldShowStartTrialModalExperimentGDEID1(user)
+    ) {
+      handleExperimentGDEID1(openModal);
     }
   }, [user.loading]);
 

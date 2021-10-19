@@ -1,6 +1,6 @@
 const REACT_APP_API_GATEWAY_URL_MATCHER = /https:\/\/(graph\.buffer|graph\.local\.buffer).com\//;
 
-describe.only('Modal', () => {
+describe('Modal', () => {
   describe('Publish product - OB Free Plan', () => {
     before(() => {
       cy.fixture('accountObFree').then((account) => {
