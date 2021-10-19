@@ -7,7 +7,8 @@
          "featureFlips":[
             "grantAnalyzeAccess",
             "sharedChannels",
-            "engageRollOut"
+            "engageRollOut",
+            "geid1_free_user_trial_prompt"
          ],
          "isImpersonation":false,
          "currentOrganization":{
@@ -26,7 +27,8 @@
             "featureFlips":[
                "grantAnalyzeAccess",
                "sharedChannels",
-               "engageRollOut"
+               "engageRollOut",
+               "geid1_free_user_trial_prompt"
             ],
             "billing":{
                "id":"606b65d6dad38c03d2b70793",
