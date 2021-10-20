@@ -1,6 +1,5 @@
 // https://github.com/bufferapp/buffer-marketing/blob/master/components/Experiment/experiments.js
 
-// import Cookies from 'js-cookie';
 import deterministicSplit from 'deterministic-split';
 import { useEffect, useState } from 'react';
 
@@ -32,28 +31,6 @@ export const experiments = {
 //   return obj;
 // }, {});
 
-/**
- * ------
- */
-
-// Fake Segment
-// window.analytics = {
-//   user() {
-//     return {
-//       anonymousId() {
-//         return 'foo';
-//       },
-//     };
-//   },
-//   track(...args) {
-//     console.log('track', args);
-//   },
-// };
-
-/**
- * ------
- */
-
 // https://github.com/bufferapp/buffer-marketing/tree/master/components/Experiment
 
 function isTrackingBlocked() {
@@ -76,12 +53,6 @@ function setIsFirstView(experimentKey) {
     if (experimentKeys.includes(experimentKey)) {
       isFirstView = false;
     } else {
-      //   Cookies.set(
-      //     'albert',
-      //     JSON.stringify({ keys: [...experimentKeys, experimentKey] }),
-      //     { expires: 0 }
-      //   );
-
       setCookie({
         key: 'albert',
         value: JSON.stringify({ keys: [...experimentKeys, experimentKey] }),
@@ -89,7 +60,6 @@ function setIsFirstView(experimentKey) {
       });
     }
   } else {
-    //   Cookies.set('albert', JSON.stringify({ keys: [experimentKey] }));
     setCookie({
       key: 'albert',
       value: JSON.stringify({ keys: [experimentKey] }),
@@ -122,14 +92,6 @@ function calculateDistribution(distribution) {
 }
 
 function getVariant(experimentKey) {
-  // const experimentPreviewVariant = getExperimentPreviewVariant();
-  // if (experimentPreviewVariant) {
-  //   console.log(
-  //     `Forcing experiment preview of variant: ${experimentPreviewVariant}`
-  //   );
-  //   return experimentPreviewVariant;
-  // }
-
   if (isTrackingBlocked() || !window.analytics.user) {
     return 'control';
   }
