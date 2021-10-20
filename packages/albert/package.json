@@ -1,0 +1,11 @@
+{
+  "name": "albert",
+  "version": "1.0.0",
+  "description": "AB testing framework taken from marketing",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "deterministic-split": "1.0.4",
+    "react": "16.14.0"
+  }
+}
