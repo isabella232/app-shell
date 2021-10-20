@@ -42,7 +42,6 @@ function isTrackingBlocked() {
 // albert=['EXP_KEY1', 'EXP_KEY_2']
 function setIsFirstView(experimentKey) {
   let isFirstView = true;
-  // const expCookie = Cookies.get('albert');
   const expCookie = getCookie({
     key: 'albert',
   });
@@ -94,6 +93,12 @@ function calculateDistribution(distribution) {
 function getVariant(experimentKey) {
   if (isTrackingBlocked() || !window.analytics.user) {
     return 'control';
+  }
+
+  // Force variant_1 when running tests
+  const isTestUser = window.analytics.user().anonymousId() === 'TEST_USER_ID';
+  if (isTestUser) {
+    return 'variant_1';
   }
 
   const userId = window.analytics.user().anonymousId();

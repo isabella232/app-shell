@@ -9,7 +9,19 @@ describe('Modal', () => {
           body: account,
         }).as('getAccount');
 
-        cy.visit(Cypress.env('PUBLISH_URL'));
+        cy.visit(Cypress.env('PUBLISH_URL'), {
+          onBeforeLoad(win) {
+            // eslint-disable-next-line no-param-reassign
+            win.analytics = {
+              user() {
+                return {
+                  anonymousId: () => 'TEST_USER_ID',
+                };
+              },
+              track: () => {},
+            };
+          },
+        });
         cy.wait('@getAccount').then(({ request }) => {
           cy.task('log', `Request finished. Request data: ${request}`);
         });
