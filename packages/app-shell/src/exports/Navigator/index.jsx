@@ -10,7 +10,7 @@ import {
 } from '@apollo/client';
 import ReactDOM from 'react-dom';
 
-import NavBar, { getLogoutUrl } from '../../components/NavBar';
+import NavBar, { getLoginUrl } from '../../components/NavBar';
 import Banner from '../../components/Banner';
 import Modal from '../../components/Modal/index';
 import { UserContext } from '../../common/context/User';
@@ -63,7 +63,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
   if (
     networkErrors?.some((err) => err.extensions?.code === 'UNAUTHENTICATED')
   ) {
-    window.location.assign(getLogoutUrl(window.location.href));
+    window.location.assign(getLoginUrl(window.location.href));
   }
 
   const modal = useModal();
