@@ -48,7 +48,8 @@ export function getProductPath(baseUrl) {
 }
 
 export function getQueryParameters(baseUrl,) {
-  return baseUrl.match(/\?(?<query>.*)$/)?.groups?.query
+  const query = baseUrl.match(/\?(?<query>.*)$/)?.groups?.query
+  return query ? `&${encodeURI(query)}` : ''
 }
 
 function getRedirectUrl(baseUrl) {
@@ -60,14 +61,14 @@ export function getLogoutUrl(baseUrl = '') {
   const productPath = getProductPath(baseUrl);
   return `https://login${
     productPath.includes('local') ? '.local' : ''
-  }.buffer.com/logout?redirect=${getRedirectUrl(baseUrl)}&${getQueryParameters(baseUrl)}`;
+  }.buffer.com/logout?redirect=${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}`;
 }
 
 export function getLoginUrl(baseUrl = '') {
   const productPath = getProductPath(baseUrl);
   return `https://login${
     productPath.includes('local') ? '.local' : ''
-  }.buffer.com/login?redirect=${getRedirectUrl(baseUrl)}&${getQueryParameters(baseUrl)}`;
+  }.buffer.com/login?redirect=${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}`;
 }
 
 export function getAccountUrl(baseUrl = '', user) {
