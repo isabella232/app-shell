@@ -66,6 +66,7 @@
     "@stripe/stripe-js": "^1.13.0",
     "babel-loader": "8.1",
     "css-loader": "^5.2.6",
+    "deterministic-split": "^1.0.4",
     "graphql-tag": "^2.11.0",
     "prop-types": ">= 15.7.2",
     "react": "16.14.0",

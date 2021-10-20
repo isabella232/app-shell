@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
-import { getActiveProductFromPath } from '../../common/utils/getProduct';
 
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
@@ -17,11 +16,12 @@ import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
 import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
 import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
+import StartTrialExperiment from './modals/ExperimentGDEID1';
 import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
 
 function handleExperimentGDEID1(openModal) {
-  openModal(MODALS.startTrial, {
-    cta: 'geid1_free_user_trial_prompt:recievedFreeTrialPrompt',
+  openModal(MODALS.GEID1FreeTrialPrompt, {
+    cta: 'geid1_free_user_trial_prompt',
   });
   setCookie({
     key: 'startTrialPrompt',
@@ -56,6 +56,8 @@ const ModalContent = ({ modal, closeAction }) => {
           <StartTrial modal={modal} />
         </SimpleModal>
       );
+    case MODALS.GEID1FreeTrialPrompt:
+      return <StartTrialExperiment modal={modal} closeAction={closeAction} />;
     case MODALS.paidMigration:
       return (
         <StickyModal closeAction={closeAction}>
@@ -132,14 +134,7 @@ const Modal = React.memo(({ modal, openModal }) => {
     }
 
     // Start free trail prompt
-    const GDEID1_FEATURE_FLIP = user?.featureFlips?.includes(
-      'geid1_free_user_trial_prompt'
-    );
-
-    if (
-      GDEID1_FEATURE_FLIP &&
-      shouldShowStartTrialModalExperimentGDEID1(user)
-    ) {
+    if (shouldShowStartTrialModalExperimentGDEID1(user)) {
       handleExperimentGDEID1(openModal);
     }
   }, [user.loading]);
