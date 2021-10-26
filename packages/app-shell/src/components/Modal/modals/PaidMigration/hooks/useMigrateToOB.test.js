@@ -9,7 +9,7 @@ describe('useMigrateToOB', () => {
     return {
       data: {
         billingMigrateToOneBuffer: {
-          billing: {}
+          billing: {},
         },
       },
     };
