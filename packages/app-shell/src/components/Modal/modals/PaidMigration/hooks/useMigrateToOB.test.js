@@ -6,7 +6,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 
 import useMigrateToOB, { MIGRATE_TO_OB } from './useMigrateToOB';
 
-describe('useMigrateToOB', () => {
+describe.skip('useMigrateToOB', () => {
   const mockSuccessMutation = jest.fn(() => {
     return {
       data: {
