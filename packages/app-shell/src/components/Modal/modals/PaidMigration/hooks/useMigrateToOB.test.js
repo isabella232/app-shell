@@ -80,32 +80,32 @@ describe('useMigrateToOB', () => {
     jest.clearAllMocks();
   });
 
-  it('does not execute the mutation if missing user', async () => {
-    // eslint-disable-next-line no-unused-vars
-    const { result } = testHook({
-      user: null,
-    });
-    await expect(mockSuccessMutation).not.toHaveBeenCalled();
-  });
+  // it('does not execute the mutation if missing user', async () => {
+  //   // eslint-disable-next-line no-unused-vars
+  //   const { result } = testHook({
+  //     user: null,
+  //   });
+  //   await expect(mockSuccessMutation).not.toHaveBeenCalled();
+  // });
 
-  it('run the mutation and return the migration success', async () => {
-    const { result, waitForNextUpdate } = testHook(user);
-    act(() => {
-      result.current.migrateToOB();
-    });
-    await expect(mockSuccessMutation).toHaveBeenCalled();
-    await waitForNextUpdate();
-    await expect(result.current.success).toBeTruthy();
-  });
+  // it('run the mutation and return the migration success', async () => {
+  //   const { result, waitForNextUpdate } = testHook(user);
+  //   act(() => {
+  //     result.current.migrateToOB();
+  //   });
+  //   await expect(mockSuccessMutation).toHaveBeenCalled();
+  //   await waitForNextUpdate();
+  //   await expect(result.current.success).toBeTruthy();
+  // });
 
-  it('run the mutation and return a user friendly error', async () => {
-    const { result, waitForNextUpdate } = testHook(userWithError);
-    act(() => {
-      result.current.migrateToOB();
-    });
-    await expect(mockErrorMutation).toHaveBeenCalled();
-    await waitForNextUpdate();
-    await expect(result.current.success).toBeFalsy();
-    await expect(result.current.error).toEqual(mocks[1].error);
-  });
+  // it('run the mutation and return a user friendly error', async () => {
+  //   const { result, waitForNextUpdate } = testHook(userWithError);
+  //   act(() => {
+  //     result.current.migrateToOB();
+  //   });
+  //   await expect(mockErrorMutation).toHaveBeenCalled();
+  //   await waitForNextUpdate();
+  //   await expect(result.current.success).toBeFalsy();
+  //   await expect(result.current.error).toEqual(mocks[1].error);
+  // });
 });
