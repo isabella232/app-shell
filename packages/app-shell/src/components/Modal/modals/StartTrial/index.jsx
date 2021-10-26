@@ -56,28 +56,27 @@ const StartTrial = ({ user, openModal, modalData }) => {
   }, []);
 
   return (
-    <Holder id="start-trial-modal">
+    <Holder>
       <Content>
-        <Text type="h1">Grow your audience with the full power of Buffer.</Text>
+        <Text type="h1">Try it all, for free!</Text>
         <Text type="p">
-          Add our powerful analytics and engagement tools to drive more growth
-          for your business.
+          Take your online business further with our entire suite of tools.
         </Text>
         <ol>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Unlimited users</Text>
+            <Text>Advanced Instagram features</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Unlimited channels</Text>
+            <Text>Comprehensive analytics</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>No credit card required</Text>
+            <Text>Easy reporting for your team and clients</Text>
           </li>
         </ol>
         <Ctas>
