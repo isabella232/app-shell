@@ -56,7 +56,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
   }, []);
 
   return (
-    <Holder>
+    <Holder id="start-trial-modal">
       <Content>
         <Text type="h1">Try it all, for free!</Text>
         <Text type="p">
