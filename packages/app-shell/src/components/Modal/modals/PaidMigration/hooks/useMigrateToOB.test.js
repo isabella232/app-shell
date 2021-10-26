@@ -81,13 +81,13 @@ describe('useMigrateToOB', () => {
     jest.clearAllMocks();
   });
 
-  // it('does not execute the mutation if missing user', async () => {
-  //   // eslint-disable-next-line no-unused-vars
-  //   const { result } = testHook({
-  //     user: null,
-  //   });
-  //   await expect(mockSuccessMutation).not.toHaveBeenCalled();
-  // });
+  it('does not execute the mutation if missing user', async () => {
+    // eslint-disable-next-line no-unused-vars
+    const { result } = testHook({
+      user: null,
+    });
+    await expect(mockSuccessMutation).not.toHaveBeenCalled();
+  });
 
   // it('run the mutation and return the migration success', async () => {
   //   const { result, waitForNextUpdate } = testHook(user);
