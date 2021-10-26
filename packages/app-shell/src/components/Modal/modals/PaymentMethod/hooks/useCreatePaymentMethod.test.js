@@ -23,7 +23,7 @@ jest.mock('@stripe/react-stripe-js', () => ({
   CardNumberElement: {},
 }));
 
-describe.skip('useCreatePaymentMethod', () => {
+describe('useCreatePaymentMethod', () => {
   const setupIntent = 'fooSetupIntent';
   beforeEach(() => {
     jest.clearAllMocks();

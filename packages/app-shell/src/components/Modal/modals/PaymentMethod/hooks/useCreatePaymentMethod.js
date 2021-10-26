@@ -50,7 +50,10 @@ function useCreatePaymentMethod(setupIntent) {
         type: 'card',
         card: elements.getElement(CardNumberElement),
       })
-      .then(confirmCardSetup);
+      .then(confirmCardSetup)
+      .catch((e) => {
+        console.error(e); // eslint-disable-line no-console
+      });
   }
 
   useEffect(() => {
