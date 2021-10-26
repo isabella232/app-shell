@@ -8,7 +8,7 @@ jobs:
     container: cypress/browsers:node12.13.0-chrome78-ff70
     steps:
       - name: Host
-        run: apt update && apt install sudo && sudo echo "0.0.0.0 publish.local.buffer.com" | sudo tee -a /etc/hosts
+        run: apt update && apt install sudo && sudo echo "0.0.0.0 publish.local.buffer.com" | sudo tee -a /etc/hosts && cat /etc/hosts
       - name: Checkout branch
         uses: actions/checkout@v2
       - name: Setup
