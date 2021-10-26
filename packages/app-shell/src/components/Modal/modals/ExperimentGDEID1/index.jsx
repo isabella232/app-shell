@@ -105,7 +105,7 @@ const StartTrialExperiment = ({ user, openModal, modalData, closeAction }) => {
                   type="secondary"
                   onClick={() => {
                     openModal(MODALS.planSelector, {
-                      cta: 'geid1FreeUserTrialPrompt',
+                      cta: 'startTrialModal',
                       ctaButton: 'checkOutPaidPlans',
                     });
                   }}
