@@ -1,5 +1,5 @@
-import getCopy, { SUCCESS_CTA } from './getCopy';
 import { renderHook } from '@testing-library/react-hooks';
+import getCopy, { SUCCESS_CTA } from './getCopy';
 
 describe('getCopy', () => {
   it('should return label, description and buttonCopy for a team/essentials plan change', () => {
@@ -9,7 +9,7 @@ describe('getCopy', () => {
 
     expect(result.current.label).toBe('Congrats! Welcome to the Team plan');
     expect(result.current.description).toBe(
-      'Your details have gone through successfully. Start using your Team plan features.'
+      "You've successfully saved your payment details! Start using your Team plan features."
     );
     expect(result.current.buttonCopy).toBe(SUCCESS_CTA);
   });
@@ -20,7 +20,7 @@ describe('getCopy', () => {
 
     expect(result.current.label).toBe('Congrats! You are now on the Free plan');
     expect(result.current.description).toBe(
-      'Your change have gone through successfully. Start using your Free plan today.'
+      "You've successfully changed your plan. Start using your Free plan today."
     );
     expect(result.current.buttonCopy).toBe(SUCCESS_CTA);
   });
