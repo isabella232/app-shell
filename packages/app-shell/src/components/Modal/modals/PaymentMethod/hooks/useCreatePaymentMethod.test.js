@@ -1,14 +1,8 @@
-/* eslint-disable import/order */
-import useCreatePaymentMethod from './useCreatePaymentMethod';
 import { renderHook, act } from '@testing-library/react-hooks';
-// import {
-//   useStripe,
-//   useElements,
-//   CardNumberElement,
-// } from '@stripe/react-stripe-js';
+import useCreatePaymentMethod from './useCreatePaymentMethod';
 
-const mockCreatePaymentMethod = jest.fn();
-const mockConfirmCardSetup = jest.fn();
+const mockCreatePaymentMethod = jest.fn(() => Promise.resolve());
+const mockConfirmCardSetup = jest.fn(() => Promise.resolve());
 const mockGetElement = jest.fn();
 const paymentMethod = { id: 'FooPaymentMethod' };
 
@@ -30,8 +24,16 @@ describe('useCreatePaymentMethod', () => {
   });
 
   describe('submit', () => {
+    const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
     it('set processing to true', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
+      mockConfirmCardSetup.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: null,
+      });
       act(() => {
         result.current.submit();
       });
@@ -42,6 +44,14 @@ describe('useCreatePaymentMethod', () => {
   describe('stripe', () => {
     it('call stripe.createPaymentMethod with card element', async () => {
       const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
       act(() => {
         result.current.submit();
       });
@@ -53,6 +63,11 @@ describe('useCreatePaymentMethod', () => {
       const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
       mockCreatePaymentMethod.mockResolvedValue({
         paymentMethod,
+        error: null,
+      });
+      mockConfirmCardSetup.mockResolvedValue({
+        paymentMethod,
+        error: null,
       });
 
       act(() => {
@@ -72,6 +87,11 @@ describe('useCreatePaymentMethod', () => {
       const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
       mockConfirmCardSetup.mockResolvedValue({
         paymentMethod,
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: null,
       });
 
       act(() => {

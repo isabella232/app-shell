@@ -38,9 +38,6 @@ function useCreatePaymentMethod(setupIntent) {
         }
 
         setPaymentMethod(paymentMethod);
-      })
-      .catch((e) => {
-        console.error(e); // eslint-disable-line no-console
       });
   }
 
@@ -50,10 +47,7 @@ function useCreatePaymentMethod(setupIntent) {
         type: 'card',
         card: elements.getElement(CardNumberElement),
       })
-      .then(confirmCardSetup)
-      .catch((e) => {
-        console.error(e); // eslint-disable-line no-console
-      });
+      .then(confirmCardSetup);
   }
 
   useEffect(() => {
