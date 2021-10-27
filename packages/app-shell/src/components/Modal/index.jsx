@@ -21,7 +21,8 @@ import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
 
 function handleExperimentGDEID1(openModal) {
   openModal(MODALS.GEID1FreeTrialPrompt, {
-    cta: 'geid1_free_user_trial_prompt',
+    cta: 'geid1FreeUserTrialPrompt',
+    ctaButton: 'geid1FreeUserTrialPrompt',
   });
   setCookie({
     key: 'startTrialPrompt',
