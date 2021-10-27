@@ -115,7 +115,7 @@ function track(experimentKey, variant, isFirstView) {
       experimentId: experiments[experimentKey].name,
       experimentGroup: variant,
       firstViewed: isFirstView,
-      product: 'navigator',
+      product: 'buffer',
       sourceFramework: 'albert',
       view: window.location.href,
     });
