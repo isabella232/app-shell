@@ -112,7 +112,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
             }}
           />
         )}
-        <Modal {...modal} />
+        {!user.loading && <Modal {...modal} />}
       </ModalContext.Provider>
     </UserContext.Provider>
   );

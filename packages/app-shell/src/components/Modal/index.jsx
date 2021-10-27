@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PropTypes from 'prop-types';
 
-import { getCookie } from '../../common/utils/cookies'
+import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
+
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';
@@ -15,6 +16,20 @@ import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
 import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
 import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
+import StartTrialExperiment from './modals/ExperimentGDEID1';
+import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
+
+function handleExperimentGDEID1(openModal) {
+  openModal(MODALS.GEID1FreeTrialPrompt, {
+    cta: 'geid1FreeUserTrialPrompt',
+    ctaButton: 'geid1FreeUserTrialPrompt',
+  });
+  setCookie({
+    key: 'startTrialPrompt',
+    value: true,
+    expires: DATES.inMonthsFromNow(12),
+  });
+}
 
 const ModalContent = ({ modal, closeAction }) => {
   switch (modal) {
@@ -42,6 +57,8 @@ const ModalContent = ({ modal, closeAction }) => {
           <StartTrial modal={modal} />
         </SimpleModal>
       );
+    case MODALS.GEID1FreeTrialPrompt:
+      return <StartTrialExperiment modal={modal} closeAction={closeAction} />;
     case MODALS.paidMigration:
       return (
         <StickyModal closeAction={closeAction}>
@@ -84,26 +101,42 @@ ModalContent.propTypes = {
 
 const Modal = React.memo(({ modal, openModal }) => {
   const [hasModal, setHasModal] = useState(!!modal);
-  const user = useUser()
+  const user = useUser();
 
   useEffect(() => {
     //Trial Expired Modal
-    const isAwaitingUserAction = user?.currentOrganization?.billing?.subscription?.trial?.isAwaitingUserAction || false;
-    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' })
+    const isAwaitingUserAction =
+      user?.currentOrganization?.billing?.subscription?.trial
+        ?.isAwaitingUserAction || false;
+    const hasDismissedTrialModal = getCookie({ key: 'trialOverDismissed' });
     if (!hasDismissedTrialModal && isAwaitingUserAction) {
-      openModal(MODALS.trialExpired)
+      openModal(MODALS.trialExpired);
     }
 
     //Check if Pendo loads on the page - we don't want to show the OB Migration modal if there is a Pendo guide already visible
-    const isPendoModalVisible = window.pendo && window.pendo.hasOwnProperty('isGuideShown') && window.pendo.isGuideShown();
+    const isPendoModalVisible =
+      window.pendo &&
+      window.pendo.hasOwnProperty('isGuideShown') &&
+      window.pendo.isGuideShown();
 
     //Migrate to OB modal
-    const canMigrateToOneBuffer = user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
-    const hasDismissedMigrationModal = getCookie({ key: 'migrationModalDismissed' })
-    const shouldShowMigrationModal = !hasDismissedMigrationModal && canMigrateToOneBuffer && !isPendoModalVisible;
+    const canMigrateToOneBuffer =
+      user?.currentOrganization?.canMigrateToOneBuffer?.canMigrate;
+    const hasDismissedMigrationModal = getCookie({
+      key: 'migrationModalDismissed',
+    });
+    const shouldShowMigrationModal =
+      !hasDismissedMigrationModal &&
+      canMigrateToOneBuffer &&
+      !isPendoModalVisible;
 
     if (shouldShowMigrationModal) {
       openModal(MODALS.paidMigration);
+    }
+
+    // Start free trail prompt
+    if (shouldShowStartTrialModalExperimentGDEID1(user)) {
+      handleExperimentGDEID1(openModal);
     }
   }, [user.loading]);
 
@@ -111,7 +144,13 @@ const Modal = React.memo(({ modal, openModal }) => {
     setHasModal(!!modal);
   }, [modal]);
 
-  return <>{hasModal && <ModalContent modal={modal} closeAction={() => openModal(null)} />}</>;
+  return (
+    <>
+      {hasModal && (
+        <ModalContent modal={modal} closeAction={() => openModal(null)} />
+      )}
+    </>
+  );
 });
 
 Modal.propTypes = {

@@ -1,11 +1,10 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_SETUP_INTENT } from '../../../../../common/graphql/billing';
 
 function useSetupIntent(user) {
-  const [createSetupIntent, { data, error: mutationError }] = useMutation(
-    CREATE_SETUP_INTENT
-  );
+  const [createSetupIntent, { data, error: mutationError }] =
+    useMutation(CREATE_SETUP_INTENT);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ function useSetupIntent(user) {
           organizationId: user.currentOrganization.id,
         },
       }).catch((e) => {
-        console.error(e);
+        console.error(e); // eslint-disable-line no-console
       });
     }
   }, [user]);

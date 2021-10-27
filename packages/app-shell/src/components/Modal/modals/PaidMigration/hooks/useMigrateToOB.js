@@ -1,31 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 import { BILLING_FIELDS } from '../../../../../common/graphql/account';
 
 export const MIGRATE_TO_OB = gql`
   ${BILLING_FIELDS}
-  mutation BillingMigrateToOneBufferResponseMutation(
-    $organizationId: String!
-  ) {
-    billingMigrateToOneBuffer(
-      organizationId: $organizationId
-    ) {
+  mutation BillingMigrateToOneBufferResponseMutation($organizationId: String!) {
+    billingMigrateToOneBuffer(organizationId: $organizationId) {
       ... on BillingMigrateToOneBufferResponse {
         billing {
           ...BillingFields
         }
       }
-      ... on BillingError { userFriendlyMessage }
+      ... on BillingError {
+        userFriendlyMessage
+      }
+    }
   }
-}
-`
+`;
 
 const useMigrateToOB = ({ currentOrganization }) => {
-  const [migrateToOB, { data, error: mutationError }] = useMutation(
-    MIGRATE_TO_OB,
-  );
+  const [migrateToOB, { data, error: mutationError }] =
+    useMutation(MIGRATE_TO_OB);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
 
@@ -36,7 +33,7 @@ const useMigrateToOB = ({ currentOrganization }) => {
           organizationId: currentOrganization.id,
         },
       }).catch((e) => {
-        console.error(e);
+        console.error(e); // eslint-disable-line no-console
       });
     }
   }, [processing]);
@@ -46,7 +43,9 @@ const useMigrateToOB = ({ currentOrganization }) => {
       setError(mutationError);
       setProcessing(false);
     } else if (data?.billingMigrateToOneBuffer.userFriendlyMessage) {
-      setError({ message: data?.billingMigrateToOneBuffer.userFriendlyMessage });
+      setError({
+        message: data?.billingMigrateToOneBuffer.userFriendlyMessage,
+      });
       setProcessing(false);
     }
   }, [data, mutationError]);

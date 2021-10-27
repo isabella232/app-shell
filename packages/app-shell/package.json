@@ -66,12 +66,13 @@
     "@stripe/stripe-js": "^1.13.0",
     "babel-loader": "8.1",
     "css-loader": "^5.2.6",
+    "deterministic-split": "^1.0.4",
     "graphql-tag": "^2.11.0",
     "prop-types": ">= 15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "styled-components": "^5.3.0",
-    "style-loader": "^2.0.0"
+    "style-loader": "^2.0.0",
+    "styled-components": "^5.3.0"
   },
   "gitHead": "29cc1e0b448417d26aa0bf47eb4eda466641e4bf"
 }

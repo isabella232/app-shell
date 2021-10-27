@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 import { renderHook, act } from '@testing-library/react-hooks';
@@ -9,7 +11,7 @@ describe('useMigrateToOB', () => {
     return {
       data: {
         billingMigrateToOneBuffer: {
-          billing: {}
+          billing: {},
         },
       },
     };
@@ -80,7 +82,7 @@ describe('useMigrateToOB', () => {
   });
 
   it('does not execute the mutation if missing user', async () => {
-    const mocks = [];
+    // eslint-disable-next-line no-unused-vars
     const { result } = testHook({
       user: null,
     });
