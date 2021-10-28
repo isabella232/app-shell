@@ -49,14 +49,16 @@ const StartTrialExperiment = ({ user, openModal, modalData, closeAction }) => {
   }, [trial]);
 
   useEffect(() => {
-    useTrackPageViewed({
-      payload: {
-        name: 'AppShell Start Trial',
-        cta,
-        ctaButton,
-      },
-      user,
-    });
+    if (variant === 'variant_1') {
+      useTrackPageViewed({
+        payload: {
+          name: 'AppShell Start Trial - Experiment GEID1',
+          cta,
+          ctaButton,
+        },
+        user,
+      });
+    }
   }, []);
 
   return (
