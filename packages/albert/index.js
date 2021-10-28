@@ -20,7 +20,6 @@ export const experiments = {
     name: 'GEID1_free-trial-prompt',
     distribution: {
       variant_1: 50,
-      variant_2: 50,
     },
   },
 };
