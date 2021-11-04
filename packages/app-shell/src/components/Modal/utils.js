@@ -10,7 +10,7 @@ export function isPendoModalVisible() {
   );
 }
 
-export function hasSeenStartTrialModalExperiement() {
+export function hasSeenFreeUserStartTrialPrompt() {
   return Boolean(
     getCookie({
       key: 'startTrialPrompt',
@@ -18,13 +18,13 @@ export function hasSeenStartTrialModalExperiement() {
   );
 }
 
-export function shouldShowStartTrialModalExperimentGDEID1(user) {
+export function shouldShowFreeUserStartTrialPrompt(user) {
   const activeProduct = getActiveProductFromPath();
   return (
     activeProduct === 'publish' &&
     isFreeUser(user) &&
     userCanStartFreeTrial(user) &&
     !isPendoModalVisible() &&
-    !hasSeenStartTrialModalExperiement()
+    !hasSeenFreeUserStartTrialPrompt()
   );
 }

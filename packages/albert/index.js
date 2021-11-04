@@ -16,12 +16,6 @@ export const experiments = {
       variant_1: 50,
     },
   },
-  GEID1: {
-    name: 'GEID1_free-trial-prompt',
-    distribution: {
-      variant_1: 50,
-    },
-  },
 };
 
 // This is used to pass the experiment key to the components

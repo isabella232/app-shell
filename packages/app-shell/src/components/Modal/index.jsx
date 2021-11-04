@@ -16,13 +16,12 @@ import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
 import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
 import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
-import StartTrialExperiment from './modals/ExperimentGDEID1';
-import { shouldShowStartTrialModalExperimentGDEID1 } from './utils';
+import { shouldShowFreeUserStartTrialPrompt } from './utils';
 
-function handleExperimentGDEID1(openModal) {
-  openModal(MODALS.GEID1FreeTrialPrompt, {
-    cta: 'geid1FreeUserTrialPrompt',
-    ctaButton: 'geid1FreeUserTrialPrompt',
+function handleStartTrialPrompt(openModal) {
+  openModal(MODALS.startTrial, {
+    cta: 'freeUserTrialPrompt',
+    ctaButton: 'freeUserTrialPrompt',
   });
   setCookie({
     key: 'startTrialPrompt',
@@ -57,8 +56,6 @@ const ModalContent = ({ modal, closeAction }) => {
           <StartTrial modal={modal} />
         </SimpleModal>
       );
-    case MODALS.GEID1FreeTrialPrompt:
-      return <StartTrialExperiment modal={modal} closeAction={closeAction} />;
     case MODALS.paidMigration:
       return (
         <StickyModal closeAction={closeAction}>
@@ -135,8 +132,8 @@ const Modal = React.memo(({ modal, openModal }) => {
     }
 
     // Start free trail prompt
-    if (shouldShowStartTrialModalExperimentGDEID1(user)) {
-      handleExperimentGDEID1(openModal);
+    if (shouldShowFreeUserStartTrialPrompt(user)) {
+      handleStartTrialPrompt(openModal);
     }
   }, [user.loading]);
 
