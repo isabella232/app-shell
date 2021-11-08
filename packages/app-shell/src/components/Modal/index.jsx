@@ -18,7 +18,7 @@ import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
 import { shouldShowFreeUserStartTrialPrompt } from './utils';
 
-function handleStartTrialPrompt(openModal) {
+function handleFreeUsersStartTrialPrompt(openModal) {
   openModal(MODALS.startTrial, {
     cta: 'freeUserTrialPrompt',
     ctaButton: 'freeUserTrialPrompt',
@@ -133,7 +133,7 @@ const Modal = React.memo(({ modal, openModal }) => {
 
     // Start free trail prompt
     if (shouldShowFreeUserStartTrialPrompt(user)) {
-      handleStartTrialPrompt(openModal);
+      handleFreeUsersStartTrialPrompt(openModal);
     }
   }, [user.loading]);
 
