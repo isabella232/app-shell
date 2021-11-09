@@ -2,8 +2,8 @@ import MOCK_ACCOUNT_OB_FREE_DATA from '../../common/mocks/accountOBFree';
 
 import {
   isPendoModalVisible,
-  hasSeenStartTrialModalExperiement,
-  shouldShowStartTrialModalExperimentGDEID1,
+  hasSeenFreeUserStartTrialPrompt,
+  shouldShowFreeUserStartTrialPrompt,
 } from './utils';
 
 describe('Modal - utils', () => {
@@ -33,14 +33,14 @@ describe('Modal - utils', () => {
     });
   });
 
-  describe('hasSeenStartTrialModalExperiement', () => {
+  describe('hasSeenFreeUserStartTrialPrompt', () => {
     it('should return true if startTrialPrompt exists in cookies', () => {
       Object.defineProperty(document, 'cookie', {
         writable: true,
         value: 'appshell_startTrialPrompt=true',
       });
 
-      const result = hasSeenStartTrialModalExperiement();
+      const result = hasSeenFreeUserStartTrialPrompt();
       expect(result).toBe(true);
     });
 
@@ -49,12 +49,12 @@ describe('Modal - utils', () => {
         writable: true,
         value: '',
       });
-      const result = hasSeenStartTrialModalExperiement();
+      const result = hasSeenFreeUserStartTrialPrompt();
       expect(result).toBe(false);
     });
   });
 
-  describe('shouldShowStartTrialModalExperimentGDEID1', () => {
+  describe('shouldShowFreeUserStartTrialPrompt', () => {
     beforeEach(() => {
       global.window = Object.create(window);
       const url = 'http://publish.bufer.com';
@@ -72,7 +72,7 @@ describe('Modal - utils', () => {
 
     it('should return true if user plan is free, can start a trial, no pendo modal is visible, they have not seen the modal before and they are currently on the publish app', () => {
       const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
-      const result = shouldShowStartTrialModalExperimentGDEID1(mockUserData);
+      const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(true);
     });
 
@@ -88,7 +88,7 @@ describe('Modal - utils', () => {
           },
         },
       };
-      const result = shouldShowStartTrialModalExperimentGDEID1(mockUserData);
+      const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(false);
     });
 
@@ -100,7 +100,7 @@ describe('Modal - utils', () => {
           },
         },
       };
-      const result = shouldShowStartTrialModalExperimentGDEID1(mockUserData);
+      const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(false);
     });
 
@@ -114,7 +114,7 @@ describe('Modal - utils', () => {
         },
       });
 
-      const result = shouldShowStartTrialModalExperimentGDEID1(mockUserData);
+      const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(false);
     });
 
@@ -128,7 +128,7 @@ describe('Modal - utils', () => {
         },
       });
 
-      const result = shouldShowStartTrialModalExperimentGDEID1(mockUserData);
+      const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(false);
     });
   });
