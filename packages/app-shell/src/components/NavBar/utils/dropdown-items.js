@@ -2,18 +2,23 @@ function getHelpDropdownItems() {
   return [
     {
       id: 'Help Center',
-      title: 'Help Center',
+      title: 'Visit Help Center',
+      onItemClick: () => {
+        window.open(
+          'https://support.buffer.com/hc/en-us/?utm_source=app&utm_medium=appshell&utm_campaign=appshell',
+          '_blank'
+        );
+      },
+    },
+    {
+      id: 'Quick Help',
+      title: 'Quick Help',
       onItemClick: () => {
         if (window.zE) {
           window.zE('webWidget', 'show');
           window.zE('webWidget', 'open');
         }
       },
-    },
-    {
-      id: 'Live Chat',
-      title: 'Live Chat',
-      onItemClick: () => {}, // Will open Pendo popup through classname
     },
     {
       id: 'Status',
