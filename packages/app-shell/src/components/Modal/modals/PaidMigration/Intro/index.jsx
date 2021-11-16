@@ -64,7 +64,7 @@ const Intro = () => {
                   setCookie({
                     key: 'migrationModalDismissed',
                     value: true,
-                    expires: DATES.inDaysFromNow(7),
+                    expires: DATES.inDaysFromNow(42),
                   });
                 }}
               />
