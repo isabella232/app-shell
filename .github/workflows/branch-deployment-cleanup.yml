@@ -1,0 +1,56 @@
+# Branch Deployment Cleanup Boilerplate code
+
+# This workflow runs when branches are deleted, and automatically deletes its associated k8s deployments
+
+# Template Version: 1.0.0
+# For problems, reach out to Peter (peter@buffer.com)
+name: branch-deployment-cleanup
+
+on:
+  delete: {}
+
+jobs:
+  generate_helm_commands_for_deletion:
+    name: Assess Which Helm Releases Need Deletion
+    runs-on: [self-hosted, aws, setup-by-ssm]
+    outputs:
+      helmCommandList: ${{ steps.generateHelmDeleteCommands.outputs.helmCommandList }}
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Generate Helm Delete Commands
+        id: generateHelmDeleteCommands
+        uses: ./deploy-actions/generate-delete-staging-releases-helm-commands
+        with:
+          githubToken: ${{ secrets.PERMISSIVE_TOKEN }}
+
+  execute_helm_commands:
+    name: Run Helm
+    runs-on: [self-hosted, aws]
+    needs:
+      - generate_helm_commands_for_deletion
+    strategy:
+      matrix:
+        include: ${{fromJson(needs.generate_helm_commands_for_deletion.outputs.helmCommandList)}}
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Run Helm Command
+        uses: ./deploy-actions/run-helm-command
+        if: ${{ always() && contains((github.event.inputs.itemsToDeploy || matrix.name), matrix.name) }}
+        with:
+          helmCommand: ${{ matrix.command }}
+          deploymentUrl: ''
+          githubToken: ${{ secrets.PERMISSIVE_TOKEN }}

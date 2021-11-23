@@ -1,0 +1,216 @@
+name: buffer-appshell-test
+on:
+  push:
+    branches:
+      - main
+      - '**'
+  workflow_dispatch:
+    inputs:
+      forceDeploymentType:
+        description: 'Leave Empty or use "production" or "staging"'
+        required: false
+        default: ''
+
+env:
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  BUFFERBOT_AWS_ACCESS_KEY_ID: ${{ secrets.BUFFERBOT_AWS_ACCESS_KEY_ID }}
+  BUFFERBOT_AWS_SECRET_ACCESS_KEY: ${{ secrets.BUFFERBOT_AWS_SECRET_ACCESS_KEY }}
+  DEPLOYMENT_KEY: ${{ github.workflow }}
+  GIT_COMMIT: ${{ github.sha }}
+
+jobs:
+  send_slack_message_and_assess_deployment:
+    name: send slack message and assess deployment
+    runs-on: [self-hosted, aws]
+    outputs:
+      dockerImageRepo: ${{ steps.getDeploymentConfiguration.outputs.dockerImageRepo }}
+      slackChannelId: ${{ steps.getDeploymentConfiguration.outputs.slackChannelId }}
+      deploymentType: ${{ steps.getDeploymentConfiguration.outputs.deploymentType }}
+      dockerFile: ${{ steps.getDeploymentConfiguration.outputs.dockerFile }}
+      slackFollowUpMessageId: ${{ steps.slackStartingMessage.outputs.slackMessageId }}
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Get deployment configuration
+        id: getDeploymentConfiguration
+        uses: ./deploy-actions/assess-deployment
+      - name: Send Starting Message
+        id: slackStartingMessage
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        with:
+          channel-id: ${{ steps.getDeploymentConfiguration.outputs.slackChannelId }}
+          notification-type: 'PIPELINE-BEGIN'
+  build_and_push_docker_image:
+    name: Build & Push Docker Image
+    runs-on: [self-hosted, aws]
+    needs:
+      - send_slack_message_and_assess_deployment
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Check if Docker image exists
+        id: dockerImageExistenceCheck
+        continue-on-error: true
+        with:
+          dockerRepoName: ${{ needs.send_slack_message_and_assess_deployment.outputs.dockerImageRepo }}
+        uses: ./deploy-actions/docker-image-exist-check
+      - name: Notify on start build
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          notification-message: 'Docker Build Process Will Now Start'
+          notification-type: 'INFO'
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+      - name: Run pre-build.sh
+        if: ${{ steps.dockerImageExistenceCheck.outcome == 'failure' }}
+        run: docker run --rm -v /home/ubuntu:/home/ubuntu -u `id -u $USER`:`id -g $USER` -v $(pwd):/src -w /src -e AWS_ACCESS_KEY_ID=$BUFFERBOT_AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$BUFFERBOT_AWS_SECRET_ACCESS_KEY -e NODE_OPTIONS="--max-old-space-size=2048" -e DEPLOY_ENV=${{ github.event.inputs.forceDeploymentType || needs.send_slack_message_and_assess_deployment.outputs.deploymentType }} -e DEPLOYMENT_KEY=$DEPLOYMENT_KEY node:12 /bin/bash -c 'set -e && ./pre-build.sh'
+      - name: Run custom-build.sh
+        run: ./custom-build.sh
+      - name: Build and push Docker image
+        uses: ./deploy-actions/build-and-push-docker-image
+        if: ${{ steps.dockerImageExistenceCheck.outcome == 'failure' }}
+        with:
+          dockerRepoName: ${{ needs.send_slack_message_and_assess_deployment.outputs.dockerImageRepo }}
+          deploymentType: ${{ needs.send_slack_message_and_assess_deployment.outputs.deploymentType }}
+          dockerFile: ${{ needs.send_slack_message_and_assess_deployment.outputs.dockerFile }}
+
+  generate_helm_commands:
+    name: Generate Helm Commands
+    runs-on: [self-hosted, aws]
+    outputs:
+      helmCommandList: ${{ steps.generateHelmCommands.outputs.helmCommandList }}
+      deploymentUrl: ${{ steps.generateHelmCommands.outputs.deploymentUrl }}
+    needs:
+      - send_slack_message_and_assess_deployment
+      - build_and_push_docker_image
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Notify on Generating Helm Commands
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          notification-message: 'Generating Helm Commands ...'
+          notification-type: 'INFO'
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+      - name: Update helm repo
+        run: helm repo update buffercharts
+      - name: Generate Helm Commands
+        uses: ./deploy-actions/generate-helm-commands
+        id: generateHelmCommands
+        with:
+          githubToken: ${{ secrets.PERMISSIVE_TOKEN }}
+          deploymentType: ${{ github.event.inputs.forceDeploymentType || needs.send_slack_message_and_assess_deployment.outputs.deploymentType }}
+
+  execute_helm_commands:
+    name: Run Helm
+    runs-on: [self-hosted, aws]
+    needs:
+      - send_slack_message_and_assess_deployment
+      - generate_helm_commands
+    strategy:
+      matrix:
+        include: ${{fromJson(needs.generate_helm_commands.outputs.helmCommandList)}}
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Notify on Service Deploy
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        if: ${{ always() && contains((github.event.inputs.itemsToDeploy || matrix.name), matrix.name) }}
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          notification-message: 'Deploying ${{ matrix.name }}'
+          notification-type: 'INFO'
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+      - name: Run Helm Command
+        uses: ./deploy-actions/run-helm-command
+        if: ${{ always() && contains((github.event.inputs.itemsToDeploy || matrix.name), matrix.name) }}
+        with:
+          helmCommand: ${{ matrix.command }}
+          deploymentUrl: ${{ needs.generate_helm_commands.outputs.deploymentUrl }}
+          githubToken: ${{ secrets.PERMISSIVE_TOKEN }}
+      - name: Notify on Service Deploy
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        if: ${{ always() && contains((github.event.inputs.itemsToDeploy || matrix.name), matrix.name) }}
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          notification-message: 'Deployed ${{ matrix.name }}'
+          notification-type: 'INFO'
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+
+  do_final_reporting:
+    name: Do Final Reporting
+    runs-on: [self-hosted, aws]
+    needs:
+      - send_slack_message_and_assess_deployment
+      - execute_helm_commands
+    steps:
+      - name: Checkout current repo
+        uses: actions/checkout@v2
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Report Deployment To Velocity
+        id: reportToVelocity
+        continue-on-error: true
+        uses: ./deploy-actions/velocity-pipeline-report
+        with:
+          token: ${{ secrets.VELOCITY_DEPLOYMENT_TOKEN }}
+          version: ${{ github.sha }}
+          environment: ${{ github.workflow }}-${{ needs.send_slack_message_and_assess_deployment.outputs.deploymentType }}
+      - name: Send Success Message
+        id: slackSuccessMessage
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+          notification-type: 'PIPELINE-SUCCESS'
+
+  report_on_failure:
+    name: Report On Failure
+    runs-on: [self-hosted, aws]
+    needs:
+      - send_slack_message_and_assess_deployment
+      - execute_helm_commands
+    if: ${{ always() && (needs.execute_helm_commands.result!='success') }}
+    steps:
+      - name: Checkout actions repo
+        uses: actions/checkout@v2
+        with:
+          repository: bufferapp/deploy-actions
+          path: deploy-actions
+          token: ${{ secrets.GH_ACTIONS_WORKFLOW_TRIGGER_TOKEN }}
+      - name: Send Failure Message
+        id: slackFailureMessage
+        uses: ./deploy-actions/slack-send-pipeline-notification
+        with:
+          channel-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackChannelId }}
+          slack-message-id: ${{ needs.send_slack_message_and_assess_deployment.outputs.slackFollowUpMessageId }}
+          notification-type: 'PIPELINE-FAIL'
