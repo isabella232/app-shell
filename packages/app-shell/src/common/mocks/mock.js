@@ -36,7 +36,6 @@ export default {
                 details: ['Upgrade anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 0,
                 intervalUnit: 'mo',
               },
               isRecommended: false,
@@ -60,7 +59,6 @@ export default {
                 details: ['Add social channels anytime', 'Cancel at anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 5,
                 intervalUnit: 'mo',
               },
               isRecommended: false,
@@ -88,7 +86,6 @@ export default {
                 ],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 10,
                 intervalUnit: 'mo',
               },
               isRecommended: false,
@@ -111,7 +108,6 @@ export default {
                 details: ['Upgrade anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 0,
                 intervalUnit: 'yr',
               },
               isRecommended: false,
@@ -135,7 +131,6 @@ export default {
                 details: ['Add social channels anytime', 'Cancel at anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 48,
                 intervalUnit: 'yr',
               },
               isRecommended: false,
@@ -163,7 +158,6 @@ export default {
                 ],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalBasePrice: 96,
                 intervalUnit: 'yr',
               },
               isRecommended: true,
