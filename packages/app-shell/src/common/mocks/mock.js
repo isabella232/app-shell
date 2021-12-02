@@ -36,7 +36,6 @@ export default {
                 details: ['Upgrade anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'mo',
               },
               isRecommended: false,
             },
@@ -59,7 +58,6 @@ export default {
                 details: ['Add social channels anytime', 'Cancel at anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'mo',
               },
               isRecommended: false,
             },
@@ -86,7 +84,6 @@ export default {
                 ],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'mo',
               },
               isRecommended: false,
             },
@@ -108,7 +105,6 @@ export default {
                 details: ['Upgrade anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'yr',
               },
               isRecommended: false,
             },
@@ -131,7 +127,6 @@ export default {
                 details: ['Add social channels anytime', 'Cancel at anytime'],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'yr',
               },
               isRecommended: false,
             },
@@ -158,7 +153,6 @@ export default {
                 ],
                 warning:
                   'By downgrading, aspects of your account will be frozen to meet with plan quotas. Nothings will be lost.',
-                intervalUnit: 'yr',
               },
               isRecommended: true,
             },
