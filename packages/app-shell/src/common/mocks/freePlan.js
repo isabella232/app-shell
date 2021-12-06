@@ -3,7 +3,7 @@ export const freePlan = {
   planInterval: 'month',
   planName: 'Free',
   isCurrentPlan: true,
-  summary: { details: [], intervalUnit: 'mo' },
+  summary: { details: [] },
   currency: '$',
   totalPrice: 0,
 };

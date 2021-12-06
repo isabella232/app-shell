@@ -61,8 +61,6 @@ export const BILLING_FIELDS = gql`
         absoluteSavings
         summary {
           details
-          intervalBasePrice
-          intervalUnit
         }
         isRecommended
         downgradedMessage
