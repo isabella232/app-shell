@@ -29,16 +29,9 @@ const Summary = ({
   isUpgradeIntent,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
-  const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
-  const selectedPlanString = selectedPlan
-    ? `${selectedPlan.planId}_${selectedPlan.planInterval}`
-    : '';
-
+  const currentPlanId = currentPlan.planId
+  const selectedPlanId = selectedPlan.planId
   const getStatus = (fromPlanSelector) => {
-    const [currentPlanId] = currentPlanString.split('_');
-    const [selectedPlanId] = selectedPlanString.split(
-      '_'
-    );
 
     let planStatus;
     if (currentPlanId === selectedPlanId) {
@@ -108,8 +101,7 @@ const Summary = ({
         <Text type="h2">Summary</Text>
         <SummaryDetails>
           <>
-            {getStatus(fromPlanSelector)}
-            <DetailList>
+            {getStatus(fromPlanSelector)}            <DetailList>
               {selectedPlan.summary.details.map((detail) => (
                 <Detail key={detail}>
                   <Text type="p">{detail}</Text>
