@@ -1,9 +1,6 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
-import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
-import ArrowDown from '@bufferapp/ui/Icon/Icons/ArrowDown';
-import ArrowUp from '@bufferapp/ui/Icon/Icons/ArrowUp';
 import {
   DiscountReminder,
   TotalPrice,
@@ -12,7 +9,6 @@ import {
   Bottom,
   Body,
   SummaryContainer,
-  BoldPrice,
   Separator,
   SummaryNote,
   SummaryDetails,
