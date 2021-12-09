@@ -36,15 +36,8 @@ const Summary = ({
     : '';
 
   const isDowngrading = (currentPlanId, selectedPlanId) => {
-    if (currentPlanId === 'essentials') {
-      return selectedPlanId === 'free' ? true : false;
-    }
-    if (currentPlanId === 'team') {
-      return true;
-    }
-    if (currentPlanId === 'free') {
-      return false;
-    }
+    const planRanked = ['free', 'essentials', 'team', 'agency']
+    return planRanked.indexOf(currentPlanId) > planRanked.indexOf(selectedPlanId)
   };
 
   const getStatus = (fromPlanSelector) => {
