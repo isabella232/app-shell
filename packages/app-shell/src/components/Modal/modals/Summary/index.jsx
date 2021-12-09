@@ -1,9 +1,6 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
-import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
-import ArrowDown from '@bufferapp/ui/Icon/Icons/ArrowDown';
-import ArrowUp from '@bufferapp/ui/Icon/Icons/ArrowUp';
 import {
   DiscountReminder,
   TotalPrice,
@@ -12,7 +9,6 @@ import {
   Bottom,
   Body,
   SummaryContainer,
-  BoldPrice,
   Separator,
   SummaryNote,
   SummaryDetails,
@@ -25,46 +21,24 @@ const Summary = ({
   planOptions,
   selectedPlan,
   fromPlanSelector,
-  trialInfo,
   subscriptionEndDate,
   isUpgradeIntent,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
-  const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
-  const selectedPlanString = selectedPlan
-    ? `${selectedPlan.planId}_${selectedPlan.planInterval}`
-    : '';
+  const currentPlanId = currentPlan.planId
+  const selectedPlanId = selectedPlan.planId
 
-  const isDowngrading = (currentPlanId, selectedPlanId) => {
-    if (currentPlanId === 'essentials') {
-      return selectedPlanId === 'free' ? true : false;
-    }
-    if (currentPlanId === 'team') {
-      return true;
-    }
-    if (currentPlanId === 'free') {
-      return false;
-    }
-  };
+  const getStatus = () => {
 
-  const getStatus = (fromPlanSelector) => {
-    const [currentPlanId, currentPlanInterval] = currentPlanString.split('_');
-    const [selectedPlanId, selectedPlanInterval] = selectedPlanString.split(
-      '_'
-    );
-
-    let downgrade;
     let planStatus;
     if (currentPlanId === selectedPlanId) {
       planStatus = `Currently on ${currentPlan.planName}`;
     } else {
-      downgrade = isDowngrading(currentPlanId, selectedPlanId);
       planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${selectedPlan?.planName}`;
     }
 
     if (isUpgradeIntent) {
       planStatus = `Change to ${selectedPlan?.planName}`;
-      downgrade = false;
     }
 
     return (
@@ -104,14 +78,6 @@ const Summary = ({
     subscriptionEndDate
   ).toLocaleDateString('en-US', dateOptions);
 
-  const formattedTrialEndDate = new Date(trialInfo?.endDate).toLocaleDateString(
-    'en-US',
-    dateOptions
-  );
-
-  const intervalInWords =
-    selectedPlan.planInterval === 'month' ? '30 days' : 'year';
-
   const getSummaryNote = () => {
     if (selectedPlan.planId === 'free' && subscriptionEndDate) {
       return (
@@ -120,9 +86,11 @@ const Summary = ({
           <span>{formattedSubscriptionEndDate}</span>
         </Text>
       );
-    } else if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
+    }
+    if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
       return <Text type="p">Upgrade your plan at anytime</Text>;
-    } else return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
+    }
+    return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
   };
 
   return (
@@ -130,20 +98,18 @@ const Summary = ({
       <Body>
         <Text type="h2">Summary</Text>
         <SummaryDetails>
-          {
-            <>
-              {getStatus(fromPlanSelector)}
-              <DetailList>
-                {selectedPlan.summary.details.map((detail) => (
-                  <Detail key={detail}>
-                    <Text type="p">{detail}</Text>
-                  </Detail>
-                ))}
-              </DetailList>
-              <Separator />
-              <SummaryNote>{getSummaryNote()}</SummaryNote>
-            </>
-          }
+          <>
+            {getStatus()}
+            <DetailList>
+              {selectedPlan.summary.details.map((detail) => (
+                <Detail key={detail}>
+                  <Text type="p">{detail}</Text>
+                </Detail>
+              ))}
+            </DetailList>
+            <Separator />
+            <SummaryNote>{getSummaryNote()}</SummaryNote>
+          </>
         </SummaryDetails>
 
         <Bottom>
