@@ -1,6 +1,9 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
+import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+import ArrowDown from '@bufferapp/ui/Icon/Icons/ArrowDown';
+import ArrowUp from '@bufferapp/ui/Icon/Icons/ArrowUp';
 import {
   DiscountReminder,
   TotalPrice,
@@ -9,6 +12,7 @@ import {
   Bottom,
   Body,
   SummaryContainer,
+  BoldPrice,
   Separator,
   SummaryNote,
   SummaryDetails,
@@ -21,7 +25,6 @@ const Summary = ({
   planOptions,
   selectedPlan,
   fromPlanSelector,
-  trialInfo,
   subscriptionEndDate,
   isUpgradeIntent,
 }) => {
@@ -31,29 +34,21 @@ const Summary = ({
     ? `${selectedPlan.planId}_${selectedPlan.planInterval}`
     : '';
 
-  const isDowngrading = (currentPlanId, selectedPlanId) => {
-    const planRanked = ['free', 'essentials', 'team', 'agency']
-    return planRanked.indexOf(currentPlanId) > planRanked.indexOf(selectedPlanId)
-  };
-
   const getStatus = (fromPlanSelector) => {
-    const [currentPlanId, currentPlanInterval] = currentPlanString.split('_');
-    const [selectedPlanId, selectedPlanInterval] = selectedPlanString.split(
+    const [currentPlanId] = currentPlanString.split('_');
+    const [selectedPlanId] = selectedPlanString.split(
       '_'
     );
 
-    let downgrade;
     let planStatus;
     if (currentPlanId === selectedPlanId) {
       planStatus = `Currently on ${currentPlan.planName}`;
     } else {
-      downgrade = isDowngrading(currentPlanId, selectedPlanId);
       planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${selectedPlan?.planName}`;
     }
 
     if (isUpgradeIntent) {
       planStatus = `Change to ${selectedPlan?.planName}`;
-      downgrade = false;
     }
 
     return (
@@ -93,14 +88,6 @@ const Summary = ({
     subscriptionEndDate
   ).toLocaleDateString('en-US', dateOptions);
 
-  const formattedTrialEndDate = new Date(trialInfo?.endDate).toLocaleDateString(
-    'en-US',
-    dateOptions
-  );
-
-  const intervalInWords =
-    selectedPlan.planInterval === 'month' ? '30 days' : 'year';
-
   const getSummaryNote = () => {
     if (selectedPlan.planId === 'free' && subscriptionEndDate) {
       return (
@@ -111,7 +98,8 @@ const Summary = ({
       );
     } else if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
       return <Text type="p">Upgrade your plan at anytime</Text>;
-    } else return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
+    } 
+    return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
   };
 
   return (
@@ -119,20 +107,18 @@ const Summary = ({
       <Body>
         <Text type="h2">Summary</Text>
         <SummaryDetails>
-          {
-            <>
-              {getStatus(fromPlanSelector)}
-              <DetailList>
-                {selectedPlan.summary.details.map((detail) => (
-                  <Detail key={detail}>
-                    <Text type="p">{detail}</Text>
-                  </Detail>
-                ))}
-              </DetailList>
-              <Separator />
-              <SummaryNote>{getSummaryNote()}</SummaryNote>
-            </>
-          }
+          <>
+            {getStatus(fromPlanSelector)}
+            <DetailList>
+              {selectedPlan.summary.details.map((detail) => (
+                <Detail key={detail}>
+                  <Text type="p">{detail}</Text>
+                </Detail>
+              ))}
+            </DetailList>
+            <Separator />
+            <SummaryNote>{getSummaryNote()}</SummaryNote>
+          </>
         </SummaryDetails>
 
         <Bottom>
