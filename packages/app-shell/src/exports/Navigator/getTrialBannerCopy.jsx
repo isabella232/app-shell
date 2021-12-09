@@ -1,5 +1,3 @@
-import React from 'react';
-
 const getTrialBannerCopy = ({ planName, daysRemaining }) => {
 
     let planNameText = planName
