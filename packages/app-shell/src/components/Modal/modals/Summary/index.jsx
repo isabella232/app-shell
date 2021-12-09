@@ -101,7 +101,8 @@ const Summary = ({
         <Text type="h2">Summary</Text>
         <SummaryDetails>
           <>
-            {getStatus(fromPlanSelector)}            <DetailList>
+            {getStatus(fromPlanSelector)}            
+            <DetailList>
               {selectedPlan.summary.details.map((detail) => (
                 <Detail key={detail}>
                   <Text type="p">{detail}</Text>
