@@ -29,6 +29,8 @@ import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
+import FreePlanSection from './FreePlanSection';
+
 export const PlanSelectorContainer = ({
   changePlanOptions,
   user,
@@ -40,10 +42,7 @@ export const PlanSelectorContainer = ({
   isUpgradeIntent,
 }) => {
   const filterPlanOptions = () => {
-    if (isUpgradeIntent) {
-      return changePlanOptions.filter((option) => option.planId !== 'free');
-    }
-    return changePlanOptions;
+    return changePlanOptions.filter((option) => option.planId !== 'free');
   };
 
   const planOptions = filterPlanOptions();
@@ -71,6 +70,7 @@ export const PlanSelectorContainer = ({
     plan: selectedPlan,
     hasPaymentMethod: true,
   });
+
   const { label, action, updateButton, ctaButton } = useButtonOptions({
     selectedPlan,
     updatePlan,
@@ -121,7 +121,7 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
-      openSuccess({ selectedPlan })
+      openSuccess({ selectedPlan });
     }
     if (subscriptionError) {
       setError(subscriptionError);
@@ -129,7 +129,10 @@ export const PlanSelectorContainer = ({
   }, [data, subscriptionError]);
 
   return (
-    <Container downgradedMessage={selectedPlan?.downgradedMessage}>
+    <Container
+      downgradedMessage={selectedPlan?.downgradedMessage}
+      isFreePlan={isFreePlan}
+    >
       <Left>
         <PlanSelectorHeader>
           <Text type="h2">{headerLabel}</Text>
@@ -161,6 +164,7 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
+        {!isFreePlan && <FreePlanSection />}
       </Left>
       <Right>
         <Summary
