@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
@@ -6,8 +7,6 @@ import {
   CardContainer,
   CardHeader,
   CardFooter,
-  CurrentLabel,
-  Recommended,
   Price,
   BenefitList,
   Benefit,
@@ -26,8 +25,6 @@ const Card = ({
   currency,
   basePrice,
   priceNote,
-  summary,
-  isCurrentPlan,
   updateSelectedPlan,
   selectedPlan,
 }) => {
@@ -93,13 +90,20 @@ export const SelectionScreen = ({
         .filter((option) => {
           if (monthlyBilling) {
             return option.planInterval === 'month';
-          } else {
-            return option.planInterval === 'year';
           }
+          return option.planInterval === 'year';
         })
         .map((option) => (
           <Card
-            {...option}
+            planId={option.planId}
+            planName={option.planName}
+            planInterval={option.planInterval}
+            description={option.description}
+            highlights={option.highlights}
+            currency={option.currency}
+            basePrice={option.basePrice}
+            priceNote={option.priceNote}
+            summary={option.summary}
             isCurrentPlan={option.isCurrentPlan}
             key={`${option.planId}_${option.planInterval}`}
             updateSelectedPlan={updateSelectedPlan}

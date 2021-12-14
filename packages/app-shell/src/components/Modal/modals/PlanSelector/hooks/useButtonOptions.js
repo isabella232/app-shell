@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow, no-else-return */
 import { useState } from 'react';
 import { formatCTAString } from '../../../../../common/hooks/useSegmentTracking';
 
