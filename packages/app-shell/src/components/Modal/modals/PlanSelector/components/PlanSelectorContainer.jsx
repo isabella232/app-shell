@@ -30,6 +30,7 @@ import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
 import FreePlanSection from './FreePlanSection';
+import useFilteredListOfPlans from '../hooks/useFilteredListOfPlans';
 
 export const PlanSelectorContainer = ({
   changePlanOptions,
@@ -42,7 +43,10 @@ export const PlanSelectorContainer = ({
   isUpgradeIntent,
 }) => {
   const filterPlanOptions = () => {
-    return changePlanOptions.filter((option) => option.planId !== 'free');
+    if (isUpgradeIntent) {
+      return changePlanOptions.filter((option) => option.planId !== 'free');
+    }
+    return changePlanOptions;
   };
 
   const planOptions = filterPlanOptions();
@@ -83,6 +87,11 @@ export const PlanSelectorContainer = ({
     trialInfo?.isActive,
     planOptions,
     isFreePlan
+  );
+
+  const planOptionsWithoutFreePlans = useFilteredListOfPlans(
+    planOptions,
+    'free'
   );
 
   useEffect(() => {
@@ -159,7 +168,7 @@ export const PlanSelectorContainer = ({
         )}
         {error && <Error error={error}>{error.message}</Error>}
         <SelectionScreen
-          planOptions={planOptions}
+          planOptions={planOptionsWithoutFreePlans}
           selectedPlan={selectedPlan}
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}

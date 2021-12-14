@@ -1,7 +1,15 @@
-const useDefaultSelectedPlan = (planOptions, isUpgradeIntent) => {
-  const defaultSelectedPlan = isUpgradeIntent
-    ? planOptions[1]
-    : planOptions.find((plan) => plan.planId === 'essentials');
+import useFilteredListOfPlans from './useFilteredListOfPlans';
+
+const useDefaultSelectedPlan = (planOptions) => {
+  const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
+
+  const planOptionsExcludingFree = useFilteredListOfPlans(planOptions, 'free');
+
+  const isOnFreePlan = currentPlan.planId === 'free' ? true : false;
+
+  const defaultSelectedPlan = isOnFreePlan
+    ? planOptionsExcludingFree[0]
+    : currentPlan;
 
   return defaultSelectedPlan;
 };
