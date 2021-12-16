@@ -32,6 +32,8 @@ import { Error } from '../../PaymentMethod/style';
 import FreePlanSection from './FreePlanSection';
 import useFilteredListOfPlans from '../hooks/useFilteredListOfPlans';
 
+import useFeatureFlip from '../hooks/useFeatureFlip';
+
 export const PlanSelectorContainer = ({
   changePlanOptions,
   user,
@@ -49,6 +51,8 @@ export const PlanSelectorContainer = ({
     return changePlanOptions;
   };
 
+  const featureFilpAgencyPlan = useFeatureFlip(user, 'agencyPlan');
+
   const planOptions = filterPlanOptions();
 
   const [error, setError] = useState(null);
@@ -61,7 +65,8 @@ export const PlanSelectorContainer = ({
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent
+    isUpgradeIntent,
+    user
   );
   const {
     updateSubscriptionPlan: updatePlan,
@@ -93,6 +98,10 @@ export const PlanSelectorContainer = ({
     planOptions,
     'free'
   );
+
+  const availablePlans = featureFilpAgencyPlan
+    ? planOptionsWithoutFreePlans
+    : planOptions;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({
@@ -168,12 +177,12 @@ export const PlanSelectorContainer = ({
         )}
         {error && <Error error={error}>{error.message}</Error>}
         <SelectionScreen
-          planOptions={planOptionsWithoutFreePlans}
+          planOptions={availablePlans}
           selectedPlan={selectedPlan}
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {!isFreePlan && <FreePlanSection />}
+        {featureFilpAgencyPlan && !isFreePlan && <FreePlanSection />}
       </Left>
       <Right>
         <Summary

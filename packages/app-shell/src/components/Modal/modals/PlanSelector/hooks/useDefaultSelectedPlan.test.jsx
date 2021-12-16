@@ -9,7 +9,12 @@ const listOfFilteredPlanOptions = [
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
 
-describe.only('useDefaultSelectedPlan', () => {
+// TODO:REMOVE_WITH_FF:agencyPlan
+const user = {
+  featureFlips: ['agencyPlan'],
+};
+
+describe('useDefaultSelectedPlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -20,7 +25,9 @@ describe.only('useDefaultSelectedPlan', () => {
       ...listOfFilteredPlanOptions,
     ];
 
-    const { result } = renderHook(() => useDefaultSelectedPlan(planOptions));
+    const { result } = renderHook(() =>
+      useDefaultSelectedPlan(planOptions, user)
+    );
 
     expect(result.current).toEqual({
       planId: 'team',
@@ -29,26 +36,26 @@ describe.only('useDefaultSelectedPlan', () => {
     });
   });
 
-  it.only('should call useFilteredListOfPlans', () => {
+  it('should call useFilteredListOfPlans', () => {
     const planOptions = [
       { planId: 'free', planInterval: 'month', isCurrentPlan: true },
       ...listOfFilteredPlanOptions,
     ];
 
-    const isFreePlan = true;
-
-    renderHook(() => useDefaultSelectedPlan(planOptions, isFreePlan));
+    renderHook(() => useDefaultSelectedPlan(planOptions, user));
     expect(useFilteredListOfPlans).toHaveBeenCalledWith(planOptions, 'free');
   });
 
-  it.only("should set the default selected plan to the first plan in list when it's a free plan", () => {
+  it("should set the default selected plan to the first plan in list when it's a free plan", () => {
     const planOptions = [
       { planId: 'free', planInterval: 'month', isCurrentPlan: true },
       ...listOfFilteredPlanOptions,
     ];
 
     useFilteredListOfPlans.mockReturnValue(listOfFilteredPlanOptions);
-    const { result } = renderHook(() => useDefaultSelectedPlan(planOptions));
+    const { result } = renderHook(() =>
+      useDefaultSelectedPlan(planOptions, user)
+    );
 
     expect(result.current).toEqual({
       planId: 'essentials',

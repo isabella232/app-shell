@@ -1,6 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useInterval from './useInterval';
 
+const user = {
+  featureFlips: ['featureFlips'],
+};
+
 describe('useInterval', () => {
   it("should set the current plan's interval as the initial interval", () => {
     const planOptions = [
@@ -8,8 +12,11 @@ describe('useInterval', () => {
       { planId: 'team', planInterval: 'month', isCurrentPlan: false },
       { planId: 'team', planInterval: 'year', isCurrentPlan: false },
     ];
+    const isFreePlan = false;
 
-    const { result } = renderHook(() => useInterval(planOptions));
+    const { result } = renderHook(() =>
+      useInterval(planOptions, isFreePlan, user)
+    );
 
     expect(result.current.monthlyBilling).toBe(true);
   });
@@ -22,7 +29,9 @@ describe('useInterval', () => {
 
     const isFreePlan = true;
 
-    const { result } = renderHook(() => useInterval(planOptions, isFreePlan));
+    const { result } = renderHook(() =>
+      useInterval(planOptions, isFreePlan, user)
+    );
 
     expect(result.current.monthlyBilling).toBeFalsy();
   });
@@ -32,8 +41,11 @@ describe('useInterval', () => {
       { planId: 'team', planInterval: 'month', isCurrentPlan: false },
       { planId: 'team', planInterval: 'year', isCurrentPlan: false },
     ];
+    const isFreePlan = false;
 
-    const { result } = renderHook(() => useInterval(planOptions));
+    const { result } = renderHook(() =>
+      useInterval(planOptions, isFreePlan, user)
+    );
     act(() => {
       result.current.setBillingInterval(!result.current.monthlyBilling);
     });
