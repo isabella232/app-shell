@@ -30,9 +30,8 @@ import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
 import FreePlanSection from './FreePlanSection';
-import useFilteredListOfPlans from '../hooks/useFilteredListOfPlans';
 
-import useFeatureFlip from '../hooks/useFeatureFlip';
+import { userHasFeatureFlip, filterListOfPlans } from '../../../utils';
 
 export const PlanSelectorContainer = ({
   changePlanOptions,
@@ -51,7 +50,7 @@ export const PlanSelectorContainer = ({
     return changePlanOptions;
   };
 
-  const featureFilpAgencyPlan = useFeatureFlip(user, 'agencyPlan');
+  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan');
 
   const planOptions = filterPlanOptions();
 
@@ -94,14 +93,16 @@ export const PlanSelectorContainer = ({
     isFreePlan
   );
 
-  const planOptionsWithoutFreePlans = useFilteredListOfPlans(
+  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
+
+  const planOptionsWithoutAgencyPlans = filterListOfPlans(
     planOptions,
-    'free'
+    'agency'
   );
 
   const availablePlans = featureFilpAgencyPlan
     ? planOptionsWithoutFreePlans
-    : planOptions;
+    : planOptionsWithoutAgencyPlans;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({

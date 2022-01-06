@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { freePlan } from '../../../../../common/mocks/freePlan';
 
-import useDefaultSelectedPlan from './useDefaultSelectedPlan';
+import { getDefaultSelectedPlan } from '../../../utils';
 
 const useSelectedPlan = (planOptions, user) => {
-  const defaultSelectedPlan = useDefaultSelectedPlan(
+  const defaultSelectedPlan = getDefaultSelectedPlan(
     planOptions,
     user // TODO:REMOVE_WITH_FF:agencyPlan
   );

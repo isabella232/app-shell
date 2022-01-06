@@ -156,7 +156,7 @@ export const CardContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 8px;
-  margin-top: 20px;
+  margin-top: 10px;
 
   div:last-child {
     margin-right: 0;
@@ -356,8 +356,6 @@ export const Benefit = styled.li`
 
 export const DowngradeMessage = styled.li`
   display: flex;
-  margin-bottom: 20px;
-  margin-top: -10px;
   max-width: 610px;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
