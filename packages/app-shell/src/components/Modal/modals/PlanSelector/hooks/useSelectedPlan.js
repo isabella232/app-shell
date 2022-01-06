@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { freePlan } from '../../../../../common/mocks/freePlan';
 
-const useSelectedPlan = (planOptions, isUpgradeIntent) => {
-  const defaultSelectedPlan = isUpgradeIntent
-    ? planOptions[1]
-    : planOptions.find((plan) => plan.isCurrentPlan);
+import { getDefaultSelectedPlan } from '../../../utils';
+
+const useSelectedPlan = (planOptions, user) => {
+  const defaultSelectedPlan = getDefaultSelectedPlan(
+    planOptions,
+    user // TODO:REMOVE_WITH_FF:agencyPlan
+  );
   const [selectedPlan, setSelectedPlan] = useState(defaultSelectedPlan);
 
   const updateSelectedPlan = (planString) => {

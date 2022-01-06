@@ -28,3 +28,31 @@ export function shouldShowFreeUserStartTrialPrompt(user) {
     !hasSeenFreeUserStartTrialPrompt()
   );
 }
+
+export function filterListOfPlans(planOptions, planToExclude) {
+  const planOptionsFiltered = planOptions.filter(
+    (plan) => plan.planId !== planToExclude
+  );
+
+  return planOptionsFiltered;
+}
+
+export function userHasFeatureFlip(user, featureFlip) {
+  if (!user || !user.featureFlips) return false;
+
+  return user.featureFlips.includes(featureFlip);
+}
+
+export function getDefaultSelectedPlan(planOptions, user) {
+  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan'); // TODO:REMOVE_WITH_FF:agencyPlan
+
+  const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
+  const isOnFreePlan = currentPlan.planId === 'free' ? true : false;
+
+  const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
+  const plans = featureFilpAgencyPlan ? planOptionsExcludingFree : planOptions;
+
+  const defaultSelectedPlan = isOnFreePlan ? plans[0] : currentPlan;
+
+  return defaultSelectedPlan;
+}
