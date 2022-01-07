@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow, no-else-return */
 import { useState } from 'react';
 import { formatCTAString } from '../../../../../common/hooks/useSegmentTracking';
 
@@ -24,6 +23,7 @@ const useButtonOptions = ({
     }
     return 'Go To Payment';
   };
+
   const [label, setLabel] = useState(getLabel(selectedPlan));
 
   const buttonFunction = () => {

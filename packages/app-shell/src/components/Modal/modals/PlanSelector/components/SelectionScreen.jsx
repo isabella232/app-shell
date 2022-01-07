@@ -1,34 +1,21 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
-import Tag from '@bufferapp/ui/Tag';
-
 import {
   Wrapper,
   CardContainer,
   CardHeader,
   CardFooter,
+  CurrentLabel,
+  Recommended,
   Price,
   BenefitList,
   Benefit,
-  Check,
-  TopSection,
+  Check
 } from '../style';
 
 const ENTER_KEY = 13;
 const SPACE_KEY = 32;
-
-function PlanName({ planName, planId }) {
-  if (planId === 'agency') {
-    return (
-      <>
-        <Text type="h2">{planName}</Text>
-        <Tag color="green">New</Tag>
-      </>
-    );
-  }
-  return <Text type="h2">{planName}</Text>;
-}
 
 const Card = ({
   planId,
@@ -39,6 +26,8 @@ const Card = ({
   currency,
   basePrice,
   priceNote,
+  summary,
+  isCurrentPlan,
   updateSelectedPlan,
   selectedPlan,
 }) => {
@@ -57,15 +46,13 @@ const Card = ({
       isSelectedPlan={isSelectedPlan}
       aria-label={isSelectedPlan ? 'checked' : 'unchecked'}
     >
-      <TopSection>
-        <CardHeader>
-          <PlanName planName={planName} planId={planId} />
-          <Check isSelectedPlan={isSelectedPlan}>
-            <CheckmarkIcon size="medium" />
-          </Check>
-        </CardHeader>
-        <Text type="p">{description}</Text>
-      </TopSection>
+      <CardHeader>
+        <Text type="h2">{planName}</Text>
+        <Check isSelectedPlan={isSelectedPlan}><CheckmarkIcon size="medium" /></Check>
+      </CardHeader>
+
+      <Text type="p">{description}</Text>
+
       <CardFooter>
         <Price>
           <sup>{currency}</sup>
@@ -77,7 +64,9 @@ const Card = ({
           {priceNote}
         </Text>
         <BenefitList>
-          <Text type="h3">Features</Text>
+          <Text type="h3">
+            Features
+          </Text>
           <ul>
             {highlights.map((benefit) => (
               <Benefit key={benefit}>
@@ -104,20 +93,13 @@ export const SelectionScreen = ({
         .filter((option) => {
           if (monthlyBilling) {
             return option.planInterval === 'month';
+          } else {
+            return option.planInterval === 'year';
           }
-          return option.planInterval === 'year';
         })
         .map((option) => (
           <Card
-            planId={option.planId}
-            planName={option.planName}
-            planInterval={option.planInterval}
-            description={option.description}
-            highlights={option.highlights}
-            currency={option.currency}
-            basePrice={option.basePrice}
-            priceNote={option.priceNote}
-            summary={option.summary}
+            {...option}
             isCurrentPlan={option.isCurrentPlan}
             key={`${option.planId}_${option.planInterval}`}
             updateSelectedPlan={updateSelectedPlan}

@@ -11,8 +11,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  height: ${({ downgradedMessage, isFreePlan }) =>
-    downgradedMessage || !isFreePlan ? '700px' : '650px'};
+  height: ${({ downgradedMessage }) => downgradedMessage ? '700px' : '650px'};
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
@@ -26,7 +25,7 @@ export const LoadingContainer = styled(Container)`
 export const Left = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 24px 24px 0px 24px;
+  padding: 24px 24px 0px 24px ;
   height: 100%;
   justify-content: center;
   box-sizing: border-box;
@@ -106,9 +105,7 @@ export const ButtonContainer = styled.div`
 
 export const Wrapper = styled.div`
   border: ${(props) =>
-    props.isSelectedPlan
-      ? '1.5px solid transparent'
-      : `1.5px solid ${grayLight}`};
+    props.isSelectedPlan ? '1.5px solid transparent' : `1.5px solid ${grayLight}`};
   box-shadow: ${(props) =>
     props.isSelectedPlan
       ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
@@ -144,9 +141,7 @@ export const Wrapper = styled.div`
   &:focus,
   &:hover {
     border: ${(props) =>
-      props.isSelectedPlan
-        ? '1.5px solid transparent'
-        : `1.5px solid ${blueLighter}`};
+      props.isSelectedPlan ? '1.5px solid transparent' : `1.5px solid ${blueLighter}`};
     outline: none;
   }
 `;
@@ -156,7 +151,7 @@ export const CardContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 8px;
-  margin-top: 10px;
+  margin-top: 20px;
 
   div:last-child {
     margin-right: 0;
@@ -177,9 +172,8 @@ export const CardHeader = styled.div`
 
 export const Check = styled.div`
   margin-left: auto;
-  border: 1.5px solid
-    ${({ isSelectedPlan }) => (isSelectedPlan ? blue : grayLight)};
-  background: ${({ isSelectedPlan }) => (isSelectedPlan ? blue : white)};
+  border: 1.5px solid ${({ isSelectedPlan }) => isSelectedPlan ? blue : grayLight};
+  background: ${({ isSelectedPlan }) => isSelectedPlan ? blue : white};
   box-sizing: border-box;
   width: 24px;
   height: 24px;
@@ -196,17 +190,13 @@ export const Check = styled.div`
 `;
 
 export const CardFooter = styled.div`
+  position: absolute;
+  top: 40%;
+
   label {
     font-weight: 500;
     font-size: 12px;
-    white-space: normal;
   }
-`;
-
-export const TopSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 40%;
 `;
 
 export const CurrentLabel = styled.label`
@@ -328,6 +318,7 @@ export const BenefitList = styled.div`
     }
   }
 
+
   &::before {
     content: '';
     border-top: 1px solid ${grayLight};
@@ -354,8 +345,11 @@ export const Benefit = styled.li`
   }
 `;
 
+
 export const DowngradeMessage = styled.li`
   display: flex;
+  margin-bottom: 20px;
+  margin-top: -10px;
   max-width: 610px;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;

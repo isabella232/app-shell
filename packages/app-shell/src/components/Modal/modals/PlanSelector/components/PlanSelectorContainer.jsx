@@ -29,10 +29,6 @@ import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
-import FreePlanSection from './FreePlanSection';
-
-import { userHasFeatureFlip, filterListOfPlans } from '../../../utils';
-
 export const PlanSelectorContainer = ({
   changePlanOptions,
   user,
@@ -50,8 +46,6 @@ export const PlanSelectorContainer = ({
     return changePlanOptions;
   };
 
-  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan');
-
   const planOptions = filterPlanOptions();
 
   const [error, setError] = useState(null);
@@ -64,8 +58,7 @@ export const PlanSelectorContainer = ({
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent,
-    user
+    isUpgradeIntent
   );
   const {
     updateSubscriptionPlan: updatePlan,
@@ -78,7 +71,6 @@ export const PlanSelectorContainer = ({
     plan: selectedPlan,
     hasPaymentMethod: true,
   });
-
   const { label, action, updateButton, ctaButton } = useButtonOptions({
     selectedPlan,
     updatePlan,
@@ -92,17 +84,6 @@ export const PlanSelectorContainer = ({
     planOptions,
     isFreePlan
   );
-
-  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
-
-  const planOptionsWithoutAgencyPlans = filterListOfPlans(
-    planOptions,
-    'agency'
-  );
-
-  const availablePlans = featureFilpAgencyPlan
-    ? planOptionsWithoutFreePlans
-    : planOptionsWithoutAgencyPlans;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({
@@ -140,7 +121,7 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
-      openSuccess({ selectedPlan });
+      openSuccess({ selectedPlan })
     }
     if (subscriptionError) {
       setError(subscriptionError);
@@ -148,10 +129,7 @@ export const PlanSelectorContainer = ({
   }, [data, subscriptionError]);
 
   return (
-    <Container
-      downgradedMessage={selectedPlan?.downgradedMessage}
-      isFreePlan={isFreePlan}
-    >
+    <Container downgradedMessage={selectedPlan?.downgradedMessage}>
       <Left>
         <PlanSelectorHeader>
           <Text type="h2">{headerLabel}</Text>
@@ -178,12 +156,11 @@ export const PlanSelectorContainer = ({
         )}
         {error && <Error error={error}>{error.message}</Error>}
         <SelectionScreen
-          planOptions={availablePlans}
+          planOptions={planOptions}
           selectedPlan={selectedPlan}
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {featureFilpAgencyPlan && !isFreePlan && <FreePlanSection />}
       </Left>
       <Right>
         <Summary
