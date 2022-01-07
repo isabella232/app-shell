@@ -24,6 +24,7 @@ const useButtonOptions = ({
     }
     return 'Go To Payment';
   };
+
   const [label, setLabel] = useState(getLabel(selectedPlan));
 
   const buttonFunction = () => {
