@@ -1,5 +1,5 @@
-import useSelectedPlan from './useSelectedPlan';
 import { renderHook, act } from '@testing-library/react-hooks';
+import useSelectedPlan from './useSelectedPlan';
 
 const planOptions = [
   { planId: 'essentials', isCurrentPlan: false, planInterval: 'year' },

@@ -1,5 +1,5 @@
-import useInterval from './useInterval';
 import { renderHook, act } from '@testing-library/react-hooks';
+import useInterval from './useInterval';
 
 describe('useInterval', () => {
   it("should set the current plan's interval as the initial interval", () => {
