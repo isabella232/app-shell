@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "watch": "HTTPS=true HOST='0.0.0.0' REACT_APP_API_GATEWAY_URL='https://graph.local.buffer.com' REACT_APP_PATH='https://appshell.local.buffer.com:8085/' REACT_APP_FILE_NAME='main.js' SSL_CRT_FILE=../../../reverseproxy/certs/local.buffer.com-wildcard.crt SSL_KEY_FILE=../../../reverseproxy/certs/local.buffer.com-wildcard.key react-scripts start",
-    "watch-production": "HTTPS=true HOST='0.0.0.0' REACT_APP_API_GATEWAY_URL='https://graph.buffer.com' REACT_APP_PATH='https://appshell.local.buffer.com:8085/' REACT_APP_FILE_NAME='main.js' react-scripts start"
+    "watch-production": "HTTPS=true HOST='0.0.0.0' REACT_APP_API_GATEWAY_URL='https://graph.buffer.com' REACT_APP_PATH='https://appshell.local.buffer.com:8085/' REACT_APP_FILE_NAME='main.js' SSL_CRT_FILE=../../../reverseproxy/certs/local.buffer.com-wildcard.crt SSL_KEY_FILE=../../../reverseproxy/certs/local.buffer.com-wildcard.key react-scripts start"
   },
   "eslintConfig": {
     "extends": [
