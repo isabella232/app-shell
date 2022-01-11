@@ -18,6 +18,7 @@ import { ModalContext } from '../../common/context/Modal';
 import useModal, { MODALS } from '../../common/hooks/useModal';
 import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
+import getTrialBannerCopy from './getTrialBannerCopy';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -68,6 +69,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
 
   const modal = useModal();
 
+
   let isActiveTrial;
   let trialBannerString;
   //in human: is OB, is admin, doesn't have payment details
@@ -83,11 +85,10 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
         user.currentOrganization?.billing?.subscription?.plan?.name;
       const daysRemaining =
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
-      trialBannerString = `You are on the Essentials plan ${
-        planName === 'Essentials' ? '' : 'with Team Pack'
-      } trial with ${daysRemaining} ${
-        daysRemaining === 1 ? 'day' : 'days'
-      } left. Add your billing details now to start your subscription.`;
+      trialBannerString = getTrialBannerCopy({
+        planName,
+        daysRemaining
+      })
     }
   }
 
