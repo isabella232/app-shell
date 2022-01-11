@@ -5,7 +5,8 @@ import { getDefaultSelectedPlan } from '../../../utils';
 const useInterval = (planOptions, isUpgradeIntent, user) => {
   const defaultSelectedPlan = getDefaultSelectedPlan(
     planOptions,
-    user // TODO:REMOVE_WITH_FF:agencyPlan
+    user, // TODO:REMOVE_WITH_FF:agencyPlan
+    isUpgradeIntent
   );
 
   const initiallyMonthly = isUpgradeIntent

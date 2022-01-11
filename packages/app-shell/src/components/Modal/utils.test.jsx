@@ -14,6 +14,11 @@ const listOfPlanOptions = [
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
 
+const listOfPlanOptionsWithNoCurrentPlan = [
+  { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'team', planInterval: 'year', isCurrentPlan: false },
+];
+
 const listOfFilteredPlanOptions = [
   { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
@@ -23,6 +28,8 @@ const listOfFilteredPlanOptions = [
 const user = {
   featureFlips: ['agencyPlan'],
 };
+
+const isUpgradeIntent = false;
 
 describe('Modal - utils', () => {
   describe('isPendoModalVisible', () => {
@@ -184,7 +191,7 @@ describe('Modal - utils', () => {
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user);
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'team',
@@ -199,7 +206,34 @@ describe('Modal - utils', () => {
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user);
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true', () => {
+      const planOptions = [
+        { planId: 'free', planInterval: 'month', isCurrentPlan: true },
+        ...listOfFilteredPlanOptions,
+      ];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should set the default selected plan to the first plan in list when the is no plan in the list of options with isCurrentPlan set to true', () => {
+      const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',

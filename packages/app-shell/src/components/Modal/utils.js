@@ -43,11 +43,15 @@ export function userHasFeatureFlip(user, featureFlip) {
   return user.featureFlips.includes(featureFlip);
 }
 
-export function getDefaultSelectedPlan(planOptions, user) {
+export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
   const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan'); // TODO:REMOVE_WITH_FF:agencyPlan
 
   const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
-  const isOnFreePlan = currentPlan.planId === 'free' ? true : false;
+
+  const isOnFreePlan =
+    isUpgradeIntent || !currentPlan || currentPlan.planId === 'free'
+      ? true
+      : false;
 
   const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
   const plans = featureFilpAgencyPlan ? planOptionsExcludingFree : planOptions;
