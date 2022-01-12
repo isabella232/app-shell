@@ -17,6 +17,19 @@ import {
 } from './style';
 import { UserContext } from '../../../../common/context/User';
 
+function renderSocialChannelsText(selectedPlan) {
+  const channelsQuantity =
+    selectedPlan.planId === 'agency' ? 10 : selectedPlan.channelsQuantity;
+  return (
+    <Text type="p" color="grayDark">
+      {/* this ends up reading: # social channels x base price */}
+      {`Includes ${channelsQuantity} social channel${
+        channelsQuantity > 1 ? 's' : ''
+      }`}
+    </Text>
+  );
+}
+
 const Summary = ({
   planOptions,
   selectedPlan,
@@ -25,16 +38,17 @@ const Summary = ({
   isUpgradeIntent,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
-  const currentPlanId = currentPlan.planId
-  const selectedPlanId = selectedPlan.planId
+  const currentPlanId = currentPlan.planId;
+  const selectedPlanId = selectedPlan.planId;
 
   const getStatus = () => {
-
     let planStatus;
     if (currentPlanId === selectedPlanId) {
       planStatus = `Currently on ${currentPlan.planName}`;
     } else {
-      planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${selectedPlan?.planName}`;
+      planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${
+        selectedPlan?.planName
+      }`;
     }
 
     if (isUpgradeIntent) {
@@ -59,12 +73,7 @@ const Summary = ({
         <Text type="p" color="grayDark">
           Billed {selectedPlan.planInterval}ly in USD
         </Text>
-        <Text type="p" color="grayDark">
-          {/* this ends up reading: # social channels x base price */}
-          {`Includes ${selectedPlan.channelsQuantity} social channel${
-            selectedPlan.channelsQuantity > 1 ? 's' : ''
-          }`}
-        </Text>
+        {renderSocialChannelsText(selectedPlan)}
       </PriceFooterWrapper>
     );
   };
@@ -90,7 +99,12 @@ const Summary = ({
     if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
       return <Text type="p">Upgrade your plan at anytime</Text>;
     }
-    return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
+    return (
+      <Text type="p">
+        First payment due today and then every {selectedPlan.planInterval} until
+        canceled
+      </Text>
+    );
   };
 
   return (
@@ -120,12 +134,13 @@ const Summary = ({
             </Text>
           </TotalPrice>
           {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
-          {selectedPlan.planInterval === 'year' && selectedPlan.planId !== 'free' && (
-            <DiscountReminder>
-              <Coupon />
-              <p>{selectedPlan.discountPercentage}% discount</p>
-            </DiscountReminder>
-          )}
+          {selectedPlan.planInterval === 'year' &&
+            selectedPlan.planId !== 'free' && (
+              <DiscountReminder>
+                <Coupon />
+                <p>{selectedPlan.discountPercentage}% discount</p>
+              </DiscountReminder>
+            )}
         </Bottom>
       </Body>
     </SummaryContainer>
