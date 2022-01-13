@@ -18,8 +18,7 @@ import {
 import { UserContext } from '../../../../common/context/User';
 
 function renderSocialChannelsText(selectedPlan) {
-  const channelsQuantity =
-    selectedPlan.planId === 'agency' ? 10 : selectedPlan.channelsQuantity;
+  const {channelsQuantity} = selectedPlan;
   return (
     <Text type="p" color="grayDark">
       {/* this ends up reading: # social channels x base price */}
