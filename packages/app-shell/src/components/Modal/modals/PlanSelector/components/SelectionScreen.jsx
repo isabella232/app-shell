@@ -2,6 +2,8 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
+import Tag from '@bufferapp/ui/Tag';
+
 import {
   Wrapper,
   CardContainer,
@@ -10,11 +12,24 @@ import {
   Price,
   BenefitList,
   Benefit,
-  Check
+  Check,
+  TopSection,
 } from '../style';
 
 const ENTER_KEY = 13;
 const SPACE_KEY = 32;
+
+function PlanName({ planName, planId }) {
+  if (planId === 'agency') {
+    return (
+      <>
+        <Text type="h2">{planName}</Text>
+        <Tag color="green">New</Tag>
+      </>
+    );
+  }
+  return <Text type="h2">{planName}</Text>;
+}
 
 const Card = ({
   planId,
@@ -43,13 +58,15 @@ const Card = ({
       isSelectedPlan={isSelectedPlan}
       aria-label={isSelectedPlan ? 'checked' : 'unchecked'}
     >
-      <CardHeader>
-        <Text type="h2">{planName}</Text>
-        <Check isSelectedPlan={isSelectedPlan}><CheckmarkIcon size="medium" /></Check>
-      </CardHeader>
-
-      <Text type="p">{description}</Text>
-
+      <TopSection>
+        <CardHeader>
+          <PlanName planName={planName} planId={planId} />
+          <Check isSelectedPlan={isSelectedPlan}>
+            <CheckmarkIcon size="medium" />
+          </Check>
+        </CardHeader>
+        <Text type="p">{description}</Text>
+      </TopSection>
       <CardFooter>
         <Price>
           <sup>{currency}</sup>
@@ -61,9 +78,7 @@ const Card = ({
           {priceNote}
         </Text>
         <BenefitList>
-          <Text type="h3">
-            Features
-          </Text>
+          <Text type="h3">Features</Text>
           <ul>
             {highlights.map((benefit) => (
               <Benefit key={benefit}>

@@ -1,12 +1,18 @@
 import { useState } from 'react';
 
-const useInterval = (planOptions, isUpgradeIntent) => {
-  const defaultSelectedPlan = isUpgradeIntent
-    ? planOptions[1]
-    : planOptions.find((plan) => plan.isCurrentPlan);
+import { getDefaultSelectedPlan } from '../../../utils';
+
+const useInterval = (planOptions, isUpgradeIntent, user) => {
+  const defaultSelectedPlan = getDefaultSelectedPlan(
+    planOptions,
+    user, // TODO:REMOVE_WITH_FF:agencyPlan
+    isUpgradeIntent
+  );
+
   const initiallyMonthly = isUpgradeIntent
     ? false
     : defaultSelectedPlan.planInterval === 'month';
+
   const [monthlyBilling, setBillingInterval] = useState(initiallyMonthly);
 
   return {

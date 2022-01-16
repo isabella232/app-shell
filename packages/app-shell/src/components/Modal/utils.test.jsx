@@ -4,7 +4,32 @@ import {
   isPendoModalVisible,
   hasSeenFreeUserStartTrialPrompt,
   shouldShowFreeUserStartTrialPrompt,
+  filterListOfPlans,
+  getDefaultSelectedPlan,
 } from './utils';
+
+const listOfPlanOptions = [
+  { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'team', planInterval: 'year', isCurrentPlan: true },
+];
+
+const listOfPlanOptionsWithNoCurrentPlan = [
+  { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'team', planInterval: 'year', isCurrentPlan: false },
+];
+
+const listOfFilteredPlanOptions = [
+  { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'team', planInterval: 'year', isCurrentPlan: true },
+];
+
+// TODO:REMOVE_WITH_FF:agencyPlan
+const user = {
+  featureFlips: ['agencyPlan'],
+};
+
+const isUpgradeIntent = false;
 
 describe('Modal - utils', () => {
   describe('isPendoModalVisible', () => {
@@ -130,6 +155,91 @@ describe('Modal - utils', () => {
 
       const result = shouldShowFreeUserStartTrialPrompt(mockUserData);
       expect(result).toBe(false);
+    });
+  });
+
+  describe('filterListOfPlans', () => {
+    it('should remove all plans which match the passed in value to filter', () => {
+      const result = filterListOfPlans(listOfPlanOptions, 'free');
+
+      expect(result).toEqual(listOfFilteredPlanOptions);
+    });
+
+    it('should return original list if no plans match the passed in value to filter', () => {
+      const result = filterListOfPlans(listOfPlanOptions, 'unknown plan');
+
+      expect(result).toEqual(listOfPlanOptions);
+    });
+
+    it('should return empty array if all plans match the passed in value to filter', () => {
+      const result = filterListOfPlans(
+        [
+          { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+          { planId: 'free', planInterval: 'yearly', isCurrentPlan: false },
+        ],
+        'free'
+      );
+
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getDefaultSelectedPlan', () => {
+    it('should set the default selected plan to the current plan when the current plan is not free', () => {
+      const planOptions = [
+        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+        ...listOfFilteredPlanOptions,
+      ];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'team',
+        planInterval: 'year',
+        isCurrentPlan: true,
+      });
+    });
+
+    it("should set the default selected plan to the first plan in list when it's a free plan", () => {
+      const planOptions = [
+        { planId: 'free', planInterval: 'month', isCurrentPlan: true },
+        ...listOfFilteredPlanOptions,
+      ];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true', () => {
+      const planOptions = [
+        { planId: 'free', planInterval: 'month', isCurrentPlan: true },
+        ...listOfFilteredPlanOptions,
+      ];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should set the default selected plan to the first plan in list when the is no plan in the list of options with isCurrentPlan set to true', () => {
+      const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
+
+      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
     });
   });
 });
