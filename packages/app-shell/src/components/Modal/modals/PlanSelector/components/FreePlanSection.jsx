@@ -1,18 +1,22 @@
 import React from 'react';
 
-import Link from '@bufferapp/ui/Link';
 import Text from '@bufferapp/ui/Text';
+import Button from '@bufferapp/ui/Button';
 
 import { Container } from './FreePlanSection.style';
 
-function FreePlanSection() {
+function FreePlanSection(props) {
+  const { ctaAction } = props;
+
   return (
     <Container>
       <Text htmlFor="foo" type="help">
         Looking for basic publishing tools?{''}{' '}
-        <Link newTab href="http://buffer.com" fontWeight={700}>
-          Downgrade to our Free plan
-        </Link>
+        <Button
+          type="text"
+          onClick={() => ctaAction()}
+          label="Downgrade to our Free plan"
+        />
       </Text>
     </Container>
   );

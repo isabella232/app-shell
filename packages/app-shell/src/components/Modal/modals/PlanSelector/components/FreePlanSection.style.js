@@ -1,7 +1,7 @@
-import { grayLight } from '@bufferapp/ui/style/colors';
+import { grayLight, blue } from '@bufferapp/ui/style/colors';
 import styled from 'styled-components';
 
-const containerPadding = 20;
+const containerPadding = 15;
 
 export const Container = styled.div`
   display: flex;
@@ -15,4 +15,9 @@ export const Container = styled.div`
 
   border: 1px solid ${grayLight};
   border-radius: 3px;
+
+  button {
+    padding: 2px;
+    color: ${blue};
+  }
 `;

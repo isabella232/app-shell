@@ -57,7 +57,7 @@ export const PlanSelectorHeader = styled.header`
 
   h2 {
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 `;
 
