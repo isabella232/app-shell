@@ -40,7 +40,10 @@ const StartTrial = ({ user, openModal, modalData }) => {
 
   useEffect(() => {
     if (trial && trial.billingStartTrial.success) {
-      openModal(MODALS.success, { startedTrial: true });
+      openModal(MODALS.success, {
+        startedTrial: true,
+        selectedPlan: suggestedPlan,
+      });
     }
   }, [trial]);
 
