@@ -29,6 +29,8 @@ import useInterval from '../hooks/useInterval';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
+import { freePlan } from '../../../../../common/mocks/freePlan';
+
 import FreePlanSection from './FreePlanSection';
 
 import { userHasFeatureFlip, filterListOfPlans } from '../../../utils';
@@ -183,7 +185,21 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {featureFilpAgencyPlan && !isFreePlan && <FreePlanSection />}
+        {featureFilpAgencyPlan && !isFreePlan && (
+          <FreePlanSection
+            ctaAction={() => {
+              updateSelectedPlan(
+                `${freePlan.planId}_${monthlyBilling ? 'month' : 'year'}`
+              );
+              updatePlan({
+                plan: freePlan,
+                cta,
+                ctaView: modal,
+                isUpgradeIntent: false,
+              });
+            }}
+          />
+        )}
       </Left>
       <Right>
         <Summary

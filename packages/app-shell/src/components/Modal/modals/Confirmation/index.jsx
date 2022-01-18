@@ -13,7 +13,7 @@ const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: ${({ planId }) => planId === 'team' ? '446px' : '376px'};
+  height: ${({ planId }) => (planId === 'team' ? '446px' : '376px')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
@@ -98,6 +98,7 @@ const Screen = ({
 const Confirmation = () => {
   return (
     <UserContext.Consumer>
+      {/* eslint-disable-next-line no-unused-vars */}
       {(user) => (
         <ModalContext.Consumer>
           {({ openModal, data }) => (
