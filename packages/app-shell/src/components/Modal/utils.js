@@ -56,7 +56,8 @@ export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
   const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
   const plans = featureFilpAgencyPlan ? planOptionsExcludingFree : planOptions;
 
-  const defaultSelectedPlan = isOnFreePlan ? plans[0] : currentPlan;
+  const defaultSelectedPlan =
+    isOnFreePlan && !currentPlan ? plans[0] : currentPlan;
 
   return defaultSelectedPlan;
 }
