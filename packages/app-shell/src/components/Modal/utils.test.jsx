@@ -200,10 +200,10 @@ describe('Modal - utils', () => {
       });
     });
 
-    it("should set the default selected plan to the first plan in list when it's a free plan", () => {
+    it("should set the default selected plan to the first plan in list when it's a free plan AND there is no current plan available", () => {
       const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: true },
-        ...listOfFilteredPlanOptions,
+        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+        ...listOfPlanOptionsWithNoCurrentPlan,
       ];
 
       const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
@@ -215,10 +215,10 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true', () => {
+    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true AND there is no current plan available', () => {
       const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: true },
-        ...listOfFilteredPlanOptions,
+        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+        ...listOfPlanOptionsWithNoCurrentPlan,
       ];
 
       const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
@@ -230,7 +230,7 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the first plan in list when the is no plan in the list of options with isCurrentPlan set to true', () => {
+    it('should set the default selected plan to the first plan in list when there is no plan in the list of options with isCurrentPlan set to true', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
       const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
@@ -239,6 +239,18 @@ describe('Modal - utils', () => {
         planId: 'essentials',
         planInterval: 'month',
         isCurrentPlan: false,
+      });
+    });
+
+    it('should set the default selected plan to the current plan when isUpgradeIntent and there is a current plan available in list ', () => {
+      const planOptions = [...listOfFilteredPlanOptions];
+
+      const result = getDefaultSelectedPlan(planOptions, user, true);
+
+      expect(result).toEqual({
+        planId: 'team',
+        planInterval: 'year',
+        isCurrentPlan: true,
       });
     });
   });
