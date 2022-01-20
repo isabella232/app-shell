@@ -47,9 +47,11 @@ export function getProductPath(baseUrl) {
   return productPath;
 }
 
-export function getQueryParameters(baseUrl,) {
-  const query = baseUrl.match(/\?(?<query>.*)$/)?.groups?.query
-  return query ? `&${encodeURI(query)}` : ''
+export function getQueryParameters(baseUrl) {
+  const query = baseUrl.match(/\?(?<query>.*)$/)?.groups?.query;
+  // NOTE: returned with a starting "&", because it is always used after the
+  // initial query parameter, "?redirect="
+  return query ? `&${encodeURI(query)}` : '';
 }
 
 function getRedirectUrl(baseUrl) {
@@ -57,18 +59,28 @@ function getRedirectUrl(baseUrl) {
   return `https://${productPath}.buffer.com`;
 }
 
-export function getLogoutUrl(baseUrl = '') {
-  const productPath = getProductPath(baseUrl);
-  return `https://login${
-    productPath.includes('local') ? '.local' : ''
-  }.buffer.com/logout?redirect=${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}`;
+function getRedirectUrlWithParams(baseUrl) {
+  return `${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}${encodeURI(
+    window.location.hash
+  )}`;
 }
 
-export function getLoginUrl(baseUrl = '') {
+function getLoginOrLogoutUrl(baseUrl = '', loginOrLogoutPath) {
   const productPath = getProductPath(baseUrl);
-  return `https://login${
+  const result = `https://login${
     productPath.includes('local') ? '.local' : ''
-  }.buffer.com/login?redirect=${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}`;
+  }.buffer.com/${loginOrLogoutPath}?redirect=${getRedirectUrlWithParams(
+    baseUrl
+  )}`;
+  return result;
+}
+
+export function getLogoutUrl(baseUrl) {
+  return getLoginOrLogoutUrl(baseUrl, 'logout');
+}
+
+export function getLoginUrl(baseUrl) {
+  return getLoginOrLogoutUrl(baseUrl, 'login');
 }
 
 export function getAccountUrl(baseUrl = '', user) {

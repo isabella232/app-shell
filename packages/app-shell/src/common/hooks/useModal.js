@@ -46,7 +46,6 @@ function useModal() {
       (k) => k === hash.replace('#', '')
     );
     if (matchingModal) {
-      window.location.hash = '';
       setModal(matchingModal);
     }
   }, []);
