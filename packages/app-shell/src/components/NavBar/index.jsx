@@ -83,17 +83,16 @@ export function getLoginUrl(baseUrl) {
   return getLoginOrLogoutUrl(baseUrl, 'login');
 }
 
-export function getAccountUrl(baseUrl = '', user) {
-  return `https://account.buffer.com?redirect=${getRedirectUrl(
-    baseUrl
-  )}&username=${encodeURI(user.name)}`;
-}
-
 function getUrlEnvModifier() {
   const [, envModifier] = window.location.hostname.match(
     /\w+\.(\w+\.)buffer\.com/
   ) || [null, null];
   return envModifier;
+}
+
+export function getAccountUrl() {
+  const envModifier = getUrlEnvModifier();
+  return `https://account.${envModifier || ''}buffer.com/`;
 }
 
 export function getBillingUrl() {
@@ -353,7 +352,7 @@ const NavBar = React.memo((props) => {
                   hasDivider: organizations.length > 1,
                   onItemClick: () => {
                     window.location.assign(
-                      getAccountUrl(window.location.href, user)
+                      getAccountUrl()
                     );
                   },
                 },
