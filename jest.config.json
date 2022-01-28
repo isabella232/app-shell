@@ -1,7 +1,8 @@
 {
   "verbose": true,
   "moduleNameMapper": {
-    "\\.(css|less)$": "identity-obj-proxy"
+    "\\.(css|less)$": "identity-obj-proxy",
+    "^utils(.*)$": "<rootDir>/packages/app-shell/src/common/utils$1"
   },
   "coverageDirectory": "<rootDir>/coverage/",
   "modulePathIgnorePatterns": ["app-shell/lib", "cypress"]

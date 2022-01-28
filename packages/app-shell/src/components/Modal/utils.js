@@ -1,6 +1,7 @@
 import { getCookie } from '../../common/utils/cookies';
 import { getActiveProductFromPath } from '../../common/utils/getProduct';
 import { isFreeUser, userCanStartFreeTrial } from '../../common/utils/user';
+import { SUPPORTED_PRODUCTS as CHANNEL_PROMPT_PRODUCTS } from './modals/ChannelConnectionPrompt';
 
 export function isPendoModalVisible() {
   return Boolean(
@@ -18,6 +19,17 @@ export function hasSeenFreeUserStartTrialPrompt() {
   );
 }
 
+export function shouldShowChannelConnectionPrompt(user) {
+  const activeProduct = getActiveProductFromPath();
+  const hasFeatureFlip = user?.featureFlips?.includes('newProductsOnboarding')
+  const isSupportedProdut =CHANNEL_PROMPT_PRODUCTS.includes(activeProduct);
+  const hasNoChannels = user?.currentOrganization?.channels?.length === 0;
+  if (hasFeatureFlip && isSupportedProdut && hasNoChannels) {
+    return true;
+  }
+
+  return false;
+}
 export function shouldShowFreeUserStartTrialPrompt(user) {
   const activeProduct = getActiveProductFromPath();
   return (

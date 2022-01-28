@@ -29,4 +29,11 @@ module.exports = {
     'spaced-comment': 'off',
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
+  "settings": {
+    "import/resolver": {
+      webpack: {
+        config: "./packages/app-shell/webpack.config.common"
+      }
+    }
+  }
 };

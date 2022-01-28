@@ -9,6 +9,7 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
         'sharedChannels',
         'engageRollOut',
         'geid1_free_user_trial_prompt',
+        'newProductsOnboarding',
       ],
       isImpersonation: false,
       currentOrganization: {
@@ -23,6 +24,11 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
           ],
           __typename: 'CanMigrateToOneBuffer',
         },
+        channels: [
+          {
+            id: '606b65e1dd934f70840bfef7',
+          },
+        ],
         createdAt: '2021-04-05T19:32:38.961Z',
         isOneBufferOrganization: true,
         shouldDisplayInviteCTA: false,
@@ -31,6 +37,7 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
           'sharedChannels',
           'engageRollOut',
           'geid1_free_user_trial_prompt',
+          'newProductsOnboarding',
         ],
         billing: {
           id: '606b65d6dad38c03d2b70793',

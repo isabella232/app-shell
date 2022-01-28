@@ -3,16 +3,17 @@ import { useState, useEffect, useCallback } from 'react';
 import eventDispatcher from './utils/eventDispatcher';
 
 export const MODALS = {
-  paymentMethod: 'paymentMethod',
-  planSelector: 'planSelector',
-  success: 'success',
-  startTrial: 'startTrial',
-  trialExpired: 'trialExpired',
-  paidMigration: 'paidMigration',
+  channelConnectionPrompt: 'channelConnectionPrompt',
+  GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
   essentialsPlan: 'essentialsPlan',
   essentialsPricing: 'essentialsPricing',
+  paidMigration: 'paidMigration',
+  paymentMethod: 'paymentMethod',
+  planSelector: 'planSelector',
+  startTrial: 'startTrial',
+  success: 'success',
+  trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
-  GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
 };
 
 export const EVENT_KEY = 'appshell__modal_event';
