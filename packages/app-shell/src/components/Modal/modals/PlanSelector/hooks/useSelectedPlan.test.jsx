@@ -22,8 +22,13 @@ describe('useSelectedPlan', () => {
   });
 
   it('should set the default as the essentials plan if the intent is to upgrade', () => {
+    const planOptionsForUpgrade = [
+      { planId: 'essentials', isCurrentPlan: false, planInterval: 'year' },
+      { planId: 'team', isCurrentPlan: false, planInterval: 'year' },
+      { planId: 'free', planInterval: 'month' },
+    ];
     const { result } = renderHook(() =>
-      useSelectedPlan(planOptions, true, user)
+      useSelectedPlan(planOptionsForUpgrade, true, user)
     );
     expect(result.current.selectedPlan.planId).toBe('essentials');
   });
