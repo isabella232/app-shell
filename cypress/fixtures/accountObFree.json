@@ -30,6 +30,12 @@
                "engageRollOut",
                "geid1_free_user_trial_prompt"
             ],
+            "channels":[
+              {
+                "id":"606b65e1dd934f70840bfef7",
+                "__typename":"Channel"
+              }
+            ],
             "billing":{
                "id":"606b65d6dad38c03d2b70793",
                "canAccessAnalytics":false,

@@ -4,6 +4,7 @@ import {
   isPendoModalVisible,
   hasSeenFreeUserStartTrialPrompt,
   shouldShowFreeUserStartTrialPrompt,
+  shouldShowChannelConnectionPrompt,
   filterListOfPlans,
   getDefaultSelectedPlan,
 } from './utils';
@@ -84,6 +85,8 @@ describe('Modal - utils', () => {
       global.window = Object.create(window);
       const url = 'http://publish.bufer.com';
       Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
         value: {
           origin: url,
         },
@@ -148,6 +151,8 @@ describe('Modal - utils', () => {
       const url = 'http://analytics.bufer.com';
       delete window.location;
       Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
         value: {
           origin: url,
         },
@@ -252,6 +257,56 @@ describe('Modal - utils', () => {
         planInterval: 'year',
         isCurrentPlan: true,
       });
+    });
+  });
+
+  describe('shouldShowChannelConnectionPrompt', () => {
+    beforeEach(() => {
+      global.window = Object.create(window);
+      const url = 'http://analyze.bufer.com';
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
+        value: {
+          origin: url,
+        },
+      });
+    });
+
+    it('should return false if it has channels', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const result = shouldShowChannelConnectionPrompt(mockUserData);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return false if product is publish', () => {
+      global.window = Object.create(window);
+      const url = 'http://publish.bufer.com';
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
+        value: {
+          origin: url,
+        },
+      });
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, { currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return true if it has no channels', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, { currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return false if it has no newProductsOnboarding featureFlip', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, { featureFlips: [], currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
+      expect(result).toBeFalsy();
     });
   });
 });

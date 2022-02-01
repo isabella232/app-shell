@@ -94,6 +94,9 @@ export const QUERY_ACCOUNT = gql`
         billing {
           ...BillingFields
         }
+        channels {
+          id
+        }
       }
       organizations {
         id

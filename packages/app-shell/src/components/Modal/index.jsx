@@ -6,17 +6,18 @@ import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
 import { useUser } from '../../common/context/User';
 
+import Confirmation from './modals/Confirmation';
+import ChannelConnectionPrompt from './modals/ChannelConnectionPrompt';
+import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
+import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
+import PaidMigration from './modals/PaidMigration';
 import PaymentMethod from './modals/PaymentMethod';
 import PlanSelector from './modals/PlanSelector';
 import StartTrial from './modals/StartTrial';
-import Confirmation from './modals/Confirmation';
-import TrialExpired from './modals/TrialExpired';
-import PaidMigration from './modals/PaidMigration';
-import EssentialsPlan from './modals/PaidMigration/EssentialsPlan';
-import EssentialsPricing from './modals/PaidMigration/EssentialsPricing';
-import Success from './modals/PaidMigration/Success';
 import StickyModal from './modals/StickyModal';
-import { shouldShowFreeUserStartTrialPrompt } from './utils';
+import Success from './modals/PaidMigration/Success';
+import TrialExpired from './modals/TrialExpired';
+import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt } from './utils';
 
 function handleFreeUsersStartTrialPrompt(openModal) {
   openModal(MODALS.startTrial, {
@@ -32,6 +33,12 @@ function handleFreeUsersStartTrialPrompt(openModal) {
 
 const ModalContent = ({ modal, closeAction }) => {
   switch (modal) {
+    case MODALS.channelConnectionPrompt:
+      return (
+        <StickyModal closeAction={closeAction}>
+          <ChannelConnectionPrompt modal={modal} />
+        </StickyModal>
+      );
     case MODALS.paymentMethod:
       return (
         <SimpleModal closeAction={closeAction}>
@@ -134,6 +141,11 @@ const Modal = React.memo(({ modal, openModal }) => {
     // Start free trail prompt
     if (shouldShowFreeUserStartTrialPrompt(user)) {
       handleFreeUsersStartTrialPrompt(openModal);
+    }
+
+    // Show Channel Connection prompt
+    if (shouldShowChannelConnectionPrompt(user)) {
+      openModal(MODALS.channelConnectionPrompt);
     }
   }, [user.loading]);
 
