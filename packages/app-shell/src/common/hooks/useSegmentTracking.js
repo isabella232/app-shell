@@ -72,7 +72,7 @@ export const useTrackPageViewed = ({ payload, user }) => {
     referrer: null, // The address of the webpage which is linked to the resource being requested. By checking the referrer, the new webpage can see where the request originated.
     
     ...payload,
-    cta: `${product}-${payload.cta}`, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
+    cta: payload?.cta ? `${product}-${payload.cta}` : null, // If the user navigated to this page from a CTA on another Buffer page, which call to action was it?
   };
 
   BufferTracker.pageViewed(eventData);

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Text from '@bufferapp/ui/Text';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
 import Button from '@bufferapp/ui/Button';
 import { facebook, instagram } from '@bufferapp/ui/style/colors';
 
-//foo
 import { getActiveProductFromPath } from 'utils/getProduct';
 import { Content, Icons } from './style';
+import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
+import { UserContext } from '../../../../common/context/User';
 
 export const SUPPORTED_PRODUCTS = ['analyze', 'engage'];
-const CHANNELS_CONNECTION_URL ='https://account.buffer.com/channels/connect';
+const CHANNELS_CONNECTION_URL ='https://account.buffer.com/channels/connect?utm_source=channel_connection_prompt';
 
 const Analytics = () => (<>
 <Text type='h3'>Connect a channel to get started with Analytics</Text>
@@ -50,10 +51,20 @@ const Engagement = () => (<>
 
 const ChannelConnectionPrompt = () => {
   const [product, setProduct] = useState(null);
+  const user = useContext(UserContext);
 
-  // TODO add tracking on render
   useEffect(() => {
-    setProduct(getActiveProductFromPath());
+    const activeProduct = getActiveProductFromPath();
+    setProduct(activeProduct);
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Connect Channel Prompt',
+        title: 'Connect a Channel',
+        product: activeProduct,
+      },
+      user,
+    });
   }, [])
 
     return <Content id="channel-connection-prompt">
