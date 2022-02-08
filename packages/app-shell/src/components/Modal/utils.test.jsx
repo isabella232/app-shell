@@ -7,6 +7,7 @@ import {
   shouldShowChannelConnectionPrompt,
   filterListOfPlans,
   getDefaultSelectedPlan,
+  calculateTotalSlotsPrice,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -290,23 +291,55 @@ describe('Modal - utils', () => {
         },
       });
       const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
-      const noChannelsUser = Object.assign(mockUserData, { currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const noChannelsUser = Object.assign(mockUserData, {
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeFalsy();
     });
 
     it('should return true if it has no channels', () => {
       const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
-      const noChannelsUser = Object.assign(mockUserData, { currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const noChannelsUser = Object.assign(mockUserData, {
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeTruthy();
     });
 
     it('should return false if it has no newProductsOnboarding featureFlip', () => {
       const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
-      const noChannelsUser = Object.assign(mockUserData, { featureFlips: [], currentOrganization: { ...mockUserData.currentOrganization, channels: [] }});
+      const noChannelsUser = Object.assign(mockUserData, {
+        featureFlips: [],
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeFalsy();
+    });
+  });
+
+  describe('calculateTotalSlotsPrice', () => {
+    it('should return 100 when 20 slots selected and pricing equals 5', () => {
+      const slotsSelected = 20;
+      const slotPrice = 5;
+      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      expect(result).toEqual(100);
+    });
+
+    it('should return 50 when 5 slots selected and pricing equals 10', () => {
+      const slotsSelected = 5;
+      const slotPrice = 10;
+      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      expect(result).toEqual(50);
     });
   });
 });
