@@ -1,6 +1,10 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
+import { useSplitEnabled } from '@bufferapp/features';
+
+import { UserContext } from '../../../../common/context/User';
+
 import {
   DiscountReminder,
   TotalPrice,
@@ -15,10 +19,9 @@ import {
   Title,
   PriceFooterWrapper,
 } from './style';
-import { UserContext } from '../../../../common/context/User';
 
 function renderSocialChannelsText(selectedPlan) {
-  const {channelsQuantity} = selectedPlan;
+  const { channelsQuantity } = selectedPlan;
   return (
     <Text type="p" color="grayDark">
       {/* this ends up reading: # social channels x base price */}
@@ -39,6 +42,12 @@ const Summary = ({
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanId = currentPlan.planId;
   const selectedPlanId = selectedPlan.planId;
+
+  // TODO: Remove eslint disable
+  // Switch Split FF key to us SBB
+  // eslint-disable-next-line no-unused-vars
+  const { isEnabled: splitAppShellTestEnabled } =
+    useSplitEnabled('app-shell-test');
 
   const getStatus = () => {
     let planStatus;

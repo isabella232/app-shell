@@ -9,6 +9,7 @@ import {
   HttpLink,
 } from '@apollo/client';
 import ReactDOM from 'react-dom';
+import { FeaturesWrapper } from '@bufferapp/features';
 
 import NavBar, { getLoginUrl } from '../../components/NavBar';
 import Banner from '../../components/Banner';
@@ -69,7 +70,6 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
 
   const modal = useModal();
 
-
   let isActiveTrial;
   let trialBannerString;
   //in human: is OB, is admin, doesn't have payment details
@@ -87,8 +87,8 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
       trialBannerString = getTrialBannerCopy({
         planName,
-        daysRemaining
-      })
+        daysRemaining,
+      });
     }
   }
 
@@ -155,7 +155,9 @@ export default () => {
   ReactDOM.render(
     <React.StrictMode>
       <ApolloProvider client={client}>
-        <Navigator />
+        <FeaturesWrapper>
+          <Navigator />
+        </FeaturesWrapper>
       </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('navigator')
