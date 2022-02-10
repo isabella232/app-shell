@@ -8,8 +8,7 @@
             "grantAnalyzeAccess",
             "sharedChannels",
             "engageRollOut",
-            "geid1_free_user_trial_prompt",
-            "newProductsOnboarding"
+            "geid1_free_user_trial_prompt"
          ],
          "isImpersonation":false,
          "currentOrganization":{
@@ -29,8 +28,7 @@
                "grantAnalyzeAccess",
                "sharedChannels",
                "engageRollOut",
-               "geid1_free_user_trial_prompt",
-               "newProductsOnboarding"
+               "geid1_free_user_trial_prompt"
             ],
             "channels":[
             ],
@@ -269,8 +267,7 @@
                "featureFlips":[
                   "grantAnalyzeAccess",
                   "sharedChannels",
-                  "engageRollOut",
-                  "newProductsOnboarding"
+                  "engageRollOut"
                ],
                "channels":[
                ],

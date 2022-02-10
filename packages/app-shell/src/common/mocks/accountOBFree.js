@@ -9,7 +9,6 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
         'sharedChannels',
         'engageRollOut',
         'geid1_free_user_trial_prompt',
-        'newProductsOnboarding',
       ],
       isImpersonation: false,
       currentOrganization: {
@@ -37,7 +36,6 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
           'sharedChannels',
           'engageRollOut',
           'geid1_free_user_trial_prompt',
-          'newProductsOnboarding',
         ],
         billing: {
           id: '606b65d6dad38c03d2b70793',
