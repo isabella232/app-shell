@@ -1,6 +1,11 @@
 function getHelpDropdownItems() {
   return [
     {
+      id: 'Getting Started',
+      title: 'Getting Started',
+      onItemClick: () => {}, // Will open Pendo popup through classname
+    },
+    {
       id: 'Help Center',
       title: 'Visit Help Center',
       onItemClick: () => {
