@@ -14,7 +14,7 @@ export const SUPPORTED_PRODUCTS = ['analyze', 'engage'];
 const CHANNELS_CONNECTION_URL ='https://account.buffer.com/channels/connect?utm_source=channel_connection_prompt';
 
 const Analytics = () => (<>
-<Text type='h3'>Connect a channel to get started with Analytics</Text>
+<Text type='h3'>Connect a channel <br/> to get started with Analytics</Text>
   <Icons>
     <FacebookIcon color={facebook} size='large'/>
     <InstagramIcon color={instagram} size='large'/>
@@ -32,7 +32,7 @@ const Analytics = () => (<>
 </>);
 
 const Engagement = () => (<>
-  <Text type='h3'>Connect a channel to get started with Engagement</Text>
+  <Text type='h3'>Connect a channel <br/> to get started with Engagement</Text>
   <Icons>
     <FacebookIcon color={facebook} size='large'/>
     <InstagramIcon color={instagram} size='large'/>

@@ -21,10 +21,9 @@ export function hasSeenFreeUserStartTrialPrompt() {
 
 export function shouldShowChannelConnectionPrompt(user) {
   const activeProduct = getActiveProductFromPath();
-  const hasFeatureFlip = user?.featureFlips?.includes('newProductsOnboarding');
   const isSupportedProdut = CHANNEL_PROMPT_PRODUCTS.includes(activeProduct);
   const hasNoChannels = user?.currentOrganization?.channels?.length === 0;
-  if (hasFeatureFlip && isSupportedProdut && hasNoChannels) {
+  if (isSupportedProdut && hasNoChannels) {
     return true;
   }
 

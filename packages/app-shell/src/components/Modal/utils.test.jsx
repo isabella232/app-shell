@@ -313,18 +313,6 @@ describe('Modal - utils', () => {
       expect(result).toBeTruthy();
     });
 
-    it('should return false if it has no newProductsOnboarding featureFlip', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
-      const noChannelsUser = Object.assign(mockUserData, {
-        featureFlips: [],
-        currentOrganization: {
-          ...mockUserData.currentOrganization,
-          channels: [],
-        },
-      });
-      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
-      expect(result).toBeFalsy();
-    });
   });
 
   describe('calculateTotalSlotsPrice', () => {
