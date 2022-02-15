@@ -45,7 +45,7 @@ const Engagement = () => (<>
   <Button
     type="primary"
     onClick={() => {window.location = CHANNELS_CONNECTION_URL}}
-      label="Connect Facebook or Instagram"
+      label="Connect a Facebook or Instagram Channel"
   />
 </>);
 
