@@ -5,9 +5,10 @@ const buttonColor = '#E9ECFC';
 
 export const ChannelsCounterContainer = styled.div`
   display: flex;
-  width: 300px;
   height: 48px;
-  background: ${blue};
+
+  border: 1px ${blue} solid;
+  border-radius: 3px;
 `;
 
 export const ChannelsCounterButton = styled.div`
@@ -15,9 +16,12 @@ export const ChannelsCounterButton = styled.div`
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+
   background: ${buttonColor};
   color: ${grayDark};
-  border: 1px ${blue} solid;
+  border-radius: 3px;
+
+  cursor: pointer;
 `;
 
 export const ChannelsCounterCountDisplay = styled.div`
@@ -26,6 +30,6 @@ export const ChannelsCounterCountDisplay = styled.div`
   flex-grow: 1.5;
   justify-content: center;
   align-items: center;
-  border-top: 1px ${blue} solid;
-  border-bottom: 1px ${blue} solid;
+  border-left: 1px ${blue} solid;
+  border-right: 1px ${blue} solid;
 `;
