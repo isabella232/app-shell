@@ -2,8 +2,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import Text from '@bufferapp/ui/Text';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
+import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
+import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
+import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import Button from '@bufferapp/ui/Button';
-import { facebook, instagram } from '@bufferapp/ui/style/colors';
+import { facebook, instagram, twitter, linkedin, shopify } from '@bufferapp/ui/style/colors';
 
 import { getActiveProductFromPath } from 'utils/getProduct';
 import { Content, Icons } from './style';
@@ -18,6 +21,9 @@ const Analytics = () => (<>
   <Icons>
     <FacebookIcon color={facebook} size='large'/>
     <InstagramIcon color={instagram} size='large'/>
+    <TwitterIcon color={twitter} size='large'/>
+    <LinkedInIcon color={linkedin} size='large'/>
+    <ShopifyIcon color={shopify} size='large'/>
   </Icons>
   <img
     src="https://buffer-ui.s3.amazonaws.com/onboarding/connection-modal-analytics_%40x2.jpg"
