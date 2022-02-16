@@ -73,6 +73,12 @@ export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
   return defaultSelectedPlan;
 }
 
-export function calculateTotalSlotsPrice(numberOfSlots, slotPrice) {
+export function calculateTotalSlotsPrice(numberOfSlots, slotPrice, planId) {
+  if (planId === 'agency') {
+    if (numberOfSlots <= 10) {
+      return slotPrice;
+    }
+    return numberOfSlots * (slotPrice / 12);
+  }
   return numberOfSlots * slotPrice;
 }

@@ -13,7 +13,7 @@ export const CurrentPlanInfoContainer = styled.div`
   box-sizing: border-box;
   margin-bottom: 10px;
   padding: 20px;
-  width: 220px;
+  width: 235px;
 
   color: ${grayDark};
   background-color: ${white};

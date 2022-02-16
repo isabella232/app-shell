@@ -12,7 +12,7 @@ export const UpdatedPlanInfoContainer = styled.div`
   flex-direction: column;
   box-sizing: border-box;
   padding: 20px;
-  width: 220px;
+  width: 235px;
 
   color: ${grayDark};
   background-color: ${white};

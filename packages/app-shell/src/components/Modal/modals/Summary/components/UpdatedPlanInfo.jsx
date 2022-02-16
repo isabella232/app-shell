@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
@@ -10,6 +10,7 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import ChannelCounter from './ChannelCounter';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
+import { calculateTotalSlotsPrice } from '../../../utils';
 
 import {
   UpdatedPlanInfoContainer,
@@ -27,8 +28,17 @@ import {
 } from './UpdatedPlanInfo.style';
 
 function UpdatedPlanInfo(props) {
-  const { planName, planPrice, planCycle, numberOfChannels, numberOfUsers } =
-    props;
+  const {
+    planId,
+    planName,
+    planPrice,
+    planCycle,
+    numberOfChannels,
+    numberOfUsers,
+  } = props;
+  const [channelsCount, setChannelsCount] = useState(numberOfChannels);
+
+  const newPrice = calculateTotalSlotsPrice(channelsCount, planPrice, planId);
 
   return (
     <UpdatedPlanInfoContainer>
@@ -45,7 +55,10 @@ function UpdatedPlanInfo(props) {
           </Icons>
         </Title>
         <ChannelsInputContainer>
-          <ChannelCounter />
+          <ChannelCounter
+            channelsCount={channelsCount}
+            onUpdate={setChannelsCount}
+          />
         </ChannelsInputContainer>
       </ChannelsContainer>
       <Section>
@@ -53,18 +66,17 @@ function UpdatedPlanInfo(props) {
         <PlanName>{planName}</PlanName>
         <Row>
           <ChannelsCount>
-            <span>{numberOfChannels}</span>
+            <span>{channelsCount}</span>
             channels
           </ChannelsCount>
           <UsersCount>
             <span>{numberOfUsers}</span>
-            user
           </UsersCount>
         </Row>
       </Section>
       <CurrentPaymentContainer>
         New monthly cost:{' '}
-        <span>{getProductPriceCycleText(planPrice, planCycle)}</span>
+        <span>{getProductPriceCycleText(newPrice, planCycle)}</span>
       </CurrentPaymentContainer>
       <CancellationInfo>
         This will be billed every month until canceled.
@@ -74,11 +86,12 @@ function UpdatedPlanInfo(props) {
 }
 
 UpdatedPlanInfo.propTypes = {
+  planId: PropTypes.string.isRequired,
   planName: PropTypes.string.isRequired,
   planPrice: PropTypes.number.isRequired,
   planCycle: PropTypes.string.isRequired,
   numberOfChannels: PropTypes.number.isRequired,
-  numberOfUsers: PropTypes.number.isRequired,
+  numberOfUsers: PropTypes.string.isRequired,
 };
 
 export default UpdatedPlanInfo;

@@ -23,7 +23,7 @@ function CurrentPlanInfo(props) {
       </PlanName>
       <Row>
         <ChannelsCount>{numberOfChannels} channels</ChannelsCount>
-        <UsersCount>{numberOfUsers} user</UsersCount>
+        <UsersCount>{numberOfUsers}</UsersCount>
       </Row>
       <CurrentPaymentContainer>
         Currently paying:{' '}
@@ -38,7 +38,7 @@ CurrentPlanInfo.propTypes = {
   planPrice: PropTypes.number.isRequired,
   planCycle: PropTypes.string.isRequired,
   numberOfChannels: PropTypes.number.isRequired,
-  numberOfUsers: PropTypes.number.isRequired,
+  numberOfUsers: PropTypes.string.isRequired,
 };
 
 export default CurrentPlanInfo;

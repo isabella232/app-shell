@@ -4,6 +4,8 @@ import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
 import { useSplitEnabled } from '@bufferapp/features';
 
 import { UserContext } from '../../../../common/context/User';
+import CurrentPlanInfo from './components/CurrentPlanInfo';
+import UpdatedPlanInfo from './components/UpdatedPlanInfo';
 
 import {
   DiscountReminder,
@@ -32,6 +34,47 @@ function renderSocialChannelsText(selectedPlan) {
   );
 }
 
+// TODO: Implement this with FF
+// eslint-disable-next-line no-unused-vars
+function renderSBBSummary(currentPlan, selectedPlan) {
+  const {
+    planName: currentPlanName,
+    totalPrice: currentPlanPricing,
+    planInterval: currentPlanInterval,
+    channelsQuantity: currentChannelsQuantity,
+    summary: currentPlanSummary,
+  } = currentPlan;
+  const currentPlanUsersText = currentPlanSummary.details[1];
+  const {
+    planId: selectedPlanId,
+    planName: selectedPlanName,
+    basePrice: selectedPlanPricing,
+    planInterval: selectedPlanInterval,
+    summary: selectePlanSummary,
+  } = selectedPlan;
+  const selectedPlanUsersText = selectePlanSummary.details[1];
+
+  return (
+    <>
+      <CurrentPlanInfo
+        planName={currentPlanName}
+        planPrice={currentPlanPricing}
+        planCycle={currentPlanInterval}
+        numberOfChannels={currentChannelsQuantity}
+        numberOfUsers={currentPlanUsersText}
+      />
+      <UpdatedPlanInfo
+        planId={selectedPlanId}
+        planName={selectedPlanName}
+        planPrice={selectedPlanPricing}
+        planCycle={selectedPlanInterval}
+        numberOfChannels={currentChannelsQuantity}
+        numberOfUsers={selectedPlanUsersText}
+      />
+    </>
+  );
+}
+
 const Summary = ({
   planOptions,
   selectedPlan,
@@ -46,8 +89,7 @@ const Summary = ({
   // TODO: Remove eslint disable
   // Switch Split FF key to us SBB
   // eslint-disable-next-line no-unused-vars
-  const { isEnabled: splitAppShellTestEnabled } =
-    useSplitEnabled('app-shell-test');
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
 
   const getStatus = () => {
     let planStatus;
