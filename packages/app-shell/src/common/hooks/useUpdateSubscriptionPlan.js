@@ -9,6 +9,7 @@ const useUpdateSubscriptionPlan = ({
   plan,
   hasPaymentMethod,
   alreadyProcessing,
+  channelsQuantity,
 }) => {
   const [processing, setProcessing] = useState(alreadyProcessing);
   const [error, setError] = useState(null);
@@ -31,7 +32,8 @@ const useUpdateSubscriptionPlan = ({
           organizationId: user.currentOrganization.id,
           plan: plan.planId,
           interval: plan.planInterval,
-          attribution: { cta }
+          quantity: channelsQuantity,
+          attribution: { cta },
         },
       }).catch((e) => {
         console.error(e); // eslint-disable-line no-console

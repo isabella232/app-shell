@@ -36,7 +36,13 @@ function renderSocialChannelsText(selectedPlan) {
 
 // TODO: Implement this with FF
 // eslint-disable-next-line no-unused-vars
-function renderSBBSummary(currentPlan, selectedPlan) {
+function renderSBBSummary(
+  currentPlan,
+  selectedPlan,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter
+) {
   const {
     planName: currentPlanName,
     totalPrice: currentPlanPricing,
@@ -70,6 +76,9 @@ function renderSBBSummary(currentPlan, selectedPlan) {
         planCycle={selectedPlanInterval}
         numberOfChannels={currentChannelsQuantity}
         numberOfUsers={selectedPlanUsersText}
+        channelsCount={channelsCount}
+        increaseCounter={() => increaseCounter()}
+        decreaseCounter={() => decreaseCounter()}
       />
     </>
   );
@@ -81,6 +90,9 @@ const Summary = ({
   fromPlanSelector,
   subscriptionEndDate,
   isUpgradeIntent,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanId = currentPlan.planId;
@@ -161,37 +173,49 @@ const Summary = ({
     <SummaryContainer>
       <Body>
         <Text type="h2">Summary</Text>
-        <SummaryDetails>
+        {splitSBBEnabled ? (
+          renderSBBSummary(
+            currentPlan,
+            selectedPlan,
+            channelsCount,
+            increaseCounter,
+            decreaseCounter
+          )
+        ) : (
           <>
-            {getStatus()}
-            <DetailList>
-              {selectedPlan.summary.details.map((detail) => (
-                <Detail key={detail}>
-                  <Text type="p">{detail}</Text>
-                </Detail>
-              ))}
-            </DetailList>
-            <Separator />
-            <SummaryNote>{getSummaryNote()}</SummaryNote>
-          </>
-        </SummaryDetails>
+            <SummaryDetails>
+              <>
+                {getStatus()}
+                <DetailList>
+                  {selectedPlan.summary.details.map((detail) => (
+                    <Detail key={detail}>
+                      <Text type="p">{detail}</Text>
+                    </Detail>
+                  ))}
+                </DetailList>
+                <Separator />
+                <SummaryNote>{getSummaryNote()}</SummaryNote>
+              </>
+            </SummaryDetails>
 
-        <Bottom>
-          <TotalPrice>
-            <sup>{selectedPlan.currency}</sup>
-            <Text type="h2" as="p">
-              {selectedPlan.totalPrice}
-            </Text>
-          </TotalPrice>
-          {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
-          {selectedPlan.planInterval === 'year' &&
-            selectedPlan.planId !== 'free' && (
-              <DiscountReminder>
-                <Coupon />
-                <p>{selectedPlan.discountPercentage}% discount</p>
-              </DiscountReminder>
-            )}
-        </Bottom>
+            <Bottom>
+              <TotalPrice>
+                <sup>{selectedPlan.currency}</sup>
+                <Text type="h2" as="p">
+                  {selectedPlan.totalPrice}
+                </Text>
+              </TotalPrice>
+              {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
+              {selectedPlan.planInterval === 'year' &&
+                selectedPlan.planId !== 'free' && (
+                  <DiscountReminder>
+                    <Coupon />
+                    <p>{selectedPlan.discountPercentage}% discount</p>
+                  </DiscountReminder>
+                )}
+            </Bottom>
+          </>
+        )}
       </Body>
     </SummaryContainer>
   );
@@ -201,6 +225,9 @@ const SummaryProvider = ({
   selectedPlan,
   fromPlanSelector,
   isUpgradeIntent,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter,
 }) => {
   return (
     <UserContext.Consumer>
@@ -215,6 +242,9 @@ const SummaryProvider = ({
             selectedPlan={selectedPlan}
             fromPlanSelector={fromPlanSelector}
             isUpgradeIntent={isUpgradeIntent}
+            channelsCount={channelsCount}
+            increaseCounter={() => increaseCounter()}
+            decreaseCounter={() => decreaseCounter()}
           />
         );
       }}

@@ -26,6 +26,7 @@ import {
   DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
+import useChannelsCounter from '../hooks/useChannelsCounter';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
@@ -33,7 +34,12 @@ import { freePlan } from '../../../../../common/mocks/freePlan';
 
 import FreePlanSection from './FreePlanSection';
 
-import { userHasFeatureFlip, filterListOfPlans } from '../../../utils';
+import {
+  userHasFeatureFlip,
+  filterListOfPlans,
+  // calculateTotalSlotsPrice,
+  handleAgencyChannelsCount,
+} from '../../../utils';
 
 export const PlanSelectorContainer = ({
   changePlanOptions,
@@ -51,6 +57,13 @@ export const PlanSelectorContainer = ({
     }
     return changePlanOptions;
   };
+
+  const {
+    channelsCount,
+    setChannelsCounterValue,
+    increaseCounter,
+    decreaseCounter,
+  } = useChannelsCounter(0);
 
   const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan');
 
@@ -79,6 +92,7 @@ export const PlanSelectorContainer = ({
     user,
     plan: selectedPlan,
     hasPaymentMethod: true,
+    channelsQuantity: channelsCount,
   });
 
   const { label, action, updateButton, ctaButton } = useButtonOptions({
@@ -137,6 +151,12 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
+    handleAgencyChannelsCount(
+      selectedPlan.planId,
+      channelsCount,
+      setChannelsCounterValue
+    );
+
     updateButton(selectedPlan);
   }, [selectedPlan]);
 
@@ -206,6 +226,9 @@ export const PlanSelectorContainer = ({
           selectedPlan={selectedPlan}
           fromPlanSelector
           isUpgradeIntent={isUpgradeIntent}
+          channelsCount={channelsCount}
+          increaseCounter={() => increaseCounter()}
+          decreaseCounter={() => decreaseCounter()}
         />
         <ButtonContainer>
           <Button

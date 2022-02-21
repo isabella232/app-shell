@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
@@ -33,10 +33,11 @@ function UpdatedPlanInfo(props) {
     planName,
     planPrice,
     planCycle,
-    numberOfChannels,
     numberOfUsers,
+    channelsCount,
+    increaseCounter,
+    decreaseCounter,
   } = props;
-  const [channelsCount, setChannelsCount] = useState(numberOfChannels);
 
   const newPrice = calculateTotalSlotsPrice(channelsCount, planPrice, planId);
 
@@ -57,7 +58,8 @@ function UpdatedPlanInfo(props) {
         <ChannelsInputContainer>
           <ChannelCounter
             channelsCount={channelsCount}
-            onUpdate={setChannelsCount}
+            onIncreaseCounter={() => increaseCounter()}
+            onDecreaseCounter={() => decreaseCounter()}
           />
         </ChannelsInputContainer>
       </ChannelsContainer>
@@ -90,8 +92,10 @@ UpdatedPlanInfo.propTypes = {
   planName: PropTypes.string.isRequired,
   planPrice: PropTypes.number.isRequired,
   planCycle: PropTypes.string.isRequired,
-  numberOfChannels: PropTypes.number.isRequired,
   numberOfUsers: PropTypes.string.isRequired,
+  channelsCount: PropTypes.number.isRequired,
+  increaseCounter: PropTypes.func.isRequired,
+  decreaseCounter: PropTypes.func.isRequired,
 };
 
 export default UpdatedPlanInfo;
