@@ -2,6 +2,7 @@ import React from 'react';
 import Loader from '@bufferapp/ui/Loader';
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button/Button';
+
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
 import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
@@ -40,7 +41,7 @@ const QuantityUpdate = () => {
                 <Container>
                     <Header>
                       <Text type="h2">Add or Remove Channels from Plan</Text>
-                      <Text type="p">You&apos;re currently on the <strong>{planName}</strong> plan and you&apos;re paying <strong>$40/mo</strong> for {quantity} channels.</Text>
+                      <Text type="p">You&apos;re currently on the <strong>{planName}</strong> plan and you&apos;re paying <strong>$40/mo</strong> for {quantity} channels.
                       <Button 
                         type="link" 
                         onClick={(data) => {
@@ -48,6 +49,7 @@ const QuantityUpdate = () => {
                         }}
                         label="Change Plan"
                       />
+                      </Text>
                     </Header>
                     <SectionContainer>
                       <Section>

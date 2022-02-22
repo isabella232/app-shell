@@ -57,7 +57,7 @@ export const Section = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${white};
-  margin: 20px;
+  margin: 16px;
   border: 1px ${grayLight} solid;
   box-sizing: border-box;
   border-radius: 4px;
@@ -67,7 +67,7 @@ export const Section = styled.div`
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  width: 100%;
-  padding: 10px 0;
+  padding: 16px 0;
   justify-content: end;
+  padding-right: 20px;
 `;
