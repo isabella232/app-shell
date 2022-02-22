@@ -50,6 +50,16 @@ function getHelpDropdownItems() {
         );
       },
     },
+    {
+      id: 'Changelog',
+      title: 'Changelog',
+      onItemClick: () => {
+        window.open(
+          'https://buffer.com/changelog',
+          '_blank'
+        );
+      },
+    },
   ]
 }
 
