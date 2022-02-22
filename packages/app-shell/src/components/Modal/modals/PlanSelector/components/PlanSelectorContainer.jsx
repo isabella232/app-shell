@@ -3,6 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
 import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
 import useSelectedPlan from '../hooks/useSelectedPlan';
@@ -33,9 +34,14 @@ import { Error } from '../../PaymentMethod/style';
 import { freePlan } from '../../../../../common/mocks/freePlan';
 
 import FreePlanSection from './FreePlanSection';
+import AgencyPlanSection from './AgencyPlanSection';
 
 import {
-  userHasFeatureFlip,
+  isAgencyUser,
+  isOnAgencyTrial,
+} from '../../../../../common/utils/user';
+
+import {
   filterListOfPlans,
   // calculateTotalSlotsPrice,
   handleAgencyChannelsCount,
@@ -65,11 +71,10 @@ export const PlanSelectorContainer = ({
     decreaseCounter,
   } = useChannelsCounter(0);
 
-  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan');
-
   const planOptions = filterPlanOptions();
 
   const [error, setError] = useState(null);
+  const [showAgencyPlan, setShowAgencyPlan] = useState(false);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
@@ -116,9 +121,12 @@ export const PlanSelectorContainer = ({
     'agency'
   );
 
-  const availablePlans = featureFilpAgencyPlan
-    ? planOptionsWithoutFreePlans
-    : planOptionsWithoutAgencyPlans;
+  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
+
+  const availablePlans =
+    shouldIncludeAgencyPlan || showAgencyPlan
+      ? planOptionsWithoutFreePlans
+      : planOptionsWithoutAgencyPlans;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({
@@ -205,7 +213,15 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {featureFilpAgencyPlan && !isFreePlan && (
+        {!shouldIncludeAgencyPlan && !showAgencyPlan && (
+          <AgencyPlanSection
+            ctaAction={() => {
+              updateSelectedPlan(`agency_${monthlyBilling ? 'month' : 'year'}`);
+              setShowAgencyPlan(true);
+            }}
+          />
+        )}
+        {(shouldIncludeAgencyPlan || showAgencyPlan) && (
           <FreePlanSection
             ctaAction={() => {
               updateSelectedPlan(
