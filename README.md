@@ -142,6 +142,12 @@ _note: you will need to manually trust the certificate, if `navigator.js` is not
 2. from the root folder run `yarn watch-production`
 3. visit `https://appshell.local.buffer.com:3000`
 
+### Storybook
+
+We use Storybook to isolating components and allow us to work on each on one component at a time
+
+To run Storybook navigate to `/packages/app-shell` and run `yarn storybook`
+
 ## Testing
 We have two types of testing, unit tests, and UX tests.
 Unit tests use [Jest ](https://jestjs.io/), and can be run with `yarn run test` or  `yarn run test:watch`.
