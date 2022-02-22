@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader, Text, Button, Link } from '@bufferapp/ui';
+import { Loader, Text, Button } from '@bufferapp/ui';
 
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
