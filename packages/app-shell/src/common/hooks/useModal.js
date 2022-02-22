@@ -14,6 +14,7 @@ export const MODALS = {
   success: 'success',
   trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
+  quantityUpdate: 'quantityUpdate'
 };
 
 export const EVENT_KEY = 'appshell__modal_event';

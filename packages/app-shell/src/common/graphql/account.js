@@ -29,6 +29,7 @@ export const BILLING_FIELDS = gql`
     ... on OBBilling {
       canStartTrial
       subscription {
+        quantity
         interval
         periodEnd
         isCanceledAtPeriodEnd

@@ -38,6 +38,20 @@ const ModalTesting = () => {
       >
         Render Modal
       </button>
+
+      <h3>Render Quantity Update</h3>
+      <button
+        onClick={() => {
+          const { MODALS, actions } = window?.appshell || {};
+          actions.openModal(MODALS.quantityUpdate, {
+            cta: 'renderModal',
+            ctaButton: 'renderModal',
+            isUpgradeIntent: false,
+          });
+        }}
+      >
+        Render Modal
+      </button>
     </Wrapper>)
 }
 
