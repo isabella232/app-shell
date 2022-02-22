@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import { fontSizeSmall } from '@bufferapp/ui/style/fonts';
-import { grayLighter, grayLight, white } from '@bufferapp/ui/style/colors';
+import {
+  grayLighter,
+  grayLight,
+  white,
+  blue,
+} from '@bufferapp/ui/style/colors';
 
 export const Container = styled.div`
   align-items: center;
   border-radius: 8px;
   box-sizing: border-box;
+  width: 512px;
 `;
 
 export const LoadingContainer = styled(Container)`
@@ -14,7 +20,18 @@ export const LoadingContainer = styled(Container)`
 `;
 
 export const Header = styled.div`
-  padding: 0 20px;
+  padding: 16px;
+  max-width: 422px;
+
+  a {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    color: ${blue};
+  }
 `;
 
 export const Title = styled.div`

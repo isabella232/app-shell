@@ -1,7 +1,5 @@
 import React from 'react';
-import Loader from '@bufferapp/ui/Loader';
-import Text from '@bufferapp/ui/Text';
-import Button from '@bufferapp/ui/Button/Button';
+import { Loader, Text, Button, Link } from '@bufferapp/ui';
 
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
 import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
@@ -48,14 +46,16 @@ const QuantityUpdate = () => {
                   <Text type="p">
                     You&apos;re currently on the <strong>{planName}</strong>{' '}
                     plan and you&apos;re paying <strong>$40/mo</strong> for{' '}
-                    {quantity} channels.
-                    <Button
-                      type="link"
-                      onClick={(data) => {
+                    {quantity} channel{quantity !== 1 ? 's' : ''}.{' '}
+                    <a
+                      href="#"
+                      onClick={(e, data) => {
+                        e.preventDefault();
                         openModal(MODALS.planSelector, data);
                       }}
-                      label="Change Plan"
-                    />
+                    >
+                      Change Plan
+                    </a>
                   </Text>
                 </Header>
                 <SectionContainer>
