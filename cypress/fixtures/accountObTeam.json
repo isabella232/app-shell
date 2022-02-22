@@ -45,6 +45,7 @@
                },
                "canStartTrial":false,
                "subscription":{
+                  "quantity": 1,
                   "interval":"year",
                   "periodEnd":"2022-08-11T17:58:29.000Z",
                   "isCanceledAtPeriodEnd":false,
@@ -291,6 +292,7 @@
                   },
                   "canStartTrial":false,
                   "subscription":{
+                     "quantity": 1,
                      "interval":"year",
                      "periodEnd":"2022-08-11T17:58:29.000Z",
                      "isCanceledAtPeriodEnd":false,

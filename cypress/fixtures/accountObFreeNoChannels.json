@@ -43,6 +43,7 @@
                },
                "canStartTrial":true,
                "subscription":{
+                  "quantity": 1,
                   "interval":"month",
                   "periodEnd":null,
                   "isCanceledAtPeriodEnd":false,
@@ -282,6 +283,7 @@
                   },
                   "canStartTrial":true,
                   "subscription":{
+                     "quantity":1,
                      "interval":"month",
                      "periodEnd":null,
                      "isCanceledAtPeriodEnd":false,
