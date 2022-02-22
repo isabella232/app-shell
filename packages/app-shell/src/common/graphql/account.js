@@ -65,6 +65,13 @@ export const BILLING_FIELDS = gql`
         }
         isRecommended
         downgradedMessage
+        channelSlotDetails {
+          flatFee
+          currentQuantity
+          chargableQuantity
+          pricePerQuantity
+          minimumQuantity
+        }
       }
     }
   }

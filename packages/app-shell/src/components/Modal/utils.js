@@ -73,13 +73,41 @@ export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
   return defaultSelectedPlan;
 }
 
-export function calculateTotalSlotsPrice(numberOfSlots, slotPrice, planId) {
-  if (planId === 'agency') {
-    if (numberOfSlots <= 10) {
-      return slotPrice;
-    }
-    return numberOfSlots * (slotPrice / 12);
+export function getCurrentPlanFromPlanOptions(planOptions) {
+  return planOptions.find((plan) => plan.isCurrentPlan);
+}
+
+export function calculateAgencySlotPrice(
+  numberOfSlots,
+  slotPrice,
+  flatFee,
+  minimumQuantity
+) {
+  if (numberOfSlots <= minimumQuantity) {
+    return flatFee;
   }
+
+  const numberOfExtraChannels = numberOfSlots - minimumQuantity;
+
+  return flatFee + numberOfExtraChannels * slotPrice;
+}
+
+export function calculateTotalSlotsPrice(
+  planId,
+  numberOfSlots,
+  slotPrice,
+  minimumQuantity,
+  flatFee
+) {
+  if (planId === 'agency') {
+    return calculateAgencySlotPrice(
+      numberOfSlots,
+      slotPrice,
+      flatFee,
+      minimumQuantity
+    );
+  }
+
   return numberOfSlots * slotPrice;
 }
 

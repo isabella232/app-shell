@@ -10,7 +10,6 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import ChannelCounter from './ChannelCounter';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
-import { calculateTotalSlotsPrice } from '../../../utils';
 
 import {
   UpdatedPlanInfoContainer,
@@ -29,17 +28,14 @@ import {
 
 function UpdatedPlanInfo(props) {
   const {
-    planId,
     planName,
-    planPrice,
     planCycle,
     numberOfUsers,
     channelsCount,
     increaseCounter,
     decreaseCounter,
+    newPrice,
   } = props;
-
-  const newPrice = calculateTotalSlotsPrice(channelsCount, planPrice, planId);
 
   return (
     <UpdatedPlanInfoContainer>
@@ -88,9 +84,7 @@ function UpdatedPlanInfo(props) {
 }
 
 UpdatedPlanInfo.propTypes = {
-  planId: PropTypes.string.isRequired,
   planName: PropTypes.string.isRequired,
-  planPrice: PropTypes.number.isRequired,
   planCycle: PropTypes.string.isRequired,
   numberOfUsers: PropTypes.string.isRequired,
   channelsCount: PropTypes.number.isRequired,

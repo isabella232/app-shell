@@ -312,22 +312,75 @@ describe('Modal - utils', () => {
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeTruthy();
     });
-
   });
 
   describe('calculateTotalSlotsPrice', () => {
     it('should return 100 when 20 slots selected and pricing equals 5', () => {
-      const slotsSelected = 20;
+      const planId = 'essentials';
+      const numberOfSlots = 20;
       const slotPrice = 5;
-      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      const minimumQuantity = 1;
+      const flatFee = 0;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
       expect(result).toEqual(100);
     });
 
     it('should return 50 when 5 slots selected and pricing equals 10', () => {
-      const slotsSelected = 5;
+      const planId = 'essentials';
+      const numberOfSlots = 5;
       const slotPrice = 10;
-      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      const minimumQuantity = 1;
+      const flatFee = 0;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
       expect(result).toEqual(50);
+    });
+
+    it('should return 120 when plan is agency and number of slots is <= 10', () => {
+      const planId = 'agency';
+      const numberOfSlots = 10;
+      const slotPrice = 6;
+      const minimumQuantity = 10;
+      const flatFee = 120;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
+      expect(result).toEqual(120);
+    });
+
+    it('should return 132 when plan is agency and number of slots are 12', () => {
+      const planId = 'agency';
+      const numberOfSlots = 12;
+      const slotPrice = 6;
+      const minimumQuantity = 10;
+      const flatFee = 120;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
+      expect(result).toEqual(132);
     });
   });
 });

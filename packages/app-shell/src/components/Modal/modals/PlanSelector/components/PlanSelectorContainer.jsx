@@ -45,6 +45,8 @@ import {
   filterListOfPlans,
   // calculateTotalSlotsPrice,
   handleAgencyChannelsCount,
+  getCurrentPlanFromPlanOptions,
+  calculateTotalSlotsPrice,
 } from '../../../utils';
 
 export const PlanSelectorContainer = ({
@@ -64,13 +66,6 @@ export const PlanSelectorContainer = ({
     return changePlanOptions;
   };
 
-  const {
-    channelsCount,
-    setChannelsCounterValue,
-    increaseCounter,
-    decreaseCounter,
-  } = useChannelsCounter(0);
-
   const planOptions = filterPlanOptions();
 
   const [error, setError] = useState(null);
@@ -87,6 +82,31 @@ export const PlanSelectorContainer = ({
     isUpgradeIntent,
     user
   );
+
+  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+
+  const { currentQuantity } = currentPlan.channelSlotDetails;
+  const {
+    flatFee: selectedPlanFlatFee,
+    pricePerQuantity: selectedPlanPricePerQuantity,
+    minimumQuantity: selectedPlanMinimumQuantity,
+  } = selectedPlan.channelSlotDetails;
+
+  const {
+    channelsCount,
+    setChannelsCounterValue,
+    increaseCounter,
+    decreaseCounter,
+  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
+
+  const newPrice = calculateTotalSlotsPrice(
+    selectedPlan.planId,
+    channelsCount,
+    selectedPlanPricePerQuantity,
+    selectedPlanMinimumQuantity,
+    selectedPlanFlatFee
+  );
+
   const {
     updateSubscriptionPlan: updatePlan,
     data,
@@ -245,6 +265,7 @@ export const PlanSelectorContainer = ({
           channelsCount={channelsCount}
           increaseCounter={() => increaseCounter()}
           decreaseCounter={() => decreaseCounter()}
+          newPrice={newPrice}
         />
         <ButtonContainer>
           <Button

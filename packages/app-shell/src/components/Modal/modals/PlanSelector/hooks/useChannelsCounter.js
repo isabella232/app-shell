@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useChannelsCounter = (initialChannelCount = 0) => {
+const useChannelsCounter = (initialChannelCount = 0, minimumQuantity = 1) => {
   const [channelsCount, setChannelsCount] = useState(initialChannelCount);
 
   function setChannelsCounterValue(value) {
@@ -14,7 +14,7 @@ const useChannelsCounter = (initialChannelCount = 0) => {
   }
 
   function decreaseCounter(disableDecrease = false) {
-    if (channelsCount !== 0 || !disableDecrease) {
+    if (channelsCount > minimumQuantity || disableDecrease) {
       setChannelsCount(channelsCount - 1);
     }
   }
