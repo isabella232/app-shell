@@ -8,6 +8,7 @@ import {
   filterListOfPlans,
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
+  handleChannelsCountConditions,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -25,11 +26,6 @@ const listOfFilteredPlanOptions = [
   { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
-
-// TODO:REMOVE_WITH_FF:agencyPlan
-const user = {
-  featureFlips: ['agencyPlan'],
-};
 
 const isUpgradeIntent = false;
 
@@ -197,7 +193,7 @@ describe('Modal - utils', () => {
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'team',
@@ -212,7 +208,7 @@ describe('Modal - utils', () => {
         ...listOfPlanOptionsWithNoCurrentPlan,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
@@ -227,7 +223,7 @@ describe('Modal - utils', () => {
         ...listOfPlanOptionsWithNoCurrentPlan,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
@@ -239,7 +235,7 @@ describe('Modal - utils', () => {
     it('should set the default selected plan to the first plan in list when there is no plan in the list of options with isCurrentPlan set to true', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
@@ -251,7 +247,7 @@ describe('Modal - utils', () => {
     it('should set the default selected plan to the current plan when isUpgradeIntent and there is a current plan available in list ', () => {
       const planOptions = [...listOfFilteredPlanOptions];
 
-      const result = getDefaultSelectedPlan(planOptions, user, true);
+      const result = getDefaultSelectedPlan(planOptions, true);
 
       expect(result).toEqual({
         planId: 'team',
@@ -381,6 +377,44 @@ describe('Modal - utils', () => {
         flatFee
       );
       expect(result).toEqual(132);
+    });
+  });
+
+  describe('handleChannelsCountConditions', () => {
+    it('should call callBack func with 10 when planId equals agency and channelCount is less than 10', () => {
+      const planId = 'agency';
+      const channelsCount = 3;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).toHaveBeenCalledWith(10);
+    });
+
+    it('should NOT call callBack func when planId equals agency and channelCount is more than 10', () => {
+      const planId = 'agency';
+      const channelsCount = 30;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).not.toHaveBeenCalled();
+    });
+
+    it('should call callBack func with 3 when planId equals free and channelCount is more than 3', () => {
+      const planId = 'free';
+      const channelsCount = 30;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).toHaveBeenCalledWith(3);
+    });
+
+    it('should NOT call callBack func when planId equals free and channelCount is less than 3', () => {
+      const planId = 'free';
+      const channelsCount = 2;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).not.toHaveBeenCalled();
     });
   });
 });

@@ -54,9 +54,7 @@ export function userHasFeatureFlip(user, featureFlip) {
   return user.featureFlips.includes(featureFlip);
 }
 
-export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
-  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan'); // TODO:REMOVE_WITH_FF:agencyPlan
-
+export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
   const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
 
   const isOnFreePlan =
@@ -65,10 +63,9 @@ export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
       : false;
 
   const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
-  const plans = featureFilpAgencyPlan ? planOptionsExcludingFree : planOptions;
 
   const defaultSelectedPlan =
-    isOnFreePlan && !currentPlan ? plans[0] : currentPlan;
+    isOnFreePlan && !currentPlan ? planOptionsExcludingFree[0] : currentPlan;
 
   return defaultSelectedPlan;
 }
