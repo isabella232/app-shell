@@ -23,7 +23,7 @@ export function shouldShowChannelConnectionPrompt(user) {
   const activeProduct = getActiveProductFromPath();
   const isSupportedProdut = CHANNEL_PROMPT_PRODUCTS.includes(activeProduct);
   const hasNoChannels = user?.currentOrganization?.channels?.length === 0;
-  if (isSupportedProdut && hasNoChannels) {
+  if (isSupportedProdut && hasNoChannels && !isFreeUser(user)) {
     return true;
   }
 

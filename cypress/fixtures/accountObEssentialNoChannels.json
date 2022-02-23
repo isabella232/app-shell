@@ -49,8 +49,8 @@
                   "isCanceledAtPeriodEnd":false,
                   "trial":null,
                   "plan":{
-                     "id":"free",
-                     "name":"Free",
+                    "id": "essentials",
+                    "name": "Essentials",
                      "__typename":"OBPlan"
                   },
                   "__typename":"OBSubscription"
@@ -337,8 +337,8 @@
                      "isCanceledAtPeriodEnd":false,
                      "trial":null,
                      "plan":{
-                        "id":"free",
-                        "name":"Free",
+                        "id": "essentials",
+                        "name": "Essentials",
                         "__typename":"OBPlan"
                      },
                      "__typename":"OBSubscription"

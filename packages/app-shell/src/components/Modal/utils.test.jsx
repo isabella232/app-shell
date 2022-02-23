@@ -1,4 +1,5 @@
 import MOCK_ACCOUNT_OB_FREE_DATA from '../../common/mocks/accountOBFree';
+import MOCK_ACCOUNT_OB_ESSENTIAL_DATA from '../../common/mocks/accountOBEssential';
 
 import {
   isPendoModalVisible,
@@ -275,7 +276,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return false if it has channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const result = shouldShowChannelConnectionPrompt(mockUserData);
       expect(result).toBeFalsy();
     });
@@ -290,7 +291,7 @@ describe('Modal - utils', () => {
           origin: url,
         },
       });
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -302,7 +303,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return true if it has no channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -311,6 +312,18 @@ describe('Modal - utils', () => {
       });
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeTruthy();
+    });
+
+    it('should return false for free plans with no channels', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, {
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
+      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
+      expect(result).toBeFalsy();
     });
   });
 
