@@ -82,28 +82,28 @@ export const PlanSelectorContainer = ({
     user
   );
 
-  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  // const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
 
-  const { currentQuantity } = currentPlan.channelSlotDetails;
-  const {
-    flatFee: selectedPlanFlatFee,
-    pricePerQuantity: selectedPlanPricePerQuantity,
-    minimumQuantity: selectedPlanMinimumQuantity,
-  } = selectedPlan.channelSlotDetails;
+  // const { currentQuantity } = currentPlan.channelSlotDetails;
+  // const {
+  //   flatFee: selectedPlanFlatFee,
+  //   pricePerQuantity: selectedPlanPricePerQuantity,
+  //   minimumQuantity: selectedPlanMinimumQuantity,
+  // } = selectedPlan.channelSlotDetails;
 
   const {
     channelsCount,
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
+  } = useChannelsCounter(1, 1);
 
   const newPrice = calculateTotalSlotsPrice(
     selectedPlan.planId,
     channelsCount,
-    selectedPlanPricePerQuantity,
-    selectedPlanMinimumQuantity,
-    selectedPlanFlatFee
+    6,
+    1,
+    0
   );
 
   const {
