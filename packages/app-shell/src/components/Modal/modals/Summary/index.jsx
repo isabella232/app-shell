@@ -34,8 +34,6 @@ function renderSocialChannelsText(selectedPlan) {
   );
 }
 
-// TODO: Implement this with FF
-// eslint-disable-next-line no-unused-vars
 function renderSBBSummary(
   currentPlan,
   selectedPlan,
@@ -101,9 +99,6 @@ const Summary = ({
   const currentPlanId = currentPlan.planId;
   const selectedPlanId = selectedPlan.planId;
 
-  // TODO: Remove eslint disable
-  // Switch Split FF key to us SBB
-  // eslint-disable-next-line no-unused-vars
   const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
 
   const getStatus = () => {

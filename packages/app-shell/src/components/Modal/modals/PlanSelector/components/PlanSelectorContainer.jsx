@@ -78,8 +78,7 @@ export const PlanSelectorContainer = ({
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent,
-    user
+    isUpgradeIntent
   );
 
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
