@@ -43,8 +43,7 @@ import {
 
 import {
   filterListOfPlans,
-  // calculateTotalSlotsPrice,
-  handleAgencyChannelsCount,
+  handleChannelsCountConditions,
   getCurrentPlanFromPlanOptions,
   calculateTotalSlotsPrice,
 } from '../../../utils';
@@ -179,7 +178,7 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
-    handleAgencyChannelsCount(
+    handleChannelsCountConditions(
       selectedPlan.planId,
       channelsCount,
       setChannelsCounterValue

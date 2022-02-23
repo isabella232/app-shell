@@ -111,12 +111,15 @@ export function calculateTotalSlotsPrice(
   return numberOfSlots * slotPrice;
 }
 
-export function handleAgencyChannelsCount(
+export function handleChannelsCountConditions(
   planId,
   channelsCount,
   setChannelsCounterValue
 ) {
   if (planId === 'agency' && channelsCount < 10) {
     setChannelsCounterValue(10);
+  }
+  if (planId === 'free' && channelsCount > 3) {
+    setChannelsCounterValue(3);
   }
 }

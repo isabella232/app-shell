@@ -173,7 +173,7 @@ const Summary = ({
   };
 
   return (
-    <SummaryContainer>
+    <SummaryContainer sbbEnabled={splitSBBEnabled}>
       <Body>
         <Text type="h2">Summary</Text>
         {splitSBBEnabled ? (
