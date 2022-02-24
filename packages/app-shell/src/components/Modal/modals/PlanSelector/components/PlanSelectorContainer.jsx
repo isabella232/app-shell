@@ -68,13 +68,11 @@ export const PlanSelectorContainer = ({
   const { cta } = modalData || {};
   const { monthlyBilling, setBillingInterval } = useInterval(
     planOptions,
-    isUpgradeIntent,
-    showAgencyPlan
+    isUpgradeIntent
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent,
-    showAgencyPlan
+    isUpgradeIntent
   );
 
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
