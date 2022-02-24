@@ -144,7 +144,7 @@ _note: you will need to manually trust the certificate, if `navigator.js` is not
 
 ### Storybook
 
-We use Storybook to isolating components and allow us to work on each on one component at a time
+We use Storybook for isolating components and allowing us to work on each on one component at a time
 
 To run Storybook navigate to `/packages/app-shell` and run `yarn storybook`
 
