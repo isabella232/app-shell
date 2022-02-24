@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import { getDefaultSelectedPlan } from '../../../utils';
 
-const useInterval = (planOptions, isUpgradeIntent) => {
+const useInterval = (planOptions, isUpgradeIntent, user) => {
   const defaultSelectedPlan = getDefaultSelectedPlan(
     planOptions,
+    user, // TODO:REMOVE_WITH_FF:agencyPlan
     isUpgradeIntent
   );
 

@@ -29,36 +29,6 @@ describe('Navigator', () => {
     });
   });
 
-  describe('OB Free Plan - upgrade flow', () => {
-    before(() => {
-      cy.fixture('accountObFreeUpgrade').then((account) => {
-        cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
-          status: 200,
-          body: account,
-        }).as('getAccount');
-        cy.visit('/');
-        cy.wait('@getAccount').then(({ request }) => {
-          cy.task('log', `Request finished. Request data: ${request}`);
-        });
-      });
-    });
-
-    it('render the navigator', () => {
-      cy.get('#navigator').should('exist');
-      cy.get('#navigator > nav').should('exist');
-    });
-
-    it('has an upgrade CTA', () => {
-      cy.contains('Upgrade').should('exist');
-    });
-
-    it('a user can upgrade to essentials after clicking the upgrade button', () => {
-      cy.get('#upgradeCTA').click();
-      cy.get('#essentials_year').should('exist');
-      cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
-    });
-  });
-
   describe('OB Essentials Plan', () => {
     before(() => {
       cy.fixture('accountObEssential').then((account) => {
