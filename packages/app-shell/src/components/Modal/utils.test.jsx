@@ -1,4 +1,5 @@
 import MOCK_ACCOUNT_OB_FREE_DATA from '../../common/mocks/accountOBFree';
+import MOCK_ACCOUNT_OB_ESSENTIAL_DATA from '../../common/mocks/accountOBEssential';
 
 import {
   isPendoModalVisible,
@@ -8,6 +9,7 @@ import {
   filterListOfPlans,
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
+  getPlanByPlanId,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -25,11 +27,6 @@ const listOfFilteredPlanOptions = [
   { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
-
-// TODO:REMOVE_WITH_FF:agencyPlan
-const user = {
-  featureFlips: ['agencyPlan'],
-};
 
 const isUpgradeIntent = false;
 
@@ -191,13 +188,13 @@ describe('Modal - utils', () => {
   });
 
   describe('getDefaultSelectedPlan', () => {
-    it('should set the default selected plan to the current plan when the current plan is not free', () => {
+    it('should set the default selected plan to the current plan when their is a currentPlan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'team',
@@ -206,40 +203,25 @@ describe('Modal - utils', () => {
       });
     });
 
-    it("should set the default selected plan to the first plan in list when it's a free plan AND there is no current plan available", () => {
+    it('should set the default selected plan to the current plan when isUpgradeIntent is true AND there is a current plan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
+        ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
+        planId: 'team',
+        planInterval: 'year',
+        isCurrentPlan: true,
       });
     });
 
-    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true AND there is no current plan available', () => {
-      const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
-      ];
-
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
-
-      expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
-      });
-    });
-
-    it('should set the default selected plan to the first plan in list when there is no plan in the list of options with isCurrentPlan set to true', () => {
+    it('should set the default selected plan to essentials when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
@@ -248,15 +230,14 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the current plan when isUpgradeIntent and there is a current plan available in list ', () => {
+    it('should set the default selected plan to essentials when isUpgradeIntent ', () => {
       const planOptions = [...listOfFilteredPlanOptions];
-
-      const result = getDefaultSelectedPlan(planOptions, user, true);
+      const result = getDefaultSelectedPlan(planOptions, true);
 
       expect(result).toEqual({
-        planId: 'team',
-        planInterval: 'year',
-        isCurrentPlan: true,
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
       });
     });
   });
@@ -275,7 +256,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return false if it has channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const result = shouldShowChannelConnectionPrompt(mockUserData);
       expect(result).toBeFalsy();
     });
@@ -290,7 +271,7 @@ describe('Modal - utils', () => {
           origin: url,
         },
       });
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -302,7 +283,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return true if it has no channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -313,10 +294,9 @@ describe('Modal - utils', () => {
       expect(result).toBeTruthy();
     });
 
-    it('should return false if it has no newProductsOnboarding featureFlip', () => {
+    it('should return false for free plans with no channels', () => {
       const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
-        featureFlips: [],
         currentOrganization: {
           ...mockUserData.currentOrganization,
           channels: [],
@@ -329,17 +309,107 @@ describe('Modal - utils', () => {
 
   describe('calculateTotalSlotsPrice', () => {
     it('should return 100 when 20 slots selected and pricing equals 5', () => {
-      const slotsSelected = 20;
+      const planId = 'essentials';
+      const numberOfSlots = 20;
       const slotPrice = 5;
-      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      const minimumQuantity = 1;
+      const flatFee = 0;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
       expect(result).toEqual(100);
     });
 
     it('should return 50 when 5 slots selected and pricing equals 10', () => {
-      const slotsSelected = 5;
+      const planId = 'essentials';
+      const numberOfSlots = 5;
       const slotPrice = 10;
-      const result = calculateTotalSlotsPrice(slotsSelected, slotPrice);
+      const minimumQuantity = 1;
+      const flatFee = 0;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
       expect(result).toEqual(50);
+    });
+
+    it('should return 120 when plan is agency and number of slots is <= 10', () => {
+      const planId = 'agency';
+      const numberOfSlots = 10;
+      const slotPrice = 6;
+      const minimumQuantity = 10;
+      const flatFee = 120;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
+      expect(result).toEqual(120);
+    });
+
+    it('should return 132 when plan is agency and number of slots are 12', () => {
+      const planId = 'agency';
+      const numberOfSlots = 12;
+      const slotPrice = 6;
+      const minimumQuantity = 10;
+      const flatFee = 120;
+
+      const result = calculateTotalSlotsPrice(
+        planId,
+        numberOfSlots,
+        slotPrice,
+        minimumQuantity,
+        flatFee
+      );
+      expect(result).toEqual(132);
+    });
+  });
+
+  describe('getPlanByPlanId', () => {
+    it('should return essentials plan when provided with essentials id', () => {
+      const planId = 'essentials';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return free plan when provided with free id', () => {
+      const planId = 'free';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'free',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return the first essentials plan in list when provided with essentials id', () => {
+      const planId = 'essentials';
+      const plans = [
+        ...listOfPlanOptions,
+        { planId: 'essentials', planInterval: 'year', isCurrentPlan: false },
+        { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+      ];
+
+      const result = getPlanByPlanId(planId, plans);
+      expect(result).toEqual(plans[1]);
     });
   });
 });

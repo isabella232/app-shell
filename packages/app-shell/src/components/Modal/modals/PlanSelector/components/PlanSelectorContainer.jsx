@@ -3,6 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
 import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
 import useSelectedPlan from '../hooks/useSelectedPlan';
@@ -26,14 +27,27 @@ import {
   DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
+import useChannelsCounter from '../hooks/useChannelsCounter';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
 import { freePlan } from '../../../../../common/mocks/freePlan';
 
 import FreePlanSection from './FreePlanSection';
+import AgencyPlanSection from './AgencyPlanSection';
 
-import { userHasFeatureFlip, filterListOfPlans } from '../../../utils';
+import {
+  isAgencyUser,
+  isOnAgencyTrial,
+} from '../../../../../common/utils/user';
+
+import {
+  filterListOfPlans,
+  handleChannelsCountConditions,
+  getCurrentPlanFromPlanOptions,
+  calculateTotalSlotsPrice,
+  handleUpgradeIntent,
+} from '../../../utils';
 
 export const PlanSelectorContainer = ({
   changePlanOptions,
@@ -45,18 +59,10 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
-  const filterPlanOptions = () => {
-    if (isUpgradeIntent) {
-      return changePlanOptions.filter((option) => option.planId !== 'free');
-    }
-    return changePlanOptions;
-  };
-
-  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan');
-
-  const planOptions = filterPlanOptions();
+  const planOptions = changePlanOptions;
 
   const [error, setError] = useState(null);
+  const [showAgencyPlan, setShowAgencyPlan] = useState(false);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
@@ -66,9 +72,33 @@ export const PlanSelectorContainer = ({
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent,
-    user
+    isUpgradeIntent
   );
+
+  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+
+  const { currentQuantity } = currentPlan.channelSlotDetails;
+  const {
+    flatFee: selectedPlanFlatFee,
+    pricePerQuantity: selectedPlanPricePerQuantity,
+    minimumQuantity: selectedPlanMinimumQuantity,
+  } = selectedPlan.channelSlotDetails;
+
+  const {
+    channelsCount,
+    setChannelsCounterValue,
+    increaseCounter,
+    decreaseCounter,
+  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
+
+  const newPrice = calculateTotalSlotsPrice(
+    selectedPlan.planId,
+    channelsCount,
+    selectedPlanPricePerQuantity,
+    selectedPlanMinimumQuantity,
+    selectedPlanFlatFee
+  );
+
   const {
     updateSubscriptionPlan: updatePlan,
     data,
@@ -79,6 +109,7 @@ export const PlanSelectorContainer = ({
     user,
     plan: selectedPlan,
     hasPaymentMethod: true,
+    channelsQuantity: channelsCount,
   });
 
   const { label, action, updateButton, ctaButton } = useButtonOptions({
@@ -96,15 +127,17 @@ export const PlanSelectorContainer = ({
   );
 
   const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
-
   const planOptionsWithoutAgencyPlans = filterListOfPlans(
     planOptions,
     'agency'
   );
 
-  const availablePlans = featureFilpAgencyPlan
-    ? planOptionsWithoutFreePlans
-    : planOptionsWithoutAgencyPlans;
+  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
+
+  const availablePlans =
+    shouldIncludeAgencyPlan || showAgencyPlan || isUpgradeIntent
+      ? planOptionsWithoutFreePlans
+      : planOptionsWithoutAgencyPlans;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({
@@ -137,6 +170,19 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
+    handleUpgradeIntent(
+      selectedPlan.planId,
+      isUpgradeIntent,
+      monthlyBilling,
+      updateSelectedPlan
+    );
+
+    handleChannelsCountConditions(
+      selectedPlan.planId,
+      channelsCount,
+      setChannelsCounterValue
+    );
+
     updateButton(selectedPlan);
   }, [selectedPlan]);
 
@@ -185,7 +231,15 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {featureFilpAgencyPlan && !isFreePlan && (
+        {!shouldIncludeAgencyPlan && !showAgencyPlan && !isUpgradeIntent && (
+          <AgencyPlanSection
+            ctaAction={() => {
+              updateSelectedPlan(`agency_${monthlyBilling ? 'month' : 'year'}`);
+              setShowAgencyPlan(true);
+            }}
+          />
+        )}
+        {(shouldIncludeAgencyPlan || showAgencyPlan) && (
           <FreePlanSection
             ctaAction={() => {
               updateSelectedPlan(
@@ -206,6 +260,10 @@ export const PlanSelectorContainer = ({
           selectedPlan={selectedPlan}
           fromPlanSelector
           isUpgradeIntent={isUpgradeIntent}
+          channelsCount={channelsCount}
+          increaseCounter={() => increaseCounter()}
+          decreaseCounter={() => decreaseCounter()}
+          newPrice={newPrice}
         />
         <ButtonContainer>
           <Button

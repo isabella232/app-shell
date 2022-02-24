@@ -29,6 +29,7 @@ export const BILLING_FIELDS = gql`
     ... on OBBilling {
       canStartTrial
       subscription {
+        quantity
         interval
         periodEnd
         isCanceledAtPeriodEnd
@@ -64,6 +65,13 @@ export const BILLING_FIELDS = gql`
         }
         isRecommended
         downgradedMessage
+        channelSlotDetails {
+          flatFee
+          currentQuantity
+          chargableQuantity
+          pricePerQuantity
+          minimumQuantity
+        }
       }
     }
   }

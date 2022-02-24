@@ -43,8 +43,14 @@ function getHelpDropdownItems() {
         window.open('https://buffer.com/feature-request', '_blank');
       },
     },
+    {
+      id: 'Changelog',
+      title: 'Changelog',
+      onItemClick: () => {
+        window.open('https://buffer.com/changelog', '_blank');
+      },
+    },
   ];
-
   // Only show "Getting Started" link for publishing product
   const activeProduct = getActiveProductFromPath();
   if (activeProduct === 'publish') {

@@ -8,8 +8,7 @@
             "grantAnalyzeAccess",
             "sharedChannels",
             "engageRollOut",
-            "geid1_free_user_trial_prompt",
-            "newProductsOnboarding"
+            "geid1_free_user_trial_prompt"
          ],
          "isImpersonation":false,
          "currentOrganization":{
@@ -29,10 +28,13 @@
                "grantAnalyzeAccess",
                "sharedChannels",
                "engageRollOut",
-               "geid1_free_user_trial_prompt",
-               "newProductsOnboarding"
+               "geid1_free_user_trial_prompt"
             ],
             "channels":[
+              {
+                "id":"606b65e1dd934f70840bfef7",
+                "__typename":"Channel"
+              }
             ],
             "billing":{
                "id":"606b65d6dad38c03d2b70793",
@@ -43,12 +45,20 @@
                   "hasPaymentDetails":true,
                   "__typename":"PaymentDetails"
                },
-               "canStartTrial":true,
+               "canStartTrial":false,
                "subscription":{
+                  "quantity": 1,
                   "interval":"month",
                   "periodEnd":null,
                   "isCanceledAtPeriodEnd":false,
-                  "trial":null,
+                  "trial":{
+                     "endDate": "2022-02-01T05:06:44.000Z",
+                     "isActive": false,
+                     "isAwaitingUserAction": true,
+                     "remainingDays": 0,
+                     "startDate": "2022-01-18T05:06:44.000Z",
+                     "__typename": "Trial"
+                  },
                   "plan":{
                      "id":"free",
                      "name":"Free",
@@ -85,6 +95,14 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -116,6 +134,14 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -150,6 +176,14 @@
                      },
                      "isRecommended":true,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -180,6 +214,14 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -211,6 +253,14 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -245,6 +295,14 @@
                      },
                      "isRecommended":true,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   }
                ],
@@ -269,10 +327,16 @@
                "featureFlips":[
                   "grantAnalyzeAccess",
                   "sharedChannels",
-                  "engageRollOut",
-                  "newProductsOnboarding"
+                  "engageRollOut"
                ],
                "channels":[
+                  {
+                     "id":"606b65e1dd934f70840bfef7",
+                     "name":"testing public",
+                     "service":"facebook",
+                     "organizationId":"606b65d6dad38c03d2b70793",
+                     "__typename":"Channel"
+                  }
                ],
                "billing":{
                   "id":"606b65d6dad38c03d2b70793",
@@ -283,8 +347,9 @@
                      "hasPaymentDetails":true,
                      "__typename":"PaymentDetails"
                   },
-                  "canStartTrial":true,
+                  "canStartTrial":false,
                   "subscription":{
+                     "quantity":1,
                      "interval":"month",
                      "periodEnd":null,
                      "isCanceledAtPeriodEnd":false,
@@ -325,6 +390,14 @@
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -356,6 +429,14 @@
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -390,6 +471,14 @@
                         },
                         "isRecommended":true,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -420,6 +509,14 @@
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -451,6 +548,14 @@
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -485,6 +590,14 @@
                         },
                         "isRecommended":true,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      }
                   ],

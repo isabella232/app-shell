@@ -1,4 +1,4 @@
-const MOCK_ACCOUNT_OB_FREE_DATA = {
+const MOCK_ACCOUNT_OB_ESSENTIAL_DATA = {
   data: {
     account: {
       id: '606b65d6dad38c9d20b70792',
@@ -53,8 +53,8 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
             isCanceledAtPeriodEnd: false,
             trial: null,
             plan: {
-              id: 'free',
-              name: 'Free',
+              id: 'essentials',
+              name: 'Essentials',
               __typename: 'OBPlan',
             },
             __typename: 'OBSubscription',
@@ -301,8 +301,8 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
               isCanceledAtPeriodEnd: false,
               trial: null,
               plan: {
-                id: 'free',
-                name: 'Free',
+                id: 'essentials',
+                name: 'Essentials',
                 __typename: 'OBPlan',
               },
               __typename: 'OBSubscription',
@@ -526,4 +526,4 @@ const MOCK_ACCOUNT_OB_FREE_DATA = {
   },
 };
 
-export default MOCK_ACCOUNT_OB_FREE_DATA;
+export default MOCK_ACCOUNT_OB_ESSENTIAL_DATA;

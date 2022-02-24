@@ -1,5 +1,10 @@
-import { blue, grayDark, grayDarker, grayLight } from '@bufferapp/ui/style/colors';
-import styled, { css } from 'styled-components';
+import {
+  blue,
+  grayDark,
+  grayDarker,
+  grayLight,
+} from '@bufferapp/ui/style/colors';
+import styled from 'styled-components';
 
 export const SummaryContainer = styled.div`
   width: 285px;
@@ -8,7 +13,7 @@ export const SummaryContainer = styled.div`
   border-bottom-right-radius: 8px;
   box-shadow: inset 1px 0px 0px #bdbdbd;
   height: 100%;
-  padding: 70px 0 24px;
+  padding: ${(props) => (props.sbbEnabled ? '60px 0 24px' : '70px 0 24px')};
   box-sizing: border-box;
   position: relative;
 
@@ -55,7 +60,6 @@ export const Detail = styled.li`
   align-items: center;
   margin-bottom: 6px;
 `;
-
 
 export const DiscountReminder = styled.div`
   display: flex;
@@ -151,7 +155,7 @@ export const SummaryDetails = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid ${grayLight};
   box-sizing: border-box;
   border-radius: 4px;
@@ -160,7 +164,6 @@ export const SummaryDetails = styled.div`
   ${Detail}, p {
     font-size: 12px;
   }
-
 `;
 
 export const Title = styled.div`

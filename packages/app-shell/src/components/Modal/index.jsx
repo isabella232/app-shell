@@ -17,6 +17,8 @@ import StartTrial from './modals/StartTrial';
 import StickyModal from './modals/StickyModal';
 import Success from './modals/PaidMigration/Success';
 import TrialExpired from './modals/TrialExpired';
+import QuantityUpdate from './modals/QuantityUpdate';
+
 import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt } from './utils';
 
 function handleFreeUsersStartTrialPrompt(openModal) {
@@ -91,6 +93,12 @@ const ModalContent = ({ modal, closeAction }) => {
       return (
         <SimpleModal closeAction={closeAction}>
           <TrialExpired modal={modal} />
+        </SimpleModal>
+      );
+    case MODALS.quantityUpdate:
+      return (
+        <SimpleModal closeAction={closeAction}>
+          <QuantityUpdate modal={modal} />
         </SimpleModal>
       );
     default:

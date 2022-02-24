@@ -2,12 +2,13 @@
    "data":{
       "account":{
          "id":"606b65d6dad38c9d20b70792",
-         "email":"federico+obfree@buffer.com",
+         "email":"ob_free@buffer.com",
          "createdAt":"2021-04-05T19:32:38.841Z",
          "featureFlips":[
             "grantAnalyzeAccess",
             "sharedChannels",
-            "engageRollOut"
+            "engageRollOut",
+            "geid1_free_user_trial_prompt"
          ],
          "isImpersonation":false,
          "currentOrganization":{
@@ -22,37 +23,34 @@
             },
             "createdAt":"2021-04-05T19:32:38.961Z",
             "isOneBufferOrganization":true,
-            "shouldDisplayInviteCTA":true,
+            "shouldDisplayInviteCTA":false,
             "featureFlips":[
                "grantAnalyzeAccess",
                "sharedChannels",
-               "engageRollOut"
+               "engageRollOut",
+               "geid1_free_user_trial_prompt"
             ],
             "channels":[
-              {
-                "id":"606b65e1dd934f70840bfef7",
-                "__typename":"Channel"
-              }
             ],
             "billing":{
                "id":"606b65d6dad38c03d2b70793",
-               "canAccessAnalytics":true,
-               "canAccessEngagement":true,
+               "canAccessAnalytics":false,
+               "canAccessEngagement":false,
                "canAccessPublishing":true,
                "paymentDetails":{
                   "hasPaymentDetails":true,
                   "__typename":"PaymentDetails"
                },
-               "canStartTrial":false,
+               "canStartTrial":true,
                "subscription":{
                   "quantity": 1,
-                  "interval":"year",
-                  "periodEnd":"2022-08-11T17:58:29.000Z",
+                  "interval":"month",
+                  "periodEnd":null,
                   "isCanceledAtPeriodEnd":false,
                   "trial":null,
                   "plan":{
-                     "id":"team",
-                     "name":"Essentials + Team Pack",
+                    "id": "essentials",
+                    "name": "Essentials",
                      "__typename":"OBPlan"
                   },
                   "__typename":"OBSubscription"
@@ -64,7 +62,7 @@
                      "planInterval":"month",
                      "channelsQuantity":1,
                      "description":"Simplify the noise and test out social media management tools.",
-                     "isCurrentPlan":false,
+                     "isCurrentPlan":true,
                      "highlights":[
                         "Basic publishing tools",
                         "Limited usage"
@@ -86,7 +84,7 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -125,7 +123,7 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -165,9 +163,9 @@
                         ],
                         "__typename":"OBPlanOptionSummary"
                      },
-                     "isRecommended":false,
+                     "isRecommended":true,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -183,7 +181,7 @@
                      "planInterval":"year",
                      "channelsQuantity":1,
                      "description":"Simplify the noise and test out social media management tools.",
-                     "isCurrentPlan":false,
+                     "isCurrentPlan":true,
                      "highlights":[
                         "Basic publishing tools",
                         "Limited usage"
@@ -205,7 +203,7 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -244,7 +242,7 @@
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -260,7 +258,7 @@
                      "planInterval":"year",
                      "channelsQuantity":1,
                      "description":"Collaborate with your team in one place & save time reporting.",
-                     "isCurrentPlan":true,
+                     "isCurrentPlan":false,
                      "highlights":[
                         "Advanced publishing tools",
                         "Analytics & reporting",
@@ -284,9 +282,9 @@
                         ],
                         "__typename":"OBPlanOptionSummary"
                      },
-                     "isRecommended":false,
+                     "isRecommended":true,
                      "downgradedMessage":"",
-                     "channelSlotDetails":{
+                    "channelSlotDetails":{
                         "flatFee":0, 
                         "currentQuantity":0, 
                         "chargableQuantity":0, 
@@ -314,40 +312,33 @@
                },
                "createdAt":"2021-04-05T19:32:38.961Z",
                "isOneBufferOrganization":true,
-               "shouldDisplayInviteCTA":true,
+               "shouldDisplayInviteCTA":false,
                "featureFlips":[
                   "grantAnalyzeAccess",
                   "sharedChannels",
                   "engageRollOut"
                ],
                "channels":[
-                  {
-                     "id":"606b65e1dd934f70840bfef7",
-                     "name":"testing public",
-                     "service":"facebook",
-                     "organizationId":"606b65d6dad38c03d2b70793",
-                     "__typename":"Channel"
-                  }
                ],
                "billing":{
                   "id":"606b65d6dad38c03d2b70793",
-                  "canAccessAnalytics":true,
-                  "canAccessEngagement":true,
+                  "canAccessAnalytics":false,
+                  "canAccessEngagement":false,
                   "canAccessPublishing":true,
                   "paymentDetails":{
                      "hasPaymentDetails":true,
                      "__typename":"PaymentDetails"
                   },
-                  "canStartTrial":false,
+                  "canStartTrial":true,
                   "subscription":{
-                     "quantity": 1,
-                     "interval":"year",
-                     "periodEnd":"2022-08-11T17:58:29.000Z",
+                     "quantity":1,
+                     "interval":"month",
+                     "periodEnd":null,
                      "isCanceledAtPeriodEnd":false,
                      "trial":null,
                      "plan":{
-                        "id":"team",
-                        "name":"Essentials + Team Pack",
+                        "id": "essentials",
+                        "name": "Essentials",
                         "__typename":"OBPlan"
                      },
                      "__typename":"OBSubscription"
@@ -359,7 +350,7 @@
                         "planInterval":"month",
                         "channelsQuantity":1,
                         "description":"Simplify the noise and test out social media management tools.",
-                        "isCurrentPlan":false,
+                        "isCurrentPlan":true,
                         "highlights":[
                            "Basic publishing tools",
                            "Limited usage"
@@ -460,7 +451,7 @@
                            ],
                            "__typename":"OBPlanOptionSummary"
                         },
-                        "isRecommended":false,
+                        "isRecommended":true,
                         "downgradedMessage":"",
                         "channelSlotDetails":{
                            "flatFee":0, 
@@ -478,7 +469,7 @@
                         "planInterval":"year",
                         "channelsQuantity":1,
                         "description":"Simplify the noise and test out social media management tools.",
-                        "isCurrentPlan":false,
+                        "isCurrentPlan":true,
                         "highlights":[
                            "Basic publishing tools",
                            "Limited usage"
@@ -555,7 +546,7 @@
                         "planInterval":"year",
                         "channelsQuantity":1,
                         "description":"Collaborate with your team in one place & save time reporting.",
-                        "isCurrentPlan":true,
+                        "isCurrentPlan":false,
                         "highlights":[
                            "Advanced publishing tools",
                            "Analytics & reporting",
@@ -579,7 +570,7 @@
                            ],
                            "__typename":"OBPlanOptionSummary"
                         },
-                        "isRecommended":false,
+                        "isRecommended":true,
                         "downgradedMessage":"",
                         "channelSlotDetails":{
                            "flatFee":0, 

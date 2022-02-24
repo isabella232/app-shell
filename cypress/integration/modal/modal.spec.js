@@ -22,7 +22,7 @@ describe('Modal', () => {
   });
   describe('Analyze product - OB no channels', () => {
     before(() => {
-      cy.fixture('accountObFreeNoChannels').then((account) => {
+      cy.fixture('accountObEssentialNoChannels').then((account) => {
         cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
           status: 200,
           body: account,
@@ -41,7 +41,7 @@ describe('Modal', () => {
   });
   describe('Engage product - OB no channels', () => {
     before(() => {
-      cy.fixture('accountObFreeNoChannels').then((account) => {
+      cy.fixture('accountObEssentialNoChannels').then((account) => {
         cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
           status: 200,
           body: account,

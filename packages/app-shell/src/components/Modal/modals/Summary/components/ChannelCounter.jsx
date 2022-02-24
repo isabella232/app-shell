@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   ChannelsCounterContainer,
@@ -7,39 +8,30 @@ import {
 } from './ChannelCounter.style';
 
 function ChannelCounter(props) {
-  const { onUpdate } = props;
-  const [channelCount, setChannelCount] = useState(0);
-
-  function handleUpdate() {
-    if (onUpdate) {
-      onUpdate(channelCount);
-    }
-  }
-
-  function increaseCounter() {
-    setChannelCount(channelCount + 1);
-    handleUpdate();
-  }
-
-  function decreaseCounter() {
-    if (channelCount !== 0) {
-      setChannelCount(channelCount - 1);
-      handleUpdate();
-    }
-  }
+  const { channelsCount, onDecreaseCounter, onIncreaseCounter } = props;
 
   // TODO: Replace text with Icons
   return (
     <ChannelsCounterContainer>
-      <ChannelsCounterButton onClick={() => decreaseCounter()}>
+      <ChannelsCounterButton onClick={() => onDecreaseCounter()}>
         -
       </ChannelsCounterButton>
-      <ChannelsCounterCountDisplay>{channelCount}</ChannelsCounterCountDisplay>
-      <ChannelsCounterButton onClick={() => increaseCounter()}>
+      <ChannelsCounterCountDisplay>{channelsCount}</ChannelsCounterCountDisplay>
+      <ChannelsCounterButton onClick={() => onIncreaseCounter()}>
         +
       </ChannelsCounterButton>
     </ChannelsCounterContainer>
   );
 }
+
+ChannelCounter.propTypes = {
+  channelsCount: PropTypes.number,
+  onDecreaseCounter: PropTypes.func.isRequired,
+  onIncreaseCounter: PropTypes.func.isRequired,
+};
+
+ChannelCounter.defaultProps = {
+  channelsCount: 0,
+};
 
 export default ChannelCounter;
