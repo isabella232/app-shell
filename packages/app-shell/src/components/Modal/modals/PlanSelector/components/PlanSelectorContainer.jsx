@@ -46,6 +46,7 @@ import {
   handleChannelsCountConditions,
   getCurrentPlanFromPlanOptions,
   calculateTotalSlotsPrice,
+  handleUpgradeIntent,
 } from '../../../utils';
 
 export const PlanSelectorContainer = ({
@@ -58,14 +59,7 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
-  const filterPlanOptions = () => {
-    if (isUpgradeIntent) {
-      return changePlanOptions.filter((option) => option.planId !== 'free');
-    }
-    return changePlanOptions;
-  };
-
-  const planOptions = filterPlanOptions();
+  const planOptions = changePlanOptions;
 
   const [error, setError] = useState(null);
   const [showAgencyPlan, setShowAgencyPlan] = useState(false);
@@ -78,32 +72,31 @@ export const PlanSelectorContainer = ({
   );
   const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
     planOptions,
-    isUpgradeIntent,
-    user
+    isUpgradeIntent
   );
 
-  // const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
 
-  // const { currentQuantity } = currentPlan.channelSlotDetails;
-  // const {
-  //   flatFee: selectedPlanFlatFee,
-  //   pricePerQuantity: selectedPlanPricePerQuantity,
-  //   minimumQuantity: selectedPlanMinimumQuantity,
-  // } = selectedPlan.channelSlotDetails;
+  const { currentQuantity } = currentPlan.channelSlotDetails;
+  const {
+    flatFee: selectedPlanFlatFee,
+    pricePerQuantity: selectedPlanPricePerQuantity,
+    minimumQuantity: selectedPlanMinimumQuantity,
+  } = selectedPlan.channelSlotDetails;
 
   const {
     channelsCount,
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(1, 1);
+  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
 
   const newPrice = calculateTotalSlotsPrice(
     selectedPlan.planId,
     channelsCount,
-    6,
-    1,
-    0
+    selectedPlanPricePerQuantity,
+    selectedPlanMinimumQuantity,
+    selectedPlanFlatFee
   );
 
   const {
@@ -134,7 +127,6 @@ export const PlanSelectorContainer = ({
   );
 
   const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
-
   const planOptionsWithoutAgencyPlans = filterListOfPlans(
     planOptions,
     'agency'
@@ -143,7 +135,7 @@ export const PlanSelectorContainer = ({
   const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
 
   const availablePlans =
-    shouldIncludeAgencyPlan || showAgencyPlan
+    shouldIncludeAgencyPlan || showAgencyPlan || isUpgradeIntent
       ? planOptionsWithoutFreePlans
       : planOptionsWithoutAgencyPlans;
 
@@ -178,6 +170,13 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
+    handleUpgradeIntent(
+      selectedPlan.planId,
+      isUpgradeIntent,
+      monthlyBilling,
+      updateSelectedPlan
+    );
+
     handleChannelsCountConditions(
       selectedPlan.planId,
       channelsCount,
@@ -232,7 +231,7 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {!shouldIncludeAgencyPlan && !showAgencyPlan && (
+        {!shouldIncludeAgencyPlan && !showAgencyPlan && !isUpgradeIntent && (
           <AgencyPlanSection
             ctaAction={() => {
               updateSelectedPlan(`agency_${monthlyBilling ? 'month' : 'year'}`);
