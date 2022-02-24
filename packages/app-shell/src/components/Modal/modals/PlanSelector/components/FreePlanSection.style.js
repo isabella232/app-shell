@@ -1,33 +1,12 @@
 import { grayLight, blue } from '@bufferapp/ui/style/colors';
 import styled from 'styled-components';
-
-const containerPadding = 15;
-
 export const Container = styled.div`
-  ${(props) => {
-    if (props.sbbEnabled) {
-      return `
-        display: flex;
-        width: 100%;
-        align-items: center;
-        width: 100%;
-        padding: 15px;
-      `;
-    }
-    return `
-      display: flex;
-      width: 100%;
-      height: 64px;
-      padding: ${containerPadding}px;
-      margin-bottom: 16px;
-      align-items: center;
-      height: calc(64px - ${containerPadding}px);
-      width: calc(100% - ${containerPadding * 2}px);
-
-      border: 1px solid ${grayLight};
-      border-radius: 3px;
-    `;
-  }}
+  display: flex;
+  width: 100%;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 16px;
 
   button {
     padding: 2px;
