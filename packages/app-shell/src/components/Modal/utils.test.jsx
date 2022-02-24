@@ -8,6 +8,7 @@ import {
   filterListOfPlans,
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
+  getPlanByPlanId,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -25,11 +26,6 @@ const listOfFilteredPlanOptions = [
   { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
-
-// TODO:REMOVE_WITH_FF:agencyPlan
-const user = {
-  featureFlips: ['agencyPlan'],
-};
 
 const isUpgradeIntent = false;
 
@@ -191,13 +187,13 @@ describe('Modal - utils', () => {
   });
 
   describe('getDefaultSelectedPlan', () => {
-    it('should set the default selected plan to the current plan when the current plan is not free', () => {
+    it('should set the default selected plan to the current plan when their is a currentPlan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'team',
@@ -206,40 +202,25 @@ describe('Modal - utils', () => {
       });
     });
 
-    it("should set the default selected plan to the first plan in list when it's a free plan AND there is no current plan available", () => {
+    it('should set the default selected plan to the current plan when isUpgradeIntent is true AND there is a current plan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
+        ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
+        planId: 'team',
+        planInterval: 'year',
+        isCurrentPlan: true,
       });
     });
 
-    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true AND there is no current plan available', () => {
-      const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
-      ];
-
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
-
-      expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
-      });
-    });
-
-    it('should set the default selected plan to the first plan in list when there is no plan in the list of options with isCurrentPlan set to true', () => {
+    it('should set the default selected plan to essentials when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
-      const result = getDefaultSelectedPlan(planOptions, user, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
@@ -248,15 +229,14 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the current plan when isUpgradeIntent and there is a current plan available in list ', () => {
+    it('should set the default selected plan to essentials when isUpgradeIntent ', () => {
       const planOptions = [...listOfFilteredPlanOptions];
-
-      const result = getDefaultSelectedPlan(planOptions, user, true);
+      const result = getDefaultSelectedPlan(planOptions, true);
 
       expect(result).toEqual({
-        planId: 'team',
-        planInterval: 'year',
-        isCurrentPlan: true,
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
       });
     });
   });
@@ -381,6 +361,42 @@ describe('Modal - utils', () => {
         flatFee
       );
       expect(result).toEqual(132);
+    });
+  });
+
+  describe('getPlanByPlanId', () => {
+    it('should return essentials plan when provided with essentials id', () => {
+      const planId = 'essentials';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return free plan when provided with free id', () => {
+      const planId = 'free';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'free',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return the first essentials plan in list when provided with essentials id', () => {
+      const planId = 'essentials';
+      const plans = [
+        ...listOfPlanOptions,
+        { planId: 'essentials', planInterval: 'year', isCurrentPlan: false },
+        { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+      ];
+
+      const result = getPlanByPlanId(planId, plans);
+      expect(result).toEqual(plans[1]);
     });
   });
 });
