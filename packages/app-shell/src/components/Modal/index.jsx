@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
@@ -20,6 +21,12 @@ import TrialExpired from './modals/TrialExpired';
 import QuantityUpdate from './modals/QuantityUpdate';
 
 import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt } from './utils';
+
+const ModalWrapper = styled.div`
+  > div {
+    z-index: 1;
+  }
+`;
 
 function handleFreeUsersStartTrialPrompt(openModal) {
   openModal(MODALS.startTrial, {
@@ -164,7 +171,7 @@ const Modal = React.memo(({ modal, openModal }) => {
   return (
     <>
       {hasModal && (
-        <ModalContent modal={modal} closeAction={() => openModal(null)} />
+        <ModalWrapper><ModalContent modal={modal} closeAction={() => openModal(null)} /></ModalWrapper>
       )}
     </>
   );
