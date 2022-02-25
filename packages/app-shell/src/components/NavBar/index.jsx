@@ -142,6 +142,7 @@ const NavBarStyled = styled.nav`
   height: 64px;
   justify-content: space-between;
   position: relative;
+  z-index: 2;
 `;
 
 const NavBarLeft = styled.div`
