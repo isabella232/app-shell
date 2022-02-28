@@ -20,7 +20,6 @@ import useModal, { MODALS } from '../../common/hooks/useModal';
 import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
 import getTrialBannerCopy from './getTrialBannerCopy';
-import ErrorBoundary from './ErrorBoundary';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -154,15 +153,13 @@ export default () => {
   });
 
   ReactDOM.render(
-    <ErrorBoundary>
-      <React.StrictMode>
-        <ApolloProvider client={client}>
-          <FeaturesWrapper>
-            <Navigator />
-          </FeaturesWrapper>
-        </ApolloProvider>
-      </React.StrictMode>
-    </ErrorBoundary>,
+    <React.StrictMode>
+      <ApolloProvider client={client}>
+        <FeaturesWrapper>
+          <Navigator />
+        </FeaturesWrapper>
+      </ApolloProvider>
+    </React.StrictMode>,
     document.getElementById('navigator')
   );
 };
