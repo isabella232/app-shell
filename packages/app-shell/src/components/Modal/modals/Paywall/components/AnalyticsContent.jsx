@@ -16,7 +16,7 @@ export const AnalyticsContent = () => {
         light="https://buffer-ui.s3.amazonaws.com/video-thumbnail-analytics.jpg"
         playIcon={<styles.PlayIcon />}
       />
-      <Text type="label" color="gray"> See how you can use Buffer’s tools together to grow your brand </Text>
+      <Text type="label"> See how you can use Buffer’s tools together to grow your brand </Text>
     </styles.Video>
     <styles.Info>
       <Text type="h2">Get in-depth insights to grow <br /> your brand on social media</Text>

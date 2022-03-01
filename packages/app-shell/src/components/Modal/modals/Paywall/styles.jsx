@@ -99,6 +99,7 @@ export const CTAs = styled.div`
   display: flex;
   align-items: center;
   width :339px;
+  margin-bottom: 8px;
 
   a {
     margin-left: 32px;
