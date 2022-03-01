@@ -2,19 +2,11 @@ import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import ReactPlayer from 'react-player';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
-import Button from '@bufferapp/ui/Button';
-import Link from '@bufferapp/ui/Link';
 
-import { useUser } from '../../../../../common/context/User';
 import * as styles from '../styles';
+import { Ctas } from './Ctas';
 
 export const AnalyticsContent = () => {
-  const user = useUser();
-  const canStartTrial = user?.currentOrganization?.billing?.canStartTrial;
-  const { MODALS, actions } = window?.appshell || {};
-  const modal = canStartTrial ? MODALS?.startTrial : MODALS?.planSelector;
-  const cta = canStartTrial ? 'startTrial' : 'upgradePlan';
-
   return (<styles.Content>
     <styles.Video>
       <ReactPlayer
@@ -42,6 +34,7 @@ export const AnalyticsContent = () => {
           <Text>Create gorgeous reports</Text>
         </li>
       </styles.List>
+      <Ctas />
     </styles.Info>
   </styles.Content>);
 };

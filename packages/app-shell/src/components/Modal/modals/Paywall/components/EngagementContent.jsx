@@ -2,19 +2,11 @@ import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import ReactPlayer from 'react-player';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
-import Button from '@bufferapp/ui/Button';
-import Link from '@bufferapp/ui/Link';
 
-import { useUser } from '../../../../../common/context/User';
 import * as styles from '../styles';
+import { Ctas } from './Ctas';
 
 export const EngagementContent = () => {
-  const user = useUser();
-  const canStartTrial = user?.currentOrganization?.billing?.canStartTrial;
-  const { MODALS, actions } = window?.appshell || {};
-  const modal = canStartTrial ? MODALS?.startTrial : MODALS?.planSelector;
-  const cta = canStartTrial ? 'startTrial' : 'upgradePlan';
-
   return (<styles.Content>
     <styles.Video>
       <ReactPlayer
@@ -42,21 +34,7 @@ export const EngagementContent = () => {
           <Text>Reply faster with hotkeys and a smart emoji picker</Text>
         </li>
       </styles.List>
-      <styles.CTAs>
-        <Button
-          type="primary"
-          onClick={() => {
-            actions.openModal(modal, {
-              cta,
-              ctaButton: `paywall-${cta}-1`,
-              isUpgradeIntent: true,
-            });
-          }}
-          label={canStartTrial ? 'Start free Trial' : 'Upgrade Plan'}
-        />
-        <Link newTab href="https://buffer.com/engage ">Learn more</Link>
-      </styles.CTAs>
+      <Ctas />
     </styles.Info>
   </styles.Content>);
 };
-
