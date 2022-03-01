@@ -60,6 +60,17 @@ const ModalTesting = () => {
       >
         Render Modal
       </button>
+      <h3>Render Paywall modal</h3>
+      <button
+        onClick={() => {
+          const { MODALS, actions } = window?.appshell || {};
+          actions.openModal(MODALS.paywall, {
+            cta: 'paywall',
+          });
+        }}
+      >
+        Render Modal
+      </button>
     </Wrapper>
   );
 };

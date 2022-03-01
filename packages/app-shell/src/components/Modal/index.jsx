@@ -19,8 +19,9 @@ import StickyModal from './modals/StickyModal';
 import Success from './modals/PaidMigration/Success';
 import TrialExpired from './modals/TrialExpired';
 import QuantityUpdate from './modals/QuantityUpdate';
+import { Paywall } from './modals/Paywall';
 
-import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt } from './utils';
+import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt, shouldShowPaywallModal } from './utils';
 
 const ModalWrapper = styled.div`
   > div {
@@ -108,6 +109,12 @@ const ModalContent = ({ modal, closeAction }) => {
           <QuantityUpdate modal={modal} />
         </SimpleModal>
       );
+    case MODALS.paywall:
+      return (
+        <SimpleModal closeAction={closeAction}>
+          <Paywall modal={modal} />
+        </SimpleModal>
+      );
     default:
       return null;
   }
@@ -161,6 +168,10 @@ const Modal = React.memo(({ modal, openModal }) => {
     // Show Channel Connection prompt
     if (shouldShowChannelConnectionPrompt(user)) {
       openModal(MODALS.channelConnectionPrompt);
+    }
+
+    if (shouldShowPaywallModal(user)) {
+      openModal(MODALS.paywall);
     }
   }, [user.loading]);
 
