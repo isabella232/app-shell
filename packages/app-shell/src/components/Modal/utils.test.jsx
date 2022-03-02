@@ -9,6 +9,7 @@ import {
   filterListOfPlans,
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
+  handleChannelsCountConditions,
   getPlanByPlanId,
 } from './utils';
 
@@ -203,7 +204,7 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the current plan when isUpgradeIntent is true AND there is a current plan found', () => {
+    it('should set the default selected plan to the current plan when isUpgradeIntent is false AND there is a current plan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
         ...listOfFilteredPlanOptions,
@@ -374,6 +375,44 @@ describe('Modal - utils', () => {
         flatFee
       );
       expect(result).toEqual(132);
+    });
+  });
+
+  describe('handleChannelsCountConditions', () => {
+    it('should call callBack func with 10 when planId equals agency and channelCount is less than 10', () => {
+      const planId = 'agency';
+      const channelsCount = 3;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).toHaveBeenCalledWith(10);
+    });
+
+    it('should NOT call callBack func when planId equals agency and channelCount is more than 10', () => {
+      const planId = 'agency';
+      const channelsCount = 30;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).not.toHaveBeenCalled();
+    });
+
+    it('should call callBack func with 3 when planId equals free and channelCount is more than 3', () => {
+      const planId = 'free';
+      const channelsCount = 30;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).toHaveBeenCalledWith(3);
+    });
+
+    it('should NOT call callBack func when planId equals free and channelCount is less than 3', () => {
+      const planId = 'free';
+      const channelsCount = 2;
+      const callBackFunc = jest.fn();
+
+      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
+      expect(callBackFunc).not.toHaveBeenCalled();
     });
   });
 

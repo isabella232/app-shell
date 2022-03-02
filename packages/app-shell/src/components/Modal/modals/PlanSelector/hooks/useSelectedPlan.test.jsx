@@ -7,16 +7,12 @@ const planOptions = [
   { planId: 'free', planInterval: 'month' },
 ];
 
-const user = {
-  featureFlips: ['featureFlips'],
-};
-
 const isUpgradeIntent = false;
 
 describe('useSelectedPlan', () => {
   it('should set the default as the current plan', () => {
     const { result } = renderHook(() =>
-      useSelectedPlan(planOptions, isUpgradeIntent, user)
+      useSelectedPlan(planOptions, isUpgradeIntent)
     );
     expect(result.current.selectedPlan.planId).toBe('team');
   });
@@ -28,7 +24,7 @@ describe('useSelectedPlan', () => {
       { planId: 'free', planInterval: 'month' },
     ];
     const { result } = renderHook(() =>
-      useSelectedPlan(planOptionsForUpgrade, true, user)
+      useSelectedPlan(planOptionsForUpgrade, true)
     );
     expect(result.current.selectedPlan.planId).toBe('essentials');
   });
@@ -37,7 +33,7 @@ describe('useSelectedPlan', () => {
     const planString = 'essentials_year';
 
     const { result } = renderHook(() =>
-      useSelectedPlan(planOptions, isUpgradeIntent, user)
+      useSelectedPlan(planOptions, isUpgradeIntent)
     );
     act(() => {
       result.current.updateSelectedPlan(planString);
@@ -49,7 +45,7 @@ describe('useSelectedPlan', () => {
     const planString = 'free_month';
 
     const { result } = renderHook(() =>
-      useSelectedPlan(planOptions, isUpgradeIntent, user)
+      useSelectedPlan(planOptions, isUpgradeIntent)
     );
     act(() => {
       result.current.updateSelectedPlan(planString);
