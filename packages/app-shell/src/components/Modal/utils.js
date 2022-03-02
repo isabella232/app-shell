@@ -23,7 +23,7 @@ export function shouldShowChannelConnectionPrompt(user) {
   const activeProduct = getActiveProductFromPath();
   const isSupportedProdut = CHANNEL_PROMPT_PRODUCTS.includes(activeProduct);
   const hasNoChannels = user?.currentOrganization?.channels?.length === 0;
-  if (isSupportedProdut && hasNoChannels) {
+  if (isSupportedProdut && hasNoChannels && !isFreeUser(user)) {
     return true;
   }
 
@@ -54,24 +54,22 @@ export function userHasFeatureFlip(user, featureFlip) {
   return user.featureFlips.includes(featureFlip);
 }
 
-export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
-  const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
-
-  const isOnFreePlan =
-    isUpgradeIntent || !currentPlan || currentPlan.planId === 'free'
-      ? true
-      : false;
-
-  const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
-
-  const defaultSelectedPlan =
-    isOnFreePlan && !currentPlan ? planOptionsExcludingFree[0] : currentPlan;
-
-  return defaultSelectedPlan;
+export function getPlanByPlanId(planId, planOptions) {
+  return planOptions.find((plan) => plan.planId === planId);
 }
 
 export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
+}
+
+export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
+  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const essentialsPlan = getPlanByPlanId('essentials', planOptions);
+
+  const defaultSelectedPlan =
+    isUpgradeIntent || !currentPlan ? essentialsPlan : currentPlan;
+
+  return defaultSelectedPlan;
 }
 
 export function calculateAgencySlotPrice(
@@ -118,5 +116,16 @@ export function handleChannelsCountConditions(
   }
   if (planId === 'free' && channelsCount > 3) {
     setChannelsCounterValue(3);
+  }
+}
+
+export function handleUpgradeIntent(
+  selectedPlanId,
+  isUpgradeIntent,
+  monthlyBilling,
+  updateSelectedPlan
+) {
+  if (selectedPlanId === 'free' && isUpgradeIntent) {
+    updateSelectedPlan(`essentials_${monthlyBilling ? 'month' : 'year'}`);
   }
 }

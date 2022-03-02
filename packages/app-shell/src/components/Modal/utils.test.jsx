@@ -1,4 +1,5 @@
 import MOCK_ACCOUNT_OB_FREE_DATA from '../../common/mocks/accountOBFree';
+import MOCK_ACCOUNT_OB_ESSENTIAL_DATA from '../../common/mocks/accountOBEssential';
 
 import {
   isPendoModalVisible,
@@ -9,6 +10,7 @@ import {
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
   handleChannelsCountConditions,
+  getPlanByPlanId,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -187,7 +189,7 @@ describe('Modal - utils', () => {
   });
 
   describe('getDefaultSelectedPlan', () => {
-    it('should set the default selected plan to the current plan when the current plan is not free', () => {
+    it('should set the default selected plan to the current plan when their is a currentPlan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
         ...listOfFilteredPlanOptions,
@@ -202,37 +204,22 @@ describe('Modal - utils', () => {
       });
     });
 
-    it("should set the default selected plan to the first plan in list when it's a free plan AND there is no current plan available", () => {
+    it('should set the default selected plan to the current plan when isUpgradeIntent is false AND there is a current plan found', () => {
       const planOptions = [
         { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
+        ...listOfFilteredPlanOptions,
       ];
 
       const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
+        planId: 'team',
+        planInterval: 'year',
+        isCurrentPlan: true,
       });
     });
 
-    it('should set the default selected plan to the first plan in list when isUpgradeIntent is true AND there is no current plan available', () => {
-      const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfPlanOptionsWithNoCurrentPlan,
-      ];
-
-      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
-
-      expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
-      });
-    });
-
-    it('should set the default selected plan to the first plan in list when there is no plan in the list of options with isCurrentPlan set to true', () => {
+    it('should set the default selected plan to essentials when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
       const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
@@ -244,15 +231,14 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the current plan when isUpgradeIntent and there is a current plan available in list ', () => {
+    it('should set the default selected plan to essentials when isUpgradeIntent ', () => {
       const planOptions = [...listOfFilteredPlanOptions];
-
       const result = getDefaultSelectedPlan(planOptions, true);
 
       expect(result).toEqual({
-        planId: 'team',
-        planInterval: 'year',
-        isCurrentPlan: true,
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
       });
     });
   });
@@ -271,7 +257,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return false if it has channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const result = shouldShowChannelConnectionPrompt(mockUserData);
       expect(result).toBeFalsy();
     });
@@ -286,7 +272,7 @@ describe('Modal - utils', () => {
           origin: url,
         },
       });
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -298,7 +284,7 @@ describe('Modal - utils', () => {
     });
 
     it('should return true if it has no channels', () => {
-      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
       const noChannelsUser = Object.assign(mockUserData, {
         currentOrganization: {
           ...mockUserData.currentOrganization,
@@ -307,6 +293,18 @@ describe('Modal - utils', () => {
       });
       const result = shouldShowChannelConnectionPrompt(noChannelsUser);
       expect(result).toBeTruthy();
+    });
+
+    it('should return false for free plans with no channels', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, {
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
+      const result = shouldShowChannelConnectionPrompt(noChannelsUser);
+      expect(result).toBeFalsy();
     });
   });
 
@@ -415,6 +413,42 @@ describe('Modal - utils', () => {
 
       handleChannelsCountConditions(planId, channelsCount, callBackFunc);
       expect(callBackFunc).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('getPlanByPlanId', () => {
+    it('should return essentials plan when provided with essentials id', () => {
+      const planId = 'essentials';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return free plan when provided with free id', () => {
+      const planId = 'free';
+
+      const result = getPlanByPlanId(planId, listOfPlanOptions);
+      expect(result).toEqual({
+        planId: 'free',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      });
+    });
+
+    it('should return the first essentials plan in list when provided with essentials id', () => {
+      const planId = 'essentials';
+      const plans = [
+        ...listOfPlanOptions,
+        { planId: 'essentials', planInterval: 'year', isCurrentPlan: false },
+        { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
+      ];
+
+      const result = getPlanByPlanId(planId, plans);
+      expect(result).toEqual(plans[1]);
     });
   });
 });
