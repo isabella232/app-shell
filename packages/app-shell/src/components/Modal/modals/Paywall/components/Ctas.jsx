@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Button from '@bufferapp/ui/Button';
 import Link from '@bufferapp/ui/Link';
+import Text from '@bufferapp/ui/Text';
 
 import useStartTrial from '../../../../../common/hooks/useStartTrial';
 import { useSuggestedPlan } from '../../../../../common/hooks/useSuggestedPlan';
@@ -58,7 +59,7 @@ const Content = ({ openModal }) => {
         label={ctaLabel}
       />
       <Link newTab href={`https://buffer.com/${product}`}>Learn more</Link>
-      </styles.CTAs>
+      <Text>No credit card required</Text>
       <Error
         error={
           error
@@ -68,6 +69,7 @@ const Content = ({ openModal }) => {
             : null
         }
       />
+    </styles.CTAs>
     </>
   );
 };

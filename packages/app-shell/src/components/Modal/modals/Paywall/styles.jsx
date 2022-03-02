@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { grayLighter, blue, white } from '@bufferapp/ui/style/colors';
+import { grayLighter, gray, blue, white } from '@bufferapp/ui/style/colors';
 
 export const Content = styled.div`
   width: 1153px;
@@ -18,8 +18,9 @@ export const Video = styled.div`
   align-items: center;
   width: 520px;
 
-  label {
+  span {
     margin-top: 16px;
+    font-size: 14px;
   }
 `;
 
@@ -97,6 +98,7 @@ export const Check = styled.span`
 
 export const CTAs = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   width :339px;
   margin-bottom: 8px;
@@ -104,5 +106,15 @@ export const CTAs = styled.div`
   a {
     margin-left: 32px;
     font-weight: 700;
+  }
+
+  span {
+    margin-top: 8px;
+    font-size: 14px;
+    color: ${gray};
+  }
+
+  > * {
+    flex-shrink: 0;
   }
 `;

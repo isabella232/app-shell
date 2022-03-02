@@ -16,7 +16,7 @@ export const EngagementContent = () => {
         light="https://buffer-ui.s3.amazonaws.com/video-thumbnail-engagement.jpg"
         playIcon={<styles.PlayIcon />}
       />
-      <Text type="label"> See how you can use Buffer’s tools together to grow your brand </Text>
+      <Text> See how you can use Buffer’s tools together to grow your brand </Text>
     </styles.Video>
     <styles.Info>
       <Text type="h2">Turn your followers into your <br/> fans</Text>
