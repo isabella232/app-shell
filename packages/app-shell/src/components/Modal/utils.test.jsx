@@ -5,6 +5,7 @@ import {
   isPendoModalVisible,
   hasSeenFreeUserStartTrialPrompt,
   shouldShowFreeUserStartTrialPrompt,
+  shouldShowPaywallModal,
   shouldShowChannelConnectionPrompt,
   filterListOfPlans,
   getDefaultSelectedPlan,
@@ -449,6 +450,68 @@ describe('Modal - utils', () => {
 
       const result = getPlanByPlanId(planId, plans);
       expect(result).toEqual(plans[1]);
+    });
+  });
+
+  describe('shouldShowPaywallModal', () => {
+    beforeEach(() => {
+      global.window = Object.create(window);
+      const url = 'http://analyze.bufer.com';
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
+        value: {
+          origin: url,
+        },
+      });
+    });
+
+    it('should return false if not a free user', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_ESSENTIAL_DATA.data.account;
+      const result = shouldShowPaywallModal(mockUserData);
+      expect(result).toBeFalsy();
+    });
+
+    it('should return true if free user on Analytics', () => {
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const result = shouldShowPaywallModal(mockUserData);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return true if free user on Engagement', () => {
+      global.window = Object.create(window);
+      const url = 'http://engage.bufer.com';
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
+        value: {
+          origin: url,
+        },
+      });
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const result = shouldShowPaywallModal(mockUserData);
+      expect(result).toBeTruthy();
+    });
+
+    it('should return false if product not analyze or engage', () => {
+      global.window = Object.create(window);
+      const url = 'http://publish.bufer.com';
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        writable: true,
+        value: {
+          origin: url,
+        },
+      });
+      const mockUserData = MOCK_ACCOUNT_OB_FREE_DATA.data.account;
+      const noChannelsUser = Object.assign(mockUserData, {
+        currentOrganization: {
+          ...mockUserData.currentOrganization,
+          channels: [],
+        },
+      });
+      const result = shouldShowPaywallModal(noChannelsUser);
+      expect(result).toBeFalsy();
     });
   });
 });

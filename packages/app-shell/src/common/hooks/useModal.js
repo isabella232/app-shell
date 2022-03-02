@@ -3,18 +3,19 @@ import { useState, useEffect, useCallback } from 'react';
 import eventDispatcher from './utils/eventDispatcher';
 
 export const MODALS = {
-  channelConnectionPrompt: 'channelConnectionPrompt',
   GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
+  channelConnectionPrompt: 'channelConnectionPrompt',
   essentialsPlan: 'essentialsPlan',
   essentialsPricing: 'essentialsPricing',
   paidMigration: 'paidMigration',
   paymentMethod: 'paymentMethod',
+  paywall: 'paywall',
   planSelector: 'planSelector',
+  quantityUpdate: 'quantityUpdate',
   startTrial: 'startTrial',
   success: 'success',
   trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
-  quantityUpdate: 'quantityUpdate'
 };
 
 export const EVENT_KEY = 'appshell__modal_event';

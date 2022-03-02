@@ -40,6 +40,14 @@ export function shouldShowFreeUserStartTrialPrompt(user) {
   );
 }
 
+export function shouldShowPaywallModal(user) {
+  const activeProduct = getActiveProductFromPath();
+  return (
+    (activeProduct === 'analyze' || activeProduct === 'engage') &&
+    isFreeUser(user)
+  );
+}
+
 export function filterListOfPlans(planOptions, planToExclude) {
   const planOptionsFiltered = planOptions.filter(
     (plan) => plan.planId !== planToExclude

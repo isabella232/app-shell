@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import Text from '@bufferapp/ui/Text';
@@ -9,28 +9,14 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
+import { useSuggestedPlan } from '../../../../common/hooks/useSuggestedPlan';
 import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
 const StartTrial = ({ user, openModal, modalData }) => {
-  const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const { suggestedPlan } = useSuggestedPlan(user);
   const { cta, ctaButton } = modalData || {};
-
-  useEffect(() => {
-    if (user) {
-      let plan = user.currentOrganization?.billing?.changePlanOptions.find(
-        (p) => p.isRecommended
-      );
-      if (!plan) {
-        plan = {
-          planId: 'team',
-          planInterval: 'month',
-        };
-      }
-      setSuggestedPlan(plan);
-    }
-  }, [user]);
 
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
