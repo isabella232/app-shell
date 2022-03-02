@@ -6,6 +6,7 @@ import {
   ApolloClient,
   InMemoryCache,
   useQuery,
+  useMutation,
   HttpLink,
 } from '@apollo/client';
 import ReactDOM from 'react-dom';
@@ -17,7 +18,10 @@ import Modal from '../../components/Modal/index';
 import { UserContext } from '../../common/context/User';
 import { ModalContext } from '../../common/context/Modal';
 import useModal, { MODALS } from '../../common/hooks/useModal';
-import { QUERY_ACCOUNT } from '../../common/graphql/account';
+import {
+  QUERY_ACCOUNT,
+  ACCOUNT_INITIATE_EMAIL_VERIFICATION,
+} from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
@@ -93,6 +97,20 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
     }
   }
 
+  const [
+    initiateEmailVerification,
+    {
+      data: initiateEmailVerificationData,
+      error: initiateEmailVerificationError,
+    },
+  ] = useMutation(ACCOUNT_INITIATE_EMAIL_VERIFICATION);
+
+  // Email verification banner
+  const showEmailVerificationBanner =
+    !loading && user.shouldShowEmailVerificationCommunication;
+  const resendEmailVerificationSuccess =
+    initiateEmailVerificationData?.accountInitiateEmailVerification?.success;
+
   return (
     <UserContext.Provider value={user}>
       <ModalContext.Provider value={modal}>
@@ -112,6 +130,24 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
                   isUpgradeIntent: true,
                 }),
             }}
+          />
+        )}
+        {showEmailVerificationBanner && (
+          <Banner
+            text={
+              resendEmailVerificationSuccess
+                ? 'Please check your inbox to verify your email'
+                : 'Please verify your email address. Contact support@buffer.com for help.'
+            }
+            actionButton={
+              resendEmailVerificationSuccess
+                ? {}
+                : {
+                    label: 'Re-send Verification Email',
+                    action: () => initiateEmailVerification(),
+                  }
+            }
+            dismissable={false}
           />
         )}
         {!user.loading && <Modal {...modal} />}
