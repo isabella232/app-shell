@@ -6,7 +6,6 @@ import {
   ApolloClient,
   InMemoryCache,
   useQuery,
-  useMutation,
   HttpLink,
 } from '@apollo/client';
 import ReactDOM from 'react-dom';
@@ -18,11 +17,9 @@ import Modal from '../../components/Modal/index';
 import { UserContext } from '../../common/context/User';
 import { ModalContext } from '../../common/context/Modal';
 import useModal, { MODALS } from '../../common/hooks/useModal';
-import {
-  QUERY_ACCOUNT,
-  ACCOUNT_INITIATE_EMAIL_VERIFICATION,
-} from '../../common/graphql/account';
+import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
+import useEmailVerification from '../../common/hooks/useEmailVerification';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -97,20 +94,10 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
     }
   }
 
-  const [
-    initiateEmailVerification,
-    {
-      data: initiateEmailVerificationData,
-      error: initiateEmailVerificationError,
-    },
-  ] = useMutation(ACCOUNT_INITIATE_EMAIL_VERIFICATION);
-
-  // Email verification banner
   const showEmailVerificationBanner =
     !loading && user.shouldShowEmailVerificationCommunication;
-  const resendEmailVerificationSuccess =
-    initiateEmailVerificationData?.accountInitiateEmailVerification?.success;
-
+  const { bannerOptions } = useEmailVerification();
+  console.log(bannerOptions);
   return (
     <UserContext.Provider value={user}>
       <ModalContext.Provider value={modal}>
@@ -134,19 +121,9 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
         )}
         {showEmailVerificationBanner && (
           <Banner
-            text={
-              resendEmailVerificationSuccess
-                ? 'Please check your inbox to verify your email'
-                : 'Please verify your email address. Contact support for help.'
-            }
-            actionButton={
-              resendEmailVerificationSuccess
-                ? {}
-                : {
-                    label: 'Re-send verification email',
-                    action: () => initiateEmailVerification(),
-                  }
-            }
+            themeColor="orange"
+            text={bannerOptions.text}
+            actionButton={bannerOptions.actionButton}
             dismissible={false}
           />
         )}
