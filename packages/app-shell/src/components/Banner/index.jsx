@@ -60,12 +60,13 @@ export default class Banner extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { themeColor } = this.props;
+    const { themeColor, dismissable } = this.props;
 
     if (isOpen) {
       return (
         <BannerStyled themeColor={themeColor}>
           {this.renderBannerContent(themeColor)}
+          {dismissable && (
           <BannerCloseButton>
             <Button
               type="text"
@@ -80,6 +81,7 @@ export default class Banner extends React.Component {
               size="small"
             />
           </BannerCloseButton>
+          )}
         </BannerStyled>
       );
     }
@@ -105,6 +107,9 @@ Banner.propTypes = {
 
   /** Handler when the banner closes */
   onCloseBanner: PropTypes.func,
+
+  /** Allow functionality to dismiss banner **/
+  dismissable: PropTypes.bool,
 };
 
 Banner.defaultProps = {
@@ -113,4 +118,5 @@ Banner.defaultProps = {
   customHTML: null,
   themeColor: 'blue',
   onCloseBanner: null,
+  dismissable: true,
 };
