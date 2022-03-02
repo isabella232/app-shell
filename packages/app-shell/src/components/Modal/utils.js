@@ -54,27 +54,22 @@ export function userHasFeatureFlip(user, featureFlip) {
   return user.featureFlips.includes(featureFlip);
 }
 
-export function getDefaultSelectedPlan(planOptions, user, isUpgradeIntent) {
-  const featureFilpAgencyPlan = userHasFeatureFlip(user, 'agencyPlan'); // TODO:REMOVE_WITH_FF:agencyPlan
-
-  const currentPlan = planOptions.find((plan) => plan.isCurrentPlan);
-
-  const isOnFreePlan =
-    isUpgradeIntent || !currentPlan || currentPlan.planId === 'free'
-      ? true
-      : false;
-
-  const planOptionsExcludingFree = filterListOfPlans(planOptions, 'free');
-  const plans = featureFilpAgencyPlan ? planOptionsExcludingFree : planOptions;
-
-  const defaultSelectedPlan =
-    isOnFreePlan && !currentPlan ? plans[0] : currentPlan;
-
-  return defaultSelectedPlan;
+export function getPlanByPlanId(planId, planOptions) {
+  return planOptions.find((plan) => plan.planId === planId);
 }
 
 export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
+}
+
+export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
+  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const essentialsPlan = getPlanByPlanId('essentials', planOptions);
+
+  const defaultSelectedPlan =
+    isUpgradeIntent || !currentPlan ? essentialsPlan : currentPlan;
+
+  return defaultSelectedPlan;
 }
 
 export function calculateAgencySlotPrice(
@@ -121,5 +116,16 @@ export function handleChannelsCountConditions(
   }
   if (planId === 'free' && channelsCount > 3) {
     setChannelsCounterValue(3);
+  }
+}
+
+export function handleUpgradeIntent(
+  selectedPlanId,
+  isUpgradeIntent,
+  monthlyBilling,
+  updateSelectedPlan
+) {
+  if (selectedPlanId === 'free' && isUpgradeIntent) {
+    updateSelectedPlan(`essentials_${monthlyBilling ? 'month' : 'year'}`);
   }
 }
