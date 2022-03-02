@@ -62,7 +62,7 @@
   "dependencies": {
     "@apollo/client": "3.3.20",
     "@bufferapp/buffer-tracking-browser-ts": "^0.0.21",
-    "@bufferapp/features": "^0.3.0",
+    "@bufferapp/features": "^1.1.0",
     "@bufferapp/ui": "^5.75.7",
     "@bugsnag/js": "^7.16.1",
     "@bugsnag/plugin-react": "^7.16.1",

@@ -1385,10 +1385,10 @@
   dependencies:
     "@types/segment-analytics" "0.0.33"
 
-"@bufferapp/features@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@bufferapp/features/-/features-0.3.0.tgz#c7ac3b6c081e4c3a5ff1296204fbdc18e43eac47"
-  integrity sha512-6jYJbWtFe6kJF8Ke6FhIdENngiSEZZ4a8wFemVq4QVMZ1U7IwGnukp8Gm01Ls4QNZ59jwrGk1MPlXgF9tzPVdQ==
+"@bufferapp/features@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@bufferapp/features/-/features-1.1.0.tgz#9e27d0d2d7366b47aa1b19ef2f00a2ed252cc364"
+  integrity sha512-o4MnQwneegSPtXibwfPG8OHgldd7JIf1vHCqVuE+Nd5mUiPAeNpA/Q2cJuy8OisTrwy9soKjbuGQv7i4fTZA7A==
   dependencies:
     "@splitsoftware/splitio-react" "^1.3.0"
 
