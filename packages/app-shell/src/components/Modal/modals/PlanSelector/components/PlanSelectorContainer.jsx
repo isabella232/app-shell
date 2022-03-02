@@ -119,6 +119,8 @@ export const PlanSelectorContainer = ({
     hasPaymentDetails,
     isActiveTrial: trialInfo?.isActive,
     isAwaitingUserAction: trialInfo?.isAwaitingUserAction,
+    currentChannelQuantity: currentQuantity,
+    updatedChannelQuantity: channelsCount,
   });
   const { headerLabel } = useHeaderLabel(
     trialInfo?.isActive,
@@ -183,8 +185,12 @@ export const PlanSelectorContainer = ({
       setChannelsCounterValue
     );
 
-    updateButton(selectedPlan);
+    updateButton(selectedPlan, channelsCount);
   }, [selectedPlan]);
+
+  useEffect(() => {
+    updateButton(selectedPlan, channelsCount);
+  }, [channelsCount]);
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
