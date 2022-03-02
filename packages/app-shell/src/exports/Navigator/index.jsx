@@ -97,7 +97,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
   const showEmailVerificationBanner =
     !loading && user.shouldShowEmailVerificationCommunication;
   const { bannerOptions } = useEmailVerification();
-  console.log(bannerOptions);
+
   return (
     <UserContext.Provider value={user}>
       <ModalContext.Provider value={modal}>
