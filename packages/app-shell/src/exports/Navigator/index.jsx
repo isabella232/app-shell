@@ -147,7 +147,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
                     action: () => initiateEmailVerification(),
                   }
             }
-            dismissable={false}
+            dismissible={false}
           />
         )}
         {!user.loading && <Modal {...modal} />}
