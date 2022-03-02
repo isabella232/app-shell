@@ -1,5 +1,5 @@
-import useButtonOptions from './useButtonOptions';
 import { renderHook, act } from '@testing-library/react-hooks';
+import useButtonOptions from './useButtonOptions';
 
 const updatePlan = () => {
   console.log('update the plan');
@@ -181,5 +181,35 @@ describe('useButtonOptions', () => {
     });
 
     expect(result.current.label).toBe('Confirm Plan Change');
+  });
+
+  it("should update the label and action when there's a change to the channels amount", () => {
+    const selectedPlan = {
+      planId: 'team',
+      isCurrentPlan: true,
+    };
+
+    const currentChannelQuantity = 10;
+    const updatedChannelQuantity = 12;
+
+    const hasPaymentDetails = true;
+
+    const { result } = renderHook(() =>
+      useButtonOptions({
+        selectedPlan,
+        updatePlan,
+        openPaymentMethod,
+        hasPaymentDetails,
+        currentChannelQuantity,
+        updatedChannelQuantity,
+      })
+    );
+
+    act(() => {
+      result.current.updateButton(selectedPlan, 12);
+    });
+
+    expect(result.current.label).toBe('Confirm changes');
+    expect(result.current.action).toBe(updatePlan);
   });
 });

@@ -9,8 +9,10 @@ const useButtonOptions = ({
   hasPaymentDetails,
   isActiveTrial,
   isAwaitingUserAction,
+  currentChannelQuantity,
+  updatedChannelQuantity,
 }) => {
-  const getLabel = (selectedPlan) => {
+  const getLabel = (selectedPlan, updatedQuantity) => {
     if (isActiveTrial) {
       if (selectedPlan.planId === 'free') {
         return 'Confirm Plan Change';
@@ -18,13 +20,17 @@ const useButtonOptions = ({
     } else if (selectedPlan?.isCurrentPlan) {
       if (selectedPlan.planId === 'free' && isAwaitingUserAction) {
         return 'Confirm Free Plan';
+      } else if (currentChannelQuantity !== updatedQuantity) {
+        return 'Confirm changes';
       } else return 'Stay On My Current Plan';
     } else if (hasPaymentDetails || selectedPlan.planId === 'free') {
       return 'Confirm Plan Change';
     }
     return 'Go To Payment';
   };
-  const [label, setLabel] = useState(getLabel(selectedPlan));
+  const [label, setLabel] = useState(
+    getLabel(selectedPlan, currentChannelQuantity, updatedChannelQuantity)
+  );
 
   const buttonFunction = () => {
     if (selectedPlan.isCurrentPlan && isActiveTrial && hasPaymentDetails) {
@@ -32,6 +38,13 @@ const useButtonOptions = ({
     }
 
     if (selectedPlan.planId === 'free') {
+      return updatePlan;
+    }
+
+    if (
+      selectedPlan.isCurrentPlan &&
+      currentChannelQuantity !== updatedChannelQuantity
+    ) {
       return updatePlan;
     }
 
@@ -44,8 +57,8 @@ const useButtonOptions = ({
 
   const [action, setAction] = useState(() => buttonFunction());
 
-  const updateButton = (selectedPlan) => {
-    setLabel(getLabel(selectedPlan));
+  const updateButton = (selectedPlan, channelsCount) => {
+    setLabel(getLabel(selectedPlan, channelsCount));
     setAction(() => buttonFunction());
   };
 
