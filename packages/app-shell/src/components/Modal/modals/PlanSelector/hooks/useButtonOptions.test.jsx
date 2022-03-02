@@ -209,7 +209,7 @@ describe('useButtonOptions', () => {
       result.current.updateButton(selectedPlan, 12);
     });
 
-    expect(result.current.label).toBe('Confirm changes');
+    expect(result.current.label).toBe('Confirm Changes');
     expect(result.current.action).toBe(updatePlan);
   });
 });
