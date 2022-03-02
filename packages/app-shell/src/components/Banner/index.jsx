@@ -47,12 +47,14 @@ export default class Banner extends React.Component {
           {text}
         </Text>
         <ButtonWrapper>
-          <Button
-            type={themeColor === 'orange' ? 'orange' : 'primary'}
-            onClick={actionButton.action}
-            label={actionButton.label}
-            size="small"
-          />
+          {actionButton.label && actionButton.action && (
+            <Button
+              type={themeColor === 'orange' ? 'orange' : 'primary'}
+              onClick={actionButton.action}
+              label={actionButton.label}
+              size="small"
+            />
+          )}
         </ButtonWrapper>
       </Wrapper>
     );
@@ -67,20 +69,20 @@ export default class Banner extends React.Component {
         <BannerStyled themeColor={themeColor}>
           {this.renderBannerContent(themeColor)}
           {dismissable && (
-          <BannerCloseButton>
-            <Button
-              type="text"
-              icon={
-                <CrossIcon
-                  color={themeColor === 'blue' ? '#fff' : orangeDark}
-                />
-              }
-              hasIconOnly
-              onClick={this.closeBanner}
-              label="Close"
-              size="small"
-            />
-          </BannerCloseButton>
+            <BannerCloseButton>
+              <Button
+                type="text"
+                icon={
+                  <CrossIcon
+                    color={themeColor === 'blue' ? '#fff' : orangeDark}
+                  />
+                }
+                hasIconOnly
+                onClick={this.closeBanner}
+                label="Close"
+                size="small"
+              />
+            </BannerCloseButton>
           )}
         </BannerStyled>
       );
