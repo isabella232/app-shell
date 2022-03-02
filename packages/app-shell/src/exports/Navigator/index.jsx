@@ -137,13 +137,13 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
             text={
               resendEmailVerificationSuccess
                 ? 'Please check your inbox to verify your email'
-                : 'Please verify your email address. Contact support@buffer.com for help.'
+                : 'Please verify your email address. Contact support for help.'
             }
             actionButton={
               resendEmailVerificationSuccess
                 ? {}
                 : {
-                    label: 'Re-send Verification Email',
+                    label: 'Re-send verification email',
                     action: () => initiateEmailVerification(),
                   }
             }
