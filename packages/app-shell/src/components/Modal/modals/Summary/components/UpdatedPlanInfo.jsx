@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
-import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
-import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
-import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
-import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
-import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
-
-import ChannelCounter from './ChannelCounter';
+import Channels from '../../../../../common/components/Channels/Channels';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
 
 import {
@@ -18,10 +11,6 @@ import {
   UsersCount,
   CurrentPaymentContainer,
   Row,
-  ChannelsContainer,
-  Icons,
-  Title,
-  ChannelsInputContainer,
   Section,
   CancellationInfo,
 } from './UpdatedPlanInfo.style';
@@ -39,26 +28,11 @@ function UpdatedPlanInfo(props) {
 
   return (
     <UpdatedPlanInfoContainer>
-      <ChannelsContainer>
-        <Title>
-          <span>Channels:</span>
-          <Icons>
-            <InstagramIcon size="medium" />
-            <FacebookIcon size="medium" />
-            <TwitterIcon size="medium" />
-            <PinterestIcon size="medium" />
-            <LinkedInIcon size="medium" />
-            <ShopifyIcon size="medium" />
-          </Icons>
-        </Title>
-        <ChannelsInputContainer>
-          <ChannelCounter
-            channelsCount={channelsCount}
-            onIncreaseCounter={() => increaseCounter()}
-            onDecreaseCounter={() => decreaseCounter()}
-          />
-        </ChannelsInputContainer>
-      </ChannelsContainer>
+      <Channels
+        channelsCount={channelsCount}
+        onIncreaseCounter={() => increaseCounter()}
+        onDecreaseCounter={() => decreaseCounter()}
+      />
       <Section>
         Your updated plan:
         <PlanName>{planName}</PlanName>
