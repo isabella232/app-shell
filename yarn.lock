@@ -1392,10 +1392,10 @@
   dependencies:
     "@splitsoftware/splitio-react" "^1.3.0"
 
-"@bufferapp/ui@^5.75.7":
-  version "5.75.7"
-  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.75.7.tgz#636523f7e81456a7093d42d16ca03907fdbb47a7"
-  integrity sha512-f0ewCirLSUJunHm78OAWgHOnmziVvVdseusMh8X/r6dTdYPLl8QNOYfTMrUH8bEX8IoXhoACKG+uQTYgBVbw2w==
+"@bufferapp/ui@^5.78.0":
+  version "5.78.0"
+  resolved "https://registry.yarnpkg.com/@bufferapp/ui/-/ui-5.78.0.tgz#5b57af8f8a91b0eb15135cef38365f71b5f90df0"
+  integrity sha512-l1s7QrBaKDSWB8CzBvNPUfqKSI4UsDN7USVEsOgdp0YjjGxkB3XkS9j8oQ9jA6lolNB0GUNj3krK0+m0kYHfDw==
   dependencies:
     "@reach/tooltip" "0.6.2"
     immutability-helper "^2.9.0"

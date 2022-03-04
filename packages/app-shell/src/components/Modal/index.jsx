@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
+import NonDismissibleModal from '@bufferapp/ui/NonDismissibleModal';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -111,9 +112,9 @@ const ModalContent = ({ modal, closeAction }) => {
       );
     case MODALS.paywall:
       return (
-        <SimpleModal closeAction={closeAction}>
+        <NonDismissibleModal>
           <Paywall modal={modal} />
-        </SimpleModal>
+        </NonDismissibleModal>
       );
     default:
       return null;
