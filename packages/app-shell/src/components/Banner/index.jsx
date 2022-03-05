@@ -34,12 +34,7 @@ export default class Banner extends React.Component {
   renderBannerContent(themeColor) {
     const { customHTML, text, actionButton } = this.props;
     if (customHTML) {
-      return (
-        <Wrapper>
-          {/* eslint-disable-next-line */}
-          <div dangerouslySetInnerHTML={customHTML} />
-        </Wrapper>
-      );
+      return <Wrapper>{customHTML}</Wrapper>;
     }
     return (
       <Wrapper>
