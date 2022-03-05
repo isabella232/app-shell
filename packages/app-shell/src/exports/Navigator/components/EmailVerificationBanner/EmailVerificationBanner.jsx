@@ -11,6 +11,7 @@ const EmailVerificationBanner = () => {
   const { bannerOptions, renderCustomHTML } = useEmailVerification();
 
   if (renderCustomHTML) {
+    //  We need to render custom HTML as we're using a link, rather than text.
     return (
       <Banner
         themeColor="orange"
@@ -18,8 +19,15 @@ const EmailVerificationBanner = () => {
         customHTML={
           <>
             <Text type="paragraph" color="#fff">
-              Please verify your email address. Check out our{' '}
-              <a href="">help guide</a> to read more.
+              Please verify your email address. You can visit our{' '}
+              <a
+                href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                help guide
+              </a>{' '}
+              for more info.
             </Text>
             <Styles.ButtonWrapper>
               <Button
