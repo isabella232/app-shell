@@ -7,6 +7,7 @@ const useEmailVerification = () => {
   );
 
   let bannerOptions;
+  let renderCustomHTML;
 
   if (data) {
     // Success after re-send verification email attempt
@@ -23,16 +24,17 @@ const useEmailVerification = () => {
   } else {
     // Email verification needed
     bannerOptions = {
-      text: 'Please verify your email address.',
       actionButton: {
         action: initiateEmailVerification,
         label: 'Re-send verification email',
       },
     };
+    renderCustomHTML = true;
   }
 
   return {
     bannerOptions,
+    renderCustomHTML,
   };
 };
 
