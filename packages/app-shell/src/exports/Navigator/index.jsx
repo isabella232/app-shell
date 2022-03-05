@@ -19,7 +19,6 @@ import { ModalContext } from '../../common/context/Modal';
 import useModal, { MODALS } from '../../common/hooks/useModal';
 import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
-import useEmailVerification from '../../common/hooks/useEmailVerification';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
 import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner';
