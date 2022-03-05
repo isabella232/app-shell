@@ -22,6 +22,7 @@ import useUserTracker from '../../common/hooks/useUserTracker';
 import useEmailVerification from '../../common/hooks/useEmailVerification';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
+import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -119,14 +120,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
             }}
           />
         )}
-        {showEmailVerificationBanner && (
-          <Banner
-            themeColor="orange"
-            text={bannerOptions.text}
-            actionButton={bannerOptions.actionButton}
-            dismissible={false}
-          />
-        )}
+        {showEmailVerificationBanner && <EmailVerificationBanner />}
         {!user.loading && <Modal {...modal} />}
       </ModalContext.Provider>
     </UserContext.Provider>
