@@ -1,3 +1,4 @@
+import React from 'react';
 import { MODALS } from '../../../../../common/hooks/useModal';
 
 import { Text, Button } from '@bufferapp/ui';
@@ -18,6 +19,8 @@ import {
   Title,
   ButtonWrapper,
   InnerContainer,
+  ChannelCounterWrapper,
+  Summary,
 } from './style';
 
 const CardBody = ({ planName, quantity }) => {
@@ -45,7 +48,7 @@ const CardBody = ({ planName, quantity }) => {
           <InnerContainer>
             <div>
               <Title>
-                <span>Channels</span>
+                <Text>Channels </Text>
                 <Icons>
                   <InstagramIcon size="medium" />
                   <FacebookIcon size="medium" />
@@ -55,16 +58,25 @@ const CardBody = ({ planName, quantity }) => {
                   <ShopifyIcon size="medium" />
                 </Icons>
               </Title>
-              <ChannelCounter
-                channelsCount={0}
-                onDecreaseCounter={() => null}
-                onIncreaseCounter={() => null}
-              />
+              <ChannelCounterWrapper>
+                <ChannelCounter
+                  channelsCount={0}
+                  onDecreaseCounter={() => null}
+                  onIncreaseCounter={() => null}
+                />
+              </ChannelCounterWrapper>
             </div>
 
-            <div>
-              <p>channel</p>
-            </div>
+            <Summary>
+              <Text type="p">
+                New monthly cost: <strong>$60</strong>
+              </Text>
+
+              <Text>
+                Then $60 on your next billing date and every month until
+                canceled
+              </Text>
+            </Summary>
           </InnerContainer>
         </Section>
       </SectionContainer>
