@@ -1,5 +1,5 @@
-import useHeaderLabel from './useHeaderLabel';
 import { renderHook } from '@testing-library/react-hooks';
+import useHeaderLabel from './useHeaderLabel';
 
 describe('useHeaderLabel', () => {
   it("should set the header label to 'Confirm Plan' when a user is on a trial", () => {

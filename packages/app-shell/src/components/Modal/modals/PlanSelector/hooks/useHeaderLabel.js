@@ -1,8 +1,6 @@
 import { freePlan } from '../../../../../common/mocks/freePlan';
 
 const useHeaderLabel = (isActiveTrial, planOptions, isFreePlan) => {
-  let headerLabel;
-
   if (isActiveTrial) {
     return { headerLabel: 'Confirm Plan' };
   }
