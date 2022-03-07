@@ -84,7 +84,7 @@ describe('useButtonOptions', () => {
     expect(result.current.label).toBe('Confirm Plan Change');
     expect(result.current.action).toBe(updatePlan);
   });
-  it("should return {label 'Confirm Trial Plan', action: updatePlan} is on a trial and has payment details", () => {
+  it("should return {label 'Confirm Plan', action: updatePlan} is on a trial and has payment details", () => {
     const selectedPlan = {
       planId: 'team',
       planInterval: 'year',
@@ -104,7 +104,7 @@ describe('useButtonOptions', () => {
       })
     );
 
-    expect(result.current.label).toBe('Confirm Trial Plan');
+    expect(result.current.label).toBe('Confirm Plan');
     expect(result.current.action).toBe(updatePlan);
   });
   it("should return {label 'Go To Payment', action: openPaymentMethod} is on a trial and doesn't have payment details", () => {
