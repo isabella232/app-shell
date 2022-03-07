@@ -19,7 +19,8 @@ const EmailVerificationBanner = () => {
         customHTML={
           <>
             <Text type="paragraph" color="#fff">
-              Please verify your email address. You can visit our{' '}
+              <strong>Verify your email:</strong> An email has been sent to your
+              inbox to verify your email address. You can visit our{' '}
               <a
                 href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
                 target="_blank"
