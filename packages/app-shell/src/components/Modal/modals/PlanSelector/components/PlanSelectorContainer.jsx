@@ -3,6 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
 import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+import { useSplitEnabled } from '@bufferapp/features';
 
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
@@ -59,6 +60,7 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
 
   const [error, setError] = useState(null);
@@ -89,7 +91,12 @@ export const PlanSelectorContainer = ({
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
+    channelCountMessageStatus,
+  } = useChannelsCounter(
+    selectedPlan.planId,
+    currentQuantity,
+    selectedPlanMinimumQuantity
+  );
 
   const newPrice = calculateTotalSlotsPrice(
     selectedPlan.planId,
@@ -141,6 +148,10 @@ export const PlanSelectorContainer = ({
       ? planOptionsWithoutFreePlans
       : planOptionsWithoutAgencyPlans;
 
+  const disableSumbitButton = splitSBBEnabled
+    ? label === 'Stay On My Current Plan' || processing || !action
+    : label === 'Stay On My Current Plan' || processing;
+
   useEffect(() => {
     useTrackPlanSelectorViewed({
       payload: {
@@ -190,6 +201,11 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
+    handleChannelsCountConditions(
+      selectedPlan.planId,
+      channelsCount,
+      setChannelsCounterValue
+    );
   }, [channelsCount]);
 
   useEffect(() => {
@@ -270,6 +286,7 @@ export const PlanSelectorContainer = ({
           increaseCounter={() => increaseCounter()}
           decreaseCounter={() => decreaseCounter()}
           newPrice={newPrice}
+          channelCounterMessageStatus={channelCountMessageStatus}
         />
         <ButtonContainer>
           <Button
@@ -284,7 +301,7 @@ export const PlanSelectorContainer = ({
             }
             label={processing ? 'Processing...' : label}
             fullWidth
-            disabled={label === 'Stay On My Current Plan' || processing}
+            disabled={disableSumbitButton}
           />
         </ButtonContainer>
       </Right>

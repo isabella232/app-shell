@@ -52,8 +52,8 @@ export const UsersCount = styled.div`
 
 export const CurrentPaymentContainer = styled.div`
   display: flex;
-  margin-top: 18px;
-  padding-top: 18px;
+  margin-top: 15px;
+  padding-top: 15px;
 
   border-top: 1px ${grayLight} solid;
 

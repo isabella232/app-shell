@@ -24,6 +24,7 @@ function UpdatedPlanInfo(props) {
     increaseCounter,
     decreaseCounter,
     newPrice,
+    channelCounterMessageStatus,
   } = props;
 
   return (
@@ -32,6 +33,7 @@ function UpdatedPlanInfo(props) {
         channelsCount={channelsCount}
         onIncreaseCounter={() => increaseCounter()}
         onDecreaseCounter={() => decreaseCounter()}
+        channelCounterMessageStatus={channelCounterMessageStatus}
       />
       <Section>
         Your updated plan:
@@ -57,6 +59,11 @@ function UpdatedPlanInfo(props) {
   );
 }
 
+const MessageStatusShape = {
+  messageStatus: PropTypes.oneOf(['error', 'warning']),
+  message: PropTypes.string.isRequired,
+};
+
 UpdatedPlanInfo.propTypes = {
   planName: PropTypes.string.isRequired,
   planCycle: PropTypes.string.isRequired,
@@ -64,6 +71,7 @@ UpdatedPlanInfo.propTypes = {
   channelsCount: PropTypes.number.isRequired,
   increaseCounter: PropTypes.func.isRequired,
   decreaseCounter: PropTypes.func.isRequired,
+  channelCounterMessageStatus: PropTypes.oneOf([MessageStatusShape, null]),
 };
 
 export default UpdatedPlanInfo;
