@@ -3,6 +3,7 @@ import { fontSizeSmall } from '@bufferapp/ui/style/fonts';
 import {
   grayLighter,
   grayLight,
+  grayDark,
   white,
   blue,
 } from '@bufferapp/ui/style/colors';
@@ -29,7 +30,11 @@ export const Title = styled.div`
   margin-bottom: 20px;
 
   span {
-    margin-right: 15px;
+    margin-right: 8px;
+  }
+
+  svg {
+    color: ${grayDark};
   }
 `;
 
@@ -69,6 +74,29 @@ export const InnerContainer = styled.div`
   flex-direction: row;
   padding: 16px;
   font-size: ${fontSizeSmall};
+`;
+
+export const ChannelCounterWrapper = styled.div`
+  width: 140px;
+`;
+
+export const Summary = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  flex: 1;
+
+  p {
+    color: ${grayDark};
+    margin-top: 0;
+  }
+
+  span {
+    max-width: 217px;
+    color: ${grayDark};
+    text-align: right;
+    line-height: 24px;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
