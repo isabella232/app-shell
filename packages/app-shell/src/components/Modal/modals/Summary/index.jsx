@@ -172,7 +172,7 @@ const Summary = ({
 
   return (
     <SummaryContainer sbbEnabled={splitSBBEnabled}>
-      <Body>
+      <Body sbbEnabled={splitSBBEnabled}>
         <Text type="h2">Summary</Text>
         {splitSBBEnabled ? (
           renderSBBSummary(
@@ -181,7 +181,8 @@ const Summary = ({
             channelsCount,
             increaseCounter,
             decreaseCounter,
-            newPrice
+            newPrice,
+            channelCounterMessageStatus
           )
         ) : (
           <>

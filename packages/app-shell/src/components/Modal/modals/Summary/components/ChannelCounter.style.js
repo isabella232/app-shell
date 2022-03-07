@@ -5,6 +5,7 @@ const buttonColor = '#E9ECFC';
 
 export const ChannelsCounterContainer = styled.div`
   display: flex;
+  flex-grow: 1;
   height: 48px;
 
   border: 1px ${blue} solid;
