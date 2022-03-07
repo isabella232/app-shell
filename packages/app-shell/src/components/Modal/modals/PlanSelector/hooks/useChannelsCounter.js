@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
   getFreePlanChannelInputMessaging,
@@ -25,22 +25,6 @@ const useChannelsCounter = (
   function increaseCounter(disableIncrease = false) {
     if (!disableIncrease) {
       setChannelsCount(channelsCount + 1);
-
-      if (
-        planId === 'free' &&
-        channelsCount >= 3 &&
-        channelCountMessageStatus === null
-      ) {
-        setChannelCountMessageStatus(freePlanLimitMessageStatus);
-      }
-
-      if (
-        planId === 'agency' &&
-        channelsCount >= 10 &&
-        channelCountMessageStatus !== null
-      ) {
-        setChannelCountMessageStatus(null);
-      }
     }
   }
 
@@ -50,21 +34,51 @@ const useChannelsCounter = (
     }
 
     if (
+      planId === 'agency' &&
+      channelsCount === minimumQuantity &&
+      channelCountMessageStatus === null
+    ) {
+      setChannelCountMessageStatus(agencyPlanLimitMessageStatus);
+    }
+  }
+
+  function handleWarningMessageChecks() {
+    if (planId === 'team' || planId === 'essentials') {
+      setChannelCountMessageStatus(null);
+    }
+
+    if (
       planId === 'free' &&
-      channelsCount <= 4 &&
+      channelsCount > 3 &&
+      channelCountMessageStatus === null
+    ) {
+      setChannelCountMessageStatus(freePlanLimitMessageStatus);
+    }
+
+    if (
+      planId === 'agency' &&
+      channelsCount >= minimumQuantity &&
       channelCountMessageStatus !== null
     ) {
       setChannelCountMessageStatus(null);
     }
 
     if (
-      planId === 'agency' &&
-      channelsCount === 10 &&
-      channelCountMessageStatus === null
+      planId === 'free' &&
+      channelsCount <= 3 &&
+      channelCountMessageStatus !== null
     ) {
-      setChannelCountMessageStatus(agencyPlanLimitMessageStatus);
+      setChannelCountMessageStatus(null);
     }
   }
+
+  useEffect(() => {
+    handleWarningMessageChecks();
+  }, [channelsCount]);
+
+  useEffect(() => {
+    handleWarningMessageChecks();
+  }, [planId]);
 
   return {
     channelsCount,

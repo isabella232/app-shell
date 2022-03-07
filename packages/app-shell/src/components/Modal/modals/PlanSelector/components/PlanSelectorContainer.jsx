@@ -3,6 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
 import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+import { useSplitEnabled } from '@bufferapp/features';
 
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
@@ -59,6 +60,7 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
 
   const [error, setError] = useState(null);
@@ -145,6 +147,10 @@ export const PlanSelectorContainer = ({
     shouldIncludeAgencyPlan || showAgencyPlan || isUpgradeIntent
       ? planOptionsWithoutFreePlans
       : planOptionsWithoutAgencyPlans;
+
+  const disableSumbitButton = splitSBBEnabled
+    ? label === 'Stay On My Current Plan' || processing || !action
+    : label === 'Stay On My Current Plan' || processing;
 
   useEffect(() => {
     useTrackPlanSelectorViewed({
@@ -295,9 +301,7 @@ export const PlanSelectorContainer = ({
             }
             label={processing ? 'Processing...' : label}
             fullWidth
-            disabled={
-              label === 'Stay On My Current Plan' || processing || !action
-            }
+            disabled={disableSumbitButton}
           />
         </ButtonContainer>
       </Right>

@@ -397,24 +397,6 @@ describe('Modal - utils', () => {
       handleChannelsCountConditions(planId, channelsCount, callBackFunc);
       expect(callBackFunc).not.toHaveBeenCalled();
     });
-
-    it('should call callBack func with 3 when planId equals free and channelCount is more than 3', () => {
-      const planId = 'free';
-      const channelsCount = 30;
-      const callBackFunc = jest.fn();
-
-      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
-      expect(callBackFunc).toHaveBeenCalledWith(3);
-    });
-
-    it('should NOT call callBack func when planId equals free and channelCount is less than 3', () => {
-      const planId = 'free';
-      const channelsCount = 2;
-      const callBackFunc = jest.fn();
-
-      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
-      expect(callBackFunc).not.toHaveBeenCalled();
-    });
   });
 
   describe('getPlanByPlanId', () => {
