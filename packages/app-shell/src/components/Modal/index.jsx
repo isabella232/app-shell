@@ -22,11 +22,15 @@ import TrialExpired from './modals/TrialExpired';
 import QuantityUpdate from './modals/QuantityUpdate';
 import { Paywall } from './modals/Paywall';
 
-import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt, shouldShowPaywallModal } from './utils';
+import {
+  shouldShowFreeUserStartTrialPrompt,
+  shouldShowChannelConnectionPrompt,
+  shouldShowPaywallModal,
+} from './utils';
 
 const ModalWrapper = styled.div`
   > div {
-    z-index: 1;
+    z-index: 2;
   }
 `;
 
@@ -183,7 +187,9 @@ const Modal = React.memo(({ modal, openModal }) => {
   return (
     <>
       {hasModal && (
-        <ModalWrapper><ModalContent modal={modal} closeAction={() => openModal(null)} /></ModalWrapper>
+        <ModalWrapper>
+          <ModalContent modal={modal} closeAction={() => openModal(null)} />
+        </ModalWrapper>
       )}
     </>
   );
