@@ -29,8 +29,10 @@ import {
 } from './utils';
 
 const ModalWrapper = styled.div`
+  min-height: 500px;
+
   > div {
-    z-index: 2;
+    z-index: 1;
   }
 `;
 
