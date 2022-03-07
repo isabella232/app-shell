@@ -5,4 +5,5 @@ export const UXMessagingContainer = styled.div`
   padding-top: 10px;
 
   color: ${(props) => props.color};
+  font-size: 10px;
 `;
