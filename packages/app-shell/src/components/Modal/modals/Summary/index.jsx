@@ -7,6 +7,8 @@ import { UserContext } from '../../../../common/context/User';
 import CurrentPlanInfo from './components/CurrentPlanInfo';
 import UpdatedPlanInfo from './components/UpdatedPlanInfo';
 
+import { findPlanUserDetails } from '../../../../common/utils/product';
+
 import {
   DiscountReminder,
   TotalPrice,
@@ -50,7 +52,7 @@ function renderSBBSummary(
     channelsQuantity: currentChannelsQuantity,
     summary: currentPlanSummary,
   } = currentPlan;
-  const currentPlanUsersText = currentPlanSummary.details[1];
+  const currentPlanUsersText = findPlanUserDetails(currentPlanSummary.details);
   const {
     planId: selectedPlanId,
     planName: selectedPlanName,
@@ -58,7 +60,7 @@ function renderSBBSummary(
     planInterval: selectedPlanInterval,
     summary: selectePlanSummary,
   } = selectedPlan;
-  const selectedPlanUsersText = selectePlanSummary.details[1];
+  const selectedPlanUsersText = findPlanUserDetails(selectePlanSummary.details);
 
   return (
     <>

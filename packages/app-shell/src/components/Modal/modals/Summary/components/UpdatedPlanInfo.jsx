@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Channels from '../../../../../common/components/Channels/Channels';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
 
+import { MessageStatusShape } from '../../../../../common/components/UXMessaging/UXMessaging';
+
 import {
   UpdatedPlanInfoContainer,
   PlanName,
@@ -59,11 +61,6 @@ function UpdatedPlanInfo(props) {
   );
 }
 
-const MessageStatusShape = {
-  messageStatus: PropTypes.oneOf(['error', 'warning']),
-  message: PropTypes.string.isRequired,
-};
-
 UpdatedPlanInfo.propTypes = {
   planName: PropTypes.string.isRequired,
   planCycle: PropTypes.string.isRequired,
@@ -71,7 +68,11 @@ UpdatedPlanInfo.propTypes = {
   channelsCount: PropTypes.number.isRequired,
   increaseCounter: PropTypes.func.isRequired,
   decreaseCounter: PropTypes.func.isRequired,
-  channelCounterMessageStatus: PropTypes.oneOf([MessageStatusShape, null]),
+  channelCounterMessageStatus: PropTypes.shape({ ...MessageStatusShape }),
+};
+
+UpdatedPlanInfo.defaultProps = {
+  channelCounterMessageStatus: null,
 };
 
 export default UpdatedPlanInfo;
