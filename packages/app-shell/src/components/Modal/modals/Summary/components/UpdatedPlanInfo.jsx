@@ -68,6 +68,7 @@ UpdatedPlanInfo.propTypes = {
   channelsCount: PropTypes.number.isRequired,
   increaseCounter: PropTypes.func.isRequired,
   decreaseCounter: PropTypes.func.isRequired,
+  newPrice: PropTypes.number.isRequired,
   channelCounterMessageStatus: PropTypes.shape({ ...MessageStatusShape }),
 };
 

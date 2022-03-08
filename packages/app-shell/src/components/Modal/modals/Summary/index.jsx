@@ -54,9 +54,7 @@ function renderSBBSummary(
   } = currentPlan;
   const currentPlanUsersText = findPlanUserDetails(currentPlanSummary.details);
   const {
-    planId: selectedPlanId,
     planName: selectedPlanName,
-    basePrice: selectedPlanPricing,
     planInterval: selectedPlanInterval,
     summary: selectePlanSummary,
   } = selectedPlan;
@@ -72,11 +70,8 @@ function renderSBBSummary(
         numberOfUsers={currentPlanUsersText}
       />
       <UpdatedPlanInfo
-        planId={selectedPlanId}
         planName={selectedPlanName}
-        planPrice={selectedPlanPricing}
         planCycle={selectedPlanInterval}
-        numberOfChannels={currentChannelsQuantity}
         numberOfUsers={selectedPlanUsersText}
         channelsCount={channelsCount}
         increaseCounter={() => increaseCounter()}
