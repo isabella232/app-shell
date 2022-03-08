@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import eventDispatcher from './utils/eventDispatcher';
+import { EVENT_KEY, ACTIONS } from '../events/modalEvents';
 
 export const MODALS = {
   GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
@@ -16,14 +16,6 @@ export const MODALS = {
   success: 'success',
   trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
-};
-
-export const EVENT_KEY = 'appshell__modal_event';
-
-export const ACTIONS = {
-  openModal(modalKey, modalData = null) {
-    eventDispatcher(EVENT_KEY, { modal: modalKey, data: modalData });
-  },
 };
 
 function useModal() {

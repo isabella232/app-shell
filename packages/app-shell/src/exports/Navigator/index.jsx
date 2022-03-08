@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   ApolloProvider,
@@ -22,6 +22,8 @@ import useUserTracker from '../../common/hooks/useUserTracker';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
 import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner';
+import { ACTIONS as ORGANIZATION_ACTIONS } from '../../common/events/orgEvents';
+import { Orchestrator } from '../Orchestrator';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -62,6 +64,10 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
           ...data.account,
         };
   useUserTracker(user);
+
+  useEffect(() => {
+    ORGANIZATION_ACTIONS.currentOrganizationUpdated({ user });
+  }, [user]);
 
   const networkErrors = error?.networkError?.result?.errors;
   if (
@@ -120,6 +126,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
         )}
         {showEmailVerificationBanner && <EmailVerificationBanner />}
         {!user.loading && <Modal {...modal} />}
+        <Orchestrator />
       </ModalContext.Provider>
     </UserContext.Provider>
   );
