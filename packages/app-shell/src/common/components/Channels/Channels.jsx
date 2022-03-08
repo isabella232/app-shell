@@ -60,7 +60,7 @@ Channels.propTypes = {
   channelsCount: PropTypes.number,
   onDecreaseCounter: PropTypes.func.isRequired,
   onIncreaseCounter: PropTypes.func.isRequired,
-  channelCounterMessageStatus: MessageStatusShape,
+  channelCounterMessageStatus: PropTypes.shape({ ...MessageStatusShape }),
 };
 
 Channels.defaultProps = {

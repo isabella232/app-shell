@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import AddIcon from '@bufferapp/ui/Icon/Icons/Add';
+import SubtractIcon from '@bufferapp/ui/Icon/Icons/Subtract';
+
 import {
   ChannelsCounterContainer,
   ChannelsCounterButton,
@@ -10,15 +13,14 @@ import {
 function ChannelCounter(props) {
   const { channelsCount, onDecreaseCounter, onIncreaseCounter } = props;
 
-  // TODO: Replace text with Icons
   return (
     <ChannelsCounterContainer>
       <ChannelsCounterButton onClick={() => onDecreaseCounter()}>
-        -
+        <SubtractIcon size="medium" />
       </ChannelsCounterButton>
       <ChannelsCounterCountDisplay>{channelsCount}</ChannelsCounterCountDisplay>
       <ChannelsCounterButton onClick={() => onIncreaseCounter()}>
-        +
+        <AddIcon size="medium" />
       </ChannelsCounterButton>
     </ChannelsCounterContainer>
   );

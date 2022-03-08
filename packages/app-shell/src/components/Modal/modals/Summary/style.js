@@ -13,7 +13,7 @@ export const SummaryContainer = styled.div`
   border-bottom-right-radius: 8px;
   box-shadow: inset 1px 0px 0px #bdbdbd;
   height: 100%;
-  padding: ${(props) => (props.sbbEnabled ? '22px 0 24px' : '70px 0 24px')};
+  padding: ${(props) => (props.sbbEnabled ? '49px 0 24px' : '70px 0 24px')};
   box-sizing: border-box;
   position: relative;
 
