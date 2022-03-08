@@ -24,13 +24,13 @@ import {
   Summary,
 } from './style';
 
-const CardBody = ({ planName, quantity }) => {
+const CardBody = ({ planName, quantity, channelFee, pricePerQuantity }) => {
   const {
     channelsCount,
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(1, 1);
+  } = useChannelsCounter(quantity, 1);
 
   return (
     <>
@@ -77,6 +77,9 @@ const CardBody = ({ planName, quantity }) => {
 
             <Summary>
               <Text type="p">
+                <strong>+ ${pricePerQuantity}</strong> per channel
+              </Text>
+              <Text type="p">
                 New monthly cost: <strong>$60</strong>
               </Text>
 
@@ -88,6 +91,7 @@ const CardBody = ({ planName, quantity }) => {
           </InnerContainer>
         </Section>
       </SectionContainer>
+
       <ButtonWrapper>
         <Button type="text" onClick={() => openModal(null)} label="Cancel" />
         <Button
