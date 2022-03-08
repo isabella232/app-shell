@@ -19,12 +19,24 @@ const QuantityUpdate = () => {
                 </LoadingContainer>
               );
             }
+            const {
+              flatFee,
+              currentQuantity,
+              chargableQuantity,
+              pricePerQuantity,
+              minimumQuantity,
+            } = user.currentOrganization.billing.channelSlotDetails;
             const { quantity, plan: currentPlan } =
               user.currentOrganization.billing.subscription;
             const { name: planName } = currentPlan;
             return (
               <Container>
-                <CardBody planName={planName} quantity={quantity} />
+                <CardBody
+                  planName={planName}
+                  quantity={currentQuantity}
+                  channelFee={flatFee}
+                  pricePerQuantity={pricePerQuantity}
+                />
               </Container>
             );
           }}
