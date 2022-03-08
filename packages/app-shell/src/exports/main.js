@@ -1,5 +1,5 @@
 import { MODALS, ACTIONS as MODAL_ACTIONS, EVENT_KEY as MODAL_EVENT_KEY } from '../common/hooks/useModal';
-import { EVENT_KEY as ORGANIZATION_EVENT_KEY, ACTIONS as ORGANIZATION_ACTIONS } from '../common/hooks/useOrgSwitcher';
+import { EVENT_KEY as ORGANIZATION_EVENT_KEY, ACTIONS as ORGANIZATION_ACTIONS } from '../common/events/orgEvents';
 import render from './Navigator';
 
 window.appshell = {

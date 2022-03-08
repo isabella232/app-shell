@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import eventDispatcher from './utils/eventDispatcher';
+import eventDispatcher from 'utils/eventDispatcher';
 
 export const MODALS = {
   GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
