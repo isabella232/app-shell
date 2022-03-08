@@ -125,14 +125,7 @@ git clone git@github.com:bufferapp/app-shell.git
 * Ensure your editor is setup for ESLint and Prettier.
 * Make and test your changes locally (docs for this TBD, contact @hamstu in the meantime).
 * Make a pull request and have it reviewed and merged into `main`.
-* Now, from the `main` branch:
-  * `git pull`
-  * if you're not in `packages/app-shell` cd your way there
-  * `npm run build`
-  * Update [CHANGELOG.md](/CHANGELOG.md)
-  * `npm version [patch|minor|major]` - pick one depending on type of changes
-  * `git push origin main` - push changes to GitHub
-  * `npm publish` - publish the new version to NPM
+* Once deployed, this will update the js file at `https://components.buffer.com/navigator`, and each of the products will automatically use the new version with your merged changes
 
 ## Local development
 
@@ -148,6 +141,12 @@ _note: you will need to manually trust the certificate, if `navigator.js` is not
 1. go to https://login.buffer.com/ and login with your production account (impersonation will also work).
 2. from the root folder run `yarn watch-production`
 3. visit `https://appshell.local.buffer.com:3000`
+
+### Storybook
+
+We use Storybook for isolating components and allowing us to work on each component one at a time
+
+To run Storybook navigate to `/packages/app-shell` and run `yarn storybook`
 
 ## Testing
 We have two types of testing, unit tests, and UX tests.

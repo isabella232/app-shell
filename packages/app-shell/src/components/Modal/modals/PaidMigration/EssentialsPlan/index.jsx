@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -6,14 +7,35 @@ import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import { purple, white } from '@bufferapp/ui/style/colors';
 
-import { useUser } from 'context/User';
+import { useUser, UserContext } from 'context/User';
 import useMigrationPlanPreview from '../hooks/useMigrationPlanPreview';
 import { ModalContext } from 'context/Modal';
 import { MODALS } from 'hooks/useModal';
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
+import { getActiveProductFromPath } from 'utils/getProduct';
 
 import * as styles from './style';
 
 export const EssentialsPlan = ({ features }) => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    const product = getActiveProductFromPath();
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'Value',
+        product,
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+
   const checkIfTrue = (plan) => {
     switch (plan) {
       case true:
@@ -32,6 +54,7 @@ export const EssentialsPlan = ({ features }) => {
               src="https://buffer-ui.s3.amazonaws.com/avatars/avatar-joel.jpg"
               width="117"
               height="117"
+              alt="Joel Gascoigne avatar"
             />
             <Text type="p">
               Hey, it’s Joel the CEO here. We’re embarking on a new future here
@@ -47,7 +70,7 @@ export const EssentialsPlan = ({ features }) => {
           </styles.Hero>
 
           <styles.SectionIntro>
-            <styles.IntroducingEssentials/>
+            <styles.IntroducingEssentials />
             <styles.Feature>
               <styles.Label color={purple}>
                 <FlashIcon size="medium" verticalAlign="middle" />
@@ -61,7 +84,7 @@ export const EssentialsPlan = ({ features }) => {
               </Text>
             </styles.Feature>
 
-            <styles.InstagramPosting/>
+            <styles.InstagramPosting />
           </styles.SectionIntro>
 
           <styles.SectionOneBuffer>
@@ -79,7 +102,7 @@ export const EssentialsPlan = ({ features }) => {
                 analytics and engagement tools to power your business.
               </Text>
             </styles.Feature>
-            <styles.BufferSuite/>
+            <styles.BufferSuite />
           </styles.SectionOneBuffer>
 
           <styles.SectionAnalytics>
@@ -99,7 +122,7 @@ export const EssentialsPlan = ({ features }) => {
               </Text>
             </styles.Feature>
 
-            <styles.OneBuffer/>
+            <styles.OneBuffer />
           </styles.SectionAnalytics>
 
           <styles.BottomSection>
@@ -109,13 +132,13 @@ export const EssentialsPlan = ({ features }) => {
                 Switch to Essentials to supercharge your social media strategy.
               </Text>
 
-              <styles.FreePlanBorder/>
-              <styles.EssentialsPlanBorder/>
+              <styles.FreePlanBorder />
+              <styles.EssentialsPlanBorder />
 
               <styles.FeaturesTable>
                 <thead>
                   <tr>
-                    <th></th>
+                    <th aria-label="Plans features" />
                     <th scope="col">
                       <styles.PlanLabel>
                         <Text type="p">Current Plan</Text>
@@ -137,8 +160,8 @@ export const EssentialsPlan = ({ features }) => {
                 </thead>
 
                 <tbody>
-                  {features.map((feature, index) => (
-                    <tr key={`row-${index}`}>
+                  {features.map((feature) => (
+                    <tr key={`row-${feature.title}`}>
                       <td>
                         <Text type="p">
                           <b>{feature.title}</b>
@@ -181,14 +204,22 @@ export const EssentialsPlan = ({ features }) => {
   );
 };
 
-export default function() {
+export default function () {
   const user = useUser();
-  const { data:migrationPreview } = useMigrationPlanPreview(user)
+  const { data: migrationPreview } = useMigrationPlanPreview(user);
   const planFeatures = migrationPreview?.planFeatures || [];
-  const features = planFeatures.map(feature => ({
+  const features = planFeatures.map((feature) => ({
     ...feature,
-    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(feature.id),
-    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(feature.id),
-  }))
-  return (<EssentialsPlan features={features} />);
+    currentPlan: migrationPreview.currentPlan.supportedFeatures.includes(
+      feature.id
+    ),
+    suggestedPlan: migrationPreview.suggestedPlan.supportedFeatures.includes(
+      feature.id
+    ),
+  }));
+  return <EssentialsPlan features={features} />;
+}
+
+EssentialsPlan.propTypes = {
+  features: PropTypes.objectOf(PropTypes.object).isRequired,
 };

@@ -18,14 +18,16 @@ const getCopy = ({ planName, startedTrial }) => {
     return {
       label: 'Congrats! You are now on the Free plan',
       description:
-        'Your change have gone through successfully. Start using your Free plan today.',
+        `You've successfully changed your plan. Start using your Free plan today.`,
       buttonCopy: SUCCESS_CTA,
       imageUrl: 'https://buffer-ui.s3.amazonaws.com/illustration-celebrate.png',
     };
-  } else if (planName) {
+  } 
+  
+  if (planName) {
     return {
       label: `Congrats! Welcome to the ${planName} plan`,
-      description: `Your details have gone through successfully. Start using your ${planName} plan features.`,
+      description: `You've successfully saved your payment details! Start using your ${planName} plan features.`,
       buttonCopy: SUCCESS_CTA,
       imageUrl: 'https://buffer-ui.s3.amazonaws.com/illustration-celebrate.png',
       footer: (<Text type='p'>You can always access your invoices and billing information <Link href='https://account.buffer.com/billing'>here</Link>.</Text>)

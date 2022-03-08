@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     container: cypress/browsers:node12.13.0-chrome78-ff70
     steps:
+      - name: Host
+        run: apt update && apt install sudo && sudo echo "0.0.0.0 publish.local.buffer.com" >> /etc/hosts && sudo echo "0.0.0.0 analyze.local.buffer.com" >> /etc/hosts && sudo echo "0.0.0.0 engage.local.buffer.com" >> /etc/hosts
       - name: Checkout branch
         uses: actions/checkout@v2
       - name: Setup
@@ -14,6 +16,9 @@ jobs:
       - uses: cypress-io/github-action@v2
         env:
           CYPRESS_BASE_URL: http://0.0.0.0:3000
+          CYPRESS_PUBLISH_URL: http://publish.local.buffer.com:3000/
+          CYPRESS_ANALYZE_URL: http://analyze.local.buffer.com:3000/
+          CYPRESS_ENGAGE_URL: http://engage.local.buffer.com:3000/
         with:
           browser: chrome
           build: yarn run build

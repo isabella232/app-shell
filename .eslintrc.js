@@ -20,12 +20,20 @@ module.exports = {
   },
   plugins: ['react', 'testing-library', 'jest-dom'],
   rules: {
-    'import/prefer-default-export': 'off',
-    'spaced-comment': 'off',
-    'no-unneeded-ternary': 'off',
+    "react/prop-types": 'off',
     'import/no-named-as-default': 'off',
-    'react/require-default-props': 'off',
+    'import/prefer-default-export': 'off',
     'no-prototype-builtins': 'off',
+    'no-unneeded-ternary': 'off',
+    'react/require-default-props': 'off',
+    'spaced-comment': 'off',
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
+  "settings": {
+    "import/resolver": {
+      webpack: {
+        config: "./packages/app-shell/webpack.config.common"
+      }
+    }
+  }
 };

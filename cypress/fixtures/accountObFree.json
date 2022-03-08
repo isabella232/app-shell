@@ -7,7 +7,8 @@
          "featureFlips":[
             "grantAnalyzeAccess",
             "sharedChannels",
-            "engageRollOut"
+            "engageRollOut",
+            "geid1_free_user_trial_prompt"
          ],
          "isImpersonation":false,
          "currentOrganization":{
@@ -26,7 +27,14 @@
             "featureFlips":[
                "grantAnalyzeAccess",
                "sharedChannels",
-               "engageRollOut"
+               "engageRollOut",
+               "geid1_free_user_trial_prompt"
+            ],
+            "channels":[
+              {
+                "id":"606b65e1dd934f70840bfef7",
+                "__typename":"Channel"
+              }
             ],
             "billing":{
                "id":"606b65d6dad38c03d2b70793",
@@ -39,6 +47,7 @@
                },
                "canStartTrial":true,
                "subscription":{
+                  "quantity": 1,
                   "interval":"month",
                   "periodEnd":null,
                   "isCanceledAtPeriodEnd":false,
@@ -75,12 +84,18 @@
                            "3 social channels",
                            "One user"
                         ],
-                        "intervalBasePrice":0,
-                        "intervalUnit":"mo",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -108,12 +123,18 @@
                            "Unlimited social channels",
                            "One user"
                         ],
-                        "intervalBasePrice":6,
-                        "intervalUnit":"mo",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -144,12 +165,18 @@
                            "Unlimited social channels",
                            "Unlimited users"
                         ],
-                        "intervalBasePrice":12,
-                        "intervalUnit":"mo",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":true,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -176,12 +203,18 @@
                            "3 social channels",
                            "One user"
                         ],
-                        "intervalBasePrice":0,
-                        "intervalUnit":"yr",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -209,12 +242,18 @@
                            "Unlimited social channels",
                            "One user"
                         ],
-                        "intervalBasePrice":60,
-                        "intervalUnit":"yr",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":false,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   },
                   {
@@ -245,12 +284,18 @@
                            "Unlimited social channels",
                            "Unlimited users"
                         ],
-                        "intervalBasePrice":120,
-                        "intervalUnit":"yr",
                         "__typename":"OBPlanOptionSummary"
                      },
                      "isRecommended":true,
                      "downgradedMessage":"",
+                     "channelSlotDetails":{
+                        "flatFee":0, 
+                        "currentQuantity":0, 
+                        "chargableQuantity":0, 
+                        "pricePerQuantity":0, 
+                        "minimumQuantity":0,
+                        "__typename": "ChannelSlotDetails"
+                     },
                      "__typename":"OBPlanOption"
                   }
                ],
@@ -297,6 +342,7 @@
                   },
                   "canStartTrial":true,
                   "subscription":{
+                     "quantity":1,
                      "interval":"month",
                      "periodEnd":null,
                      "isCanceledAtPeriodEnd":false,
@@ -333,12 +379,18 @@
                               "3 social channels",
                               "One user"
                            ],
-                           "intervalBasePrice":0,
-                           "intervalUnit":"mo",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -366,12 +418,18 @@
                               "Unlimited social channels",
                               "One user"
                            ],
-                           "intervalBasePrice":6,
-                           "intervalUnit":"mo",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -402,12 +460,18 @@
                               "Unlimited social channels",
                               "Unlimited users"
                            ],
-                           "intervalBasePrice":12,
-                           "intervalUnit":"mo",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":true,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -434,12 +498,18 @@
                               "3 social channels",
                               "One user"
                            ],
-                           "intervalBasePrice":0,
-                           "intervalUnit":"yr",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -467,12 +537,18 @@
                               "Unlimited social channels",
                               "One user"
                            ],
-                           "intervalBasePrice":60,
-                           "intervalUnit":"yr",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":false,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      },
                      {
@@ -503,12 +579,18 @@
                               "Unlimited social channels",
                               "Unlimited users"
                            ],
-                           "intervalBasePrice":120,
-                           "intervalUnit":"yr",
                            "__typename":"OBPlanOptionSummary"
                         },
                         "isRecommended":true,
                         "downgradedMessage":"",
+                        "channelSlotDetails":{
+                           "flatFee":0, 
+                           "currentQuantity":0, 
+                           "chargableQuantity":0, 
+                           "pricePerQuantity":0, 
+                           "minimumQuantity":0,
+                           "__typename": "ChannelSlotDetails"
+                        },
                         "__typename":"OBPlanOption"
                      }
                   ],

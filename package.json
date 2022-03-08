@@ -22,12 +22,12 @@
     "build:app-shell": "lerna exec --scope @bufferapp/app-shell -- yarn build",
     "serve": "serve -l 3000 ./packages/app/build",
     "test": "jest",
-    "test:ux": "CYPRESS_BASE_URL=https://0.0.0.0:3000 yarn run cypress run",
-    "test:ux:live": "CYPRESS_BASE_URL=https://0.0.0.0:3000 yarn run cypress open",
+    "test:ux": "CYPRESS_BASE_URL=https://0.0.0.0:3000 CYPRESS_ENGAGE_URL=https://engage.local.buffer.com:3000/ CYPRESS_ANALYZE_URL=https://analyze.local.buffer.com:3000/ CYPRESS_PUBLISH_URL=https://publish.local.buffer.com:3000/ yarn run cypress run",
+    "test:ux:live": "CYPRESS_BASE_URL=https://0.0.0.0:3000 CYPRESS_ENGAGE_URL=https://engage.local.buffer.com:3000/ CYPRESS_ANALYZE_URL=https://analyze.local.buffer.com:3000/ CYPRESS_PUBLISH_URL=https://publish.local.buffer.com:3000/ yarn run cypress open",
     "test:watch": "jest --watch",
     "watch": "npm-run-all --parallel app app-shell",
     "watch-production": "npm-run-all --parallel app-production app-shell",
     "lint": "eslint . --ext .js,.jsx",
-    "lint-touched": "eslint $(git diff --name-only HEAD | grep -E \"(.*)\\.(jsx|js)$\" | xargs)"
+    "lint-touched": "eslint $(git diff --name-only HEAD | grep -E \"(.*)\\.(jsx|js)$\" | xargs) --no-error-on-unmatched-pattern"
   }
 }

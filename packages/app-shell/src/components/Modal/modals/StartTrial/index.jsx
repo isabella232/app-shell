@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import CheckmarkIcon from '@bufferapp/ui/Icon/Icons/Checkmark';
 import Text from '@bufferapp/ui/Text';
@@ -9,30 +9,14 @@ import { MODALS } from 'hooks/useModal';
 import { UserContext } from 'context/User';
 import { ModalContext } from 'context/Modal';
 import useStartTrial from 'hooks/useStartTrial';
-import {
-  useTrackPageViewed,
-} from 'hooks/useSegmentTracking';
+import { useSuggestedPlan } from 'hooks/useSuggestedPlan';
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
 const StartTrial = ({ user, openModal, modalData }) => {
-  const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const { suggestedPlan } = useSuggestedPlan(user);
   const { cta, ctaButton } = modalData || {};
-
-  useEffect(() => {
-    if (user) {
-      let plan = user.currentOrganization?.billing?.changePlanOptions.find(
-        (p) => p.isRecommended
-      );
-      if (!plan) {
-        plan = {
-          planId: 'team',
-          planInterval: 'month',
-        };
-      }
-      setSuggestedPlan(plan);
-    }
-  }, [user]);
 
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
@@ -42,7 +26,10 @@ const StartTrial = ({ user, openModal, modalData }) => {
 
   useEffect(() => {
     if (trial && trial.billingStartTrial.success) {
-      openModal(MODALS.success, { startedTrial: true });
+      openModal(MODALS.success, {
+        startedTrial: true,
+        selectedPlan: suggestedPlan,
+      });
     }
   }, [trial]);
 
@@ -58,29 +45,31 @@ const StartTrial = ({ user, openModal, modalData }) => {
   }, []);
 
   return (
-    <Holder>
+    <Holder id="start-trial-modal">
       <Content>
-        <Text type="h1">Try it all, for free!</Text>
+        <Text type="h1">
+          {' '}
+          Grow your audience with the full power of Buffer.
+        </Text>
         <Text type="p">
-          Take your online business further with our entire suite of tools.
+          Add our powerful analytics and engagement tools to drive more growth
+          for your business.
         </Text>
         <ol>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Advanced Instagram features</Text>
+            <Text>Unlimited users</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>Comprehensive analytics</Text>
+            <Text>Unlimited channels</Text>
           </li>
           <li>
             {' '}
             <CheckmarkIcon size="medium" />
-            <Text>
-              Easy reporting for your team and clients
-            </Text>
+            <Text>No credit card required</Text>
           </li>
         </ol>
         <Ctas>
@@ -122,7 +111,13 @@ const StartTrialProvider = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data:modalData }) => <StartTrial modalData={modalData} user={user} openModal={openModal} />}
+          {({ openModal, data: modalData }) => (
+            <StartTrial
+              modalData={modalData}
+              user={user}
+              openModal={openModal}
+            />
+          )}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>

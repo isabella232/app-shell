@@ -1,14 +1,10 @@
 import { useEffect , useState} from 'react';
 import { useMutation } from '@apollo/client';
 import { UPDATE_PAYMENT_METHOD } from '../../../../../common/graphql/billing';
-import { QUERY_ACCOUNT } from '../../../../../common/graphql/account';
 
 function useUpdateUserPaymentMethod({ user, paymentMethod }) {
   const [updatePaymentMethod, { data, error: mutationError }] = useMutation(
     UPDATE_PAYMENT_METHOD,
-    {
-      refetchQueries: [{ query: QUERY_ACCOUNT }],
-    }
   );
   const [error, setError] = useState(null);
 
@@ -20,7 +16,7 @@ function useUpdateUserPaymentMethod({ user, paymentMethod }) {
           paymentMethodId: paymentMethod.id,
         },
       }).catch((e) => {
-        console.error(e);
+        console.error(e); // eslint-disable-line no-console
       });
     }
   }, [paymentMethod]);

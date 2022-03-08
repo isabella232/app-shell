@@ -47,22 +47,40 @@ export function getProductPath(baseUrl) {
   return productPath;
 }
 
+export function getQueryParameters(baseUrl) {
+  const query = baseUrl.match(/\?(?<query>.*)$/)?.groups?.query;
+  // NOTE: returned with a starting "&", because it is always used after the
+  // initial query parameter, "?redirect="
+  return query ? `&${encodeURI(query)}` : '';
+}
+
 function getRedirectUrl(baseUrl) {
   const productPath = getProductPath(baseUrl);
   return `https://${productPath}.buffer.com`;
 }
 
-export function getLogoutUrl(baseUrl = '') {
-  const productPath = getProductPath(baseUrl);
-  return `https://login${
-    productPath.includes('local') ? '.local' : ''
-  }.buffer.com/logout?redirect=${getRedirectUrl(baseUrl)}`;
+function getRedirectUrlWithParams(baseUrl) {
+  return `${getRedirectUrl(baseUrl)}${getQueryParameters(baseUrl)}${encodeURI(
+    window.location.hash
+  )}`;
 }
 
-export function getAccountUrl(baseUrl = '', user) {
-  return `https://account.buffer.com?redirect=${getRedirectUrl(
+function getLoginOrLogoutUrl(baseUrl = '', loginOrLogoutPath) {
+  const productPath = getProductPath(baseUrl);
+  const result = `https://login${
+    productPath.includes('local') ? '.local' : ''
+  }.buffer.com/${loginOrLogoutPath}?redirect=${getRedirectUrlWithParams(
     baseUrl
-  )}&username=${encodeURI(user.name)}`;
+  )}`;
+  return result;
+}
+
+export function getLogoutUrl(baseUrl) {
+  return getLoginOrLogoutUrl(baseUrl, 'logout');
+}
+
+export function getLoginUrl(baseUrl) {
+  return getLoginOrLogoutUrl(baseUrl, 'login');
 }
 
 function getUrlEnvModifier() {
@@ -70,6 +88,11 @@ function getUrlEnvModifier() {
     /\w+\.(\w+\.)buffer\.com/
   ) || [null, null];
   return envModifier;
+}
+
+export function getAccountUrl() {
+  const envModifier = getUrlEnvModifier();
+  return `https://account.${envModifier || ''}buffer.com/`;
 }
 
 export function getBillingUrl() {
@@ -119,6 +142,7 @@ const NavBarStyled = styled.nav`
   height: 64px;
   justify-content: space-between;
   position: relative;
+  z-index: 2;
 `;
 
 const NavBarLeft = styled.div`
@@ -244,14 +268,11 @@ const NavBar = React.memo((props) => {
   const organizations = buildOrgSwitcher(user, selectOrganization);
 
   const isFree = isFreePlan(user);
-  let subscription = null;
   let canStartTrial = false;
   let isOneBufferOrganization = false;
   const shouldDisplayInviteCTA =
     user?.currentOrganization?.shouldDisplayInviteCTA;
   if (user.currentOrganization.billing) {
-    // eslint-disable-next-line no-unused-vars
-    subscription = user?.currentOrganization?.billing?.subscription;
     canStartTrial = user?.currentOrganization?.billing.canStartTrial;
     isOneBufferOrganization =
       user?.currentOrganization?.isOneBufferOrganization;
@@ -296,7 +317,10 @@ const NavBar = React.memo((props) => {
               <SkipToMainLink href="#main">Skip to main content</SkipToMainLink>
             )}
             <BufferLogoWithWords />
-            <NavBarProducts activeProduct={activeProduct} />
+            <NavBarProducts
+              activeProduct={activeProduct}
+              currentOrganization={user?.currentOrganization}
+            />
           </NavBarLeft>
           <NavBarRight>
             <UpgradeCTA />
@@ -329,7 +353,7 @@ const NavBar = React.memo((props) => {
                   hasDivider: organizations.length > 1,
                   onItemClick: () => {
                     window.location.assign(
-                      getAccountUrl(window.location.href, user)
+                      getAccountUrl()
                     );
                   },
                 },
@@ -423,7 +447,12 @@ const NavBar = React.memo((props) => {
 
 NavBar.propTypes = {
   /** The currently active (highlighted) product in the `NavBar`. */
-  activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
+  activeProduct: PropTypes.oneOf([
+    'publish',
+    'analyze',
+    'engage',
+    'start-page',
+  ]),
 
   onLogout: PropTypes.func,
   displaySkipLink: PropTypes.bool,

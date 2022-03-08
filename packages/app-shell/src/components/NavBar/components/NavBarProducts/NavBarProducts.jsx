@@ -71,50 +71,68 @@ const NewLabel = styled.span`
   margin-top: 2px;
 `;
 
-const products = [
-  {
-    id: 'publish',
-    label: 'Publishing',
-    isNew: false,
-  },
-  {
-    id: 'analyze',
-    label: 'Analytics',
-    isNew: false,
-  },
-  {
-    id: 'engage',
-    label: 'Engagement',
-    isNew: false,
-  },
-];
+const NavBarProducts = ({ activeProduct, currentOrganization }) => {
+  const products = [
+    {
+      id: 'publish',
+      label: 'Publishing',
+      isNew: false,
+    },
+    {
+      id: 'analyze',
+      label: 'Analytics',
+      isNew: false,
+    },
+    {
+      id: 'engage',
+      label: 'Engagement',
+      isNew: false,
+    },
+  ];
 
-const NavBarProducts = ({ activeProduct }) => (
-  <StyledNavBarProducts>
-    {products.map(({ id, label, isNew }) => (
-      <ProductLink
-        active={activeProduct === id}
-        href={`https://${id}.buffer.com`}
-        key={id}
-        id={`product-${id}`}
-      >
-        <ProductText>{label}</ProductText>
-        {isNew && (
-          <NewLabel aria-label="This is a new product! Give it a try!">
-            New!
-          </NewLabel>
-        )}
-      </ProductLink>
-    ))}
-  </StyledNavBarProducts>
-);
+  const showStartPage = currentOrganization?.role === 'admin';
+
+  if (showStartPage) {
+    products.push({ id: 'start-page', label: 'Start Page', isNew: true });
+  }
+
+  return (
+    <StyledNavBarProducts>
+      {products.map(({ id, label, isNew }) => (
+        <ProductLink
+          active={activeProduct === id}
+          href={`https://${id}.buffer.com`}
+          key={id}
+          id={`product-${id}`}
+        >
+          <ProductText>{label}</ProductText>
+          {isNew && (
+            <NewLabel aria-label="This is a new product! Give it a try!">
+              New!
+            </NewLabel>
+          )}
+        </ProductLink>
+      ))}
+    </StyledNavBarProducts>
+  );
+};
 
 NavBarProducts.propTypes = {
-  activeProduct: PropTypes.oneOf(['publish', 'analyze', 'engage']),
+  activeProduct: PropTypes.oneOf([
+    'publish',
+    'analyze',
+    'engage',
+    'start-page',
+  ]),
+  currentOrganization: PropTypes.shape({
+    role: PropTypes.string,
+    featureFlips: PropTypes.arrayOf(PropTypes.string),
+  }),
 };
 
 NavBarProducts.defaultProps = {
   activeProduct: undefined,
+  currentOrganization: {},
 };
 
 export default NavBarProducts;

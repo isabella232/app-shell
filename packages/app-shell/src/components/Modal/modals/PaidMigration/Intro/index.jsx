@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import FlashIcon from '@bufferapp/ui/Icon/Icons/Flash';
 import { setCookie, DATES } from 'utils/cookies';
 import { ModalContext } from 'context/Modal';
+import { UserContext } from 'context/User';
 import { MODALS } from 'hooks/useModal';
+
+import { useTrackPageViewed } from 'hooks/useSegmentTracking';
+import { getActiveProductFromPath } from 'utils/getProduct';
 
 import {
   Holder,
@@ -17,12 +21,31 @@ import {
 } from './style';
 
 const Intro = () => {
+  const currentUser = useContext(UserContext);
+  const { data } = useContext(ModalContext);
+  const { cta, ctaButton } = data || {};
+
+  useEffect(() => {
+    const product = getActiveProductFromPath();
+
+    useTrackPageViewed({
+      payload: {
+        name: 'Migrate to OB Modal',
+        title: 'Intro',
+        product,
+        cta,
+        ctaButton,
+      },
+      user: currentUser,
+    });
+  }, []);
+
   return (
     <ModalContext.Consumer>
       {({ openModal }) => (
         <Holder>
-          <BackgroundLayerBottom></BackgroundLayerBottom>
-          <BackgroundLayerTop></BackgroundLayerTop>
+          <BackgroundLayerBottom />
+          <BackgroundLayerTop />
           <IconWrapper>
             <FlashIcon size="large" />
           </IconWrapper>
@@ -39,7 +62,7 @@ const Intro = () => {
                   setCookie({
                     key: 'migrationModalDismissed',
                     value: true,
-                    expires: DATES.inDaysFromNow(7),
+                    expires: DATES.inDaysFromNow(42),
                   });
                 }}
               />

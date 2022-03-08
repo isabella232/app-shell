@@ -1,15 +1,10 @@
-import useCreatePaymentMethod from './useCreatePaymentMethod'
-import { renderHook, act } from '@testing-library/react-hooks'
-import {
-  useStripe,
-  useElements,
-  CardNumberElement,
-} from '@stripe/react-stripe-js';
+import { renderHook, act } from '@testing-library/react-hooks';
+import useCreatePaymentMethod from './useCreatePaymentMethod';
 
-const mockCreatePaymentMethod = jest.fn();
-const mockConfirmCardSetup = jest.fn();
+const mockCreatePaymentMethod = jest.fn(() => Promise.resolve());
+const mockConfirmCardSetup = jest.fn(() => Promise.resolve());
 const mockGetElement = jest.fn();
-const paymentMethod = { id: 'FooPaymentMethod' }
+const paymentMethod = { id: 'FooPaymentMethod' };
 
 jest.mock('@stripe/react-stripe-js', () => ({
   useStripe: () => ({
@@ -20,65 +15,91 @@ jest.mock('@stripe/react-stripe-js', () => ({
     getElement: mockGetElement,
   }),
   CardNumberElement: {},
-}))
+}));
 
 describe('useCreatePaymentMethod', () => {
   const setupIntent = 'fooSetupIntent';
   beforeEach(() => {
-      jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
   describe('submit', () => {
-
+    const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
     it('set processing to true', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
-      act(() => {
-        result.current.submit()
-      })
-      await expect(result.current.processing).toBeTruthy()
-    })
-  })
-
-  describe('stripe',() => {
-    it('call stripe.createPaymentMethod with card element', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
-      act(() => {
-        result.current.submit()
-      })
-      await expect(mockGetElement).toHaveBeenCalled()
-      await expect(mockCreatePaymentMethod).toHaveBeenCalled()
-    })
-
-    it('call stripe.confirmCardSetup after createPaymentMethod', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
-      mockCreatePaymentMethod.mockResolvedValue({
-        paymentMethod,
-      })
-
-      act(() => {
-        result.current._confirmCardSetup({ paymentMethod })
-      })
-
-      await expect(mockConfirmCardSetup)
-        .toHaveBeenCalledWith(
-          setupIntent,
-          expect.objectContaining({
-            payment_method: paymentMethod.id,
-          })
-        )
-    })
-
-    it('return paymentMethodError', async () => {
-      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent))
       mockConfirmCardSetup.mockResolvedValue({
         paymentMethod,
-      })
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: null,
+      });
+      act(() => {
+        result.current.submit();
+      });
+      await expect(result.current.processing).toBeTruthy();
+    });
+  });
+
+  describe('stripe', () => {
+    it('call stripe.createPaymentMethod with card element', async () => {
+      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
+      act(() => {
+        result.current.submit();
+      });
+      await expect(mockGetElement).toHaveBeenCalled();
+      await expect(mockCreatePaymentMethod).toHaveBeenCalled();
+    });
+
+    it('call stripe.confirmCardSetup after createPaymentMethod', async () => {
+      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: null,
+      });
+      mockConfirmCardSetup.mockResolvedValue({
+        paymentMethod,
+        error: null,
+      });
 
       act(() => {
-        result.current._confirmCardSetup({ error: 'fooBarError' })
-      })
+        // eslint-disable-next-line no-underscore-dangle
+        result.current._confirmCardSetup({ paymentMethod });
+      });
 
-      await expect(result.current.error).toEqual('fooBarError')
-    })
-  })
-})
+      await expect(mockConfirmCardSetup).toHaveBeenCalledWith(
+        setupIntent,
+        expect.objectContaining({
+          payment_method: paymentMethod.id,
+        })
+      );
+    });
+
+    it('return paymentMethodError', async () => {
+      const { result } = renderHook(() => useCreatePaymentMethod(setupIntent));
+      mockConfirmCardSetup.mockResolvedValue({
+        paymentMethod,
+        error: new Error('whoops'),
+      });
+      mockCreatePaymentMethod.mockResolvedValue({
+        paymentMethod,
+        error: null,
+      });
+
+      act(() => {
+        // eslint-disable-next-line no-underscore-dangle
+        result.current._confirmCardSetup({ error: 'fooBarError' });
+      });
+
+      await expect(result.current.error).toEqual('fooBarError');
+    });
+  });
+});

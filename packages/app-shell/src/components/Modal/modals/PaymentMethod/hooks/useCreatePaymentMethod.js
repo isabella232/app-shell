@@ -12,18 +12,22 @@ function useCreatePaymentMethod(setupIntent) {
   const [processing, setProcessing] = useState(false);
   const [processingError, setProcessingError] = useState(null);
 
-  async function submit () {
+  async function submit() {
     setProcessingError(null);
     setProcessing(true);
-  };
+  }
 
-  async function confirmCardSetup({ error:paymentMethodError, paymentMethod }) {
+  async function confirmCardSetup({
+    error: paymentMethodError,
+    paymentMethod,
+  }) {
     if (paymentMethodError) {
       setProcessingError(paymentMethodError);
       return;
     }
 
-    await stripe.confirmCardSetup(setupIntent, {
+    await stripe
+      .confirmCardSetup(setupIntent, {
         payment_method: paymentMethod.id,
       })
       .then(({ error }) => {
@@ -38,16 +42,17 @@ function useCreatePaymentMethod(setupIntent) {
   }
 
   async function createPaymentMethod() {
-    await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardNumberElement)
-    })
+    await stripe
+      .createPaymentMethod({
+        type: 'card',
+        card: elements.getElement(CardNumberElement),
+      })
       .then(confirmCardSetup);
   }
 
   useEffect(() => {
     setProcessing(false);
-  }, [processingError])
+  }, [processingError]);
 
   useEffect(() => {
     if (processing) {
@@ -57,7 +62,7 @@ function useCreatePaymentMethod(setupIntent) {
 
       createPaymentMethod();
     }
-  }, [processing])
+  }, [processing]);
 
   return {
     // _confirmCardSetup is exposed for simpler testing
@@ -66,7 +71,7 @@ function useCreatePaymentMethod(setupIntent) {
     paymentMethod: result,
     processing,
     submit,
-  }
+  };
 }
 
-export default useCreatePaymentMethod
+export default useCreatePaymentMethod;

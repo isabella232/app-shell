@@ -9,8 +9,9 @@ import {
   HttpLink,
 } from '@apollo/client';
 import ReactDOM from 'react-dom';
+import { FeaturesWrapper } from '@bufferapp/features';
 
-import NavBar, { getLogoutUrl } from '../../components/NavBar';
+import NavBar, { getLoginUrl } from '../../components/NavBar';
 import Banner from '../../components/Banner';
 import Modal from '../../components/Modal/index';
 import { UserContext } from '../../common/context/User';
@@ -18,17 +19,19 @@ import { ModalContext } from '../../common/context/Modal';
 import useModal, { MODALS } from '../../common/hooks/useModal';
 import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
+import getTrialBannerCopy from './getTrialBannerCopy';
+import ErrorBoundary from './ErrorBoundary';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
-  if (['analyze', 'engage', 'publish'].includes(productUrl)) {
+  if (['analyze', 'engage', 'publish', 'start-page'].includes(productUrl)) {
     return productUrl;
   }
 
   return null;
 }
 
-export const Navigator = ({ apolloClient, channels }) => {
+export const Navigator = React.memo(({ apolloClient, channels }) => {
   const graphqlConfig = apolloClient
     ? {
         client: apolloClient,
@@ -63,7 +66,7 @@ export const Navigator = ({ apolloClient, channels }) => {
   if (
     networkErrors?.some((err) => err.extensions?.code === 'UNAUTHENTICATED')
   ) {
-    window.location.assign(getLogoutUrl(window.location.href));
+    window.location.assign(getLoginUrl(window.location.href));
   }
 
   const modal = useModal();
@@ -83,11 +86,10 @@ export const Navigator = ({ apolloClient, channels }) => {
         user.currentOrganization?.billing?.subscription?.plan?.name;
       const daysRemaining =
         user.currentOrganization?.billing?.subscription?.trial?.remainingDays;
-      trialBannerString = `You are on the Essentials plan ${
-        planName === 'Essentials' ? '' : 'with Team Pack'
-      } trial with ${daysRemaining} ${
-        daysRemaining === 1 ? 'day' : 'days'
-      } left. Add your billing details now to start your subscription.`;
+      trialBannerString = getTrialBannerCopy({
+        planName,
+        daysRemaining,
+      });
     }
   }
 
@@ -112,11 +114,11 @@ export const Navigator = ({ apolloClient, channels }) => {
             }}
           />
         )}
-        <Modal {...modal} />
+        {!user.loading && <Modal {...modal} />}
       </ModalContext.Provider>
     </UserContext.Provider>
   );
-};
+});
 
 Navigator.propTypes = {
   apolloClient: PropTypes.instanceOf(ApolloClient),
@@ -152,11 +154,15 @@ export default () => {
   });
 
   ReactDOM.render(
-    <React.StrictMode>
-      <ApolloProvider client={client}>
-        <Navigator />
-      </ApolloProvider>
-    </React.StrictMode>,
+    <ErrorBoundary>
+      <React.StrictMode>
+        <ApolloProvider client={client}>
+          <FeaturesWrapper>
+            <Navigator />
+          </FeaturesWrapper>
+        </ApolloProvider>
+      </React.StrictMode>
+    </ErrorBoundary>,
     document.getElementById('navigator')
   );
 };

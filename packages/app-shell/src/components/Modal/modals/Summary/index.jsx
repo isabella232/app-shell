@@ -1,9 +1,12 @@
 import React from 'react';
 import Text from '@bufferapp/ui/Text';
 import Coupon from '@bufferapp/ui/Icon/Icons/Coupon';
-import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
-import ArrowDown from '@bufferapp/ui/Icon/Icons/ArrowDown';
-import ArrowUp from '@bufferapp/ui/Icon/Icons/ArrowUp';
+import { useSplitEnabled } from '@bufferapp/features';
+
+import { UserContext } from '../../../../common/context/User';
+import CurrentPlanInfo from './components/CurrentPlanInfo';
+import UpdatedPlanInfo from './components/UpdatedPlanInfo';
+
 import {
   DiscountReminder,
   TotalPrice,
@@ -12,59 +15,104 @@ import {
   Bottom,
   Body,
   SummaryContainer,
-  BoldPrice,
   Separator,
   SummaryNote,
   SummaryDetails,
   Title,
   PriceFooterWrapper,
 } from './style';
-import { UserContext } from 'context/User';
+
+function renderSocialChannelsText(selectedPlan) {
+  const { channelsQuantity } = selectedPlan;
+  return (
+    <Text type="p" color="grayDark">
+      {/* this ends up reading: # social channels x base price */}
+      {`Includes ${channelsQuantity} social channel${
+        channelsQuantity > 1 ? 's' : ''
+      }`}
+    </Text>
+  );
+}
+
+function renderSBBSummary(
+  currentPlan,
+  selectedPlan,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter,
+  newPrice
+) {
+  const {
+    planName: currentPlanName,
+    totalPrice: currentPlanPricing,
+    planInterval: currentPlanInterval,
+    channelsQuantity: currentChannelsQuantity,
+    summary: currentPlanSummary,
+  } = currentPlan;
+  const currentPlanUsersText = currentPlanSummary.details[1];
+  const {
+    planId: selectedPlanId,
+    planName: selectedPlanName,
+    basePrice: selectedPlanPricing,
+    planInterval: selectedPlanInterval,
+    summary: selectePlanSummary,
+  } = selectedPlan;
+  const selectedPlanUsersText = selectePlanSummary.details[1];
+
+  return (
+    <>
+      <CurrentPlanInfo
+        planName={currentPlanName}
+        planPrice={currentPlanPricing}
+        planCycle={currentPlanInterval}
+        numberOfChannels={currentChannelsQuantity}
+        numberOfUsers={currentPlanUsersText}
+      />
+      <UpdatedPlanInfo
+        planId={selectedPlanId}
+        planName={selectedPlanName}
+        planPrice={selectedPlanPricing}
+        planCycle={selectedPlanInterval}
+        numberOfChannels={currentChannelsQuantity}
+        numberOfUsers={selectedPlanUsersText}
+        channelsCount={channelsCount}
+        increaseCounter={() => increaseCounter()}
+        decreaseCounter={() => decreaseCounter()}
+        newPrice={newPrice}
+      />
+    </>
+  );
+}
 
 const Summary = ({
   planOptions,
   selectedPlan,
   fromPlanSelector,
-  trialInfo,
   subscriptionEndDate,
   isUpgradeIntent,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter,
+  newPrice,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
-  const currentPlanString = `${currentPlan.planId}_${currentPlan.planInterval}`;
-  const selectedPlanString = selectedPlan
-    ? `${selectedPlan.planId}_${selectedPlan.planInterval}`
-    : '';
+  const currentPlanId = currentPlan.planId;
+  const selectedPlanId = selectedPlan.planId;
 
-  const isDowngrading = (currentPlanId, selectedPlanId) => {
-    if (currentPlanId === 'essentials') {
-      return selectedPlanId === 'free' ? true : false;
-    }
-    if (currentPlanId === 'team') {
-      return true;
-    }
-    if (currentPlanId === 'free') {
-      return false;
-    }
-  };
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
 
-  const getStatus = (fromPlanSelector) => {
-    const [currentPlanId, currentPlanInterval] = currentPlanString.split('_');
-    const [selectedPlanId, selectedPlanInterval] = selectedPlanString.split(
-      '_'
-    );
-
-    let downgrade;
+  const getStatus = () => {
     let planStatus;
     if (currentPlanId === selectedPlanId) {
       planStatus = `Currently on ${currentPlan.planName}`;
     } else {
-      downgrade = isDowngrading(currentPlanId, selectedPlanId);
-      planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${selectedPlan?.planName}`;
+      planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${
+        selectedPlan?.planName
+      }`;
     }
 
     if (isUpgradeIntent) {
       planStatus = `Change to ${selectedPlan?.planName}`;
-      downgrade = false;
     }
 
     return (
@@ -85,12 +133,7 @@ const Summary = ({
         <Text type="p" color="grayDark">
           Billed {selectedPlan.planInterval}ly in USD
         </Text>
-        <Text type="p" color="grayDark">
-          {/* this ends up reading: # social channels x base price */}
-          {`Includes ${selectedPlan.channelsQuantity} social channel${
-            selectedPlan.channelsQuantity > 1 ? 's' : ''
-          }`}
-        </Text>
+        {renderSocialChannelsText(selectedPlan)}
       </PriceFooterWrapper>
     );
   };
@@ -104,14 +147,6 @@ const Summary = ({
     subscriptionEndDate
   ).toLocaleDateString('en-US', dateOptions);
 
-  const formattedTrialEndDate = new Date(trialInfo?.endDate).toLocaleDateString(
-    'en-US',
-    dateOptions
-  );
-
-  const intervalInWords =
-    selectedPlan.planInterval === 'month' ? '30 days' : 'year';
-
   const getSummaryNote = () => {
     if (selectedPlan.planId === 'free' && subscriptionEndDate) {
       return (
@@ -120,47 +155,66 @@ const Summary = ({
           <span>{formattedSubscriptionEndDate}</span>
         </Text>
       );
-    } else if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
+    }
+    if (selectedPlan.planId === 'free' && !subscriptionEndDate) {
       return <Text type="p">Upgrade your plan at anytime</Text>;
-    } else return <Text type="p">First payment due today and then every {selectedPlan.planInterval} until canceled</Text>;
+    }
+    return (
+      <Text type="p">
+        First payment due today and then every {selectedPlan.planInterval} until
+        canceled
+      </Text>
+    );
   };
 
   return (
-    <SummaryContainer>
+    <SummaryContainer sbbEnabled={splitSBBEnabled}>
       <Body>
         <Text type="h2">Summary</Text>
-        <SummaryDetails>
-          {
-            <>
-              {getStatus(fromPlanSelector)}
-              <DetailList>
-                {selectedPlan.summary.details.map((detail) => (
-                  <Detail key={detail}>
-                    <Text type="p">{detail}</Text>
-                  </Detail>
-                ))}
-              </DetailList>
-              <Separator />
-              <SummaryNote>{getSummaryNote()}</SummaryNote>
-            </>
-          }
-        </SummaryDetails>
+        {splitSBBEnabled ? (
+          renderSBBSummary(
+            currentPlan,
+            selectedPlan,
+            channelsCount,
+            increaseCounter,
+            decreaseCounter,
+            newPrice
+          )
+        ) : (
+          <>
+            <SummaryDetails>
+              <>
+                {getStatus()}
+                <DetailList>
+                  {selectedPlan.summary.details.map((detail) => (
+                    <Detail key={detail}>
+                      <Text type="p">{detail}</Text>
+                    </Detail>
+                  ))}
+                </DetailList>
+                <Separator />
+                <SummaryNote>{getSummaryNote()}</SummaryNote>
+              </>
+            </SummaryDetails>
 
-        <Bottom>
-          <TotalPrice>
-            <sup>{selectedPlan.currency}</sup>
-            <Text type="h2" as="p">
-              {selectedPlan.totalPrice}
-            </Text>
-          </TotalPrice>
-          {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
-          {selectedPlan.planInterval === 'year' && selectedPlan.planId !== 'free' && (
-            <DiscountReminder>
-              <Coupon />
-              <p>{selectedPlan.discountPercentage}% discount</p>
-            </DiscountReminder>
-          )}
-        </Bottom>
+            <Bottom>
+              <TotalPrice>
+                <sup>{selectedPlan.currency}</sup>
+                <Text type="h2" as="p">
+                  {selectedPlan.totalPrice}
+                </Text>
+              </TotalPrice>
+              {!selectedPlan.channelsQuantity ? '' : <>{getPriceFooter()}</>}
+              {selectedPlan.planInterval === 'year' &&
+                selectedPlan.planId !== 'free' && (
+                  <DiscountReminder>
+                    <Coupon />
+                    <p>{selectedPlan.discountPercentage}% discount</p>
+                  </DiscountReminder>
+                )}
+            </Bottom>
+          </>
+        )}
       </Body>
     </SummaryContainer>
   );
@@ -170,6 +224,10 @@ const SummaryProvider = ({
   selectedPlan,
   fromPlanSelector,
   isUpgradeIntent,
+  channelsCount,
+  increaseCounter,
+  decreaseCounter,
+  newPrice,
 }) => {
   return (
     <UserContext.Consumer>
@@ -184,6 +242,10 @@ const SummaryProvider = ({
             selectedPlan={selectedPlan}
             fromPlanSelector={fromPlanSelector}
             isUpgradeIntent={isUpgradeIntent}
+            channelsCount={channelsCount}
+            increaseCounter={() => increaseCounter()}
+            decreaseCounter={() => decreaseCounter()}
+            newPrice={newPrice}
           />
         );
       }}

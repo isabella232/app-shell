@@ -140,10 +140,10 @@ describe('useUserTracker hooks', () => {
       groupUser(OBUser)
       expect(global.analytics.group)
         .toHaveBeenCalledWith(OBUser.currentOrganization.id, expect.objectContaining({
-          currentAnalyzePlan: null,
+          currentAnalyzePlan: 'free',
           currentBufferPlan: 'team',
           currentBufferTrialPlan: null,
-          currentPublishPlan: null,
+          currentPublishPlan: 'free',
           isOnPublishTrial: false,
           isOneBufferEnabled: true,
           isPayingAnalyzeOrganization: false,

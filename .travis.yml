@@ -12,7 +12,7 @@ jobs:
       name: 'Lint changed files'
       script:
         - "eslint $(git diff --name-only $TRAVIS_BRANCH
-      | grep -E \"(.*)\\.(jsx|js)$\" | xargs)"
+      | grep -E \"(.*)\\.(jsx|js)$\" | xargs) --no-error-on-unmatched-pattern"
     - stage: 'Tests'
       name: 'Tests'
       script:

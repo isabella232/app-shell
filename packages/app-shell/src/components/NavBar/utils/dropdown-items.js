@@ -1,5 +1,7 @@
+import { getActiveProductFromPath } from '../../../common/utils/getProduct';
+
 function getHelpDropdownItems() {
-  return [
+  const dropdownItems = [
     {
       id: 'Help Center',
       title: 'Visit Help Center',
@@ -24,24 +26,42 @@ function getHelpDropdownItems() {
       id: 'Status',
       title: 'Status',
       onItemClick: () => {
-        window.location.assign('https://status.buffer.com/');
+        window.open('https://status.buffer.com/', '_blank');
       },
     },
     {
       id: 'Pricing & Plans',
       title: 'Pricing & Plans',
       onItemClick: () => {
-        window.location.assign('https://buffer.com/pricing');
+        window.open('https://buffer.com/pricing', '_blank');
       },
     },
     {
       id: 'Wishlist',
       title: 'Wishlist',
       onItemClick: () => {
-        window.location.assign('https://buffer.com/feature-request');
+        window.open('https://buffer.com/feature-request', '_blank');
       },
     },
-  ]
+    {
+      id: 'Changelog',
+      title: 'Changelog',
+      onItemClick: () => {
+        window.open('https://buffer.com/changelog', '_blank');
+      },
+    },
+  ];
+  // Only show "Getting Started" link for publishing product
+  const activeProduct = getActiveProductFromPath();
+  if (activeProduct === 'publish') {
+    dropdownItems.unshift({
+      id: 'Getting Started',
+      title: 'Getting Started',
+      onItemClick: () => {}, // Will open Pendo popup through classname
+    });
+  }
+
+  return dropdownItems;
 }
 
 function getAppsDropdownItems() {
@@ -50,27 +70,37 @@ function getAppsDropdownItems() {
       id: 'Buffer-for-iOS',
       title: 'Buffer for iOS',
       onItemClick: () => {
-        window.open('https://apps.apple.com/app/apple-store/id490474324?pt=936146&ct=TopBarAppsDropdown&mt=8',
-          '_blank')
+        window.open(
+          'https://apps.apple.com/app/apple-store/id490474324?pt=936146&ct=TopBarAppsDropdown&mt=8',
+          '_blank'
+        );
       },
     },
     {
       id: 'Buffer-for-Android',
       title: 'Buffer for Android',
       onItemClick: () => {
-        window.open('https://play.google.com/store/apps/details?id=org.buffer.android',
-          '_blank')
+        window.open(
+          'https://play.google.com/store/apps/details?id=org.buffer.android',
+          '_blank'
+        );
       },
     },
     {
       id: 'Remix-by-Buffer',
       title: 'Remix by Buffer',
       onItemClick: () => {
-        window.open('https://buffer.com/remix',
-          '_blank')
+        window.open('https://buffer.com/remix', '_blank');
       },
     },
-  ]
-};
-  
+    {
+      id: 'Integrations',
+      title: 'Integrations',
+      onItemClick: () => {
+        window.open('https://buffer.com/extras', '_blank');
+      },
+    },
+  ];
+}
+
 export { getHelpDropdownItems, getAppsDropdownItems };
