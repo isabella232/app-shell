@@ -10,6 +10,7 @@ import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import ChannelCounter from '../../../../../common/components/Counter/Counter';
+import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 
 import {
   Header,
@@ -24,6 +25,13 @@ import {
 } from './style';
 
 const CardBody = ({ planName, quantity }) => {
+  const {
+    channelsCount,
+    setChannelsCounterValue,
+    increaseCounter,
+    decreaseCounter,
+  } = useChannelsCounter(1, 1);
+
   return (
     <>
       <Header>
@@ -60,9 +68,9 @@ const CardBody = ({ planName, quantity }) => {
               </Title>
               <ChannelCounterWrapper>
                 <ChannelCounter
-                  channelsCount={0}
-                  onDecreaseCounter={() => null}
-                  onIncreaseCounter={() => null}
+                  channelsCount={channelsCount}
+                  onDecreaseCounter={() => decreaseCounter()}
+                  onIncreaseCounter={() => increaseCounter()}
                 />
               </ChannelCounterWrapper>
             </div>
