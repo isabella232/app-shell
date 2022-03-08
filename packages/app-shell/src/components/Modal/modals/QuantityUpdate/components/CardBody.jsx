@@ -11,6 +11,7 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import ChannelCounter from '../../../../../common/components/Counter/Counter';
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
+import { calculateTotalSlotsPrice } from '../../../utils';
 
 import {
   Header,
@@ -30,6 +31,7 @@ const CardBody = ({
   channelFee,
   pricePerQuantity,
   minimumQuantity,
+  planId,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
 
@@ -39,6 +41,14 @@ const CardBody = ({
     increaseCounter,
     decreaseCounter,
   } = useChannelsCounter(quantity, minimumQuantity);
+
+  const newPrice = calculateTotalSlotsPrice(
+    planId,
+    channelsCount,
+    pricePerQuantity,
+    minimumQuantity,
+    channelFee
+  );
 
   useEffect(() => {
     changeCounterState(false);
@@ -95,7 +105,7 @@ const CardBody = ({
               {hasCounterChanged ? (
                 <Summary>
                   <Text type="p">
-                    New monthly cost: <strong>$60</strong>
+                    New monthly cost: <strong>${newPrice}</strong>
                   </Text>
                   <Text>
                     Then $60 on your next billing date and every month until

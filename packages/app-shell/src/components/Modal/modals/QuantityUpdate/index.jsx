@@ -28,7 +28,7 @@ const QuantityUpdate = () => {
             } = user.currentOrganization.billing.channelSlotDetails;
             const { plan: currentPlan } =
               user.currentOrganization.billing.subscription;
-            const { name: planName } = currentPlan;
+            const { name: planName, id: planId } = currentPlan;
             return (
               <Container>
                 <CardBody
@@ -37,6 +37,7 @@ const QuantityUpdate = () => {
                   channelFee={flatFee}
                   pricePerQuantity={pricePerQuantity}
                   minimumQuantity={minimumQuantity}
+                  plandId={planId}
                 />
               </Container>
             );
