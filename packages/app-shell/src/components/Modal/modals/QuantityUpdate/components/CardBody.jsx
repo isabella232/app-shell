@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MODALS } from '../../../../../common/hooks/useModal';
 
 import { Text, Button } from '@bufferapp/ui';
@@ -24,13 +24,29 @@ import {
   Summary,
 } from './style';
 
-const CardBody = ({ planName, quantity, channelFee, pricePerQuantity }) => {
+const CardBody = ({
+  planName,
+  quantity,
+  channelFee,
+  pricePerQuantity,
+  minimumQuantity,
+}) => {
+  const [hasCounterChanged, changeCounterState] = useState(false);
+
   const {
     channelsCount,
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(quantity, 1);
+  } = useChannelsCounter(quantity, minimumQuantity);
+
+  useEffect(() => {
+    changeCounterState(false);
+
+    if (channelsCount != quantity) {
+      changeCounterState(true);
+    }
+  });
 
   return (
     <>
@@ -76,17 +92,21 @@ const CardBody = ({ planName, quantity, channelFee, pricePerQuantity }) => {
             </div>
 
             <Summary>
-              <Text type="p">
-                <strong>+ ${pricePerQuantity}</strong> per channel
-              </Text>
-              <Text type="p">
-                New monthly cost: <strong>$60</strong>
-              </Text>
-
-              <Text>
-                Then $60 on your next billing date and every month until
-                canceled
-              </Text>
+              {hasCounterChanged ? (
+                <Summary>
+                  <Text type="p">
+                    New monthly cost: <strong>$60</strong>
+                  </Text>
+                  <Text>
+                    Then $60 on your next billing date and every month until
+                    canceled
+                  </Text>
+                </Summary>
+              ) : (
+                <Text type="p">
+                  <strong>+ ${pricePerQuantity}</strong> per channel
+                </Text>
+              )}
             </Summary>
           </InnerContainer>
         </Section>

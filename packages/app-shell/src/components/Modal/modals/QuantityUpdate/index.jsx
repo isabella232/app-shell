@@ -26,7 +26,7 @@ const QuantityUpdate = () => {
               pricePerQuantity,
               minimumQuantity,
             } = user.currentOrganization.billing.channelSlotDetails;
-            const { quantity, plan: currentPlan } =
+            const { plan: currentPlan } =
               user.currentOrganization.billing.subscription;
             const { name: planName } = currentPlan;
             return (
@@ -36,6 +36,7 @@ const QuantityUpdate = () => {
                   quantity={currentQuantity}
                   channelFee={flatFee}
                   pricePerQuantity={pricePerQuantity}
+                  minimumQuantity={minimumQuantity}
                 />
               </Container>
             );
