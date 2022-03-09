@@ -205,36 +205,10 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to the current plan when isUpgradeIntent is false AND there is a current plan found', () => {
-      const planOptions = [
-        { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-        ...listOfFilteredPlanOptions,
-      ];
-
-      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
-
-      expect(result).toEqual({
-        planId: 'team',
-        planInterval: 'year',
-        isCurrentPlan: true,
-      });
-    });
-
     it('should set the default selected plan to essentials when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
       const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
-
-      expect(result).toEqual({
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
-      });
-    });
-
-    it('should set the default selected plan to essentials when isUpgradeIntent ', () => {
-      const planOptions = [...listOfFilteredPlanOptions];
-      const result = getDefaultSelectedPlan(planOptions, true);
 
       expect(result).toEqual({
         planId: 'essentials',

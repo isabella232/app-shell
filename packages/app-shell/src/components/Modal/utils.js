@@ -70,12 +70,11 @@ export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
 }
 
-export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
+export function getDefaultSelectedPlan(planOptions) {
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
   const essentialsPlan = getPlanByPlanId('essentials', planOptions);
 
-  const defaultSelectedPlan =
-    isUpgradeIntent || !currentPlan ? essentialsPlan : currentPlan;
+  const defaultSelectedPlan = !currentPlan ? essentialsPlan : currentPlan;
 
   return defaultSelectedPlan;
 }
