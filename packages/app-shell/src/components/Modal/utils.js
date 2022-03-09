@@ -70,12 +70,11 @@ export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
 }
 
-export function getDefaultSelectedPlan(planOptions, isUpgradeIntent) {
+export function getDefaultSelectedPlan(planOptions) {
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
   const essentialsPlan = getPlanByPlanId('essentials', planOptions);
 
-  const defaultSelectedPlan =
-    isUpgradeIntent || !currentPlan ? essentialsPlan : currentPlan;
+  const defaultSelectedPlan = !currentPlan ? essentialsPlan : currentPlan;
 
   return defaultSelectedPlan;
 }
@@ -114,6 +113,21 @@ export function calculateTotalSlotsPrice(
   return numberOfSlots * slotPrice;
 }
 
+export function getAgencyPlanMinimumChannelInputMessaging() {
+  return {
+    messageStatus: 'warning',
+    message: 'Oops! The Agency Plan has a minimum of 10 channels. ',
+  };
+}
+
+export function getFreePlanChannelInputMessaging() {
+  return {
+    messageStatus: 'warning',
+    message:
+      'The Free plan is limited to 3 channels. Additional channels will be locked.',
+  };
+}
+
 export function handleChannelsCountConditions(
   planId,
   channelsCount,
@@ -121,9 +135,6 @@ export function handleChannelsCountConditions(
 ) {
   if (planId === 'agency' && channelsCount < 10) {
     setChannelsCounterValue(10);
-  }
-  if (planId === 'free' && channelsCount > 3) {
-    setChannelsCounterValue(3);
   }
 }
 

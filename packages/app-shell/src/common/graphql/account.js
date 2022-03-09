@@ -6,6 +6,19 @@ export const SET_CURRENT_ORGANIZATION = gql`
   }
 `;
 
+export const ACCOUNT_INITIATE_EMAIL_VERIFICATION = gql`
+  mutation AccountInitiateEmailVerification {
+    accountInitiateEmailVerification {
+      ... on AccountInitiateEmailVerificationResponse {
+        success
+      }
+      ... on AccountInitiateEmailVerificationError {
+        userFriendlyMessage
+      }
+    }
+  }
+`;
+
 export const BILLING_FIELDS = gql`
   fragment BillingFields on Billing {
     id
@@ -94,6 +107,7 @@ export const QUERY_ACCOUNT = gql`
       createdAt
       featureFlips
       isImpersonation
+      shouldShowEmailVerificationCommunication
       currentOrganization {
         id
         name

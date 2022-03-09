@@ -21,6 +21,7 @@ import { QUERY_ACCOUNT } from '../../common/graphql/account';
 import useUserTracker from '../../common/hooks/useUserTracker';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
+import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -93,6 +94,9 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
     }
   }
 
+  const showEmailVerificationBanner =
+    !loading && user.shouldShowEmailVerificationCommunication;
+
   return (
     <UserContext.Provider value={user}>
       <ModalContext.Provider value={modal}>
@@ -114,6 +118,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
             }}
           />
         )}
+        {showEmailVerificationBanner && <EmailVerificationBanner />}
         {!user.loading && <Modal {...modal} />}
       </ModalContext.Provider>
     </UserContext.Provider>
