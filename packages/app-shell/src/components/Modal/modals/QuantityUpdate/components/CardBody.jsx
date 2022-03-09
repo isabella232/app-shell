@@ -72,13 +72,13 @@ const CardBody = ({
           <strong>{getProductPriceCycleText(planPrice, planCycle)}</strong> for{' '}
           {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
-          <Button
-            type="text"
+          <button
             onClick={(data) => {
               openModal(MODALS.planSelector, data);
             }}
-            label="Change Plan"
-          />
+          >
+            Change Plan
+          </button>
         </Text>
       </Header>
       <SectionContainer>

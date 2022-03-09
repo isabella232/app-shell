@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import {
   getFreePlanChannelInputMessaging,
   getAgencyPlanMinimumChannelInputMessaging,
-} from '../../../utils';
+} from '../../components/Modal/utils';
 
 const agencyPlanLimitMessageStatus =
   getAgencyPlanMinimumChannelInputMessaging();
