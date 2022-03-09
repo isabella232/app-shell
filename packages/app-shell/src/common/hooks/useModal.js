@@ -53,6 +53,13 @@ function useModal() {
     }
   }, []);
 
+  useEffect(() => {
+    if (modal === MODALS.success) {
+      // propagate a modal event on success
+      ACTIONS.openModal(modal)
+    }
+  }, [modal])
+
   // Open modal from events
   function handleOpenModal({ detail }) {
     const { modal: modalKey, data: modalData } = detail;
