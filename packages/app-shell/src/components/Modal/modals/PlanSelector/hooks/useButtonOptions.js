@@ -16,7 +16,7 @@ const useButtonOptions = ({
     if (isActiveTrial) {
       if (selectedPlan.planId === 'free') {
         return 'Confirm Plan Change';
-      } else return hasPaymentDetails ? 'Confirm Trial Plan' : 'Go To Payment';
+      } else return hasPaymentDetails ? 'Confirm Plan' : 'Go To Payment';
     } else if (selectedPlan?.isCurrentPlan) {
       if (selectedPlan.planId === 'free' && isAwaitingUserAction) {
         return 'Confirm Free Plan';
