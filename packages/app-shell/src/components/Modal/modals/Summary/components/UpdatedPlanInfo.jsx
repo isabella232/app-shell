@@ -51,11 +51,10 @@ function UpdatedPlanInfo(props) {
         </Row>
       </Section>
       <CurrentPaymentContainer>
-        New monthly cost:{' '}
-        <span>{getProductPriceCycleText(newPrice, planCycle)}</span>
+        New cost: <span>{getProductPriceCycleText(newPrice, planCycle)}</span>
       </CurrentPaymentContainer>
       <CancellationInfo>
-        This will be billed every month until canceled.
+        This will be billed every {planCycle} until canceled.
       </CancellationInfo>
     </UpdatedPlanInfoContainer>
   );
