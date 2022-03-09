@@ -89,10 +89,10 @@ export const Summary = styled.div`
   p {
     color: ${grayDark};
     margin-top: 0;
+    margin-bottom: auto;
   }
 
   span {
-    max-width: 217px;
     color: ${grayDark};
     text-align: right;
     line-height: 24px;
