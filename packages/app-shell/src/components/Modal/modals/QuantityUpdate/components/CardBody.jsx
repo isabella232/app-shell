@@ -73,6 +73,7 @@ const CardBody = ({
           {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
           <button
+            type="button"
             onClick={(data) => {
               openModal(MODALS.planSelector, data);
             }}
