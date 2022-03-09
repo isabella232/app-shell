@@ -103,7 +103,7 @@ const CardBody = ({
 
             <Summary>
               {hasCounterChanged ? (
-                <Summary>
+                <>
                   <Text type="p">
                     New monthly cost: <strong>${newPrice}</strong>
                   </Text>
@@ -111,7 +111,7 @@ const CardBody = ({
                     Then $60 on your next billing date and every month until
                     canceled
                   </Text>
-                </Summary>
+                </>
               ) : (
                 <Text type="p">
                   <strong>+ ${pricePerQuantity}</strong> per channel
