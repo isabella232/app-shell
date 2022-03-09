@@ -26,7 +26,7 @@ const ModalTesting = () => {
           actions.openModal(MODALS.planSelector, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: true,
+            isUpgradeIntent: false,
           });
         }}
       >
