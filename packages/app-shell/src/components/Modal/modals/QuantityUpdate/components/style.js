@@ -12,7 +12,7 @@ export const Header = styled.div`
   padding: 16px;
   max-width: 422px;
 
-  a {
+  button {
     font-family: Roboto, sans-serif;
     font-size: 14px;
     font-weight: 700;
@@ -20,6 +20,8 @@ export const Header = styled.div`
     cursor: pointer;
     text-decoration: none;
     color: ${blue};
+    background: none;
+    border: none;
   }
 `;
 
