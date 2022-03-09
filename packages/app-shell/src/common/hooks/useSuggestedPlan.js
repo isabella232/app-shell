@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 export function useSuggestedPlan(user) {
   const [suggestedPlan, setSuggestedPlan] = useState(null);
+  const memoizedUser = useMemo(() => user, [user?.currentOrganization?.id]);
 
   useEffect(() => {
-    if (user) {
-      let plan = user.currentOrganization?.billing?.changePlanOptions.find(
+    if (memoizedUser) {
+      let plan = memoizedUser?.currentOrganization?.billing?.changePlanOptions?.find(
         (p) => p.isRecommended
       );
       if (!plan) {
@@ -16,7 +17,7 @@ export function useSuggestedPlan(user) {
       }
       setSuggestedPlan(plan);
     }
-  }, [user]);
+  }, [memoizedUser]);
 
   return { suggestedPlan };
 };

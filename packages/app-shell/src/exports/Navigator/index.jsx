@@ -22,7 +22,7 @@ import useUserTracker from '../../common/hooks/useUserTracker';
 import getTrialBannerCopy from './getTrialBannerCopy';
 import ErrorBoundary from './ErrorBoundary';
 import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner';
-import { ACTIONS as ORGANIZATION_ACTIONS } from '../../common/events/orgEvents';
+import { useOrgEventsListener } from '../../common/events/orgEvents';
 
 function getActiveProductFromUrl() {
   const productUrl = window.location.hostname.split('.')[0];
@@ -63,10 +63,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
           ...data.account,
         };
   useUserTracker(user);
-
-  useEffect(() => {
-    ORGANIZATION_ACTIONS.currentOrganizationUpdated({ user });
-  }, [user]);
+  useOrgEventsListener(user);
 
   const networkErrors = error?.networkError?.result?.errors;
   if (
