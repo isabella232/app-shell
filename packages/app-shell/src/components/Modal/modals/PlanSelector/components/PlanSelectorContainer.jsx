@@ -28,7 +28,7 @@ import {
   DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
-import useChannelsCounter from '../hooks/useChannelsCounter';
+import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 

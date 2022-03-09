@@ -108,8 +108,8 @@ const CardBody = ({
                     New monthly cost: <strong>${newPrice}</strong>
                   </Text>
                   <Text>
-                    Then $60 on your next billing date and every month until
-                    canceled
+                    Then ${newPrice} on your next billing date and every month
+                    until canceled
                   </Text>
                 </>
               ) : (
