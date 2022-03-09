@@ -1,11 +1,4 @@
 import styled from 'styled-components';
-import { fontSizeSmall } from '@bufferapp/ui/style/fonts';
-import {
-  grayLighter,
-  grayLight,
-  white,
-  blue,
-} from '@bufferapp/ui/style/colors';
 
 export const Container = styled.div`
   align-items: center;
