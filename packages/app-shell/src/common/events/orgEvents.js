@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import eventDispatcher from 'utils/eventDispatcher'
 import { useSuggestedPlan } from '../hooks/useSuggestedPlan';
+import useStartTrial from '../hooks/useStartTrial';
 
 export const EVENT_KEY = 'appshell__organization_event'
 export const MISSING_USER_ERROR = 'Missing options.user';
@@ -49,19 +50,30 @@ export function getActionFromEvent({ detail }) {
 }
 
 export function useOrgEventsListener(user) {
+  const [eventToProcess, setEventToProcess] = useState()
   const { suggestedPlan } = useSuggestedPlan(user)
-  console.log('suggestedPlan', suggestedPlan);
+  const { startTrial, trial, error, processing } = useStartTrial({
+    user,
+    plan: suggestedPlan,
+    // TODO update the cta logic so that we can pass it on action
+    // attribution: { cta },
+  });
 
   function handleEvent(event) {
-    const actionToProcess = getActionFromEvent(event)
-    switch(actionToProcess) {
-      case ACTION_KEYS.startTrial:
-        console.log('user', user);
-        break;
-      default:
-        break;
+    const action = getActionFromEvent(event)
+    if (action) {
+      setEventToProcess(ACTION_KEYS.startTrial)
     }
   }
+
+  useEffect(() => {
+    if (eventToProcess) {
+      console.log('suggestedPlan', suggestedPlan);
+      console.log(user)
+      //TODO start trial
+    }
+    setEventToProcess(null);
+  }, [eventToProcess]);
 
   useEffect(() => {
     ACTIONS.currentOrganizationUpdated({ user })

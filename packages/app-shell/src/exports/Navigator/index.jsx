@@ -63,7 +63,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
           ...data.account,
         };
   useUserTracker(user);
-  useOrgEventsListener(user);
+  useOrgEventsListener(data?.account);
 
   const networkErrors = error?.networkError?.result?.errors;
   if (
