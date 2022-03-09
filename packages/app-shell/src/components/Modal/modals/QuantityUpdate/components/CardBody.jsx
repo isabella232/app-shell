@@ -11,6 +11,7 @@ import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import ChannelCounter from '../../../../../common/components/Counter/Counter';
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
+import { getProductPriceCycleText } from '../../../../../common/utils/product';
 import { calculateTotalSlotsPrice } from '../../../utils';
 
 import {
@@ -32,6 +33,8 @@ const CardBody = ({
   pricePerQuantity,
   minimumQuantity,
   planId,
+  planPrice,
+  planCycle,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
 
@@ -64,7 +67,9 @@ const CardBody = ({
         <Text type="h2">Add or Remove Channels from Plan</Text>
         <Text type="p">
           You&apos;re currently on the <strong>{planName}</strong> plan and
-          you&apos;re paying <strong>$40/mo</strong> for {quantity} channel
+          you&apos;re paying{' '}
+          <strong>{getProductPriceCycleText(planPrice, planCycle)}</strong> for{' '}
+          {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
           <a
             href="#"
