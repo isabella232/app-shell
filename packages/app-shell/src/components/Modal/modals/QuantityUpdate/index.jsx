@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from '@bufferapp/ui/Loader';
 import CardBody from './components/CardBody';
 
 import { UserContext } from '../../../../common/context/User';
@@ -24,7 +25,6 @@ const QuantityUpdate = () => {
             const {
               flatFee,
               currentQuantity,
-              chargableQuantity,
               pricePerQuantity,
               minimumQuantity,
             } = user.currentOrganization.billing.channelSlotDetails;
@@ -34,8 +34,7 @@ const QuantityUpdate = () => {
             const planOptions =
               user.currentOrganization.billing.changePlanOptions;
             const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-            const { basePrice: planPricing, planInterval: planInterval } =
-              currentPlan;
+            const { basePrice: planPricing, planInterval } = currentPlan;
             return (
               <Container>
                 <CardBody
@@ -47,6 +46,7 @@ const QuantityUpdate = () => {
                   pricePerQuantity={pricePerQuantity}
                   minimumQuantity={minimumQuantity}
                   plandId={planId}
+                  openModal={openModal}
                 />
               </Container>
             );

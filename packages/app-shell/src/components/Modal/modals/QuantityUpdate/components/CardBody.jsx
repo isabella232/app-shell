@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MODALS } from '../../../../../common/hooks/useModal';
 
 import { Text, Button } from '@bufferapp/ui';
 import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
@@ -9,6 +8,7 @@ import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
 import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
+import { MODALS } from '../../../../../common/hooks/useModal';
 import ChannelCounter from '../../../../../common/components/Counter/Counter';
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
@@ -35,12 +35,13 @@ const CardBody = ({
   planId,
   planPrice,
   planCycle,
+  openModal,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
 
   const {
     channelsCount,
-    setChannelsCounterValue,
+    // setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
   } = useChannelsCounter(quantity, minimumQuantity);
@@ -56,7 +57,7 @@ const CardBody = ({
   useEffect(() => {
     changeCounterState(false);
 
-    if (channelsCount != quantity) {
+    if (channelsCount !== quantity) {
       changeCounterState(true);
     }
   });
@@ -71,15 +72,13 @@ const CardBody = ({
           <strong>{getProductPriceCycleText(planPrice, planCycle)}</strong> for{' '}
           {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
-          <a
-            href="#"
-            onClick={(e, data) => {
-              e.preventDefault();
+          <Button
+            type="text"
+            onClick={(data) => {
               openModal(MODALS.planSelector, data);
             }}
-          >
-            Change Plan
-          </a>
+            label="Change Plan"
+          />
         </Text>
       </Header>
       <SectionContainer>
