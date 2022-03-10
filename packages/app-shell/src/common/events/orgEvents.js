@@ -4,7 +4,7 @@ export const EVENT_KEY = 'appshell__organization_event'
 
 export const ACTION_KEYS = {
   setCurrentOrganization: 'setCurrentOrganization',
-  currentOrganizationUpdated: 'currentOrganizationUpdated',
+  billingUpdated: 'billingUpdated',
 }
 
 export const ACTIONS = {
@@ -14,10 +14,10 @@ export const ACTIONS = {
       { action: ACTION_KEYS.setCurrentOrganization, organizationId, options }
     )
   },
-  currentOrganizationUpdated(options = {}){
+  billingUpdated(options = {}){
     eventDispatcher(
       EVENT_KEY,
-      { action: ACTION_KEYS.currentOrganizationUpdated,  options }
+      { action: ACTION_KEYS.billingUpdated,  options }
     )
   }
 }

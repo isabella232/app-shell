@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { ACTIONS as ORGANIZATION_ACTIONS } from 'common/events/orgEvents';
 import { START_TRIAL } from '../graphql/billing';
 import { QUERY_ACCOUNT } from '../graphql/account';
 
@@ -9,6 +10,9 @@ const useStartTrial = ({ user, plan, attribution }) => {
     {
       refetchQueries: [{ query: QUERY_ACCOUNT }],
       awaitRefetchQueries: true,
+      onCompleted: () => {
+        ORGANIZATION_ACTIONS.billingUpdated({ user });
+      }
     }
   );
   const [processing, setProcessing] = useState(false);

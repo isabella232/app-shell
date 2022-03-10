@@ -71,16 +71,15 @@ To react to Organization changes events in the App the easiest option is to list
   }, []);
 ```
 
-It's also possible to listen to updates on the current organization, for example trial starts, by filtering for event action type 
+It's also possible to listen to updates on the current organization billing, for example trial starts, by filtering for event action type 
 
 ```jsx
   useEffect(() => {
     const { ORGANIZATION_EVENT_KEY } = window?.appshell?.eventKeys || {};
-    const { currentOrganizationUpdated } = window?.appshell?.actionKeys || {};
+    const { billingUpdated } = window?.appshell?.actionKeys || {};
 
     function handleOrgChange({ detail }) {
-      if (detail.action === currentOrganizationUpdated) {
-        console.log(detail.OrganizationId);
+      if (detail.action === billingUpdated) {
         // handle the change in here, for example refetch the account query
       }
     }

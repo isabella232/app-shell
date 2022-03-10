@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@bufferapp/ui/Button';
 
 import useStartTrial from 'common/hooks/useStartTrial';
@@ -9,24 +9,26 @@ import { MODALS } from 'common/hooks/useModal';
 import { Error } from '../../../components/Modal/modals/PaymentMethod/style';
 
 export const CTA = ({ options, openModal }) => {
-  const user = useUser();
+  const [modalOpened, setModalOpened] = useState(false)
+  const user = useUser()
   const suggestedPlan = getSuggestedPlan(user);
-  const { cta } = options || {};
+  const { cta } = options || {}
 
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
     plan: suggestedPlan,
     attribution: { cta },
-  });
+  })
 
   useEffect(() => {
-    if (trial && trial.billingStartTrial.success) {
+    if (trial && trial.billingStartTrial.success && !modalOpened) {
       openModal(MODALS.success, {
         startedTrial: true,
         selectedPlan: suggestedPlan,
-      });
+      })
+      setModalOpened(true)
     }
-  }, [trial]);
+  }, [trial])
 
   return (<>
     <Button
