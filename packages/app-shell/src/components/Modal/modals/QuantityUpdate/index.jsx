@@ -1,27 +1,13 @@
 import React from 'react';
-import { Loader, Text, Button } from '@bufferapp/ui';
+import Loader from '@bufferapp/ui/Loader';
+import CardBody from './components/CardBody';
 
-import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
-import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
-import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
-import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
-import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
-import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
-
-import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 
-import {
-  LoadingContainer,
-  Container,
-  Header,
-  SectionContainer,
-  Section,
-  Icons,
-  Title,
-  ButtonWrapper,
-} from './style';
+import { LoadingContainer, Container } from './style';
+
+import { getCurrentPlanFromPlanOptions } from '../../utils';
 
 const QuantityUpdate = () => {
   return (
@@ -36,58 +22,32 @@ const QuantityUpdate = () => {
                 </LoadingContainer>
               );
             }
-            const { quantity, plan: currentPlan } =
-              user.currentOrganization.billing.subscription;
-            const { name: planName } = currentPlan;
+            const {
+              flatFee,
+              currentQuantity,
+              pricePerQuantity,
+              minimumQuantity,
+            } = user.currentOrganization.billing.channelSlotDetails;
+
+            const { name: planName, id: planId } =
+              user.currentOrganization.billing.subscription.plan;
+            const planOptions =
+              user.currentOrganization.billing.changePlanOptions;
+            const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+            const { basePrice: planPricing, planInterval } = currentPlan;
             return (
               <Container>
-                <Header>
-                  <Text type="h2">Add or Remove Channels from Plan</Text>
-                  <Text type="p">
-                    You&apos;re currently on the <strong>{planName}</strong>{' '}
-                    plan and you&apos;re paying <strong>$40/mo</strong> for{' '}
-                    {quantity} channel{quantity !== 1 ? 's' : ''}.{' '}
-                    <a
-                      href="#"
-                      onClick={(e, data) => {
-                        e.preventDefault();
-                        openModal(MODALS.planSelector, data);
-                      }}
-                    >
-                      Change Plan
-                    </a>
-                  </Text>
-                </Header>
-                <SectionContainer>
-                  <Section>
-                    <Title>
-                      <span>Channels</span>
-                      <Icons>
-                        <InstagramIcon size="medium" />
-                        <FacebookIcon size="medium" />
-                        <TwitterIcon size="medium" />
-                        <PinterestIcon size="medium" />
-                        <LinkedInIcon size="medium" />
-                        <ShopifyIcon size="medium" />
-                      </Icons>
-                    </Title>
-                    Channel counter + description
-                  </Section>
-                </SectionContainer>
-                <ButtonWrapper>
-                  <Button
-                    type="text"
-                    onClick={() => openModal(null)}
-                    label="Cancel"
-                  />
-                  <Button
-                    type="primary"
-                    onClick={(data) => {
-                      openModal(MODALS.paymentMethod, data);
-                    }}
-                    label="Confirm and Pay"
-                  />
-                </ButtonWrapper>
+                <CardBody
+                  planName={planName}
+                  planPrice={planPricing}
+                  planCycle={planInterval}
+                  quantity={currentQuantity}
+                  channelFee={flatFee}
+                  pricePerQuantity={pricePerQuantity}
+                  minimumQuantity={minimumQuantity}
+                  plandId={planId}
+                  openModal={openModal}
+                />
               </Container>
             );
           }}

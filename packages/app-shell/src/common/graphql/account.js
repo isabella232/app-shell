@@ -58,6 +58,14 @@ export const BILLING_FIELDS = gql`
           name
         }
       }
+      channelSlotDetails {
+        flatFee
+        currentQuantity
+        chargableQuantity
+        pricePerQuantity
+        minimumQuantity
+      }
+
       changePlanOptions {
         planId
         planName
