@@ -1,4 +1,4 @@
-export function getSuggestesPlan(user) {
+export function getSuggestedPlan(user) {
   const plan = {
     planId: 'team',
     planInterval: 'month',

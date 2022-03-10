@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Button from '@bufferapp/ui/Button';
 
 import useStartTrial from 'common/hooks/useStartTrial';
-import { getSuggestesPlan } from 'utils/getSuggestedPlan';
+import { getSuggestedPlan } from 'utils/getSuggestedPlan';
 import { useUser } from 'common/context/User';
 import { ModalContext } from 'common/context/Modal';
 import { MODALS } from 'common/hooks/useModal';
@@ -10,7 +10,7 @@ import { Error } from '../../../components/Modal/modals/PaymentMethod/style';
 
 export const CTA = ({ options, openModal }) => {
   const user = useUser();
-  const suggestedPlan = getSuggestesPlan(user);
+  const suggestedPlan = getSuggestedPlan(user);
   const { cta } = options || {};
 
   const { startTrial, trial, error, processing } = useStartTrial({

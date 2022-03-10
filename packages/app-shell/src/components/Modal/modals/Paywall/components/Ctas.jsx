@@ -4,7 +4,7 @@ import Link from '@bufferapp/ui/Link';
 import Text from '@bufferapp/ui/Text';
 
 import useStartTrial from '../../../../../common/hooks/useStartTrial';
-import { getSuggestesPlan } from '../../../../../common/utils/getSuggestedPlan';
+import { getSuggestedPlan } from '../../../../../common/utils/getSuggestedPlan';
 import { getActiveProductFromPath } from '../../../../../common/utils/getProduct';
 import { useUser } from '../../../../../common/context/User';
 import { MODALS } from '../../../../../common/hooks/useModal';
@@ -19,7 +19,7 @@ const Content = ({ openModal }) => {
   const canStartTrial = user?.currentOrganization?.billing?.canStartTrial;
   const cta = canStartTrial ? 'startTrial' : 'upgradePlan';
 
-  const suggestedPlan = getSuggestesPlan(user);
+  const suggestedPlan = getSuggestedPlan(user);
   const { startTrial, trial, error, processing } = useStartTrial({
     user,
     plan: suggestedPlan,
