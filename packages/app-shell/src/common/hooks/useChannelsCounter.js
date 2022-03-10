@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-
-<<<<<<< HEAD
-const useChannelsCounter = (initialChannelCount = 0, minimumQuantity = 1) => {
-=======
-=======
 import { useState, useEffect } from 'react';
 
->>>>>>> 5d60899382d1976e68ab31b3b8ad088ec46483cb
 import {
   getFreePlanChannelInputMessaging,
   getAgencyPlanMinimumChannelInputMessaging,
@@ -22,14 +14,9 @@ const useChannelsCounter = (
   initialChannelCount = 0,
   minimumQuantity = 1
 ) => {
-<<<<<<< HEAD
->>>>>>> c9b4635 (switch link for button on modal call)
-  const [channelsCount, setChannelsCount] = useState(initialChannelCount);
-=======
   const [channelsCount, setChannelsCount] = useState(initialChannelCount);
   const [channelCountMessageStatus, setChannelCountMessageStatus] =
     useState(null);
->>>>>>> 5d60899382d1976e68ab31b3b8ad088ec46483cb
 
   function setChannelsCounterValue(value) {
     setChannelsCount(value);
@@ -45,10 +32,6 @@ const useChannelsCounter = (
     if (channelsCount > minimumQuantity || disableDecrease) {
       setChannelsCount(channelsCount - 1);
     }
-<<<<<<< HEAD
-  }
-
-=======
 
     if (
       planId === 'agency' &&
@@ -97,17 +80,13 @@ const useChannelsCounter = (
     handleWarningMessageChecks();
   }, [planId]);
 
->>>>>>> 5d60899382d1976e68ab31b3b8ad088ec46483cb
   return {
     channelsCount,
     setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-<<<<<<< HEAD
-=======
     channelCountMessageStatus,
     setChannelCountMessageStatus,
->>>>>>> 5d60899382d1976e68ab31b3b8ad088ec46483cb
   };
 };
 
