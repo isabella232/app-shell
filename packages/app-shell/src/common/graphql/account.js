@@ -40,13 +40,6 @@ export const BILLING_FIELDS = gql`
       }
     }
     ... on OBBilling {
-      channelSlotDetails {
-        flatFee
-        currentQuantity
-        chargableQuantity
-        pricePerQuantity
-        minimumQuantity
-      }
       canStartTrial
       subscription {
         quantity
@@ -64,6 +57,13 @@ export const BILLING_FIELDS = gql`
           id
           name
         }
+      }
+      channelSlotDetails {
+        flatFee
+        currentQuantity
+        chargableQuantity
+        pricePerQuantity
+        minimumQuantity
       }
 
       changePlanOptions {
