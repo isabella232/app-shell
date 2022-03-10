@@ -9,13 +9,13 @@ import { MODALS } from '../../../../common/hooks/useModal';
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import useStartTrial from '../../../../common/hooks/useStartTrial';
-import { useSuggestedPlan } from '../../../../common/hooks/useSuggestedPlan';
+import { getSuggestedPlan } from '../../../../common/utils/getSuggestedPlan';
 import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
 const StartTrial = ({ user, openModal, modalData }) => {
-  const { suggestedPlan } = useSuggestedPlan(user);
+  const suggestedPlan = getSuggestedPlan(user);
   const { cta, ctaButton } = modalData || {};
 
   const { startTrial, trial, error, processing } = useStartTrial({

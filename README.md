@@ -68,8 +68,28 @@ To react to Organization changes events in the App the easiest option is to list
     return function cleanup() {
       window.removeEventListener(ORGANIZATION_EVENT_KEY, handleOrgChange);
     };
-  }, [window?.appshell]);
-  // we are Listening for changes in the `window.appshell` object to make sure we are properly mounting even if the App is initialized before the Navigator.
+  }, []);
+```
+
+It's also possible to listen to updates on the current organization billing, for example trial starts, by filtering for event action type 
+
+```jsx
+  useEffect(() => {
+    const { ORGANIZATION_EVENT_KEY } = window?.appshell?.eventKeys || {};
+    const { billingUpdated } = window?.appshell?.actionKeys || {};
+
+    function handleOrgChange({ detail }) {
+      if (detail.action === billingUpdated) {
+        // handle the change in here, for example refetch the account query
+      }
+    }
+
+    window.addEventListener(ORGANIZATION_EVENT_KEY, handleOrgChange);
+
+    return function cleanup() {
+      window.removeEventListener(ORGANIZATION_EVENT_KEY, handleOrgChange);
+    };
+  }, []);
 ```
 
 ## Change the Organization from the AppShell
@@ -112,6 +132,24 @@ Some places in our apps, the user's intent is to upgrade from Trial or from Free
   }>
   Upgrade
 </button>
+```
+
+## Redering components in Product App
+
+```jsx
+const ComponentHolder = () => {
+  useEffect(() => {
+    const { COMPONENTS, actions } = window?.appshell || {}
+    actions.renderComponent({
+      containerId: 'startTrialOnboardingCta',
+      componentKey: COMPONENTS.startTrialButton,
+      cta: 'startTrial',
+      ctaButton: 'account-onboarding-startTrial-1',
+    })
+  }, [])
+
+  return (<div id="startTrialOnboardingCta" />)
+}
 ```
 
 ## Contributing

@@ -25,6 +25,7 @@ module.exports = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       utils: path.resolve(__dirname, './src/common/utils/'),
+      common: path.resolve(__dirname, './src/common'),
     },
   },
 };

@@ -1,17 +1,30 @@
-import { MODALS, ACTIONS as MODAL_ACTIONS, EVENT_KEY as MODAL_EVENT_KEY } from '../common/hooks/useModal';
-import { EVENT_KEY as ORGANIZATION_EVENT_KEY, ACTIONS as ORGANIZATION_ACTIONS } from '../common/hooks/useOrgSwitcher';
+import { MODALS } from '../common/hooks/useModal';
+import {
+  EVENT_KEY as ORGANIZATION_EVENT_KEY,
+  ACTIONS as ORGANIZATION_ACTIONS,
+  ACTION_KEYS as ORGANIZATION_ACTION_KEYS,
+} from '../common/events/orgEvents';
+import { EVENT_KEY as MODAL_EVENT_KEY, ACTIONS as MODAL_ACTIONS } from '../common/events/modalEvents';
+import { EVENT_KEY as ORCHESTRATOR_EVENT_KEY, ACTIONS as ORCHESTRATOR_ACTIONS } from '../common/events/orchestratorEvents';
 import render from './Navigator';
+import { COMPONENTS } from './Orchestrator';
 
 window.appshell = {
   eventKeys: {
-    ORGANIZATION_EVENT_KEY,
     MODAL_EVENT_KEY,
+    ORCHESTRATOR_EVENT_KEY,
+    ORGANIZATION_EVENT_KEY,
   },
   actions: {
     ...MODAL_ACTIONS,
+    ...ORCHESTRATOR_ACTIONS,
     ...ORGANIZATION_ACTIONS,
   },
+  actionKeys: {
+    ...ORGANIZATION_ACTION_KEYS
+  },
   MODALS,
+  COMPONENTS,
 }
 
 function injectLayoutStyle() {
@@ -21,7 +34,7 @@ function injectLayoutStyle() {
   document.head.append(style);
 }
 
-(function() {
+(function init() {
   injectLayoutStyle()
   render()
 }())

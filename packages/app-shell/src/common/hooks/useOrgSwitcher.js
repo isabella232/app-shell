@@ -2,20 +2,10 @@ import { useEffect } from 'react';
 import { useMutation } from '@apollo/client'
 import { BufferTracker } from '@bufferapp/buffer-tracking-browser-ts'
 
+import eventDispatcher from 'utils/eventDispatcher'
 import { QUERY_ACCOUNT, SET_CURRENT_ORGANIZATION } from '../graphql/account'
-import eventDispatcher from './utils/eventDispatcher'
 import { getActiveProductFromPath } from '../utils/getProduct';
-
-export const EVENT_KEY = 'appshell__organization_event'
-
-export const ACTIONS = {
-  setCurrentOrganization(organizationId, options = {}){
-    eventDispatcher(
-      EVENT_KEY,
-      { action: 'setCurrentOrganization', organizationId, options }
-    )
-  }
-}
+import { EVENT_KEY, ACTION_KEYS } from '../events/orgEvents';
 
 function useOrgSwitcher() {
   const [setCurrentOrganization] = useMutation(SET_CURRENT_ORGANIZATION);
@@ -64,8 +54,8 @@ function useOrgSwitcher() {
   function handleUpdateOrganization({ detail }) {
     const { action, organizationId:orgId, options:updateOptions } = detail
 
-    switch (action) { 
-      case 'setCurrentOrganization':
+    switch (action) {
+      case ACTION_KEYS.setCurrentOrganization:
         updateOrganization(orgId, updateOptions)
         break;
       default:
