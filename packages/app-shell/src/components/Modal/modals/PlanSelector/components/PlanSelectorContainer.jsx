@@ -65,6 +65,7 @@ export const PlanSelectorContainer = ({
 
   const [error, setError] = useState(null);
   const [showAgencyPlan, setShowAgencyPlan] = useState(false);
+  const [previousPlanId, setPreviousPlanId] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
@@ -78,6 +79,7 @@ export const PlanSelectorContainer = ({
   );
 
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const currentPlanId = currentPlan.planId;
 
   const { currentQuantity } = currentPlan.channelSlotDetails;
   const {
@@ -210,7 +212,11 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
-      openSuccess({ selectedPlan });
+      openSuccess({
+        selectedPlan,
+        stayedOnSamePlan: previousPlanId === selectedPlan.planId,
+        splitSBBEnabled,
+      });
     }
     if (subscriptionError) {
       setError(subscriptionError);
@@ -291,14 +297,15 @@ export const PlanSelectorContainer = ({
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={() =>
+            onClick={() => {
               action({
                 plan: selectedPlan,
                 cta,
                 ctaView: modal,
                 isUpgradeIntent,
-              })
-            }
+              });
+              setPreviousPlanId(currentPlanId);
+            }}
             label={processing ? 'Processing...' : label}
             fullWidth
             disabled={disableSumbitButton}

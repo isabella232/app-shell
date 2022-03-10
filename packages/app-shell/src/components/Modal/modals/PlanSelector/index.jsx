@@ -39,7 +39,11 @@ const PlanSelector = () => {
                   'free'
                 }
                 openSuccess={(newData) => {
-                  modal.openModal(MODALS.success, newData);
+                  if (newData.stayedOnSamePlan && newData.splitSBBEnabled) {
+                    return modal.openModal(null);
+                  }
+
+                  return modal.openModal(MODALS.success, newData);
                 }}
                 isUpgradeIntent={modal.data?.isUpgradeIntent}
               />
