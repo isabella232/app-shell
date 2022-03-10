@@ -54,12 +54,14 @@ const Screen = ({
   onlyUpdatedCardDetails,
   startedTrial,
   closeModal,
+  stayedOnSamePlan
 }) => {
   const planName = selectedPlan ? selectedPlan.planName : null;
   const { label, description, buttonCopy, imageUrl, footer } = getCopy({
     planName,
     onlyUpdatedCardDetails,
     startedTrial,
+    stayedOnSamePlan
   });
 
   const currentUser = useContext(UserContext);
@@ -106,6 +108,7 @@ const Confirmation = () => {
               selectedPlan={data.selectedPlan}
               onlyUpdatedCardDetails={data.onlyUpdatedCardDetails}
               startedTrial={data.startedTrial}
+              stayedOnSamePlan={data.stayedOnSamePlan}
               closeModal={() => {
                 openModal(null);
               }}

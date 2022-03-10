@@ -3,7 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Link from '@bufferapp/ui/Link';
 
 export const SUCCESS_CTA = "Great, Let's Go!";
-const getCopy = ({ planName, startedTrial }) => {
+const getCopy = ({ planName, startedTrial, stayedOnSamePlan }) => {
   if (startedTrial) {
     return {
       label: 'Trial activated! Time to explore.',
@@ -24,7 +24,7 @@ const getCopy = ({ planName, startedTrial }) => {
     };
   } 
   
-  if (planName) {
+  if (planName && !stayedOnSamePlan) {
     return {
       label: `Congrats! Welcome to the ${planName} plan`,
       description: `You've successfully saved your payment details! Start using your ${planName} plan features.`,
