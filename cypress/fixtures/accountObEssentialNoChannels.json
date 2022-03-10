@@ -57,6 +57,14 @@
             },
             "__typename": "OBSubscription"
           },
+          "channelSlotDetails": {
+            "flatFee": 0,
+            "currentQuantity": 0,
+            "chargableQuantity": 0,
+            "pricePerQuantity": 0,
+            "minimumQuantity": 0,
+            "__typename": "ChannelSlotDetails"
+          },
           "changePlanOptions": [
             {
               "planId": "free",
@@ -339,6 +347,14 @@
                 "__typename": "OBPlan"
               },
               "__typename": "OBSubscription"
+            },
+            "channelSlotDetails": {
+              "flatFee": 0,
+              "currentQuantity": 0,
+              "chargableQuantity": 0,
+              "pricePerQuantity": 0,
+              "minimumQuantity": 0,
+              "__typename": "ChannelSlotDetails"
             },
             "changePlanOptions": [
               {
