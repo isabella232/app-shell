@@ -35,7 +35,7 @@ export const CTA = ({ options, openModal }) => {
     onClick={() => {
       startTrial();
     }}
-    label={processing ? 'Processing ...' : 'Start a 14-day free trial'}
+    label={processing ? 'Processing ...' : 'Start a 14-day Free Trial'}
     />
     <Error
       error={
