@@ -143,8 +143,10 @@ const ComponentHolder = () => {
     actions.renderComponent({
       containerId: 'startTrialOnboardingCta',
       componentKey: COMPONENTS.startTrialButton,
-      cta: 'startTrial',
-      ctaButton: 'account-onboarding-startTrial-1',
+      options: {
+        cta: 'startTrial',
+        ctaButton: 'account-onboarding-startTrial-1',
+      }
     })
   }, [])
 
