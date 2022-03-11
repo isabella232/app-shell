@@ -86,8 +86,10 @@ const ModalTesting = () => {
           actions.renderComponent({
             componentKey: COMPONENTS.startTrialButton,
             containerId: 'components_container',
-            cta: 'orchestrator_trial',
-            ctaButton: 'orchestrator_button'
+            options: {
+              cta: 'orchestrator_trial',
+              ctaButton: 'orchestrator_button'
+            }
           })
         }}
       >
