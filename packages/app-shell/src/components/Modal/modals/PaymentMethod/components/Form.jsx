@@ -151,7 +151,11 @@ const Form = ({
           <Button
             type="primary"
             onClick={handleSubmit}
-            disabled={!submitEnabled || processing}
+            disabled={
+              !submitEnabled ||
+              processing ||
+              shouldShowEmailVerificationCommunication
+            }
             label={getButtonLabel()}
             fullWidth
           />
