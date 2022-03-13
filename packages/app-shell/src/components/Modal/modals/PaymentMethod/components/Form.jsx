@@ -139,6 +139,14 @@ const Form = ({
       </LeftSide>
       <RightSide>
         {plan && <Summary selectedPlan={plan} />}
+        {shouldShowEmailVerificationCommunication && (
+          <Notice type="warning">
+            <Text>
+              Please verify your email address in order to update payment method
+              details.
+            </Text>
+          </Notice>
+        )}
         <ButtonContainer>
           <Button
             type="primary"
