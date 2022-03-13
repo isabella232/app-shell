@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
+import Notice from '@bufferapp/ui/Notice';
 import ArrowLeftIcon from '@bufferapp/ui/Icon/Icons/ArrowLeft';
 import LockIcon from '@bufferapp/ui/Icon/Icons/Locked';
 import {
@@ -28,6 +29,7 @@ const Form = ({
   plan,
   isTrial,
   isUpgradeIntent,
+  shouldShowEmailVerificationCommunication,
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
