@@ -52,6 +52,10 @@
             "plan": {
               "id": "team",
               "name": "Essentials + Team Pack",
+              "prices": {
+                "baseMonthlyPrice": 10,
+                "__typename": "PlanPrices"
+              },
               "__typename": "OBPlan"
             },
             "__typename": "OBSubscription"
@@ -351,6 +355,10 @@
               "plan": {
                 "id": "team",
                 "name": "Essentials + Team Pack",
+                "prices": {
+                  "baseMonthlyPrice": 10,
+                  "__typename": "PlanPrices"
+                },
                 "__typename": "OBPlan"
               },
               "__typename": "OBSubscription"

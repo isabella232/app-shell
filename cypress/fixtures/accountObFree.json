@@ -58,6 +58,10 @@
             "plan": {
               "id": "free",
               "name": "Free",
+              "prices": {
+                "baseMonthlyPrice": 0,
+                "__typename": "PlanPrices"
+              },
               "__typename": "OBPlan"
             },
             "__typename": "OBSubscription"

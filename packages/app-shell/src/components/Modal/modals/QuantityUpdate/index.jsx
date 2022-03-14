@@ -7,8 +7,6 @@ import { ModalContext } from '../../../../common/context/Modal';
 
 import { LoadingContainer, Container } from './style';
 
-import { getCurrentPlanFromPlanOptions } from '../../utils';
-
 const QuantityUpdate = () => {
   return (
     <UserContext.Consumer>
@@ -29,19 +27,20 @@ const QuantityUpdate = () => {
               minimumQuantity,
             } = user.currentOrganization.billing.channelSlotDetails;
 
-            const { name: planName, id: planId } =
-              user.currentOrganization.billing.subscription.plan;
+            const {
+              name: planName,
+              id: planId,
+              prices: { baseMonthlyPrice },
+            } = user.currentOrganization.billing.subscription.plan;
 
-            const planOptions =
-              user.currentOrganization.billing.changePlanOptions;
-            const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-            const { basePrice: planPricing, planInterval } = currentPlan;
+            const { interval: planCycle } =
+              user.currentOrganization.billing.subscription;
             return (
               <Container>
                 <CardBody
                   planName={planName}
-                  planPrice={planPricing}
-                  planCycle={planInterval}
+                  planPrice={baseMonthlyPrice}
+                  planCycle={planCycle}
                   quantity={currentQuantity}
                   channelFee={flatFee}
                   pricePerQuantity={pricePerQuantity}
