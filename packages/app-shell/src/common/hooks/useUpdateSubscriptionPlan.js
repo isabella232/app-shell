@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { ACTIONS as ORGANIZATION_ACTIONS } from 'common/events/orgEvents';
 import { UPDATE_SUBSCRIPTION_PLAN } from '../graphql/billing';
 import { QUERY_ACCOUNT } from '../graphql/account';
 
@@ -19,6 +20,9 @@ const useUpdateSubscriptionPlan = ({
     {
       refetchQueries: [{ query: QUERY_ACCOUNT }],
       awaitRefetchQueries: true,
+      onCompleted: () => {
+        ORGANIZATION_ACTIONS.billingUpdated({ user });
+      }
     }
   );
 
