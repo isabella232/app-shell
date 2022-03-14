@@ -110,7 +110,7 @@ const CardBody = ({
               {hasCounterChanged ? (
                 <>
                   <Text type="p">
-                    New monthly cost: <strong>${newPrice}</strong>
+                    New cost: <strong>${newPrice}</strong>
                   </Text>
                   <Text>
                     This will be billed every {planCycle} until canceled
