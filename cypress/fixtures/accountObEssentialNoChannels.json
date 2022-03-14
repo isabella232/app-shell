@@ -53,6 +53,10 @@
             "plan": {
               "id": "essentials",
               "name": "Essentials",
+              "prices": {
+                "baseMonthlyPrice": 5,
+                "__typename": "PlanPrices"
+              },
               "__typename": "OBPlan"
             },
             "__typename": "OBSubscription"

@@ -56,6 +56,9 @@ export const BILLING_FIELDS = gql`
         plan {
           id
           name
+          prices {
+            baseMonthlyPrice
+          }
         }
       }
       channelSlotDetails {
