@@ -47,7 +47,6 @@ import {
 import {
   filterListOfPlans,
   handleChannelsCountConditions,
-  getCurrentPlanFromPlanOptions,
   calculateTotalSlotsPrice,
   handleUpgradeIntent,
 } from '../../../utils';
