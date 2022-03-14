@@ -40,6 +40,8 @@ import AgencyPlanSection from './AgencyPlanSection';
 import {
   isAgencyUser,
   isOnAgencyTrial,
+  getUsersCurrentPlan,
+  getUsersCurrentChannelSlotDetails,
 } from '../../../../../common/utils/user';
 
 import {
@@ -78,10 +80,10 @@ export const PlanSelectorContainer = ({
     isUpgradeIntent
   );
 
-  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const currentPlan = getUsersCurrentPlan(user);
   const currentPlanId = currentPlan.planId;
 
-  const { currentQuantity } = currentPlan.channelSlotDetails;
+  const { currentQuantity } = getUsersCurrentChannelSlotDetails(user);
   const {
     flatFee: selectedPlanFlatFee,
     pricePerQuantity: selectedPlanPricePerQuantity,
@@ -293,6 +295,7 @@ export const PlanSelectorContainer = ({
           decreaseCounter={() => decreaseCounter()}
           newPrice={newPrice}
           channelCounterMessageStatus={channelCountMessageStatus}
+          currentChannelQuantity={currentQuantity}
         />
         <ButtonContainer>
           <Button
