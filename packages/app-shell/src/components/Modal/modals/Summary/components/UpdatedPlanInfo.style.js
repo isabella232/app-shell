@@ -32,8 +32,10 @@ export const Row = styled.div`
 
 export const Section = styled.div`
   display: flex;
+  margin-top: 15px;
   padding: 15px 0;
   border-bottom: 1px ${grayLight} solid;
+  border-top: 1px ${grayLight} solid;
   flex-direction: column;
 `;
 

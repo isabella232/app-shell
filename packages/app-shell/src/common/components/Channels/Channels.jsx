@@ -29,7 +29,7 @@ function Channels(props) {
   return (
     <ChannelsContainer>
       <Title>
-        <span>Channels:</span>
+        <span>Channels</span>
         <Icons>
           <InstagramIcon size="medium" />
           <FacebookIcon size="medium" />
