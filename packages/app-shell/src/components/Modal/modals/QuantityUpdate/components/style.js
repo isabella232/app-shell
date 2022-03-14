@@ -25,35 +25,8 @@ export const Header = styled.div`
   }
 `;
 
-export const Title = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-bottom: 20px;
-
-  span {
-    margin-right: 8px;
-  }
-
-  svg {
-    color: ${grayDark};
-  }
-`;
-
-export const Icons = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  svg {
-    width: 12px;
-    height: 12px;
-    margin-right: 6px;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-  }
+export const ChannelsWrapper = styled.div`
+  flex-basis: 33%;
 `;
 
 export const SectionContainer = styled.div`
@@ -78,15 +51,12 @@ export const InnerContainer = styled.div`
   font-size: ${fontSizeSmall};
 `;
 
-export const ChannelCounterWrapper = styled.div`
-  width: 140px;
-`;
-
 export const Summary = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
   flex: 1;
+  flex-basis: 66%;
 
   p {
     color: ${grayDark};
