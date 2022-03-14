@@ -37,7 +37,7 @@ const CardBody = ({
   planCycle,
   openModal,
 }) => {
-  const [hasCounterChanged, changeCounterState] = useState(false);
+  const [hasCounterChanged, updateCounter] = useState(false);
 
   const {
     channelsCount,
@@ -55,12 +55,9 @@ const CardBody = ({
   );
 
   useEffect(() => {
-    changeCounterState(false);
-
-    if (channelsCount !== quantity) {
-      changeCounterState(true);
-    }
-  });
+    // available channels is different from # in counter
+    updateCounter(channelsCount !== quantity);
+  }, [channelsCount]);
 
   return (
     <>
@@ -134,6 +131,7 @@ const CardBody = ({
             openModal(MODALS.paymentMethod, data);
           }}
           label="Confirm and Pay"
+          disabled={!hasCounterChanged}
         />
       </ButtonWrapper>
     </>
