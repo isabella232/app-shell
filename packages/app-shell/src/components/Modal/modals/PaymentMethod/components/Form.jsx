@@ -113,6 +113,15 @@ const Form = ({
     <StyledForm onSubmit={handleSubmit}>
       <LeftSide>
         <Text type="h2">Billing Details</Text>
+        {shouldShowEmailVerificationCommunication ? (
+          <Notice>
+            <Text type="p">
+              Please verify your email address in order to update payment method
+              details.
+            </Text>
+          </Notice>
+        ) : (
+          <>
         <Error
           error={error && error.type !== 'validation_error' ? error : null}
         />
@@ -138,17 +147,11 @@ const Form = ({
             <LockIcon size="medium" /> Payments securely processed by Stripe
           </Text>
         </Footer>
+          </>
+        )}
       </LeftSide>
       <RightSide>
         {plan && <Summary selectedPlan={plan} />}
-        {shouldShowEmailVerificationCommunication && (
-          <Notice type="warning">
-            <Text>
-              Please verify your email address in order to update payment method
-              details.
-            </Text>
-          </Notice>
-        )}
         <ButtonContainer>
           <Button
             type="primary"
