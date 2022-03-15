@@ -31,6 +31,7 @@ const QuantityUpdate = () => {
 
             const { name: planName, id: planId } =
               user.currentOrganization.billing.subscription.plan;
+
             const planOptions =
               user.currentOrganization.billing.changePlanOptions;
             const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
@@ -45,7 +46,7 @@ const QuantityUpdate = () => {
                   channelFee={flatFee}
                   pricePerQuantity={pricePerQuantity}
                   minimumQuantity={minimumQuantity}
-                  plandId={planId}
+                  planId={planId}
                   openModal={openModal}
                 />
               </Container>

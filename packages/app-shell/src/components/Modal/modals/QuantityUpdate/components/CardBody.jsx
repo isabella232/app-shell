@@ -1,28 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
 import { Text, Button } from '@bufferapp/ui';
-import InstagramIcon from '@bufferapp/ui/Icon/Icons/Instagram';
-import FacebookIcon from '@bufferapp/ui/Icon/Icons/Facebook';
-import LinkedInIcon from '@bufferapp/ui/Icon/Icons/LinkedIn';
-import PinterestIcon from '@bufferapp/ui/Icon/Icons/Pinterest';
-import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
-import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import { MODALS } from '../../../../../common/hooks/useModal';
-import ChannelCounter from '../../../../../common/components/Counter/Counter';
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
-import { calculateTotalSlotsPrice } from '../../../utils';
+import Channels from '../../../../../common/components/Channels/Channels';
+import {
+  calculateTotalSlotsPrice,
+  handleChannelsCountConditions,
+} from '../../../utils';
 
 import {
   Header,
   SectionContainer,
   Section,
-  Icons,
-  Title,
   ButtonWrapper,
   InnerContainer,
-  ChannelCounterWrapper,
+  ChannelsWrapper,
   Summary,
 } from './style';
 
@@ -38,13 +33,13 @@ const CardBody = ({
   openModal,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
-
   const {
     channelsCount,
-    // setChannelsCounterValue,
+    setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(quantity, minimumQuantity);
+    channelCountMessageStatus,
+  } = useChannelsCounter(planId, quantity, minimumQuantity);
 
   const newPrice = calculateTotalSlotsPrice(
     planId,
@@ -61,6 +56,14 @@ const CardBody = ({
       changeCounterState(true);
     }
   });
+
+  useEffect(() => {
+    handleChannelsCountConditions(
+      planId,
+      channelsCount,
+      setChannelsCounterValue
+    );
+  }, [channelsCount]);
 
   return (
     <>
@@ -85,32 +88,20 @@ const CardBody = ({
       <SectionContainer>
         <Section>
           <InnerContainer>
-            <div>
-              <Title>
-                <Text>Channels </Text>
-                <Icons>
-                  <InstagramIcon size="medium" />
-                  <FacebookIcon size="medium" />
-                  <TwitterIcon size="medium" />
-                  <PinterestIcon size="medium" />
-                  <LinkedInIcon size="medium" />
-                  <ShopifyIcon size="medium" />
-                </Icons>
-              </Title>
-              <ChannelCounterWrapper>
-                <ChannelCounter
-                  channelsCount={channelsCount}
-                  onDecreaseCounter={() => decreaseCounter()}
-                  onIncreaseCounter={() => increaseCounter()}
-                />
-              </ChannelCounterWrapper>
-            </div>
+            <ChannelsWrapper>
+              <Channels
+                channelsCount={channelsCount}
+                onIncreaseCounter={() => increaseCounter()}
+                onDecreaseCounter={() => decreaseCounter()}
+                channelCounterMessageStatus={channelCountMessageStatus}
+              />
+            </ChannelsWrapper>
 
             <Summary>
               {hasCounterChanged ? (
                 <>
                   <Text type="p">
-                    New monthly cost: <strong>${newPrice}</strong>
+                    New cost: <strong>${newPrice}</strong>
                   </Text>
                   <Text>
                     This will be billed every {planCycle} until canceled

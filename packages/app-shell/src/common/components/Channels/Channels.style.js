@@ -1,25 +1,21 @@
 import styled from 'styled-components';
-import { grayLight } from '@bufferapp/ui/style/colors';
+import { grayDark } from '@bufferapp/ui/style/colors';
 import { fontSizeSmall } from '@bufferapp/ui/style/fonts';
 
 export const ChannelsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding-bottom: 20px;
 
   font-size: ${fontSizeSmall};
-  border-bottom: 1px ${grayLight} solid;
 `;
 
 export const Title = styled.div`
   display: flex;
   flex-direction: row;
+  min-width: 160px;
   width: 100%;
   margin-bottom: 20px;
-
-  span {
-    margin-right: 15px;
-  }
+  justify-content: space-between;
 `;
 
 export const Icons = styled.div`
@@ -31,6 +27,7 @@ export const Icons = styled.div`
     width: 12px;
     height: 12px;
     margin-right: 6px;
+    color: ${grayDark};
 
     &:last-of-type {
       margin-right: 0;
