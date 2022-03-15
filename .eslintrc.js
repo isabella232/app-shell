@@ -28,6 +28,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'spaced-comment': 'off',
     'no-shadow': 'off',
+    'react/jsx-filename-extension': 'off',
   },
   ignorePatterns: ['lib/*'], // Stop ESLint complaining when looking at transpiled lib
   settings: {
