@@ -202,9 +202,6 @@ export const Notice = styled.div`
   background: #fdf8d8;
   border-radius: 6px;
   padding: 16px;
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
 
   p {
     margin: 0;
