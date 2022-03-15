@@ -6,7 +6,6 @@ import {
   gray,
   grayDark,
   grayLight,
-  grayLighter,
   redDark,
   redLighter,
 } from '@bufferapp/ui/style/colors';
