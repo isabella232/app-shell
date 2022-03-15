@@ -161,6 +161,7 @@ const Form = ({
       </LeftSide>
       <RightSide>
         {plan && <Summary selectedPlan={plan} />}
+        {!shouldShowEmailVerificationCommunication && (
         <ButtonContainer>
           <Button
             type="primary"
@@ -174,6 +175,7 @@ const Form = ({
             fullWidth
           />
         </ButtonContainer>
+        )}
       </RightSide>
     </StyledForm>
   );
