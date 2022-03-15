@@ -80,7 +80,7 @@ export const PlanSelectorContainer = ({
   );
 
   const currentPlan = getUsersCurrentPlan(user);
-  const currentPlanId = currentPlan.planId;
+  const currentPlanId = currentPlan?.id;
 
   const { currentQuantity } = getUsersCurrentChannelSlotDetails(user);
   const {
