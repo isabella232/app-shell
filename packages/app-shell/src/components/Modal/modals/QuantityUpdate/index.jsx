@@ -35,7 +35,7 @@ const QuantityUpdate = () => {
             const planOptions =
               user.currentOrganization.billing.changePlanOptions;
             const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-            const { basePrice: planPricing, planInterval } = currentPlan;
+            const { totalPrice: planPricing, planInterval } = currentPlan;
             return (
               <Container>
                 <CardBody
