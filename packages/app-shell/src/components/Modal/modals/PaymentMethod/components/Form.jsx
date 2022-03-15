@@ -117,7 +117,16 @@ const Form = ({
           <Notice>
             <Text type="p">
               Please verify your email address in order to update payment method
-              details.
+              details. An email has been sent to your inbox to verify your email
+              address. You can visit our{' '}
+              <a
+                href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                help guide
+              </a>{' '}
+              for more info.
             </Text>
           </Notice>
         ) : (
