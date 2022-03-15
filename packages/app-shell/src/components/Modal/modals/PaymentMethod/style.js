@@ -195,3 +195,18 @@ export const CardWrapper = styled.div`
     margin-left: 0px;
   }
 `;
+
+export const Notice = styled.div`
+  border: 1px solid #a59638;
+  color: #625920;
+  background: #fdf8d8;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+
+  p {
+    margin: 0;
+  }
+`;
