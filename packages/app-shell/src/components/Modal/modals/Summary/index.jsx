@@ -43,13 +43,13 @@ function renderSBBSummary(
   increaseCounter,
   decreaseCounter,
   newPrice,
-  channelCounterMessageStatus
+  channelCounterMessageStatus,
+  currentChannelQuantity
 ) {
   const {
     planName: currentPlanName,
     totalPrice: currentPlanPricing,
     planInterval: currentPlanInterval,
-    channelsQuantity: currentChannelsQuantity,
     summary: currentPlanSummary,
   } = currentPlan;
   const currentPlanUsersText = findPlanUserDetails(currentPlanSummary.details);
@@ -66,7 +66,7 @@ function renderSBBSummary(
         planName={currentPlanName}
         planPrice={currentPlanPricing}
         planCycle={currentPlanInterval}
-        numberOfChannels={currentChannelsQuantity}
+        numberOfChannels={currentChannelQuantity}
         numberOfUsers={currentPlanUsersText}
       />
       <UpdatedPlanInfo
@@ -94,6 +94,7 @@ const Summary = ({
   decreaseCounter,
   newPrice,
   channelCounterMessageStatus,
+  currentChannelQuantity,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanId = currentPlan.planId;
@@ -179,7 +180,8 @@ const Summary = ({
             increaseCounter,
             decreaseCounter,
             newPrice,
-            channelCounterMessageStatus
+            channelCounterMessageStatus,
+            currentChannelQuantity
           )
         ) : (
           <>
@@ -230,6 +232,7 @@ const SummaryProvider = ({
   decreaseCounter,
   newPrice,
   channelCounterMessageStatus,
+  currentChannelQuantity,
 }) => {
   return (
     <UserContext.Consumer>
@@ -249,6 +252,7 @@ const SummaryProvider = ({
             decreaseCounter={() => decreaseCounter()}
             newPrice={newPrice}
             channelCounterMessageStatus={channelCounterMessageStatus}
+            currentChannelQuantity={currentChannelQuantity}
           />
         );
       }}

@@ -38,9 +38,6 @@ const useButtonOptions = ({
     }
 
     if (selectedPlan.planId === 'free') {
-      if (updatedChannelQuantity > 3) {
-        return null;
-      }
       return updatePlan;
     }
 

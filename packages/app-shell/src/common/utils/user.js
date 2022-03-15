@@ -20,3 +20,11 @@ export function isOnAgencyTrial(user) {
 
   return false;
 }
+
+export function getUsersCurrentPlan(user) {
+  return user.currentOrganization.billing.subscription.plan;
+}
+
+export function getUsersCurrentChannelSlotDetails(user) {
+  return user.currentOrganization.billing.channelSlotDetails;
+}
