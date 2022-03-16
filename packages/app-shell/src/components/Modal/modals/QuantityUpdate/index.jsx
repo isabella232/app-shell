@@ -1,13 +1,23 @@
 import React from 'react';
 import Loader from '@bufferapp/ui/Loader';
+import {
+  onSuccess,
+  openPlanSelector,
+  closeModal,
+} from 'common/actions/openModal';
+import { getUserBillingData } from 'common/utils/user';
+import {
+  getSubscriptionInterval,
+  getSubscriptionPlanData,
+  getBillingChannelSlotDetails,
+} from 'common/utils/billing';
+
 import CardBody from './components/CardBody';
 
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 
 import { LoadingContainer, Container } from './style';
-
-import { getCurrentPlanFromPlanOptions } from '../../utils';
 
 const QuantityUpdate = () => {
   return (
@@ -22,32 +32,33 @@ const QuantityUpdate = () => {
                 </LoadingContainer>
               );
             }
+
+            const billingData = getUserBillingData(user);
+            const currentPlan = getSubscriptionPlanData(billingData);
+
             const {
               flatFee,
               currentQuantity,
               pricePerQuantity,
               minimumQuantity,
-            } = user.currentOrganization.billing.channelSlotDetails;
+            } = getBillingChannelSlotDetails(billingData);
+            const { name: planName, id: planId } = currentPlan;
+            const planInterval = getSubscriptionInterval(billingData);
 
-            const { name: planName, id: planId } =
-              user.currentOrganization.billing.subscription.plan;
-
-            const planOptions =
-              user.currentOrganization.billing.changePlanOptions;
-            const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-            const { basePrice: planPricing, planInterval } = currentPlan;
             return (
               <Container>
                 <CardBody
                   planName={planName}
-                  planPrice={planPricing}
                   planCycle={planInterval}
                   quantity={currentQuantity}
                   channelFee={flatFee}
                   pricePerQuantity={pricePerQuantity}
                   minimumQuantity={minimumQuantity}
                   planId={planId}
-                  openModal={openModal}
+                  user={user}
+                  onSuccess={(data) => onSuccess(data, openModal)}
+                  openPlanSelector={(data) => openPlanSelector(data, openModal)}
+                  closeModal={() => closeModal(openModal)}
                 />
               </Container>
             );

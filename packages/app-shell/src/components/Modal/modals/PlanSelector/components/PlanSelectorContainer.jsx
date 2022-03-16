@@ -46,7 +46,6 @@ import {
 
 import {
   filterListOfPlans,
-  handleChannelsCountConditions,
   calculateTotalSlotsPrice,
   handleUpgradeIntent,
 } from '../../../utils';
@@ -91,7 +90,6 @@ export const PlanSelectorContainer = ({
 
   const {
     channelsCount,
-    setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
     channelCountMessageStatus,
@@ -193,22 +191,11 @@ export const PlanSelectorContainer = ({
       updateSelectedPlan
     );
 
-    handleChannelsCountConditions(
-      selectedPlan.planId,
-      channelsCount,
-      setChannelsCounterValue
-    );
-
     updateButton(selectedPlan, channelsCount);
   }, [selectedPlan]);
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
-    handleChannelsCountConditions(
-      selectedPlan.planId,
-      channelsCount,
-      setChannelsCounterValue
-    );
   }, [channelsCount]);
 
   useEffect(() => {

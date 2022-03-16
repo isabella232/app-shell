@@ -22,12 +22,16 @@ const useUpdateSubscriptionPlan = ({
       awaitRefetchQueries: true,
       onCompleted: () => {
         ORGANIZATION_ACTIONS.billingUpdated({ user });
-      }
+      },
     }
   );
 
   useEffect(() => {
     if (!user || !plan || !hasPaymentMethod) {
+      // eslint-disable-next-line no-console
+      console.error(
+        'Could not update plan because either: user, plan or paymentDetails are undefined'
+      );
       return;
     }
     if (processing || alreadyProcessing) {

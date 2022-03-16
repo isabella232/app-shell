@@ -128,16 +128,6 @@ export function getFreePlanChannelInputMessaging() {
   };
 }
 
-export function handleChannelsCountConditions(
-  planId,
-  channelsCount,
-  setChannelsCounterValue
-) {
-  if (planId === 'agency' && channelsCount < 10) {
-    setChannelsCounterValue(10);
-  }
-}
-
 export function handleUpgradeIntent(
   selectedPlanId,
   isUpgradeIntent,

@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import { Text, Button } from '@bufferapp/ui';
 
-import { MODALS } from '../../../../../common/hooks/useModal';
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
+import useUpdateSubscriptionQuantity from '../../../../../common/hooks/useUpdateSubscriptionQuantity';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
 import Channels from '../../../../../common/components/Channels/Channels';
-import {
-  calculateTotalSlotsPrice,
-  handleChannelsCountConditions,
-} from '../../../utils';
+import { calculateTotalSlotsPrice } from '../../../utils';
 
 import {
   Header,
@@ -28,14 +26,16 @@ const CardBody = ({
   pricePerQuantity,
   minimumQuantity,
   planId,
-  planPrice,
   planCycle,
-  openModal,
+  user,
+  onSuccess,
+  openPlanSelector,
+  closeModal,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
+
   const {
     channelsCount,
-    setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
     channelCountMessageStatus,
@@ -49,6 +49,17 @@ const CardBody = ({
     channelFee
   );
 
+  const {
+    updateSubscriptionQuantity,
+    data: updateQuantityData,
+    isProcessing,
+  } = useUpdateSubscriptionQuantity({
+    user,
+    channelsQuantity: channelsCount,
+  });
+
+  const disableSumbitButton = !hasCounterChanged || isProcessing;
+
   useEffect(() => {
     changeCounterState(false);
 
@@ -58,12 +69,10 @@ const CardBody = ({
   });
 
   useEffect(() => {
-    handleChannelsCountConditions(
-      planId,
-      channelsCount,
-      setChannelsCounterValue
-    );
-  }, [channelsCount]);
+    if (updateQuantityData?.billingUpdateSubscriptionQuantity.success) {
+      onSuccess(updateQuantityData);
+    }
+  }, [updateQuantityData]);
 
   return (
     <>
@@ -72,13 +81,15 @@ const CardBody = ({
         <Text type="p">
           You&apos;re currently on the <strong>{planName}</strong> plan and
           you&apos;re paying{' '}
-          <strong>{getProductPriceCycleText(planPrice, planCycle)}</strong> for{' '}
-          {quantity} channel
+          <strong>
+            {getProductPriceCycleText(pricePerQuantity, planCycle)}
+          </strong>{' '}
+          for {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
           <button
             type="button"
-            onClick={(data) => {
-              openModal(MODALS.planSelector, data);
+            onClick={(newData) => {
+              openPlanSelector(newData);
             }}
           >
             Change Plan
@@ -118,17 +129,35 @@ const CardBody = ({
       </SectionContainer>
 
       <ButtonWrapper>
-        <Button type="text" onClick={() => openModal(null)} label="Cancel" />
+        <Button type="text" onClick={closeModal} label="Cancel" />
         <Button
           type="primary"
-          onClick={(data) => {
-            openModal(MODALS.paymentMethod, data);
+          onClick={() => {
+            updateSubscriptionQuantity();
           }}
-          label="Confirm and Pay"
+          label={isProcessing ? 'Processing...' : 'Confirm and Pay'}
+          disabled={disableSumbitButton}
         />
       </ButtonWrapper>
     </>
   );
+};
+
+CardBody.propTypes = {
+  planName: PropTypes.string.isRequired,
+  planId: PropTypes.string.isRequired,
+  planCycle: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  channelFee: PropTypes.number.isRequired,
+  pricePerQuantity: PropTypes.number.isRequired,
+  minimumQuantity: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    // eslint-disable-next-line react/forbid-prop-types
+    currentOrganization: PropTypes.object.isRequired,
+  }).isRequired, // TODO: This type should be defined better/stricter
+  onSuccess: PropTypes.func.isRequired,
+  openPlanSelector: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default CardBody;

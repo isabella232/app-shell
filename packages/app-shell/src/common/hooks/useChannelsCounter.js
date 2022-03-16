@@ -5,6 +5,16 @@ import {
   getAgencyPlanMinimumChannelInputMessaging,
 } from '../../components/Modal/utils';
 
+function handleChannelsCountConditions(
+  planId,
+  channelsCount,
+  setChannelsCounterValue
+) {
+  if (planId === 'agency' && channelsCount < 10) {
+    setChannelsCounterValue(10);
+  }
+}
+
 const agencyPlanLimitMessageStatus =
   getAgencyPlanMinimumChannelInputMessaging();
 const freePlanLimitMessageStatus = getFreePlanChannelInputMessaging();
@@ -78,6 +88,11 @@ const useChannelsCounter = (
 
   useEffect(() => {
     handleWarningMessageChecks();
+    handleChannelsCountConditions(
+      planId,
+      channelsCount,
+      setChannelsCounterValue
+    );
   }, [planId]);
 
   return {

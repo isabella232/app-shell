@@ -54,14 +54,14 @@ const Screen = ({
   onlyUpdatedCardDetails,
   startedTrial,
   closeModal,
-  stayedOnSamePlan
+  stayedOnSamePlan,
 }) => {
   const planName = selectedPlan ? selectedPlan.planName : null;
   const { label, description, buttonCopy, imageUrl, footer } = getCopy({
     planName,
     onlyUpdatedCardDetails,
     startedTrial,
-    stayedOnSamePlan
+    stayedOnSamePlan,
   });
 
   const currentUser = useContext(UserContext);
@@ -103,17 +103,26 @@ const Confirmation = () => {
       {/* eslint-disable-next-line no-unused-vars */}
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data }) => (
-            <Screen
-              selectedPlan={data.selectedPlan}
-              onlyUpdatedCardDetails={data.onlyUpdatedCardDetails}
-              startedTrial={data.startedTrial}
-              stayedOnSamePlan={data.stayedOnSamePlan}
-              closeModal={() => {
-                openModal(null);
-              }}
-            />
-          )}
+          {({ openModal, data }) => {
+            if (!data.selectedPlan) {
+              // eslint-disable-next-line no-console
+              console.error(
+                'Error: Confirmation Modal - selectedPlan is undefined'
+              );
+            }
+
+            return (
+              <Screen
+                selectedPlan={data.selectedPlan}
+                onlyUpdatedCardDetails={data.onlyUpdatedCardDetails}
+                startedTrial={data.startedTrial}
+                stayedOnSamePlan={data.stayedOnSamePlan}
+                closeModal={() => {
+                  openModal(null);
+                }}
+              />
+            );
+          }}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>

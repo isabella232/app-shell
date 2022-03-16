@@ -10,7 +10,6 @@ import {
   filterListOfPlans,
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
-  handleChannelsCountConditions,
   getPlanByPlanId,
 } from './utils';
 
@@ -350,26 +349,6 @@ describe('Modal - utils', () => {
         flatFee
       );
       expect(result).toEqual(132);
-    });
-  });
-
-  describe('handleChannelsCountConditions', () => {
-    it('should call callBack func with 10 when planId equals agency and channelCount is less than 10', () => {
-      const planId = 'agency';
-      const channelsCount = 3;
-      const callBackFunc = jest.fn();
-
-      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
-      expect(callBackFunc).toHaveBeenCalledWith(10);
-    });
-
-    it('should NOT call callBack func when planId equals agency and channelCount is more than 10', () => {
-      const planId = 'agency';
-      const channelsCount = 30;
-      const callBackFunc = jest.fn();
-
-      handleChannelsCountConditions(planId, channelsCount, callBackFunc);
-      expect(callBackFunc).not.toHaveBeenCalled();
     });
   });
 

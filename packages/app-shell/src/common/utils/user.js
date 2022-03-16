@@ -1,3 +1,5 @@
+import { getSubscriptionPlanData } from 'common/utils/billing';
+
 export function isFreeUser(user) {
   return user?.currentOrganization?.billing?.subscription?.plan?.id === 'free';
 }
@@ -21,10 +23,28 @@ export function isOnAgencyTrial(user) {
   return false;
 }
 
-export function getUsersCurrentPlan(user) {
-  return user.currentOrganization.billing.subscription.plan;
-}
-
 export function getUsersCurrentChannelSlotDetails(user) {
   return user.currentOrganization.billing.channelSlotDetails;
+}
+
+export function hasPaymentDetails(user) {
+  return user.currentOrganization.billing.paymentDetails.hasPaymentDetails;
+}
+
+export function getUserBillingData(user) {
+  return user.currentOrganization.billing;
+}
+
+export function getUsersCurrentPlan(user) {
+  const billingData = getUserBillingData(user);
+
+  if (!billingData) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      'Warning: getUsersCurrentPlan - billingData undefined. unable to find users current plan'
+    );
+    return null;
+  }
+
+  return getSubscriptionPlanData(billingData);
 }
