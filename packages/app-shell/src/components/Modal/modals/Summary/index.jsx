@@ -6,6 +6,7 @@ import { useSplitEnabled } from '@bufferapp/features';
 import { UserContext } from '../../../../common/context/User';
 import CurrentPlanInfo from './components/CurrentPlanInfo';
 import UpdatedPlanInfo from './components/UpdatedPlanInfo';
+import PaymentPlanInfo from './components/PaymentPlanInfo';
 
 import { findPlanUserDetails } from '../../../../common/utils/product';
 
@@ -44,7 +45,8 @@ function renderSBBSummary(
   decreaseCounter,
   newPrice,
   channelCounterMessageStatus,
-  currentChannelQuantity
+  currentChannelQuantity,
+  isPaymentMethodSummary
 ) {
   const {
     planName: currentPlanName,
@@ -60,6 +62,28 @@ function renderSBBSummary(
   } = selectedPlan;
   const selectedPlanUsersText = findPlanUserDetails(selectePlanSummary.details);
 
+  const paymentInfo = isPaymentMethodSummary ? (
+    <PaymentPlanInfo
+      planName={selectedPlanName}
+      planCycle={selectedPlanInterval}
+      numberOfUsers={selectedPlanUsersText}
+      channelsCount={channelsCount}
+      newPrice={newPrice}
+      channelCounterMessageStatus={channelCounterMessageStatus}
+    />
+  ) : (
+    <UpdatedPlanInfo
+      planName={selectedPlanName}
+      planCycle={selectedPlanInterval}
+      numberOfUsers={selectedPlanUsersText}
+      channelsCount={channelsCount}
+      increaseCounter={() => increaseCounter()}
+      decreaseCounter={() => decreaseCounter()}
+      newPrice={newPrice}
+      channelCounterMessageStatus={channelCounterMessageStatus}
+    />
+  );
+
   return (
     <>
       <CurrentPlanInfo
@@ -69,16 +93,7 @@ function renderSBBSummary(
         numberOfChannels={currentChannelQuantity}
         numberOfUsers={currentPlanUsersText}
       />
-      <UpdatedPlanInfo
-        planName={selectedPlanName}
-        planCycle={selectedPlanInterval}
-        numberOfUsers={selectedPlanUsersText}
-        channelsCount={channelsCount}
-        increaseCounter={() => increaseCounter()}
-        decreaseCounter={() => decreaseCounter()}
-        newPrice={newPrice}
-        channelCounterMessageStatus={channelCounterMessageStatus}
-      />
+      {paymentInfo}
     </>
   );
 }
@@ -95,6 +110,7 @@ const Summary = ({
   newPrice,
   channelCounterMessageStatus,
   currentChannelQuantity,
+  isPaymentMethodSummary,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanId = currentPlan.planId;
@@ -181,7 +197,8 @@ const Summary = ({
             decreaseCounter,
             newPrice,
             channelCounterMessageStatus,
-            currentChannelQuantity
+            currentChannelQuantity,
+            isPaymentMethodSummary
           )
         ) : (
           <>
@@ -233,6 +250,7 @@ const SummaryProvider = ({
   newPrice,
   channelCounterMessageStatus,
   currentChannelQuantity,
+  isPaymentMethodSummary,
 }) => {
   return (
     <UserContext.Consumer>
@@ -253,6 +271,7 @@ const SummaryProvider = ({
             newPrice={newPrice}
             channelCounterMessageStatus={channelCounterMessageStatus}
             currentChannelQuantity={currentChannelQuantity}
+            isPaymentMethodSummary={isPaymentMethodSummary}
           />
         );
       }}

@@ -10,17 +10,6 @@ const openPaymentMethod = () => {
 };
 
 describe('useButtonOptions', () => {
-  it("should return the label 'Stay On My Current Plan' and action null if there's no plan change", () => {
-    const selectedPlan = {
-      planId: 'team',
-      planInterval: 'year',
-      isCurrentPlan: true,
-    };
-
-    const { result } = renderHook(() => useButtonOptions({ selectedPlan }));
-    expect(result.current.label).toBe('Stay On My Current Plan');
-    expect(result.current.action).toBe(null);
-  });
   it("should return {label 'Go To Payment', action: openPaymentMethod} if the user changes plan and doesn't have payment details", () => {
     const selectedPlan = {
       planId: 'team',
@@ -211,5 +200,35 @@ describe('useButtonOptions', () => {
 
     expect(result.current.label).toBe('Confirm Changes');
     expect(result.current.action).toBe(updatePlan);
+  });
+
+  it('should set the label to "Stay On My Current Plan" and set the action to null', () => {
+    const selectedPlan = {
+      planId: 'team',
+      isCurrentPlan: true,
+    };
+
+    const currentChannelQuantity = 12;
+    const updatedChannelQuantity = 12;
+
+    const hasPaymentDetails = true;
+
+    const { result } = renderHook(() =>
+      useButtonOptions({
+        selectedPlan,
+        updatePlan,
+        openPaymentMethod,
+        hasPaymentDetails,
+        currentChannelQuantity,
+        updatedChannelQuantity,
+      })
+    );
+
+    act(() => {
+      result.current.updateButton(selectedPlan, 12);
+    });
+
+    expect(result.current.label).toBe('Stay On My Current Plan');
+    expect(result.current.action).toBe(null);
   });
 });

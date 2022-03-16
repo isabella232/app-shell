@@ -41,17 +41,12 @@ const useButtonOptions = ({
       return updatePlan;
     }
 
-    if (
-      selectedPlan.isCurrentPlan &&
-      currentChannelQuantity !== updatedChannelQuantity
-    ) {
-      return updatePlan;
+    if (selectedPlan.isCurrentPlan && currentChannelQuantity === updatedChannelQuantity) {
+      return null
     }
 
-    if (selectedPlan.isCurrentPlan && !isActiveTrial) {
-      return null;
-    }
-
+    // If there are no payment details we open the paymentMethod modal
+    // otherwise we update the plan directly.
     return hasPaymentDetails ? updatePlan : openPaymentMethod;
   };
 

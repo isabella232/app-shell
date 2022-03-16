@@ -292,6 +292,10 @@ export const PlanSelectorContainer = ({
                 cta,
                 ctaView: modal,
                 isUpgradeIntent,
+                newPrice,
+                channelCounterMessageStatus: channelCountMessageStatus,
+                currentChannelQuantity: currentQuantity,
+                channelsCount,
               });
               setPreviousPlanId(currentPlanId);
             }}

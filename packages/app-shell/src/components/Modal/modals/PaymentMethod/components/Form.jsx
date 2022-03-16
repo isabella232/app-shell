@@ -30,28 +30,37 @@ const Form = ({
   isTrial,
   isUpgradeIntent,
   canManageBilling,
+  newPrice,
+  channelCounterMessageStatus,
+  currentChannelQuantity,
+  channelsCount,
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
 
-  const { setupIntent, error:setupIntentError } = useSetupIntent(user);
-  const { error:newPaymentMethodError, paymentMethod, submit } = useCreatePaymentMethod(
-    setupIntent
-  );
-
-  const { userPaymentMethod, error:updatePaymentMethodError } = useUpdateUserPaymentMethod({
-    user,
+  const { setupIntent, error: setupIntentError } = useSetupIntent(user);
+  const {
+    error: newPaymentMethodError,
     paymentMethod,
-  });
+    submit,
+  } = useCreatePaymentMethod(setupIntent);
 
-  const { data: newPlan , error:subscriptionPlanError} = useUpdateSubscriptionPlan({
-    user,
-    plan,
-    hasPaymentMethod,
-    alreadyProcessing: processing
-  });
+  const { userPaymentMethod, error: updatePaymentMethodError } =
+    useUpdateUserPaymentMethod({
+      user,
+      paymentMethod,
+    });
+
+  const { data: newPlan, error: subscriptionPlanError } =
+    useUpdateSubscriptionPlan({
+      user,
+      plan,
+      hasPaymentMethod,
+      alreadyProcessing: processing,
+      channelsQuantity: channelsCount,
+    });
 
   useEffect(() => {
     if (paymentMethod) {
@@ -67,19 +76,24 @@ const Form = ({
     //re-enable form submit in case of errors
     setProcessing(false);
 
-    if(updatePaymentMethodError ){
-      setError(updatePaymentMethodError)
+    if (updatePaymentMethodError) {
+      setError(updatePaymentMethodError);
     }
-    if(newPaymentMethodError){
-      setError(newPaymentMethodError)
+    if (newPaymentMethodError) {
+      setError(newPaymentMethodError);
     }
-    if(subscriptionPlanError){
-      setError(subscriptionPlanError)
+    if (subscriptionPlanError) {
+      setError(subscriptionPlanError);
     }
-    if(setupIntentError){
-      setError(setupIntentError)
+    if (setupIntentError) {
+      setError(setupIntentError);
     }
-  }, [updatePaymentMethodError, newPaymentMethodError, subscriptionPlanError, setupIntentError])
+  }, [
+    updatePaymentMethodError,
+    newPaymentMethodError,
+    subscriptionPlanError,
+    setupIntentError,
+  ]);
 
   useEffect(() => {
     if (newPlan?.billingUpdateSubscriptionPlan.success) {
@@ -101,11 +115,11 @@ const Form = ({
   };
 
   function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
-    if(submitEnabled || !processing) {
-      setProcessing(true)
-      submit()
+    if (submitEnabled || !processing) {
+      setProcessing(true);
+      submit();
     }
   }
 
@@ -115,31 +129,31 @@ const Form = ({
         <Text type="h2">Billing Details</Text>
         {canManageBilling ? (
           <>
-        <Error
-          error={error && error.type !== 'validation_error' ? error : null}
-        />
-        <br />
-        <Field
-          label="Credit card number"
-          enableSubmit={() => {
-            setSubmitEnabled(true);
-          }}
-        />
-        <DoubleFields>
-          <Field label="Expiration date" />
-          <Field label="CVC" />
-        </DoubleFields>
-        <Footer>
-          <Button
-            type="text"
-            onClick={() => openPlans(isUpgradeIntent)}
-            label="Go back to plans"
-            icon={<ArrowLeftIcon />}
-          />
-          <Text type="p">
-            <LockIcon size="medium" /> Payments securely processed by Stripe
-          </Text>
-        </Footer>
+            <Error
+              error={error && error.type !== 'validation_error' ? error : null}
+            />
+            <br />
+            <Field
+              label="Credit card number"
+              enableSubmit={() => {
+                setSubmitEnabled(true);
+              }}
+            />
+            <DoubleFields>
+              <Field label="Expiration date" />
+              <Field label="CVC" />
+            </DoubleFields>
+            <Footer>
+              <Button
+                type="text"
+                onClick={() => openPlans(isUpgradeIntent)}
+                label="Go back to plans"
+                icon={<ArrowLeftIcon />}
+              />
+              <Text type="p">
+                <LockIcon size="medium" /> Payments securely processed by Stripe
+              </Text>
+            </Footer>
           </>
         ) : (
           <Notice>
@@ -160,17 +174,26 @@ const Form = ({
         )}
       </LeftSide>
       <RightSide>
-        {plan && <Summary selectedPlan={plan} />}
-        {canManageBilling && (
-        <ButtonContainer>
-          <Button
-            type="primary"
-            onClick={handleSubmit}
-              disabled={!submitEnabled || processing}
-            label={getButtonLabel()}
-            fullWidth
+        {plan && (
+          <Summary
+            selectedPlan={plan}
+            isPaymentMethodSummary
+            newPrice={newPrice}
+            channelCounterMessageStatus={channelCounterMessageStatus}
+            currentChannelQuantity={currentChannelQuantity}
+            channelsCount={channelsCount}
           />
-        </ButtonContainer>
+        )}
+        {canManageBilling && (
+          <ButtonContainer>
+            <Button
+              type="primary"
+              onClick={handleSubmit}
+              disabled={!submitEnabled || processing}
+              label={getButtonLabel()}
+              fullWidth
+            />
+          </ButtonContainer>
         )}
       </RightSide>
     </StyledForm>

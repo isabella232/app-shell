@@ -30,7 +30,7 @@ const PaymentMethod = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data, modal }) => {
+          {({ openModal, data: modalData, modal }) => {
             return (
               <StripeProvider>
                 <Form
@@ -50,13 +50,19 @@ const PaymentMethod = () => {
                     });
                   }}
                   user={user}
-                  plan={data ? data.plan : null}
+                  plan={modalData ? modalData.plan : null}
                   isTrial={
                     user?.currentOrganization.billing?.subscription?.trial
                       ?.isActive
                   }
-                  isUpgradeIntent={data?.isUpgradeIntent}
                   canManageBilling={user?.currentOrganization?.canManageBilling}
+                  isUpgradeIntent={modalData?.isUpgradeIntent}
+                  newPrice={modalData?.newPrice}
+                  channelCounterMessageStatus={
+                    modalData?.channelCounterMessageStatus
+                  }
+                  currentChannelQuantity={modalData?.currentChannelQuantity}
+                  channelsCount={modalData?.channelsCount}
                 />
               </StripeProvider>
             );
