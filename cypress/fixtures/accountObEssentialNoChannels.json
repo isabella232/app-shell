@@ -16,6 +16,7 @@
         "id": "606b65d6dad38c03d2b70793",
         "name": "test",
         "canEdit": true,
+        "canManageBilling": true,
         "role": "admin",
         "canMigrateToOneBuffer": {
           "canMigrate": false,

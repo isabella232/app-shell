@@ -12,6 +12,7 @@ import {
   RightSide,
   Error,
   ButtonContainer,
+  Notice,
 } from '../style';
 import Field from './Field';
 import Summary from '../../Summary';
@@ -28,6 +29,7 @@ const Form = ({
   plan,
   isTrial,
   isUpgradeIntent,
+  canManageBilling,
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
@@ -111,6 +113,8 @@ const Form = ({
     <StyledForm onSubmit={handleSubmit}>
       <LeftSide>
         <Text type="h2">Billing Details</Text>
+        {canManageBilling ? (
+          <>
         <Error
           error={error && error.type !== 'validation_error' ? error : null}
         />
@@ -136,18 +140,38 @@ const Form = ({
             <LockIcon size="medium" /> Payments securely processed by Stripe
           </Text>
         </Footer>
+          </>
+        ) : (
+          <Notice>
+            <Text type="p">
+              Please verify your email address in order to update payment method
+              details. An email has been sent to your inbox to verify your email
+              address. You can visit our{' '}
+              <a
+                href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                help guide
+              </a>{' '}
+              for more info.
+            </Text>
+          </Notice>
+        )}
       </LeftSide>
       <RightSide>
         {plan && <Summary selectedPlan={plan} />}
+        {canManageBilling && (
         <ButtonContainer>
           <Button
             type="primary"
             onClick={handleSubmit}
-            disabled={!submitEnabled || processing}
+              disabled={!submitEnabled || processing}
             label={getButtonLabel()}
             fullWidth
           />
         </ButtonContainer>
+        )}
       </RightSide>
     </StyledForm>
   );

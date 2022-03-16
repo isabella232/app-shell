@@ -56,6 +56,7 @@ const PaymentMethod = () => {
                       ?.isActive
                   }
                   isUpgradeIntent={data?.isUpgradeIntent}
+                  canManageBilling={user?.currentOrganization?.canManageBilling}
                 />
               </StripeProvider>
             );
