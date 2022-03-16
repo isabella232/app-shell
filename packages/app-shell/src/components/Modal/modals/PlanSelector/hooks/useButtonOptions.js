@@ -20,6 +20,8 @@ const useButtonOptions = ({
     } else if (selectedPlan?.isCurrentPlan) {
       if (selectedPlan.planId === 'free' && isAwaitingUserAction) {
         return 'Confirm Free Plan';
+      } else if (selectedPlan.planId === 'free' && selectedPlan?.isCurrentPlan) {
+        return 'Stay On My Current Plan'
       } else if (currentChannelQuantity !== updatedQuantity) {
         return 'Confirm Changes';
       } else return 'Stay On My Current Plan';
