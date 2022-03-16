@@ -56,9 +56,7 @@ const PaymentMethod = () => {
                       ?.isActive
                   }
                   isUpgradeIntent={data?.isUpgradeIntent}
-                  shouldShowEmailVerificationCommunication={
-                    user?.shouldShowEmailVerificationCommunication
-                  }
+                  canManageBilling={user?.currentOrganization?.canManageBilling}
                 />
               </StripeProvider>
             );

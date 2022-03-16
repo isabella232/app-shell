@@ -112,6 +112,7 @@ export const QUERY_ACCOUNT = gql`
         id
         name
         canEdit
+        canManageBilling
         role
         createdAt
         isOneBufferOrganization

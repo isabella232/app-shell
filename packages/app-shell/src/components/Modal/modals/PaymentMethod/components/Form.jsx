@@ -29,7 +29,7 @@ const Form = ({
   plan,
   isTrial,
   isUpgradeIntent,
-  shouldShowEmailVerificationCommunication,
+  canManageBilling,
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
@@ -113,23 +113,7 @@ const Form = ({
     <StyledForm onSubmit={handleSubmit}>
       <LeftSide>
         <Text type="h2">Billing Details</Text>
-        {shouldShowEmailVerificationCommunication ? (
-          <Notice>
-            <Text type="p">
-              Please verify your email address in order to update payment method
-              details. An email has been sent to your inbox to verify your email
-              address. You can visit our{' '}
-              <a
-                href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                help guide
-              </a>{' '}
-              for more info.
-            </Text>
-          </Notice>
-        ) : (
+        {canManageBilling ? (
           <>
         <Error
           error={error && error.type !== 'validation_error' ? error : null}
@@ -157,20 +141,32 @@ const Form = ({
           </Text>
         </Footer>
           </>
+        ) : (
+          <Notice>
+            <Text type="p">
+              Please verify your email address in order to update payment method
+              details. An email has been sent to your inbox to verify your email
+              address. You can visit our{' '}
+              <a
+                href="https://support.buffer.com/hc/en-us/articles/4563021461907-Verifying-your-Buffer-email-address"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                help guide
+              </a>{' '}
+              for more info.
+            </Text>
+          </Notice>
         )}
       </LeftSide>
       <RightSide>
         {plan && <Summary selectedPlan={plan} />}
-        {!shouldShowEmailVerificationCommunication && (
+        {canManageBilling && (
         <ButtonContainer>
           <Button
             type="primary"
             onClick={handleSubmit}
-            disabled={
-              !submitEnabled ||
-              processing ||
-              shouldShowEmailVerificationCommunication
-            }
+              disabled={!submitEnabled || processing}
             label={getButtonLabel()}
             fullWidth
           />
