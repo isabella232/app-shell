@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import { black } from '@bufferapp/ui/style/colors';
@@ -12,14 +14,15 @@ import getCopy from './getCopy';
 const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
-  height: ${({ planId }) => (planId === 'team' ? '446px' : '376px')};
+  width: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '650px' : '800px')};
+  height: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '290px' : '376px')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
   background-position-y: bottom;
   background-image: url(${(props) => props.imageUrl});
-  background-size: 445px;
+  background-size: ${({ stayedOnSamePlan }) =>
+    stayedOnSamePlan ? '376px' : '445px'};
   padding: 24px;
 
   p,
@@ -29,13 +32,13 @@ const ScreenContainer = styled.div`
 
   h1 {
     max-width: 324px;
-    margin-top: 22px;
-    margin-bottom: 22px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   p {
     margin-top: 0px;
-    max-width: 282px;
+    max-width: 285px;
   }
 
   p:last-child {
@@ -45,8 +48,8 @@ const ScreenContainer = styled.div`
 
 const ButtonContainer = styled.div`
   width: fit-content;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const Screen = ({
@@ -80,7 +83,7 @@ const Screen = ({
   }, []);
 
   return (
-    <ScreenContainer planId={selectedPlan.planId} imageUrl={imageUrl}>
+    <ScreenContainer stayedOnSamePlan={stayedOnSamePlan} imageUrl={imageUrl}>
       <Text type="h1">{label}</Text>
       <Text type="p">{description}</Text>
       <ButtonContainer>
@@ -95,6 +98,22 @@ const Screen = ({
       {footer && footer}
     </ScreenContainer>
   );
+};
+
+Screen.propTypes = {
+  selectedPlan: PropTypes.shape({
+    planId: PropTypes.string,
+  }).isRequired,
+  onlyUpdatedCardDetails: PropTypes.bool,
+  startedTrial: PropTypes.bool,
+  closeModal: PropTypes.func.isRequired,
+  stayedOnSamePlan: PropTypes.bool,
+};
+
+Screen.defaultProps = {
+  onlyUpdatedCardDetails: false,
+  startedTrial: false,
+  stayedOnSamePlan: false,
 };
 
 const Confirmation = () => {
