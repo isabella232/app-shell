@@ -32,11 +32,11 @@ describe('getCopy', () => {
       getCopy({ planName, onlyUpdatedCardDetails })
     );
 
-    expect(result.current.label).toBe('All set!');
+    expect(result.current.label).toBe('You’re all set!');
     expect(result.current.description).toBe(
-      'You have successfully adjusted your channels.'
+      'You have successfully adjusted the channel count for your plan.'
     );
-    expect(result.current.buttonCopy).toBe('Great!');
+    expect(result.current.buttonCopy).toBe('Great! Now Take Me Back');
   });
   it('should return label, description and buttonCopy for a new trial start', () => {
     const planName = 'Team';

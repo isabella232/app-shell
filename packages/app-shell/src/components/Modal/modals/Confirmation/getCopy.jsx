@@ -40,10 +40,17 @@ const getCopy = ({ planName, startedTrial, stayedOnSamePlan }) => {
 
   // Just quantity change
   return {
-    label: 'All set!',
-    description: 'You have successfully adjusted your channels.',
-    buttonCopy: 'Great!',
+    label: 'You’re all set!',
+    description:
+      'You have successfully adjusted the channel count for your plan.',
+    buttonCopy: 'Great! Now Take Me Back',
     imageUrl: 'https://buffer-ui.s3.amazonaws.com/illustration-highfive.png',
+    footer: (
+      <Text type="p">
+        You can always access your invoices and billing information{' '}
+        <Link href="https://account.buffer.com/billing">here</Link>.
+      </Text>
+    ),
   };
 };
 

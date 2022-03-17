@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
@@ -14,15 +14,15 @@ import getCopy from './getCopy';
 const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '650px' : '800px')};
-  height: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '290px' : '376px')};
+  width: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '700px' : '800px')};
+  height: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '306px' : '376px')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
   background-position-y: bottom;
   background-image: url(${(props) => props.imageUrl});
   background-size: ${({ stayedOnSamePlan }) =>
-    stayedOnSamePlan ? '376px' : '445px'};
+    stayedOnSamePlan ? '366px' : '445px'};
   padding: 24px;
 
   p,
@@ -38,7 +38,14 @@ const ScreenContainer = styled.div`
 
   p {
     margin-top: 0px;
-    max-width: 285px;
+    max-width: ${({ stayedOnSamePlan }) =>
+      stayedOnSamePlan ? '258px' : '285px'};
+
+    ${({ stayedOnSamePlan }) =>
+      stayedOnSamePlan &&
+      css`
+        margin-bottom: 0;
+      `}
   }
 
   p:last-child {
@@ -50,6 +57,12 @@ const ButtonContainer = styled.div`
   width: fit-content;
   margin-top: 10px;
   margin-bottom: 10px;
+
+  ${({ stayedOnSamePlan }) =>
+    stayedOnSamePlan &&
+    css`
+      margin-bottom: auto;
+    `}
 `;
 
 const Screen = ({
@@ -86,7 +99,7 @@ const Screen = ({
     <ScreenContainer stayedOnSamePlan={stayedOnSamePlan} imageUrl={imageUrl}>
       <Text type="h1">{label}</Text>
       <Text type="p">{description}</Text>
-      <ButtonContainer>
+      <ButtonContainer stayedOnSamePlan={stayedOnSamePlan}>
         <Button
           type="primary"
           onClick={() => {
