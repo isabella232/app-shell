@@ -13,6 +13,9 @@ function handleChannelsCountConditions(
   if (planId === 'agency' && channelsCount < 10) {
     setChannelsCounterValue(10);
   }
+  if (planId === 'free' && channelsCount > 3) {
+    setChannelsCounterValue(3);
+  }
 }
 
 const agencyPlanLimitMessageStatus =
