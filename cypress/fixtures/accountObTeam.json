@@ -4,7 +4,11 @@
       "id": "606b65d6dad38c9d20b70792",
       "email": "federico+obfree@buffer.com",
       "createdAt": "2021-04-05T19:32:38.841Z",
-      "featureFlips": ["grantAnalyzeAccess", "sharedChannels", "engageRollOut"],
+      "featureFlips": [
+        "grantAnalyzeAccess",
+        "sharedChannels",
+        "engageRollOut"
+      ],
       "isImpersonation": false,
       "shouldShowEmailVerificationCommunication": true,
       "currentOrganization": {
@@ -31,6 +35,9 @@
         "channels": [
           {
             "id": "606b65e1dd934f70840bfef7",
+            "name": "testing public",
+            "service": "facebook",
+            "organizationId": "606b65d6dad38c03d2b70793",
             "__typename": "Channel"
           }
         ],
@@ -73,7 +80,10 @@
               "channelsQuantity": 1,
               "description": "Simplify the noise and test out social media management tools.",
               "isCurrentPlan": false,
-              "highlights": ["Basic publishing tools", "Limited usage"],
+              "highlights": [
+                "Basic publishing tools",
+                "Limited usage"
+              ],
               "currency": "$",
               "basePrice": 0,
               "totalPrice": 0,
@@ -189,7 +199,10 @@
               "channelsQuantity": 1,
               "description": "Simplify the noise and test out social media management tools.",
               "isCurrentPlan": false,
-              "highlights": ["Basic publishing tools", "Limited usage"],
+              "highlights": [
+                "Basic publishing tools",
+                "Limited usage"
+              ],
               "currency": "$",
               "basePrice": 0,
               "totalPrice": 0,
@@ -308,6 +321,7 @@
           "id": "606b65d6dad38c03d2b70793",
           "name": "test",
           "canEdit": true,
+          "canManageBilling": true,
           "role": "admin",
           "canMigrateToOneBuffer": {
             "canMigrate": false,
@@ -372,7 +386,10 @@
                 "channelsQuantity": 1,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": false,
-                "highlights": ["Basic publishing tools", "Limited usage"],
+                "highlights": [
+                  "Basic publishing tools",
+                  "Limited usage"
+                ],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,
@@ -488,7 +505,10 @@
                 "channelsQuantity": 1,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": false,
-                "highlights": ["Basic publishing tools", "Limited usage"],
+                "highlights": [
+                  "Basic publishing tools",
+                  "Limited usage"
+                ],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,
