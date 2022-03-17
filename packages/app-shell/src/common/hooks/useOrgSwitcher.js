@@ -20,6 +20,7 @@ function useOrgSwitcher() {
         currentOrganization: organizationSelected,
       },
     };
+
     client.writeQuery({
       query: QUERY_ACCOUNT,
       data: updatedData,

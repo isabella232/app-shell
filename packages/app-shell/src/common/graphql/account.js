@@ -98,8 +98,36 @@ export const BILLING_FIELDS = gql`
   }
 `;
 
-export const QUERY_ACCOUNT = gql`
+export const ACCOUNT_ORGANIZATION_FIELDS = gql`
   ${BILLING_FIELDS}
+  fragment AccountOrganizationFields on AccountOrganization {
+    id
+    name
+    canEdit
+    canManageBilling
+    role
+    createdAt
+    isOneBufferOrganization
+    canMigrateToOneBuffer {
+      canMigrate
+      reasons
+    }
+    shouldDisplayInviteCTA
+    featureFlips
+    channels {
+      id
+      name
+      service
+      organizationId
+    }
+    billing {
+      ...BillingFields
+    }
+  }
+`;
+
+export const QUERY_ACCOUNT = gql`
+  ${ACCOUNT_ORGANIZATION_FIELDS}
   query GetAccount {
     account {
       id
@@ -109,48 +137,10 @@ export const QUERY_ACCOUNT = gql`
       isImpersonation
       shouldShowEmailVerificationCommunication
       currentOrganization {
-        id
-        name
-        canEdit
-        canManageBilling
-        role
-        createdAt
-        isOneBufferOrganization
-        canMigrateToOneBuffer {
-          canMigrate
-          reasons
-        }
-        shouldDisplayInviteCTA
-        featureFlips
-        billing {
-          ...BillingFields
-        }
-        channels {
-          id
-        }
+        ...AccountOrganizationFields
       }
       organizations {
-        id
-        name
-        canEdit
-        role
-        createdAt
-        isOneBufferOrganization
-        canMigrateToOneBuffer {
-          canMigrate
-          reasons
-        }
-        shouldDisplayInviteCTA
-        featureFlips
-        channels {
-          id
-          name
-          service
-          organizationId
-        }
-        billing {
-          ...BillingFields
-        }
+        ...AccountOrganizationFields
       }
       products {
         name
