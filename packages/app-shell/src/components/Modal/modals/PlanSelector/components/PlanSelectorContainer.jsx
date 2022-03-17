@@ -196,6 +196,15 @@ export const PlanSelectorContainer = ({
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
+
+    if (
+      selectedPlan.planId === 'free' &&
+      channelsCount > selectedPlanMinimumQuantity
+    ) {
+      const newInterval = monthlyBilling ? 'month' : 'year';
+      const planString = `essentials_${newInterval}`;
+      updateSelectedPlan(planString);
+    }
   }, [channelsCount]);
 
   useEffect(() => {
