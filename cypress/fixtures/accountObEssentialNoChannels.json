@@ -16,7 +16,9 @@
         "id": "606b65d6dad38c03d2b70793",
         "name": "test",
         "canEdit": true,
-        "canManageBilling": true,
+        "privileges": {
+          "canManageBilling": true
+        },
         "role": "admin",
         "canMigrateToOneBuffer": {
           "canMigrate": false,
@@ -74,10 +76,7 @@
               "channelsQuantity": 1,
               "description": "Simplify the noise and test out social media management tools.",
               "isCurrentPlan": true,
-              "highlights": [
-                "Basic publishing tools",
-                "Limited usage"
-              ],
+              "highlights": ["Basic publishing tools", "Limited usage"],
               "currency": "$",
               "basePrice": 0,
               "totalPrice": 0,
@@ -193,10 +192,7 @@
               "channelsQuantity": 1,
               "description": "Simplify the noise and test out social media management tools.",
               "isCurrentPlan": true,
-              "highlights": [
-                "Basic publishing tools",
-                "Limited usage"
-              ],
+              "highlights": ["Basic publishing tools", "Limited usage"],
               "currency": "$",
               "basePrice": 0,
               "totalPrice": 0,
@@ -315,7 +311,9 @@
           "id": "606b65d6dad38c03d2b70793",
           "name": "test",
           "canEdit": true,
-          "canManageBilling": true,
+          "privileges": {
+            "canManageBilling": true
+          },
           "role": "admin",
           "canMigrateToOneBuffer": {
             "canMigrate": false,
@@ -372,10 +370,7 @@
                 "channelsQuantity": 1,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": true,
-                "highlights": [
-                  "Basic publishing tools",
-                  "Limited usage"
-                ],
+                "highlights": ["Basic publishing tools", "Limited usage"],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,
@@ -491,10 +486,7 @@
                 "channelsQuantity": 1,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": true,
-                "highlights": [
-                  "Basic publishing tools",
-                  "Limited usage"
-                ],
+                "highlights": ["Basic publishing tools", "Limited usage"],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,

@@ -104,7 +104,9 @@ export const ACCOUNT_ORGANIZATION_FIELDS = gql`
     id
     name
     canEdit
-    canManageBilling
+    privileges {
+      canManageBilling
+    }
     role
     createdAt
     isOneBufferOrganization
