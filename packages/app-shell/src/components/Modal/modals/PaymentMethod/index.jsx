@@ -55,7 +55,9 @@ const PaymentMethod = () => {
                     user?.currentOrganization.billing?.subscription?.trial
                       ?.isActive
                   }
-                  canManageBilling={user?.currentOrganization?.canManageBilling}
+                  canManageBilling={
+                    user?.currentOrganization?.privileges?.canManageBilling
+                  }
                   isUpgradeIntent={modalData?.isUpgradeIntent}
                   newPrice={modalData?.newPrice}
                   channelCounterMessageStatus={
