@@ -22,11 +22,38 @@ import TrialExpired from './modals/TrialExpired';
 import QuantityUpdate from './modals/QuantityUpdate';
 import { Paywall } from './modals/Paywall';
 
-import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt, shouldShowPaywallModal } from './utils';
+import {
+  shouldShowFreeUserStartTrialPrompt,
+  shouldShowChannelConnectionPrompt,
+  shouldShowPaywallModal,
+} from './utils';
 
 const ModalWrapper = styled.div`
   > div {
     z-index: 1;
+    overflow: scroll;
+
+    // Hacky: The navigator has been forced on top of everything
+    // This is nbeeded for the paywall work.
+    // This below css handles makes it possible to scroll the modal into view.
+    @media screen and (max-height: 850px) {
+      justify-content: unset;
+      top: 60px;
+      flex-direction: column;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -300px;
+        left: 0;
+        width: 100px;
+        height: 400px;
+      }
+
+      > div > div {
+        top: 20px;
+      }
+    }
   }
 `;
 
@@ -183,7 +210,9 @@ const Modal = React.memo(({ modal, openModal }) => {
   return (
     <>
       {hasModal && (
-        <ModalWrapper><ModalContent modal={modal} closeAction={() => openModal(null)} /></ModalWrapper>
+        <ModalWrapper>
+          <ModalContent modal={modal} closeAction={() => openModal(null)} />
+        </ModalWrapper>
       )}
     </>
   );
