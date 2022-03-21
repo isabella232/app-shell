@@ -35,14 +35,17 @@ const useButtonOptions = ({
   );
 
   const buttonFunction = () => {
-    if (selectedPlan.isCurrentPlan && isActiveTrial && hasPaymentDetails) {
+    // If Free is selected and is not the current plan (no payment method modal needed)
+    if (selectedPlan.planId === 'free' && !selectedPlan.isCurrentPlan) {
       return updatePlan;
     }
 
-    if (selectedPlan.planId === 'free') {
-      return updatePlan;
+    // If trialing
+    if (isActiveTrial) {
+      return hasPaymentDetails ? updatePlan : openPaymentMethod;
     }
 
+    // If not not trialing, no plan changed and quantity has not changed.
     if (selectedPlan.isCurrentPlan && currentChannelQuantity === updatedChannelQuantity) {
       return null
     }

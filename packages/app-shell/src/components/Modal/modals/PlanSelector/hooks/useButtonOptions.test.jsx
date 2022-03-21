@@ -231,4 +231,46 @@ describe('useButtonOptions', () => {
     expect(result.current.label).toBe('Stay On My Current Plan');
     expect(result.current.action).toBe(null);
   });
+
+  it("should return {label 'Go To Payment', action: openPaymentMethod} if on trial without payment details", () => {
+    const selectedPlan = {
+      planId: 'team',
+      planInterval: 'year',
+      isCurrentPlan: true,
+    };
+
+    const { result } = renderHook(() =>
+      useButtonOptions({
+        selectedPlan,
+        updatePlan,
+        openPaymentMethod,
+        hasPaymentDetails: false,
+        isActiveTrial: true,
+      })
+    );
+
+    expect(result.current.label).toBe('Go To Payment');
+    expect(result.current.action).toBe(openPaymentMethod);
+  });
+
+  it("should return {label 'Go To Payment', action: updatePlan} if on trial with payment details", () => {
+    const selectedPlan = {
+      planId: 'team',
+      planInterval: 'year',
+      isCurrentPlan: true,
+    };
+
+    const { result } = renderHook(() =>
+      useButtonOptions({
+        selectedPlan,
+        updatePlan,
+        openPaymentMethod,
+        hasPaymentDetails: true,
+        isActiveTrial: true,
+      })
+    );
+
+    expect(result.current.label).toBe('Confirm Plan');
+    expect(result.current.action).toBe(updatePlan);
+  });
 });
