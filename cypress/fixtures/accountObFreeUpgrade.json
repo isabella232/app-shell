@@ -17,7 +17,8 @@
         "name": "test",
         "canEdit": true,
         "privileges": {
-          "canManageBilling": true
+          "canManageBilling": true,
+          "__typename": "AccountPrivileges"
         },
         "role": "admin",
         "canMigrateToOneBuffer": {
@@ -327,7 +328,8 @@
           "name": "test",
           "canEdit": true,
           "privileges": {
-            "canManageBilling": true
+            "canManageBilling": true,
+            "__typename": "AccountPrivileges"
           },
           "role": "admin",
           "canMigrateToOneBuffer": {
