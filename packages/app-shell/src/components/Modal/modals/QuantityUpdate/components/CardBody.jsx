@@ -82,10 +82,10 @@ const CardBody = ({
           You&apos;re currently on the <strong>{planName}</strong> plan and
           you&apos;re paying{' '}
           <strong>
-            ${pricePerQuantity}/{planCycle}
+            ${pricePerQuantity}/{planCycle} per channel
           </strong>{' '}
           for {quantity} channel
-          {quantity !== 1 ? 's' : ''}.{' '}
+          {quantity !== 1 ? 's' : ''}.
           <button
             type="button"
             onClick={(newData) => {
