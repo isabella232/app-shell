@@ -5,7 +5,6 @@ import { Text, Button } from '@bufferapp/ui';
 
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import useUpdateSubscriptionQuantity from '../../../../../common/hooks/useUpdateSubscriptionQuantity';
-import { getProductPriceCycleText } from '../../../../../common/utils/product';
 import Channels from '../../../../../common/components/Channels/Channels';
 import { calculateTotalSlotsPrice } from '../../../utils';
 
