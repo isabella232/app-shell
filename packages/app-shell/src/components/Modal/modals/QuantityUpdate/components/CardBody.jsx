@@ -5,7 +5,6 @@ import { Text, Button } from '@bufferapp/ui';
 
 import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import useUpdateSubscriptionQuantity from '../../../../../common/hooks/useUpdateSubscriptionQuantity';
-import { getProductPriceCycleText } from '../../../../../common/utils/product';
 import Channels from '../../../../../common/components/Channels/Channels';
 import { calculateTotalSlotsPrice } from '../../../utils';
 
@@ -82,10 +81,10 @@ const CardBody = ({
           You&apos;re currently on the <strong>{planName}</strong> plan and
           you&apos;re paying{' '}
           <strong>
-            {getProductPriceCycleText(pricePerQuantity, planCycle)}
+            ${pricePerQuantity}/{planCycle} per channel
           </strong>{' '}
           for {quantity} channel
-          {quantity !== 1 ? 's' : ''}.{' '}
+          {quantity !== 1 ? 's' : ''}.
           <button
             type="button"
             onClick={(newData) => {
