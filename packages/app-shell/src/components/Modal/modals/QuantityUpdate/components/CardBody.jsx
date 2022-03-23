@@ -82,7 +82,8 @@ const CardBody = ({
           You&apos;re currently on the <strong>{planName}</strong> plan and
           you&apos;re paying{' '}
           <strong>
-            {getProductPriceCycleText(pricePerQuantity, planCycle)}
+            {' '}
+            ${pricePerQuantity}/{planCycle}
           </strong>{' '}
           for {quantity} channel
           {quantity !== 1 ? 's' : ''}.{' '}
