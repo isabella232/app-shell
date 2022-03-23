@@ -52,6 +52,7 @@ const CardBody = ({
     updateSubscriptionQuantity,
     data: updateQuantityData,
     isProcessing,
+    error,
   } = useUpdateSubscriptionQuantity({
     user,
     channelsQuantity: channelsCount,
@@ -94,6 +95,11 @@ const CardBody = ({
             Change Plan
           </button>
         </Text>
+        {error && (
+          <Text type="help" hasError>
+            {error.message}
+          </Text>
+        )}
       </Header>
       <SectionContainer>
         <Section>
