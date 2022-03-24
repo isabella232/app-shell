@@ -1,6 +1,6 @@
 import MOCK_ACCOUNT_OB_FREE_DATA from '../mocks/accountOBFree';
 
-import { isFreeUser, userCanStartFreeTrial } from './user';
+import { isFreeUser, isOnActiveTrial, userCanStartFreeTrial } from './user';
 
 describe('Modal - utils', () => {
   describe('isFreeUser', () => {
@@ -42,6 +42,61 @@ describe('Modal - utils', () => {
     it('should return false if user data is not provided', () => {
       const result = userCanStartFreeTrial(null);
       expect(result).toBe(false);
+    });
+  });
+
+  describe('isOnActiveTrial', () => {
+    it('should return false with no proper organization response structure', () => {
+      // Arrange
+      const account = {};
+
+      // Act
+      const result = isOnActiveTrial(account);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('should return false with non active trial', () => {
+      // Arrange
+      const account = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+            },
+          },
+        },
+      };
+
+      // Act
+      const result = isOnActiveTrial(account);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('should return true with an active trial', () => {
+      // Arrange
+      const account = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: true,
+              },
+            },
+          },
+        },
+      };
+
+      // Act
+      const result = isOnActiveTrial(account);
+
+      // Assert
+      expect(result).toBeTruthy();
     });
   });
 });

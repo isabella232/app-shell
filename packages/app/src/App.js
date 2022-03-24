@@ -79,6 +79,21 @@ const ModalTesting = () => {
       >
         Render Modal
       </button>
+
+      <h3>Render Quantity Update or Plan Selector based on Organization state</h3>
+      <button
+        onClick={() => {
+          const { MODALS, actions } = window?.appshell || {};
+          actions.openModal(MODALS.quantityUpdate, {
+            cta: 'renderModal',
+            ctaButton: 'renderModal',
+            shouldPickModalOnOrganizationState: true
+          });
+        }}
+      >
+        Render Modal
+      </button>
+
       <h3>Render Component with Orchestrator</h3>
       <button
         onClick={() => {

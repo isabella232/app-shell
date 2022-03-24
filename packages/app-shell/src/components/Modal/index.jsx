@@ -3,6 +3,7 @@ import SimpleModal from '@bufferapp/ui/SimpleModal';
 import NonDismissibleModal from '@bufferapp/ui/NonDismissibleModal';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useSplitEnabled } from '@bufferapp/features';
 
 import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
 import { MODALS } from '../../common/hooks/useModal';
@@ -21,8 +22,13 @@ import Success from './modals/PaidMigration/Success';
 import TrialExpired from './modals/TrialExpired';
 import QuantityUpdate from './modals/QuantityUpdate';
 import { Paywall } from './modals/Paywall';
+import { isFreeUser, isOnActiveTrial } from '../../common/utils/user';
 
-import { shouldShowFreeUserStartTrialPrompt, shouldShowChannelConnectionPrompt, shouldShowPaywallModal } from './utils';
+import {
+  shouldShowFreeUserStartTrialPrompt,
+  shouldShowChannelConnectionPrompt,
+  shouldShowPaywallModal,
+} from './utils';
 
 const ModalWrapper = styled.div`
   > div {
@@ -42,7 +48,7 @@ function handleFreeUsersStartTrialPrompt(openModal) {
   });
 }
 
-const ModalContent = ({ modal, closeAction }) => {
+const ModalContent = ({ modal, closeAction, shouldUsePlanSelector }) => {
   switch (modal) {
     case MODALS.channelConnectionPrompt:
       return (
@@ -107,7 +113,11 @@ const ModalContent = ({ modal, closeAction }) => {
     case MODALS.quantityUpdate:
       return (
         <SimpleModal closeAction={closeAction}>
-          <QuantityUpdate modal={modal} />
+          {shouldUsePlanSelector ? (
+            <PlanSelector modal={modal} />
+          ) : (
+            <QuantityUpdate modal={modal} />
+          )}
         </SimpleModal>
       );
     case MODALS.paywall:
@@ -126,7 +136,9 @@ ModalContent.propTypes = {
   closeAction: PropTypes.func.isRequired,
 };
 
-const Modal = React.memo(({ modal, openModal }) => {
+const Modal = React.memo(({ modal, openModal, data }) => {
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
+
   const [hasModal, setHasModal] = useState(!!modal);
   const user = useUser();
 
@@ -180,10 +192,25 @@ const Modal = React.memo(({ modal, openModal }) => {
     setHasModal(!!modal);
   }, [modal]);
 
+  // In some Organization billing states we want the same CTA
+  // to either open the Quantity Update or the Plan Selector.
+  // Those are when the user is on the Free plan or trialling.
+  // In both case we specify this with a flag "shouldPickModalOnOrganizationState"
+  const shouldUsePlanSelector = !splitSBBEnabled
+    ? true
+    : data?.shouldPickModalOnOrganizationState &&
+      (isFreeUser(user) || isOnActiveTrial(user));
+
   return (
     <>
       {hasModal && (
-        <ModalWrapper><ModalContent modal={modal} closeAction={() => openModal(null)} /></ModalWrapper>
+        <ModalWrapper>
+          <ModalContent
+            modal={modal}
+            closeAction={() => openModal(null)}
+            shouldUsePlanSelector={shouldUsePlanSelector}
+          />
+        </ModalWrapper>
       )}
     </>
   );

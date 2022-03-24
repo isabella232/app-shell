@@ -14,10 +14,14 @@ export function userCanStartFreeTrial(user) {
   return Boolean(user?.currentOrganization?.billing?.canStartTrial);
 }
 
+export function isOnActiveTrial(user) {
+  return user?.currentOrganization?.billing?.subscription?.trial?.isActive;
+}
+
 export function isOnAgencyTrial(user) {
   const isOnAgencyPlan = isAgencyUser(user);
   if (isOnAgencyPlan) {
-    return user?.currentOrganization?.billing?.subscription?.trial?.isActive;
+    return isOnActiveTrial(user);
   }
 
   return false;
