@@ -113,11 +113,7 @@ const ModalContent = ({ modal, closeAction, shouldUsePlanSelector }) => {
     case MODALS.quantityUpdate:
       return (
         <SimpleModal closeAction={closeAction}>
-          {shouldUsePlanSelector ? (
-            <PlanSelector modal={modal} />
-          ) : (
-            <QuantityUpdate modal={modal} />
-          )}
+          <QuantityUpdate modal={modal} />
         </SimpleModal>
       );
     case MODALS.paywall:
@@ -125,6 +121,16 @@ const ModalContent = ({ modal, closeAction, shouldUsePlanSelector }) => {
         <NonDismissibleModal>
           <Paywall modal={modal} />
         </NonDismissibleModal>
+      );
+    case MODALS.subscriptionUpdate:
+      return (
+        <SimpleModal closeAction={closeAction}>
+          {shouldUsePlanSelector ? (
+            <PlanSelector modal={modal} />
+          ) : (
+            <QuantityUpdate modal={modal} />
+          )}
+        </SimpleModal>
       );
     default:
       return null;
@@ -196,10 +202,13 @@ const Modal = React.memo(({ modal, openModal, data }) => {
   // to either open the Quantity Update or the Plan Selector.
   // Those are when the user is on the Free plan or trialling.
   // In both case we specify this with a flag "shouldPickModalOnOrganizationState"
-  const shouldUsePlanSelector = !splitSBBEnabled
-    ? true
-    : data?.shouldPickModalOnOrganizationState &&
-      (isFreeUser(user) || isOnActiveTrial(user));
+  // This property is being used by the MODALS.subscriptionUpdate that
+  // is a wrapper modal for the 2 subscription update modals.
+  const shouldUsePlanSelector =
+    !splitSBBEnabled ||
+    (splitSBBEnabled && !data?.shouldPickModalOnOrganizationState)
+      ? true
+      : isFreeUser(user) || isOnActiveTrial(user);
 
   return (
     <>

@@ -84,7 +84,7 @@ const ModalTesting = () => {
       <button
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
-          actions.openModal(MODALS.quantityUpdate, {
+          actions.openModal(MODALS.subscriptionUpdate, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
             shouldPickModalOnOrganizationState: true

@@ -16,6 +16,9 @@ export const MODALS = {
   success: 'success',
   trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
+  // This modal will make a decision based on the Organization state if
+  // it will render the planSelector or the QuantityUpdate
+  subscriptionUpdate: 'subscriptionUpdate'
 };
 
 function useModal() {
