@@ -1,4 +1,5 @@
-{
+
+  {
   "data": {
     "account": {
       "id": "606b65d6dad38c9d20b70792",
@@ -644,6 +645,15 @@
         }
       ],
       "__typename": "Account"
+    },
+    "billingUpdateSubscriptionPlan": {
+      "success": true,
+      "__typename": "BillingResponse"
+    },
+    "billingCreateSetupIntent": {
+      "clientSecret": "",
+      "success": true,
+      "__typename": "BillingCreateSetupIntentResponse"
     }
   }
 }

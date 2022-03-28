@@ -52,10 +52,12 @@ describe('Navigator', () => {
       cy.contains('Upgrade').should('exist');
     });
 
-    it('a user can upgrade to essentials after clicking the upgrade button', () => {
+    it.only('a user can upgrade to essentials after clicking the upgrade button and be shown the success modal', () => {
       cy.get('#upgradeCTA').click();
       cy.get('#essentials_year').should('exist');
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
+
+      cy.get('#submitButton').click();
     });
   });
 

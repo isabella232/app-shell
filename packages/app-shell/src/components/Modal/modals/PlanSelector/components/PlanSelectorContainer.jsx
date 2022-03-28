@@ -295,6 +295,7 @@ export const PlanSelectorContainer = ({
         <ButtonContainer>
           <Button
             type="primary"
+            id="submitButton"
             onClick={() => {
               action({
                 plan: selectedPlan,
