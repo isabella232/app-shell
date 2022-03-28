@@ -46,7 +46,6 @@ import {
 
 import {
   calculateTotalSlotsPrice,
-  handleUpgradeIntent,
   getAvailablePlansForDisplay,
 } from '../../../utils';
 
