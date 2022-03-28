@@ -68,6 +68,7 @@ const ModalTesting = () => {
 
       <h3>Render Quantity Update</h3>
       <button
+        id="render_quantity_update"
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
           actions.openModal(MODALS.quantityUpdate, {
@@ -80,14 +81,16 @@ const ModalTesting = () => {
         Render Modal
       </button>
 
-      <h3>Render Quantity Update or Plan Selector based on Organization state</h3>
+      <h3>
+        Render Quantity Update or Plan Selector based on Organization state
+      </h3>
       <button
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
           actions.openModal(MODALS.subscriptionUpdate, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            shouldPickModalOnOrganizationState: true
+            shouldPickModalOnOrganizationState: true,
           });
         }}
       >
@@ -103,9 +106,9 @@ const ModalTesting = () => {
             containerId: 'components_container',
             options: {
               cta: 'orchestrator_trial',
-              ctaButton: 'orchestrator_button'
-            }
-          })
+              ctaButton: 'orchestrator_button',
+            },
+          });
         }}
       >
         Render Start Trial Button

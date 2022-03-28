@@ -65,10 +65,10 @@
           },
           "channelSlotDetails": {
             "flatFee": 0,
-            "currentQuantity": 0,
-            "chargableQuantity": 0,
-            "pricePerQuantity": 0,
-            "minimumQuantity": 0,
+            "currentQuantity": 2,
+            "chargableQuantity": 2,
+            "pricePerQuantity": 6,
+            "minimumQuantity": 1,
             "__typename": "ChannelSlotDetails"
           },
           "changePlanOptions": [
@@ -99,10 +99,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
+                "currentQuantity": 3,
+                "chargableQuantity": 3,
                 "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "minimumQuantity": 3,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -138,10 +138,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -180,10 +180,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -215,10 +215,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -254,10 +254,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -296,10 +296,10 @@
               "downgradedMessage": "",
               "channelSlotDetails": {
                 "flatFee": 0,
-                "currentQuantity": 0,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 0,
-                "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"
@@ -368,10 +368,10 @@
             },
             "channelSlotDetails": {
               "flatFee": 0,
-              "currentQuantity": 0,
-              "chargableQuantity": 0,
-              "pricePerQuantity": 0,
-              "minimumQuantity": 0,
+              "currentQuantity": 2,
+              "chargableQuantity": 2,
+              "pricePerQuantity": 6,
+              "minimumQuantity": 1,
               "__typename": "ChannelSlotDetails"
             },
             "changePlanOptions": [
@@ -402,10 +402,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "currentQuantity": 2,
+                  "chargableQuantity": 2,
+                  "pricePerQuantity": 6,
+                  "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -441,10 +441,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "currentQuantity": 2,
+                  "chargableQuantity": 2,
+                  "pricePerQuantity": 6,
+                  "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -483,10 +483,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "currentQuantity": 2,
+                  "chargableQuantity": 2,
+                  "pricePerQuantity": 6,
+                  "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -518,10 +518,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "currentQuantity": 2,
+                  "chargableQuantity": 2,
+                  "pricePerQuantity": 6,
+                  "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -557,10 +557,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -599,10 +599,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 0,
-                  "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                "currentQuantity": 2,
+                "chargableQuantity": 2,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -631,6 +631,10 @@
         }
       ],
       "__typename": "Account"
+    },
+    "billingUpdateSubscriptionQuantity": {
+      "success": true,
+      "__typename": "BillingResponse"
     }
   }
 }
