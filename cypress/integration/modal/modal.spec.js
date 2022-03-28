@@ -1,61 +1,76 @@
 const REACT_APP_API_GATEWAY_URL_MATCHER = /https:\/\/(graph\.buffer|graph\.local\.buffer).com\//;
 
 describe('Modal', () => {
-  describe('Publish product - OB Free Plan', () => {
-    before(() => {
+  describe('Plan selector - Free plan', () => {
+    beforeEach(() => {
       cy.fixture('accountObFree').then((account) => {
         cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
           status: 200,
           body: account,
         }).as('getAccount');
-
-        cy.visit(Cypress.env('PUBLISH_URL'));
+        cy.visit('/');
         cy.wait('@getAccount').then(({ request }) => {
           cy.task('log', `Request finished. Request data: ${request}`);
         });
       });
     });
 
-    it('should render the Start Trial Modal', () => {
-      cy.get('#start-trial-modal').should('exist');
+    it('should render the Plan Selector Modal with Essentials plan monthly selected when the users current plan is Free monthly', () => {
+      cy.get('#render_plan_selector').click();
+
+      cy.get('#essentials_month').should('exist');
+      cy.get('#essentials_month').should('have.attr', 'aria-label', 'checked');
+    });
+
+    it('should render the Plan Selector Modal with Essentials and Team displayed', () => {
+      cy.get('#render_plan_selector').click();
+
+      cy.get('#essentials_month').should('exist');
+      cy.get('#team_month').should('exist');
+      cy.get('#free_month').should('not.exist');
+      cy.get('#agency_month').should('not.exist');
+    });
+
+    it('should render the Plan Selector Modal with Agency CTA displayed in footer', () => {
+      cy.get('#render_plan_selector').click();
+
+      cy.get('#agency_plan_section').should('exist');
+      cy.get('#agency_month').should('not.exist');
     });
   });
-  describe('Analyze product - OB no channels', () => {
-    before(() => {
-      cy.fixture('accountObEssentialNoChannels').then((account) => {
+
+  describe('Plan selector - Essentials plan', () => {
+    beforeEach(() => {
+      cy.fixture('accountObEssential').then((account) => {
         cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
           status: 200,
           body: account,
-        }).as('getAccount');
-
-        cy.visit(Cypress.env('ANALYZE_URL'));
-        cy.wait('@getAccount').then(({ request }) => {
-          cy.task('log', `Request finished. Request data: ${request}`);
         });
+        cy.visit('/');
       });
     });
 
-    it('should render Channel Connection prompt modal', () => {
-      cy.get('#channel-connection-prompt').should('exist');
-    });
-  });
-  describe('Engage product - OB no channels', () => {
-    before(() => {
-      cy.fixture('accountObEssentialNoChannels').then((account) => {
-        cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
-          status: 200,
-          body: account,
-        }).as('getAccount');
+    it('should render the Plan Selector Modal with Essentials plan yearly selected when this is the current users plan', () => {
+      cy.get('#render_plan_selector').click();
 
-        cy.visit(Cypress.env('ENGAGE_URL'));
-        cy.wait('@getAccount').then(({ request }) => {
-          cy.task('log', `Request finished. Request data: ${request}`);
-        });
-      });
+      cy.get('#essentials_year').should('exist');
+      cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
 
-    it('should render Channel Connection prompt modal', () => {
-      cy.get('#channel-connection-prompt').should('exist');
+    it('should render the Plan Selector Modal with Free, Essentials and Team plans displayed', () => {
+      cy.get('#render_plan_selector').click();
+
+      cy.get('#essentials_year').should('exist');
+      cy.get('#team_year').should('exist');
+      cy.get('#free_year').should('exist');
+      cy.get('#agency_year').should('not.exist');
+    });
+
+    it('should render the Plan Selector Modal with Agency CTA displayed in footer', () => {
+      cy.get('#render_plan_selector').click();
+
+      cy.get('#agency_plan_section').should('exist');
+      cy.get('#agency_month').should('not.exist');
     });
   });
 });
