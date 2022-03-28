@@ -52,10 +52,22 @@ describe('Navigator', () => {
       cy.contains('Upgrade').should('exist');
     });
 
-    it('a user can upgrade to essentials after clicking the upgrade button', () => {
-      cy.get('#upgradeCTA').click();
-      cy.get('#essentials_year').should('exist');
-      cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
+    it('a user on the Free plan should be able click Upgrade and see essentials or team plan displayed', () => {
+      cy.contains('Upgrade').should('exist');
+      cy.contains('Upgrade').click();
+
+      cy.get('#essentials_month').should('exist');
+      cy.get('#team_month').should('exist');
+      cy.get('#free_month').should('not.exist');
+      cy.get('#agency_month').should('not.exist');
+    });
+
+    it('a user on the Free plan should be able click Upgrade and see the agency cta displayed in footer', () => {
+      cy.contains('Upgrade').should('exist');
+      cy.contains('Upgrade').click();
+
+      cy.get('#agency_plan_section').should('exist');
+      cy.get('#agency_month').should('not.exist');
     });
   });
 
@@ -81,6 +93,24 @@ describe('Navigator', () => {
 
     it('does not have an invite team CTA', () => {
       cy.get('#inviteTeamCTA').should('not.exist');
+    });
+
+    it('a user on the Free plan should be able click Upgrade and see essentials or team plan displayed', () => {
+      cy.contains('Upgrade').should('exist');
+      cy.contains('Upgrade').click();
+
+      cy.get('#essentials_month').should('exist');
+      cy.get('#team_month').should('exist');
+      cy.get('#free_month').should('not.exist');
+      cy.get('#agency_month').should('not.exist');
+    });
+
+    it('a user on the Free plan should be able click Upgrade and see the agency cta displayed in footer', () => {
+      cy.contains('Upgrade').should('exist');
+      cy.contains('Upgrade').click();
+
+      cy.get('#agency_plan_section').should('exist');
+      cy.get('#agency_month').should('not.exist');
     });
   });
 
