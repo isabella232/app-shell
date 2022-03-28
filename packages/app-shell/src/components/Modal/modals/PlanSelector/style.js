@@ -89,7 +89,7 @@ export const AbsoluteSavings = styled.span`
   letter-spacing: 0px;
   color: ${blue};
   text-align: right;
-  width: 110px;
+  width: 120px;
 `;
 
 export const ButtonContainer = styled.div`
