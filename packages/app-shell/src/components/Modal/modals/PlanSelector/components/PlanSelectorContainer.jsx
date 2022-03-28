@@ -280,7 +280,6 @@ export const PlanSelectorContainer = ({
         <ButtonContainer>
           <Button
             type="primary"
-            id="ubmitButton"
             onClick={() => {
               action({
                 plan: selectedPlan,
