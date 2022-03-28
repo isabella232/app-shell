@@ -101,6 +101,7 @@ const Screen = ({
       <Text type="p">{description}</Text>
       <ButtonContainer stayedOnSamePlan={stayedOnSamePlan}>
         <Button
+          id="confirmation"
           type="primary"
           onClick={() => {
             closeModal();

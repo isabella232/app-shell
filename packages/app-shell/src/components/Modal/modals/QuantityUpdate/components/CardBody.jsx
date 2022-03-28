@@ -136,6 +136,7 @@ const CardBody = ({
       <ButtonWrapper>
         <Button type="text" onClick={closeModal} label="Cancel" />
         <Button
+          id="confirm_and_pay"
           type="primary"
           onClick={() => {
             updateSubscriptionQuantity();
