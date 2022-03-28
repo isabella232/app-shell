@@ -174,18 +174,15 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
-    handleUpgradeIntent(
-      selectedPlan.planId,
-      monthlyBilling,
-      updateSelectedPlan
-    );
-
     updateButton(selectedPlan, channelsCount);
   }, [selectedPlan]);
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
 
+    // When the channel count changes and we are on the Free plan
+    // We do this to automatically switch the user to the essentials plan
+    // as Free plans can have a max of 3 channels
     if (
       selectedPlan.planId === 'free' &&
       channelsCount > selectedPlanMinimumQuantity
