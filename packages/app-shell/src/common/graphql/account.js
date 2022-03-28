@@ -6,6 +6,19 @@ export const SET_CURRENT_ORGANIZATION = gql`
   }
 `;
 
+export const ACCOUNT_INITIATE_EMAIL_VERIFICATION = gql`
+  mutation AccountInitiateEmailVerification {
+    accountInitiateEmailVerification {
+      ... on AccountInitiateEmailVerificationResponse {
+        success
+      }
+      ... on AccountInitiateEmailVerificationError {
+        userFriendlyMessage
+      }
+    }
+  }
+`;
+
 export const BILLING_FIELDS = gql`
   fragment BillingFields on Billing {
     id
@@ -45,6 +58,14 @@ export const BILLING_FIELDS = gql`
           name
         }
       }
+      channelSlotDetails {
+        flatFee
+        currentQuantity
+        chargableQuantity
+        pricePerQuantity
+        minimumQuantity
+      }
+
       changePlanOptions {
         planId
         planName
@@ -77,8 +98,38 @@ export const BILLING_FIELDS = gql`
   }
 `;
 
-export const QUERY_ACCOUNT = gql`
+export const ACCOUNT_ORGANIZATION_FIELDS = gql`
   ${BILLING_FIELDS}
+  fragment AccountOrganizationFields on AccountOrganization {
+    id
+    name
+    canEdit
+    privileges {
+      canManageBilling
+    }
+    role
+    createdAt
+    isOneBufferOrganization
+    canMigrateToOneBuffer {
+      canMigrate
+      reasons
+    }
+    shouldDisplayInviteCTA
+    featureFlips
+    channels {
+      id
+      name
+      service
+      organizationId
+    }
+    billing {
+      ...BillingFields
+    }
+  }
+`;
+
+export const QUERY_ACCOUNT = gql`
+  ${ACCOUNT_ORGANIZATION_FIELDS}
   query GetAccount {
     account {
       id
@@ -86,48 +137,12 @@ export const QUERY_ACCOUNT = gql`
       createdAt
       featureFlips
       isImpersonation
+      shouldShowEmailVerificationCommunication
       currentOrganization {
-        id
-        name
-        canEdit
-        role
-        createdAt
-        isOneBufferOrganization
-        canMigrateToOneBuffer {
-          canMigrate
-          reasons
-        }
-        shouldDisplayInviteCTA
-        featureFlips
-        billing {
-          ...BillingFields
-        }
-        channels {
-          id
-        }
+        ...AccountOrganizationFields
       }
       organizations {
-        id
-        name
-        canEdit
-        role
-        createdAt
-        isOneBufferOrganization
-        canMigrateToOneBuffer {
-          canMigrate
-          reasons
-        }
-        shouldDisplayInviteCTA
-        featureFlips
-        channels {
-          id
-          name
-          service
-          organizationId
-        }
-        billing {
-          ...BillingFields
-        }
+        ...AccountOrganizationFields
       }
       products {
         name

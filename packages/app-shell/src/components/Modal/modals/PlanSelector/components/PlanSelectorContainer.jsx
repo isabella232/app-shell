@@ -3,6 +3,7 @@ import Text from '@bufferapp/ui/Text';
 import Switch from '@bufferapp/ui/Switch';
 import Button from '@bufferapp/ui/Button';
 import Checkmark from '@bufferapp/ui/Icon/Icons/Checkmark';
+import { useSplitEnabled } from '@bufferapp/features';
 
 import { SelectionScreen } from './SelectionScreen';
 import Summary from '../../Summary';
@@ -27,7 +28,7 @@ import {
   DowngradeMessage,
 } from '../style';
 import useInterval from '../hooks/useInterval';
-import useChannelsCounter from '../hooks/useChannelsCounter';
+import useChannelsCounter from '../../../../../common/hooks/useChannelsCounter';
 import { ModalContext } from '../../../../../common/context/Modal';
 import { Error } from '../../PaymentMethod/style';
 
@@ -39,12 +40,12 @@ import AgencyPlanSection from './AgencyPlanSection';
 import {
   isAgencyUser,
   isOnAgencyTrial,
+  getUsersCurrentPlan,
+  getUsersCurrentChannelSlotDetails,
 } from '../../../../../common/utils/user';
 
 import {
   filterListOfPlans,
-  handleChannelsCountConditions,
-  getCurrentPlanFromPlanOptions,
   calculateTotalSlotsPrice,
   handleUpgradeIntent,
 } from '../../../utils';
@@ -59,10 +60,12 @@ export const PlanSelectorContainer = ({
   isFreePlan,
   isUpgradeIntent,
 }) => {
+  const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
 
   const [error, setError] = useState(null);
   const [showAgencyPlan, setShowAgencyPlan] = useState(false);
+  const [previousPlanId, setPreviousPlanId] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
@@ -75,9 +78,10 @@ export const PlanSelectorContainer = ({
     isUpgradeIntent
   );
 
-  const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
+  const currentPlan = getUsersCurrentPlan(user);
+  const currentPlanId = currentPlan?.id;
 
-  const { currentQuantity } = currentPlan.channelSlotDetails;
+  const { currentQuantity } = getUsersCurrentChannelSlotDetails(user);
   const {
     flatFee: selectedPlanFlatFee,
     pricePerQuantity: selectedPlanPricePerQuantity,
@@ -86,10 +90,14 @@ export const PlanSelectorContainer = ({
 
   const {
     channelsCount,
-    setChannelsCounterValue,
     increaseCounter,
     decreaseCounter,
-  } = useChannelsCounter(currentQuantity, selectedPlanMinimumQuantity);
+    channelCountMessageStatus,
+  } = useChannelsCounter(
+    selectedPlan.planId,
+    currentQuantity,
+    selectedPlanMinimumQuantity
+  );
 
   const newPrice = calculateTotalSlotsPrice(
     selectedPlan.planId,
@@ -141,6 +149,10 @@ export const PlanSelectorContainer = ({
       ? planOptionsWithoutFreePlans
       : planOptionsWithoutAgencyPlans;
 
+  const disableSumbitButton = splitSBBEnabled
+    ? label === 'Stay On My Current Plan' || processing || !action
+    : label === 'Stay On My Current Plan' || processing;
+
   useEffect(() => {
     useTrackPlanSelectorViewed({
       payload: {
@@ -179,22 +191,29 @@ export const PlanSelectorContainer = ({
       updateSelectedPlan
     );
 
-    handleChannelsCountConditions(
-      selectedPlan.planId,
-      channelsCount,
-      setChannelsCounterValue
-    );
-
     updateButton(selectedPlan, channelsCount);
   }, [selectedPlan]);
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
+
+    if (
+      selectedPlan.planId === 'free' &&
+      channelsCount > selectedPlanMinimumQuantity
+    ) {
+      const newInterval = monthlyBilling ? 'month' : 'year';
+      const planString = `essentials_${newInterval}`;
+      updateSelectedPlan(planString);
+    }
   }, [channelsCount]);
 
   useEffect(() => {
     if (data?.billingUpdateSubscriptionPlan.success) {
-      openSuccess({ selectedPlan });
+      openSuccess({
+        selectedPlan,
+        stayedOnSamePlan: previousPlanId === selectedPlan.planId,
+        splitSBBEnabled,
+      });
     }
     if (subscriptionError) {
       setError(subscriptionError);
@@ -270,21 +289,28 @@ export const PlanSelectorContainer = ({
           increaseCounter={() => increaseCounter()}
           decreaseCounter={() => decreaseCounter()}
           newPrice={newPrice}
+          channelCounterMessageStatus={channelCountMessageStatus}
+          currentChannelQuantity={currentQuantity}
         />
         <ButtonContainer>
           <Button
             type="primary"
-            onClick={() =>
+            onClick={() => {
               action({
                 plan: selectedPlan,
                 cta,
                 ctaView: modal,
                 isUpgradeIntent,
-              })
-            }
+                newPrice,
+                channelCounterMessageStatus: channelCountMessageStatus,
+                currentChannelQuantity: currentQuantity,
+                channelsCount,
+              });
+              setPreviousPlanId(currentPlanId);
+            }}
             label={processing ? 'Processing...' : label}
             fullWidth
-            disabled={label === 'Stay On My Current Plan' || processing}
+            disabled={disableSumbitButton}
           />
         </ButtonContainer>
       </Right>

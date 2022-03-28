@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import eventDispatcher from './utils/eventDispatcher';
+import { EVENT_KEY, ACTIONS } from '../events/modalEvents';
 
 export const MODALS = {
   GEID1FreeTrialPrompt: 'GEID1FreeTrialPrompt',
@@ -16,14 +16,9 @@ export const MODALS = {
   success: 'success',
   trialExpired: 'trialExpired',
   upgradeSuccess: 'upgradeSuccess',
-};
-
-export const EVENT_KEY = 'appshell__modal_event';
-
-export const ACTIONS = {
-  openModal(modalKey, modalData = null) {
-    eventDispatcher(EVENT_KEY, { modal: modalKey, data: modalData });
-  },
+  // This modal will make a decision based on the Organization state if
+  // it will render the planSelector or the QuantityUpdate
+  subscriptionUpdate: 'subscriptionUpdate'
 };
 
 function useModal() {
@@ -52,6 +47,13 @@ function useModal() {
       setModal(matchingModal);
     }
   }, []);
+
+  useEffect(() => {
+    if (modal === MODALS.success) {
+      // propagate a modal event on success
+      ACTIONS.openModal(modal)
+    }
+  }, [modal])
 
   // Open modal from events
   function handleOpenModal({ detail }) {

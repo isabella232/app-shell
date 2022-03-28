@@ -21,9 +21,13 @@ function UXMessaging(props) {
   );
 }
 
-UXMessaging.propTypes = {
+export const MessageStatusShape = {
   messageStatus: PropTypes.oneOf(['error', 'warning']),
   message: PropTypes.string.isRequired,
+};
+
+UXMessaging.propTypes = {
+  ...MessageStatusShape,
 };
 
 UXMessaging.defaultProps = {

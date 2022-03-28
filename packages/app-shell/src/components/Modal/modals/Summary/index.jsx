@@ -6,6 +6,9 @@ import { useSplitEnabled } from '@bufferapp/features';
 import { UserContext } from '../../../../common/context/User';
 import CurrentPlanInfo from './components/CurrentPlanInfo';
 import UpdatedPlanInfo from './components/UpdatedPlanInfo';
+import PaymentPlanInfo from './components/PaymentPlanInfo';
+
+import { findPlanUserDetails } from '../../../../common/utils/product';
 
 import {
   DiscountReminder,
@@ -40,24 +43,46 @@ function renderSBBSummary(
   channelsCount,
   increaseCounter,
   decreaseCounter,
-  newPrice
+  newPrice,
+  channelCounterMessageStatus,
+  currentChannelQuantity,
+  isPaymentMethodSummary
 ) {
   const {
     planName: currentPlanName,
     totalPrice: currentPlanPricing,
     planInterval: currentPlanInterval,
-    channelsQuantity: currentChannelsQuantity,
     summary: currentPlanSummary,
   } = currentPlan;
-  const currentPlanUsersText = currentPlanSummary.details[1];
+  const currentPlanUsersText = findPlanUserDetails(currentPlanSummary.details);
   const {
-    planId: selectedPlanId,
     planName: selectedPlanName,
-    basePrice: selectedPlanPricing,
     planInterval: selectedPlanInterval,
     summary: selectePlanSummary,
   } = selectedPlan;
-  const selectedPlanUsersText = selectePlanSummary.details[1];
+  const selectedPlanUsersText = findPlanUserDetails(selectePlanSummary.details);
+
+  const paymentInfo = isPaymentMethodSummary ? (
+    <PaymentPlanInfo
+      planName={selectedPlanName}
+      planCycle={selectedPlanInterval}
+      numberOfUsers={selectedPlanUsersText}
+      channelsCount={channelsCount}
+      newPrice={newPrice}
+      channelCounterMessageStatus={channelCounterMessageStatus}
+    />
+  ) : (
+    <UpdatedPlanInfo
+      planName={selectedPlanName}
+      planCycle={selectedPlanInterval}
+      numberOfUsers={selectedPlanUsersText}
+      channelsCount={channelsCount}
+      increaseCounter={() => increaseCounter()}
+      decreaseCounter={() => decreaseCounter()}
+      newPrice={newPrice}
+      channelCounterMessageStatus={channelCounterMessageStatus}
+    />
+  );
 
   return (
     <>
@@ -65,21 +90,10 @@ function renderSBBSummary(
         planName={currentPlanName}
         planPrice={currentPlanPricing}
         planCycle={currentPlanInterval}
-        numberOfChannels={currentChannelsQuantity}
+        numberOfChannels={currentChannelQuantity}
         numberOfUsers={currentPlanUsersText}
       />
-      <UpdatedPlanInfo
-        planId={selectedPlanId}
-        planName={selectedPlanName}
-        planPrice={selectedPlanPricing}
-        planCycle={selectedPlanInterval}
-        numberOfChannels={currentChannelsQuantity}
-        numberOfUsers={selectedPlanUsersText}
-        channelsCount={channelsCount}
-        increaseCounter={() => increaseCounter()}
-        decreaseCounter={() => decreaseCounter()}
-        newPrice={newPrice}
-      />
+      {paymentInfo}
     </>
   );
 }
@@ -94,6 +108,9 @@ const Summary = ({
   increaseCounter,
   decreaseCounter,
   newPrice,
+  channelCounterMessageStatus,
+  currentChannelQuantity,
+  isPaymentMethodSummary,
 }) => {
   const currentPlan = planOptions.find((option) => option.isCurrentPlan);
   const currentPlanId = currentPlan.planId;
@@ -169,7 +186,7 @@ const Summary = ({
 
   return (
     <SummaryContainer sbbEnabled={splitSBBEnabled}>
-      <Body>
+      <Body sbbEnabled={splitSBBEnabled}>
         <Text type="h2">Summary</Text>
         {splitSBBEnabled ? (
           renderSBBSummary(
@@ -178,7 +195,10 @@ const Summary = ({
             channelsCount,
             increaseCounter,
             decreaseCounter,
-            newPrice
+            newPrice,
+            channelCounterMessageStatus,
+            currentChannelQuantity,
+            isPaymentMethodSummary
           )
         ) : (
           <>
@@ -228,6 +248,9 @@ const SummaryProvider = ({
   increaseCounter,
   decreaseCounter,
   newPrice,
+  channelCounterMessageStatus,
+  currentChannelQuantity,
+  isPaymentMethodSummary,
 }) => {
   return (
     <UserContext.Consumer>
@@ -246,6 +269,9 @@ const SummaryProvider = ({
             increaseCounter={() => increaseCounter()}
             decreaseCounter={() => decreaseCounter()}
             newPrice={newPrice}
+            channelCounterMessageStatus={channelCounterMessageStatus}
+            currentChannelQuantity={currentChannelQuantity}
+            isPaymentMethodSummary={isPaymentMethodSummary}
           />
         );
       }}

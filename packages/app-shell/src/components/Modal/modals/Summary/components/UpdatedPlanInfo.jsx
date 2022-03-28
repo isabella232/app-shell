@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Channels from '../../../../../common/components/Channels/Channels';
 import { getProductPriceCycleText } from '../../../../../common/utils/product';
 
+import { MessageStatusShape } from '../../../../../common/components/UXMessaging/UXMessaging';
+
 import {
   UpdatedPlanInfoContainer,
   PlanName,
@@ -24,6 +26,7 @@ function UpdatedPlanInfo(props) {
     increaseCounter,
     decreaseCounter,
     newPrice,
+    channelCounterMessageStatus,
   } = props;
 
   return (
@@ -32,6 +35,7 @@ function UpdatedPlanInfo(props) {
         channelsCount={channelsCount}
         onIncreaseCounter={() => increaseCounter()}
         onDecreaseCounter={() => decreaseCounter()}
+        channelCounterMessageStatus={channelCounterMessageStatus}
       />
       <Section>
         Your updated plan:
@@ -47,11 +51,10 @@ function UpdatedPlanInfo(props) {
         </Row>
       </Section>
       <CurrentPaymentContainer>
-        New monthly cost:{' '}
-        <span>{getProductPriceCycleText(newPrice, planCycle)}</span>
+        New cost: <span>{getProductPriceCycleText(newPrice, planCycle)}</span>
       </CurrentPaymentContainer>
       <CancellationInfo>
-        This will be billed every month until canceled.
+        This will be billed every {planCycle} until canceled.
       </CancellationInfo>
     </UpdatedPlanInfoContainer>
   );
@@ -64,6 +67,12 @@ UpdatedPlanInfo.propTypes = {
   channelsCount: PropTypes.number.isRequired,
   increaseCounter: PropTypes.func.isRequired,
   decreaseCounter: PropTypes.func.isRequired,
+  newPrice: PropTypes.number.isRequired,
+  channelCounterMessageStatus: PropTypes.shape({ ...MessageStatusShape }),
+};
+
+UpdatedPlanInfo.defaultProps = {
+  channelCounterMessageStatus: null,
 };
 
 export default UpdatedPlanInfo;

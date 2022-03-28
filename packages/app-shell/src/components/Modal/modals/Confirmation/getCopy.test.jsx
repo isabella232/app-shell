@@ -32,11 +32,11 @@ describe('getCopy', () => {
       getCopy({ planName, onlyUpdatedCardDetails })
     );
 
-    expect(result.current.label).toBe('Your billing details are now updated');
+    expect(result.current.label).toBe('You’re all set!');
     expect(result.current.description).toBe(
-      'Thank you, your billing details have gone through successfully.'
+      'You have successfully adjusted the channel count for your plan.'
     );
-    expect(result.current.buttonCopy).toBe("That's great!");
+    expect(result.current.buttonCopy).toBe('Great! Now Take Me Back');
   });
   it('should return label, description and buttonCopy for a new trial start', () => {
     const planName = 'Team';

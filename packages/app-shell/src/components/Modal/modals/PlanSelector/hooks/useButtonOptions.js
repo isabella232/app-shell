@@ -16,10 +16,12 @@ const useButtonOptions = ({
     if (isActiveTrial) {
       if (selectedPlan.planId === 'free') {
         return 'Confirm Plan Change';
-      } else return hasPaymentDetails ? 'Confirm Trial Plan' : 'Go To Payment';
+      } else return hasPaymentDetails ? 'Confirm Plan' : 'Go To Payment';
     } else if (selectedPlan?.isCurrentPlan) {
       if (selectedPlan.planId === 'free' && isAwaitingUserAction) {
         return 'Confirm Free Plan';
+      } else if (selectedPlan.planId === 'free' && selectedPlan?.isCurrentPlan) {
+        return 'Stay On My Current Plan'
       } else if (currentChannelQuantity !== updatedQuantity) {
         return 'Confirm Changes';
       } else return 'Stay On My Current Plan';
@@ -33,25 +35,23 @@ const useButtonOptions = ({
   );
 
   const buttonFunction = () => {
-    if (selectedPlan.isCurrentPlan && isActiveTrial && hasPaymentDetails) {
+    // If Free is selected and is not the current plan (no payment method modal needed)
+    if (selectedPlan.planId === 'free' && !selectedPlan.isCurrentPlan) {
       return updatePlan;
     }
 
-    if (selectedPlan.planId === 'free') {
-      return updatePlan;
+    // If trialing
+    if (isActiveTrial) {
+      return hasPaymentDetails ? updatePlan : openPaymentMethod;
     }
 
-    if (
-      selectedPlan.isCurrentPlan &&
-      currentChannelQuantity !== updatedChannelQuantity
-    ) {
-      return updatePlan;
+    // If not not trialing, no plan changed and quantity has not changed.
+    if (selectedPlan.isCurrentPlan && currentChannelQuantity === updatedChannelQuantity) {
+      return null
     }
 
-    if (selectedPlan.isCurrentPlan && !isActiveTrial) {
-      return null;
-    }
-
+    // If there are no payment details we open the paymentMethod modal
+    // otherwise we update the plan directly.
     return hasPaymentDetails ? updatePlan : openPaymentMethod;
   };
 

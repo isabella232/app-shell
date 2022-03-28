@@ -9,13 +9,13 @@ import { MODALS } from 'hooks/useModal';
 import { UserContext } from 'context/User';
 import { ModalContext } from 'context/Modal';
 import useStartTrial from 'hooks/useStartTrial';
-import { useSuggestedPlan } from 'hooks/useSuggestedPlan';
+import { getSuggestedPlan } from 'utils/getSuggestedPlan';
 import { useTrackPageViewed } from 'hooks/useSegmentTracking';
 
 import { Holder, Content, Ctas } from './style';
 
 const StartTrial = ({ user, openModal, modalData }) => {
-  const { suggestedPlan } = useSuggestedPlan(user);
+  const suggestedPlan = getSuggestedPlan(user);
   const { cta, ctaButton } = modalData || {};
 
   const { startTrial, trial, error, processing } = useStartTrial({

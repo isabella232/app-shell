@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+
 import Text from '@bufferapp/ui/Text';
 import Button from '@bufferapp/ui/Button';
 import { black } from '@bufferapp/ui/style/colors';
@@ -12,14 +14,15 @@ import getCopy from './getCopy';
 const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
-  height: ${({ planId }) => (planId === 'team' ? '446px' : '376px')};
+  width: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '700px' : '800px')};
+  height: ${({ stayedOnSamePlan }) => (stayedOnSamePlan ? '306px' : '376px')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
   background-position-y: bottom;
   background-image: url(${(props) => props.imageUrl});
-  background-size: 445px;
+  background-size: ${({ stayedOnSamePlan }) =>
+    stayedOnSamePlan ? '366px' : '445px'};
   padding: 24px;
 
   p,
@@ -29,13 +32,20 @@ const ScreenContainer = styled.div`
 
   h1 {
     max-width: 324px;
-    margin-top: 22px;
-    margin-bottom: 22px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   p {
     margin-top: 0px;
-    max-width: 282px;
+    max-width: ${({ stayedOnSamePlan }) =>
+      stayedOnSamePlan ? '258px' : '285px'};
+
+    ${({ stayedOnSamePlan }) =>
+      stayedOnSamePlan &&
+      css`
+        margin-bottom: 0;
+      `}
   }
 
   p:last-child {
@@ -45,8 +55,14 @@ const ScreenContainer = styled.div`
 
 const ButtonContainer = styled.div`
   width: fit-content;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  ${({ stayedOnSamePlan }) =>
+    stayedOnSamePlan &&
+    css`
+      margin-bottom: auto;
+    `}
 `;
 
 const Screen = ({
@@ -54,12 +70,14 @@ const Screen = ({
   onlyUpdatedCardDetails,
   startedTrial,
   closeModal,
+  stayedOnSamePlan,
 }) => {
   const planName = selectedPlan ? selectedPlan.planName : null;
   const { label, description, buttonCopy, imageUrl, footer } = getCopy({
     planName,
     onlyUpdatedCardDetails,
     startedTrial,
+    stayedOnSamePlan,
   });
 
   const currentUser = useContext(UserContext);
@@ -78,10 +96,10 @@ const Screen = ({
   }, []);
 
   return (
-    <ScreenContainer planId={selectedPlan.planId} imageUrl={imageUrl}>
+    <ScreenContainer stayedOnSamePlan={stayedOnSamePlan} imageUrl={imageUrl}>
       <Text type="h1">{label}</Text>
       <Text type="p">{description}</Text>
-      <ButtonContainer>
+      <ButtonContainer stayedOnSamePlan={stayedOnSamePlan}>
         <Button
           type="primary"
           onClick={() => {
@@ -95,22 +113,48 @@ const Screen = ({
   );
 };
 
+Screen.propTypes = {
+  selectedPlan: PropTypes.shape({
+    planId: PropTypes.string,
+  }).isRequired,
+  onlyUpdatedCardDetails: PropTypes.bool,
+  startedTrial: PropTypes.bool,
+  closeModal: PropTypes.func.isRequired,
+  stayedOnSamePlan: PropTypes.bool,
+};
+
+Screen.defaultProps = {
+  onlyUpdatedCardDetails: false,
+  startedTrial: false,
+  stayedOnSamePlan: false,
+};
+
 const Confirmation = () => {
   return (
     <UserContext.Consumer>
       {/* eslint-disable-next-line no-unused-vars */}
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal, data }) => (
-            <Screen
-              selectedPlan={data.selectedPlan}
-              onlyUpdatedCardDetails={data.onlyUpdatedCardDetails}
-              startedTrial={data.startedTrial}
-              closeModal={() => {
-                openModal(null);
-              }}
-            />
-          )}
+          {({ openModal, data }) => {
+            if (!data.selectedPlan) {
+              // eslint-disable-next-line no-console
+              console.error(
+                'Error: Confirmation Modal - selectedPlan is undefined'
+              );
+            }
+
+            return (
+              <Screen
+                selectedPlan={data.selectedPlan}
+                onlyUpdatedCardDetails={data.onlyUpdatedCardDetails}
+                startedTrial={data.startedTrial}
+                stayedOnSamePlan={data.stayedOnSamePlan}
+                closeModal={() => {
+                  openModal(null);
+                }}
+              />
+            );
+          }}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>

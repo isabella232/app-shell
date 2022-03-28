@@ -9,7 +9,7 @@ import ShopifyIcon from '@bufferapp/ui/Icon/Icons/Shopify';
 import TwitterIcon from '@bufferapp/ui/Icon/Icons/Twitter';
 
 import Counter from '../Counter/Counter';
-import UXMessaging from '../UXMessaging/UXMessaging';
+import UXMessaging, { MessageStatusShape } from '../UXMessaging/UXMessaging';
 
 import {
   ChannelsContainer,
@@ -19,12 +19,17 @@ import {
 } from './Channels.style';
 
 function Channels(props) {
-  const { channelsCount, onDecreaseCounter, onIncreaseCounter } = props;
+  const {
+    channelsCount,
+    onDecreaseCounter,
+    onIncreaseCounter,
+    channelCounterMessageStatus,
+  } = props;
 
   return (
     <ChannelsContainer>
       <Title>
-        <span>Channels:</span>
+        <span>Channels</span>
         <Icons>
           <InstagramIcon size="medium" />
           <FacebookIcon size="medium" />
@@ -41,7 +46,12 @@ function Channels(props) {
           onDecreaseCounter={() => onDecreaseCounter()}
         />
       </ChannelsInputContainer>
-      <UXMessaging messageStatus="warning" message="" />
+      {channelCounterMessageStatus && (
+        <UXMessaging
+          messageStatus={channelCounterMessageStatus.messageStatus}
+          message={channelCounterMessageStatus.message}
+        />
+      )}
     </ChannelsContainer>
   );
 }
@@ -50,10 +60,12 @@ Channels.propTypes = {
   channelsCount: PropTypes.number,
   onDecreaseCounter: PropTypes.func.isRequired,
   onIncreaseCounter: PropTypes.func.isRequired,
+  channelCounterMessageStatus: PropTypes.shape({ ...MessageStatusShape }),
 };
 
 Channels.defaultProps = {
   channelsCount: 0,
+  channelCounterMessageStatus: null,
 };
 
 export default Channels;

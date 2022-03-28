@@ -10,7 +10,10 @@ import { fontSizeSmall, fontWeightMedium } from '@bufferapp/ui/style/fonts';
 export const UpdatedPlanInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 2;
+
   box-sizing: border-box;
+  margin-bottom: 10px;
   padding: 20px;
   width: 235px;
 
@@ -29,7 +32,7 @@ export const Row = styled.div`
 
 export const Section = styled.div`
   display: flex;
-  padding: 20px 0;
+  padding: 15px 0;
   border-bottom: 1px ${grayLight} solid;
   flex-direction: column;
 `;
@@ -66,7 +69,7 @@ export const UsersCount = styled.div`
 
 export const CurrentPaymentContainer = styled.div`
   display: flex;
-  padding: 20px 0;
+  padding: 15px 0;
 
   border-bottom: 1px ${grayLight} solid;
 
@@ -78,6 +81,6 @@ export const CurrentPaymentContainer = styled.div`
 `;
 
 export const CancellationInfo = styled.div`
-  padding-top: 20px;
+  padding-top: 15px;
   font-size: ${fontSizeSmall};
 `;

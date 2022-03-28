@@ -58,6 +58,25 @@ export const UPDATE_SUBSCRIPTION_PLAN = gql`
   }
 `;
 
+export const UPDATE_SUBSCRIPTION_QUANTITY = gql`
+  mutation updateQuantity(
+    $organizationId: String
+    $quantity: Int
+  ) {
+    billingUpdateSubscriptionQuantity(
+      organizationId: $organizationId
+      quantity: $quantity
+    ) {
+      ... on BillingResponse {
+        success
+      }
+      ... on BillingError {
+        userFriendlyMessage
+      }
+    }
+  }
+`;
+
 export const START_TRIAL = gql`
   mutation startTrial(
     $organizationId: String

@@ -28,6 +28,7 @@ module.exports = {
       context: path.resolve(__dirname, './src/common/context/'),
       hooks: path.resolve(__dirname, './src/common/hooks/'),
       utils: path.resolve(__dirname, './src/common/utils/'),
+      common: path.resolve(__dirname, './src/common'),
     },
   },
 };

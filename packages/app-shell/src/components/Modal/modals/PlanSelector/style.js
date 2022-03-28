@@ -89,7 +89,7 @@ export const AbsoluteSavings = styled.span`
   letter-spacing: 0px;
   color: ${blue};
   text-align: right;
-  width: 110px;
+  width: 120px;
 `;
 
 export const ButtonContainer = styled.div`
@@ -114,15 +114,15 @@ export const Wrapper = styled.div`
       ? `0px 0px 0px 1.5px ${blue}, 0px 4px 8px rgba(0, 0, 0, 0.04)`
       : `0px 4px 8px rgba(0, 0, 0, 0.04)`};
   border-radius: 3px;
-  height: 500px;
+  height: 490px;
   position: relative;
-  padding: 32px 21px;
+  padding: 28px 18px;
   flex: 1 1 0px;
   margin-right: 12px;
   box-sizing: border-box;
   background: ${white};
   cursor: pointer;
-  width: 285px;
+  width: 260px;
 
   transition-property: border-color;
   transition-duration: 250ms;
@@ -169,9 +169,9 @@ export const CardHeader = styled.div`
   height: 30px;
   margin-bottom: 16px;
 
-  h2 {
-    font-size: 18px;
-    line-height: 28px;
+  h3 {
+    font-size: 16px;
+    line-height: 26px;
   }
 `;
 
@@ -206,7 +206,7 @@ export const CardFooter = styled.div`
 export const TopSection = styled.div`
   display: flex;
   flex-direction: column;
-  height: 40%;
+  height: 37%;
 `;
 
 export const CurrentLabel = styled.label`
@@ -331,7 +331,7 @@ export const BenefitList = styled.div`
   &::before {
     content: '';
     border-top: 1px solid ${grayLight};
-    width: 237px;
+    width: 207px;
     display: block;
     margin-bottom: 8px;
     margin-top: 16px;
