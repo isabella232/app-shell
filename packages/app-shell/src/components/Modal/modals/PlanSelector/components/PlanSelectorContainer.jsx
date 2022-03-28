@@ -45,9 +45,9 @@ import {
 } from '../../../../../common/utils/user';
 
 import {
-  filterListOfPlans,
   calculateTotalSlotsPrice,
   handleUpgradeIntent,
+  getAvailablePlansForDisplay,
 } from '../../../utils';
 
 export const PlanSelectorContainer = ({
@@ -63,20 +63,23 @@ export const PlanSelectorContainer = ({
   const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
 
+  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
+
   const [error, setError] = useState(null);
-  const [showAgencyPlan, setShowAgencyPlan] = useState(false);
+  const [showAgencyPlan, setShowAgencyPlan] = useState(shouldIncludeAgencyPlan);
   const [previousPlanId, setPreviousPlanId] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
-  const { monthlyBilling, setBillingInterval } = useInterval(
+
+  const { selectedPlan, updateSelectedPlan } = useSelectedPlan(planOptions);
+  const availablePlans = getAvailablePlansForDisplay(
+    user,
     planOptions,
-    isUpgradeIntent
+    showAgencyPlan
   );
-  const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
-    planOptions,
-    isUpgradeIntent
-  );
+
+  const { monthlyBilling, setBillingInterval } = useInterval(availablePlans);
 
   const currentPlan = getUsersCurrentPlan(user);
   const currentPlanId = currentPlan?.id;
@@ -136,19 +139,6 @@ export const PlanSelectorContainer = ({
     isFreePlan
   );
 
-  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
-  const planOptionsWithoutAgencyPlans = filterListOfPlans(
-    planOptions,
-    'agency'
-  );
-
-  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
-
-  const availablePlans =
-    shouldIncludeAgencyPlan || showAgencyPlan || isUpgradeIntent
-      ? planOptionsWithoutFreePlans
-      : planOptionsWithoutAgencyPlans;
-
   const disableSumbitButton = splitSBBEnabled
     ? label === 'Stay On My Current Plan' || processing || !action
     : label === 'Stay On My Current Plan' || processing;
@@ -186,7 +176,6 @@ export const PlanSelectorContainer = ({
   useEffect(() => {
     handleUpgradeIntent(
       selectedPlan.planId,
-      isUpgradeIntent,
       monthlyBilling,
       updateSelectedPlan
     );
@@ -256,7 +245,7 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {!shouldIncludeAgencyPlan && !showAgencyPlan && !isUpgradeIntent && (
+        {!shouldIncludeAgencyPlan && !showAgencyPlan && (
           <AgencyPlanSection
             ctaAction={() => {
               updateSelectedPlan(`agency_${monthlyBilling ? 'month' : 'year'}`);
@@ -274,7 +263,6 @@ export const PlanSelectorContainer = ({
                 plan: freePlan,
                 cta,
                 ctaView: modal,
-                isUpgradeIntent: false,
               });
             }}
           />
@@ -295,12 +283,12 @@ export const PlanSelectorContainer = ({
         <ButtonContainer>
           <Button
             type="primary"
+            id="ubmitButton"
             onClick={() => {
               action({
                 plan: selectedPlan,
                 cta,
                 ctaView: modal,
-                isUpgradeIntent,
                 newPrice,
                 channelCounterMessageStatus: channelCountMessageStatus,
                 currentChannelQuantity: currentQuantity,

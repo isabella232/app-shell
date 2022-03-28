@@ -8,9 +8,7 @@ const useInterval = (planOptions, isUpgradeIntent) => {
     isUpgradeIntent
   );
 
-  const initiallyMonthly = isUpgradeIntent
-    ? false
-    : defaultSelectedPlan.planInterval === 'month';
+  const initiallyMonthly = defaultSelectedPlan.planInterval === 'month';
 
   const [monthlyBilling, setBillingInterval] = useState(initiallyMonthly);
 
