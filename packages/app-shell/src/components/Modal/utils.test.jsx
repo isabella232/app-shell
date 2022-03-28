@@ -11,6 +11,7 @@ import {
   getDefaultSelectedPlan,
   calculateTotalSlotsPrice,
   getPlanByPlanId,
+  getAvailablePlansForDisplay,
 } from './utils';
 
 const listOfPlanOptions = [
@@ -447,6 +448,211 @@ describe('Modal - utils', () => {
       });
       const result = shouldShowPaywallModal(noChannelsUser);
       expect(result).toBeFalsy();
+    });
+  });
+
+  describe.only('getAvailablePlansForDisplay', () => {
+    const freePlans = [
+      { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+      { planId: 'free', planInterval: 'year', isCurrentPlan: false },
+    ];
+    const essentialsPlans = [
+      {
+        planId: 'essentials',
+        planInterval: 'month',
+        isCurrentPlan: false,
+      },
+      {
+        planId: 'essentials',
+        planInterval: 'year',
+        isCurrentPlan: false,
+      },
+    ];
+    const teamPlans = [
+      { planId: 'team', planInterval: 'month', isCurrentPlan: false },
+      { planId: 'team', planInterval: 'year', isCurrentPlan: false },
+    ];
+    const agencyPlans = [
+      { planId: 'agency', planInterval: 'month', isCurrentPlan: false },
+      { planId: 'agency', planInterval: 'year', isCurrentPlan: false },
+    ];
+
+    it('should return an array of plans with no Free options when the agency plan should be displayed', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = false;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = true;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining(freePlans));
+      expect(result).toEqual([
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ]);
+    });
+
+    it('should return an array of plans with no Free options when the agency plan should be displayed and the user is on a free plan', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = true;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = true;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining(freePlans));
+      expect(result).toEqual([
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ]);
+    });
+
+    // TODO fix this test
+    it('should return an array of plans with no Free options when the user is on an Agency trial', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = true;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = true;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining(freePlans));
+      expect(result).toEqual([
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ]);
+    });
+
+    // TODO fix this test
+    it('should return an array of plans with no Free options when the user is on an Agency plan', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = true;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = true;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining(freePlans));
+      expect(result).toEqual([
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ]);
+    });
+
+    // TODO fix this test
+    it('should return an array of plans with no Free options when the provided with showAgencyPlan set to true', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = true;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = true;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining(freePlans));
+      expect(result).toEqual([
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ]);
+    });
+
+    // TODO: fix this test - add correct test values
+    it('should return an array of plans with no Agency or Free plan options when the user is on a free plan', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = true;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = false;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining([...agencyPlans]));
+      expect(result).toEqual([...freePlans, ...essentialsPlans, ...teamPlans]);
+    });
+
+    it('should return an array of plans with no Agency options when Agency should not be included ', () => {
+      const listOfPlanOptions = [
+        ...freePlans,
+        ...essentialsPlans,
+        ...teamPlans,
+        ...agencyPlans,
+      ];
+
+      const isOnFreePlan = false;
+      const isUpgradeIntent = false;
+      const shouldIncludeAgencyPlan = false;
+
+      const result = getAvailablePlansForDisplay(
+        listOfPlanOptions,
+        isOnFreePlan,
+        isUpgradeIntent,
+        shouldIncludeAgencyPlan
+      );
+      expect(result).toEqual(expect.not.arrayContaining([...agencyPlans]));
+      expect(result).toEqual([...freePlans, ...essentialsPlans, ...teamPlans]);
     });
   });
 });

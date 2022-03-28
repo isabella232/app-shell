@@ -1,6 +1,11 @@
 import { getCookie } from '../../common/utils/cookies';
 import { getActiveProductFromPath } from '../../common/utils/getProduct';
-import { isFreeUser, userCanStartFreeTrial } from '../../common/utils/user';
+import {
+  isFreeUser,
+  userCanStartFreeTrial,
+  isAgencyUser,
+  isOnAgencyTrial,
+} from '../../common/utils/user';
 import { SUPPORTED_PRODUCTS as CHANNEL_PROMPT_PRODUCTS } from './modals/ChannelConnectionPrompt';
 
 export function isPendoModalVisible() {
@@ -130,11 +135,39 @@ export function getFreePlanChannelInputMessaging() {
 
 export function handleUpgradeIntent(
   selectedPlanId,
-  isUpgradeIntent,
   monthlyBilling,
   updateSelectedPlan
 ) {
-  if (selectedPlanId === 'free' && isUpgradeIntent) {
+  if (selectedPlanId === 'free') {
     updateSelectedPlan(`essentials_${monthlyBilling ? 'month' : 'year'}`);
   }
+}
+
+// This will return an array of plan that should be displayed to the user
+// in the selection screen inside the plan selector
+export function getAvailablePlansForDisplay(user, planOptions, showAgencyPlan) {
+  const isOnFreePlan = isFreeUser(user);
+  const shouldIncludeAgencyPlan =
+    isAgencyUser(user) || isOnAgencyTrial(user) || showAgencyPlan;
+
+  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
+  const planOptionsWithoutAgencyPlans = filterListOfPlans(
+    planOptions,
+    'agency'
+  );
+
+  if (shouldIncludeAgencyPlan) {
+    return planOptionsWithoutFreePlans;
+  }
+
+  if (isOnFreePlan) {
+    const plansWithoutFreeOrAgency = filterListOfPlans(
+      planOptionsWithoutFreePlans,
+      'agency'
+    );
+
+    return plansWithoutFreeOrAgency;
+  }
+
+  return planOptionsWithoutAgencyPlans;
 }
