@@ -133,16 +133,6 @@ export function getFreePlanChannelInputMessaging() {
   };
 }
 
-export function handleUpgradeIntent(
-  selectedPlanId,
-  monthlyBilling,
-  updateSelectedPlan
-) {
-  if (selectedPlanId === 'free') {
-    updateSelectedPlan(`essentials_${monthlyBilling ? 'month' : 'year'}`);
-  }
-}
-
 // This will return an array of plan that should be displayed to the user
 // in the selection screen inside the plan selector
 export function getAvailablePlansForDisplay(user, planOptions, showAgencyPlan) {
