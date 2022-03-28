@@ -7,7 +7,7 @@ import {
 import styled from 'styled-components';
 
 export const SummaryContainer = styled.div`
-  width: 285px;
+  width: 260px;
   background-color: #fcfcfc;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;

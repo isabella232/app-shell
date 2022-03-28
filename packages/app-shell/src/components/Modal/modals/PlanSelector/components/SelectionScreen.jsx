@@ -22,12 +22,12 @@ function PlanName({ planName, planId }) {
   if (planId === 'agency') {
     return (
       <>
-        <Text type="h2">{planName}</Text>
+        <Text type="h3">{planName}</Text>
         <Tag color="green">New</Tag>
       </>
     );
   }
-  return <Text type="h2">{planName}</Text>;
+  return <Text type="h3">{planName}</Text>;
 }
 
 const Card = ({
