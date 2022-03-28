@@ -125,14 +125,6 @@ export function getAgencyPlanMinimumChannelInputMessaging() {
   };
 }
 
-export function getFreePlanChannelInputMessaging() {
-  return {
-    messageStatus: 'warning',
-    message:
-      'The Free plan is limited to 3 channels. Additional channels will be locked.',
-  };
-}
-
 // This will return an array of plan that should be displayed to the user
 // in the selection screen inside the plan selector
 export function getAvailablePlansForDisplay(user, planOptions, showAgencyPlan) {

@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import {
-  getFreePlanChannelInputMessaging,
-  getAgencyPlanMinimumChannelInputMessaging,
-} from '../../components/Modal/utils';
+import { getAgencyPlanMinimumChannelInputMessaging } from '../../components/Modal/utils';
 
 function handleChannelsCountConditions(
   planId,
@@ -20,7 +17,6 @@ function handleChannelsCountConditions(
 
 const agencyPlanLimitMessageStatus =
   getAgencyPlanMinimumChannelInputMessaging();
-const freePlanLimitMessageStatus = getFreePlanChannelInputMessaging();
 
 const useChannelsCounter = (
   planId,
