@@ -20,7 +20,7 @@ const Portal = styled.div`
   border: 6px solid #decd9c;
 
   &:before {
-    content: "#components_container";
+    content: '#components_container';
     font-size: 64px;
     font-weight: bold;
     color: #decd9c;
@@ -40,6 +40,7 @@ const ModalTesting = () => {
     <Wrapper>
       <h3>Render Plan Selector</h3>
       <button
+        id="render_plan_selector"
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
           actions.openModal(MODALS.planSelector, {
@@ -88,9 +89,9 @@ const ModalTesting = () => {
             containerId: 'components_container',
             options: {
               cta: 'orchestrator_trial',
-              ctaButton: 'orchestrator_button'
-            }
-          })
+              ctaButton: 'orchestrator_button',
+            },
+          });
         }}
       >
         Render Start Trial Button
