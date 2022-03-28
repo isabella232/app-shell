@@ -71,13 +71,23 @@ export function getPlanByPlanId(planId, planOptions) {
   return planOptions.find((plan) => plan.planId === planId);
 }
 
+export function getPlanByPlanIdAndInterval(planId, interval, planOptions) {
+  return planOptions.find(
+    (plan) => plan.planId === planId && plan.planInterval === interval
+  );
+}
+
 export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
 }
 
 export function getDefaultSelectedPlan(planOptions) {
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-  const essentialsPlan = getPlanByPlanId('essentials', planOptions);
+  const essentialsPlan = getPlanByPlanIdAndInterval(
+    'essentials',
+    'year',
+    planOptions
+  );
 
   const defaultSelectedPlan =
     !currentPlan || currentPlan.planId === 'free'

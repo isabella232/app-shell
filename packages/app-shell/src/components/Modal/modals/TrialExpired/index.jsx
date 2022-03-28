@@ -10,14 +10,13 @@ import { useTrackPageViewed } from '../../../../common/hooks/useSegmentTracking'
 import { UserContext } from '../../../../common/context/User';
 import { ModalContext } from '../../../../common/context/Modal';
 import { MODALS } from '../../../../common/hooks/useModal';
-import { setCookie, DATES } from '../../../../common/utils/cookies'
-
+import { setCookie, DATES } from '../../../../common/utils/cookies';
 
 const ScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 800px;
-  height: ${({ planId }) => planId === 'team' ? '446px' : '376px'};
+  height: ${({ planId }) => (planId === 'team' ? '446px' : '376px')};
   box-sizing: border-box;
   background-repeat: no-repeat;
   background-position-x: right;
@@ -72,30 +71,28 @@ const Details = styled.ul`
   }
 `;
 
-export const Modal = ({
-  user,
-  onDismiss,
-  onUpgrade,
-}) => {
-
+export const Modal = ({ user, onDismiss, onUpgrade }) => {
   useEffect(() => {
     useTrackPageViewed({
       payload: {
         name: 'trial',
         title: 'trial expired modal',
       },
-      user
-    })
-  }, [])
+      user,
+    });
+  }, []);
 
-  const imageUrl = 'https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png';
+  const imageUrl =
+    'https://buffer-ui.s3.amazonaws.com/Confirmation+Illustration.png';
   const description = `Your trial is over and you are back to free features. Upgrade to get the power restored.`;
-  const planId = user?.currentOrganization?.billing?.subscription?.plan?.id
-  const changePlanOptions = user?.currentOrganization?.billing?.changePlanOptions || []
-  const planDetails = changePlanOptions.find(o => o.planId === planId)?.summary.details
+  const planId = user?.currentOrganization?.billing?.subscription?.plan?.id;
+  const changePlanOptions =
+    user?.currentOrganization?.billing?.changePlanOptions || [];
+  const planDetails = changePlanOptions.find((o) => o.planId === planId)
+    ?.summary.details;
 
   if (!planDetails) {
-    return null
+    return null;
   }
 
   return (
@@ -104,23 +101,17 @@ export const Modal = ({
       <Text type="p">{description}</Text>
       <Text type="p">Your free plan is limited to:</Text>
       <Details>
-        {planDetails.map(detail => (<li>
-          <CheckmarkIcon size="medium" />
-          <Text type="p">{detail}</Text>
-        </li>))}
+        {planDetails.map((detail) => (
+          <li>
+            <CheckmarkIcon size="medium" />
+            <Text type="p">{detail}</Text>
+          </li>
+        ))}
       </Details>
       <ButtonContainer>
-        <Button
-          type="primary"
-          onClick={onUpgrade}
-          label="Upgrade"
-        />
-      <Button
-        type="secondary"
-        onClick={onDismiss}
-        label="No Thanks"
-      />
-    </ButtonContainer>
+        <Button type="primary" onClick={onUpgrade} label="Upgrade" />
+        <Button type="secondary" onClick={onDismiss} label="No Thanks" />
+      </ButtonContainer>
     </ScreenContainer>
   );
 };
@@ -130,7 +121,7 @@ function setTrialDismissedCookies() {
     key: 'trialOverDismissed',
     value: true,
     expires: DATES.inMonthsFromNow(2),
-  })
+  });
 }
 
 const TrialExpired = () => {
@@ -142,27 +133,25 @@ const TrialExpired = () => {
             <Modal
               user={user}
               onDismiss={() => {
-                setTrialDismissedCookies()
+                setTrialDismissedCookies();
                 openModal(null);
               }}
               onUpgrade={() => {
-                setTrialDismissedCookies()
+                setTrialDismissedCookies();
                 openModal(MODALS.planSelector, {
                   cta: 'trialExpiredUpgrade',
                   ctaButton: 'trialExpired',
-                  isUpgradeIntent: true,
-                })
+                });
               }}
               closeModal={() => {
-                openModal(null)
-              }
-              }
+                openModal(null);
+              }}
             />
           )}
         </ModalContext.Consumer>
       )}
     </UserContext.Consumer>
-  )
+  );
 };
 
 Modal.propTypes = {

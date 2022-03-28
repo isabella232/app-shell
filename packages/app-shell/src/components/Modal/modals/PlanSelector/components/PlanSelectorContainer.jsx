@@ -57,7 +57,6 @@ export const PlanSelectorContainer = ({
   trialInfo,
   openSuccess,
   isFreePlan,
-  isUpgradeIntent,
 }) => {
   const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
@@ -268,7 +267,6 @@ export const PlanSelectorContainer = ({
         <Summary
           selectedPlan={selectedPlan}
           fromPlanSelector
-          isUpgradeIntent={isUpgradeIntent}
           channelsCount={channelsCount}
           increaseCounter={() => increaseCounter()}
           decreaseCounter={() => decreaseCounter()}

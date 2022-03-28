@@ -14,6 +14,31 @@ import {
   getAvailablePlansForDisplay,
 } from './utils';
 
+const freePlans = [
+  { planId: 'free', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'free', planInterval: 'year', isCurrentPlan: false },
+];
+const essentialsPlans = [
+  {
+    planId: 'essentials',
+    planInterval: 'month',
+    isCurrentPlan: false,
+  },
+  {
+    planId: 'essentials',
+    planInterval: 'year',
+    isCurrentPlan: false,
+  },
+];
+const teamPlans = [
+  { planId: 'team', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'team', planInterval: 'year', isCurrentPlan: false },
+];
+const agencyPlans = [
+  { planId: 'agency', planInterval: 'month', isCurrentPlan: false },
+  { planId: 'agency', planInterval: 'year', isCurrentPlan: false },
+];
+
 const listOfPlanOptions = [
   { planId: 'free', planInterval: 'month', isCurrentPlan: false },
   { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
@@ -21,8 +46,10 @@ const listOfPlanOptions = [
 ];
 
 const listOfPlanOptionsWithNoCurrentPlan = [
-  { planId: 'essentials', planInterval: 'month', isCurrentPlan: false },
-  { planId: 'team', planInterval: 'year', isCurrentPlan: false },
+  ...freePlans,
+  ...essentialsPlans,
+  ...teamPlans,
+  ...agencyPlans,
 ];
 
 const listOfFilteredPlanOptions = [
@@ -205,14 +232,14 @@ describe('Modal - utils', () => {
       });
     });
 
-    it('should set the default selected plan to essentials when isCurrentPlan cannot be found in the list of plans', () => {
+    it('should set the default selected plan to essentials yearly when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
       const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
 
       expect(result).toEqual({
         planId: 'essentials',
-        planInterval: 'month',
+        planInterval: 'year',
         isCurrentPlan: false,
       });
     });
@@ -452,31 +479,6 @@ describe('Modal - utils', () => {
   });
 
   describe('getAvailablePlansForDisplay', () => {
-    const freePlans = [
-      { planId: 'free', planInterval: 'month', isCurrentPlan: false },
-      { planId: 'free', planInterval: 'year', isCurrentPlan: false },
-    ];
-    const essentialsPlans = [
-      {
-        planId: 'essentials',
-        planInterval: 'month',
-        isCurrentPlan: false,
-      },
-      {
-        planId: 'essentials',
-        planInterval: 'year',
-        isCurrentPlan: false,
-      },
-    ];
-    const teamPlans = [
-      { planId: 'team', planInterval: 'month', isCurrentPlan: false },
-      { planId: 'team', planInterval: 'year', isCurrentPlan: false },
-    ];
-    const agencyPlans = [
-      { planId: 'agency', planInterval: 'month', isCurrentPlan: false },
-      { planId: 'agency', planInterval: 'year', isCurrentPlan: false },
-    ];
-
     it('should return an array of plans with no Free options when the agency plan should be displayed', () => {
       const user = {
         currentOrganization: {

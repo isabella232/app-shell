@@ -34,9 +34,8 @@ const PaymentMethod = () => {
             return (
               <StripeProvider>
                 <Form
-                  openPlans={(isUpgradeIntent) => {
+                  openPlans={() => {
                     openModal(MODALS.planSelector, {
-                      isUpgradeIntent,
                       cta,
                       ctaButton: 'goBackToPlanSelection',
                       ctaView: modal,
@@ -58,7 +57,6 @@ const PaymentMethod = () => {
                   canManageBilling={
                     user?.currentOrganization?.privileges?.canManageBilling
                   }
-                  isUpgradeIntent={modalData?.isUpgradeIntent}
                   newPrice={modalData?.newPrice}
                   channelCounterMessageStatus={
                     modalData?.channelCounterMessageStatus

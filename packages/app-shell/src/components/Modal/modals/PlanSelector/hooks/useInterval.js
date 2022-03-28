@@ -2,11 +2,8 @@ import { useState } from 'react';
 
 import { getDefaultSelectedPlan } from '../../../utils';
 
-const useInterval = (planOptions, isUpgradeIntent) => {
-  const defaultSelectedPlan = getDefaultSelectedPlan(
-    planOptions,
-    isUpgradeIntent
-  );
+const useInterval = (planOptions) => {
+  const defaultSelectedPlan = getDefaultSelectedPlan(planOptions);
 
   const initiallyMonthly = defaultSelectedPlan.planInterval === 'month';
 

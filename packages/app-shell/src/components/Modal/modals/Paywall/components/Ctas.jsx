@@ -40,45 +40,46 @@ const Content = ({ openModal }) => {
     }
   }, [trial]);
 
-  return (<>
-    <styles.CTAs>
-      <Button
-        type="primary"
-        disabled={processing}
-        onClick={() => {
-          if (canStartTrial) {
-            startTrial()
-          } else {
-            openModal(MODALS.planSelector, {
-              cta,
-              ctaButton: `paywall-${cta}-1`,
-              isUpgradeIntent: true,
-            });
+  return (
+    <>
+      <styles.CTAs>
+        <Button
+          type="primary"
+          disabled={processing}
+          onClick={() => {
+            if (canStartTrial) {
+              startTrial();
+            } else {
+              openModal(MODALS.planSelector, {
+                cta,
+                ctaButton: `paywall-${cta}-1`,
+              });
+            }
+          }}
+          label={ctaLabel}
+        />
+        <Link newTab href={`https://buffer.com/${product}`}>
+          Learn more
+        </Link>
+        <Text>No credit card required</Text>
+        <Error
+          error={
+            error
+              ? {
+                  message: error.message,
+                }
+              : null
           }
-        }}
-        label={ctaLabel}
-      />
-      <Link newTab href={`https://buffer.com/${product}`}>Learn more</Link>
-      <Text>No credit card required</Text>
-      <Error
-        error={
-          error
-            ? {
-                message: error.message,
-              }
-            : null
-        }
-      />
-    </styles.CTAs>
+        />
+      </styles.CTAs>
     </>
   );
 };
 
 export const Ctas = () => {
-  return (<ModalContext.Consumer>
-    {({ openModal }) => (
-      <Content openModal={openModal} />
-    )}
-  </ModalContext.Consumer>);
+  return (
+    <ModalContext.Consumer>
+      {({ openModal }) => <Content openModal={openModal} />}
+    </ModalContext.Consumer>
+  );
 };
-
