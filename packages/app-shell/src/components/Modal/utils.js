@@ -79,7 +79,10 @@ export function getDefaultSelectedPlan(planOptions) {
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
   const essentialsPlan = getPlanByPlanId('essentials', planOptions);
 
-  const defaultSelectedPlan = !currentPlan ? essentialsPlan : currentPlan;
+  const defaultSelectedPlan =
+    !currentPlan || currentPlan.planId === 'free'
+      ? essentialsPlan
+      : currentPlan;
 
   return defaultSelectedPlan;
 }
