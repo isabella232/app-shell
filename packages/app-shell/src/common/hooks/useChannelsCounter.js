@@ -61,14 +61,6 @@ const useChannelsCounter = (
     }
 
     if (
-      planId === 'free' &&
-      channelsCount > 3 &&
-      channelCountMessageStatus === null
-    ) {
-      setChannelCountMessageStatus(freePlanLimitMessageStatus);
-    }
-
-    if (
       planId === 'agency' &&
       channelsCount >= minimumQuantity &&
       channelCountMessageStatus !== null
