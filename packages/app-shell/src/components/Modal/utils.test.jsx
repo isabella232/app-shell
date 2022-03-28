@@ -451,7 +451,7 @@ describe('Modal - utils', () => {
     });
   });
 
-  describe.only('getAvailablePlansForDisplay', () => {
+  describe('getAvailablePlansForDisplay', () => {
     const freePlans = [
       { planId: 'free', planInterval: 'month', isCurrentPlan: false },
       { planId: 'free', planInterval: 'year', isCurrentPlan: false },
@@ -478,6 +478,21 @@ describe('Modal - utils', () => {
     ];
 
     it('should return an array of plans with no Free options when the agency plan should be displayed', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+              plan: {
+                id: 'free',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -485,15 +500,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = false;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = true;
+      const showAgencyPlan = true;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining(freePlans));
       expect(result).toEqual([
@@ -504,6 +516,21 @@ describe('Modal - utils', () => {
     });
 
     it('should return an array of plans with no Free options when the agency plan should be displayed and the user is on a free plan', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+              plan: {
+                id: 'free',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -511,15 +538,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = true;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = true;
+      const showAgencyPlan = true;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining(freePlans));
       expect(result).toEqual([
@@ -529,8 +553,22 @@ describe('Modal - utils', () => {
       ]);
     });
 
-    // TODO fix this test
     it('should return an array of plans with no Free options when the user is on an Agency trial', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: true,
+              },
+              plan: {
+                id: 'agency',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -538,15 +576,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = true;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = true;
+      const showAgencyPlan = true;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining(freePlans));
       expect(result).toEqual([
@@ -556,8 +591,22 @@ describe('Modal - utils', () => {
       ]);
     });
 
-    // TODO fix this test
     it('should return an array of plans with no Free options when the user is on an Agency plan', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+              plan: {
+                id: 'agency',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -565,15 +614,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = true;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = true;
+      const showAgencyPlan = true;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining(freePlans));
       expect(result).toEqual([
@@ -583,8 +629,9 @@ describe('Modal - utils', () => {
       ]);
     });
 
-    // TODO fix this test
     it('should return an array of plans with no Free options when the provided with showAgencyPlan set to true', () => {
+      const user = {};
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -592,15 +639,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = true;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = true;
+      const showAgencyPlan = true;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining(freePlans));
       expect(result).toEqual([
@@ -610,8 +654,22 @@ describe('Modal - utils', () => {
       ]);
     });
 
-    // TODO: fix this test - add correct test values
     it('should return an array of plans with no Agency or Free plan options when the user is on a free plan', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+              plan: {
+                id: 'free',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -619,21 +677,35 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = true;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = false;
+      const showAgencyPlan = false;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
-      expect(result).toEqual(expect.not.arrayContaining([...agencyPlans]));
-      expect(result).toEqual([...freePlans, ...essentialsPlans, ...teamPlans]);
+      expect(result).toEqual(
+        expect.not.arrayContaining([...freePlans, ...agencyPlans])
+      );
+      expect(result).toEqual([...essentialsPlans, ...teamPlans]);
     });
 
     it('should return an array of plans with no Agency options when Agency should not be included ', () => {
+      const user = {
+        currentOrganization: {
+          billing: {
+            subscription: {
+              trial: {
+                isActive: false,
+              },
+              plan: {
+                id: 'essentials',
+              },
+            },
+          },
+        },
+      };
+
       const listOfPlanOptions = [
         ...freePlans,
         ...essentialsPlans,
@@ -641,15 +713,12 @@ describe('Modal - utils', () => {
         ...agencyPlans,
       ];
 
-      const isOnFreePlan = false;
-      const isUpgradeIntent = false;
-      const shouldIncludeAgencyPlan = false;
+      const showAgencyPlan = false;
 
       const result = getAvailablePlansForDisplay(
+        user,
         listOfPlanOptions,
-        isOnFreePlan,
-        isUpgradeIntent,
-        shouldIncludeAgencyPlan
+        showAgencyPlan
       );
       expect(result).toEqual(expect.not.arrayContaining([...agencyPlans]));
       expect(result).toEqual([...freePlans, ...essentialsPlans, ...teamPlans]);
