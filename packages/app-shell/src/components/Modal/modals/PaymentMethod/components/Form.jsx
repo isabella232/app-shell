@@ -34,6 +34,7 @@ const Form = ({
   channelCounterMessageStatus,
   currentChannelQuantity,
   channelsCount,
+  cta,
 }) => {
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false);
@@ -60,6 +61,7 @@ const Form = ({
       hasPaymentMethod,
       alreadyProcessing: processing,
       channelsQuantity: channelsCount,
+      cta,
     });
 
   useEffect(() => {

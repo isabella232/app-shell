@@ -65,6 +65,7 @@ const PaymentMethod = () => {
                   }
                   currentChannelQuantity={modalData?.currentChannelQuantity}
                   channelsCount={modalData?.channelsCount}
+                  cta={cta}
                 />
               </StripeProvider>
             );
