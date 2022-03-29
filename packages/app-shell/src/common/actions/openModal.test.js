@@ -7,7 +7,7 @@ import {
 
 const openModal = jest.fn();
 
-describe.only('actions', () => {
+describe('actions', () => {
   beforeEach(() => {
     openModal.mockReset();
     jest.spyOn(global.console, 'error').mockImplementation(() => {});
@@ -24,7 +24,7 @@ describe.only('actions', () => {
       };
       const expectedObjectAgruement = {
         selectedPlan: plan,
-        splitSBBEnabled: true,
+        stayedOnSamePlan: true
       };
 
       onSuccess(plan, openModal);
@@ -39,7 +39,7 @@ describe.only('actions', () => {
       onSuccess(plan, openModal);
       // eslint-disable-next-line no-console
       expect(console.error).toHaveBeenCalledWith(
-        'Error: onSuccess - plan or openModal is undefined'
+        'Error: onSuccess - data or openModal is undefined'
       );
     });
 
@@ -49,7 +49,7 @@ describe.only('actions', () => {
       onSuccess(plan, undefinedOpenModal);
       // eslint-disable-next-line no-console
       expect(console.error).toHaveBeenCalledWith(
-        'Error: onSuccess - plan or openModal is undefined'
+        'Error: onSuccess - data or openModal is undefined'
       );
     });
   });
@@ -110,13 +110,13 @@ describe.only('actions', () => {
     });
   });
 
-  describe.only('closeModal', () => {
-    it.only('should call openModal with null', () => {
+  describe('closeModal', () => {
+    it('should call openModal with null', () => {
       closeModal(openModal);
       expect(openModal).toHaveBeenCalledWith(null);
     });
 
-    it.only('should log an error when openModal is undefined', () => {
+    it('should log an error when openModal is undefined', () => {
       const undefinedOpenModal = undefined;
       closeModal(undefinedOpenModal);
       // eslint-disable-next-line no-console

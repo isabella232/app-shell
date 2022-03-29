@@ -30,6 +30,7 @@ const CardBody = ({
   onSuccess,
   openPlanSelector,
   closeModal,
+  cta,
 }) => {
   const [hasCounterChanged, changeCounterState] = useState(false);
 
@@ -56,6 +57,7 @@ const CardBody = ({
   } = useUpdateSubscriptionQuantity({
     user,
     channelsQuantity: channelsCount,
+    cta,
   });
 
   const disableSumbitButton = !hasCounterChanged || isProcessing;

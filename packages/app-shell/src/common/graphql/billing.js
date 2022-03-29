@@ -62,10 +62,12 @@ export const UPDATE_SUBSCRIPTION_QUANTITY = gql`
   mutation updateQuantity(
     $organizationId: String
     $quantity: Int
+    $attribution: AttributionInput
   ) {
     billingUpdateSubscriptionQuantity(
       organizationId: $organizationId
       quantity: $quantity
+      attribution: $attribution
     ) {
       ... on BillingResponse {
         success

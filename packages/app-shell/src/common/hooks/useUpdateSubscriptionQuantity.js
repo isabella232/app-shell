@@ -4,7 +4,7 @@ import { ACTIONS as ORGANIZATION_ACTIONS } from 'common/events/orgEvents';
 import { UPDATE_SUBSCRIPTION_QUANTITY } from '../graphql/billing';
 import { QUERY_ACCOUNT } from '../graphql/account';
 
-const useUpdateSubscriptionQuantity = ({ user, channelsQuantity }) => {
+const useUpdateSubscriptionQuantity = ({ user, channelsQuantity, cta }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
 
@@ -24,6 +24,7 @@ const useUpdateSubscriptionQuantity = ({ user, channelsQuantity }) => {
       variables: {
         organizationId: user.currentOrganization.id,
         quantity: channelsQuantity,
+        attribution: { cta },
       },
     }).catch((e) => {
       throw new Error('Error: updateSubscriptionQuantity failed', e);

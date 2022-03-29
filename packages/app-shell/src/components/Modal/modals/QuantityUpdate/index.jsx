@@ -24,7 +24,7 @@ const QuantityUpdate = () => {
     <UserContext.Consumer>
       {(user) => (
         <ModalContext.Consumer>
-          {({ openModal }) => {
+          {({ openModal, data }) => {
             if (!user.currentOrganization.billing) {
               return (
                 <LoadingContainer>
@@ -59,6 +59,7 @@ const QuantityUpdate = () => {
                   onSuccess={(data) => onSuccess(data, openModal)}
                   openPlanSelector={(data) => openPlanSelector(data, openModal)}
                   closeModal={() => closeModal(openModal)}
+                  cta={data?.cta}
                 />
               </Container>
             );
