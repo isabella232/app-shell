@@ -15,20 +15,13 @@ describe('Modal', () => {
       });
     });
 
-    it('should render the Plan Selector Modal with Essentials plan monthly selected when the users current plan is Free monthly', () => {
-      cy.get('#render_plan_selector').click();
-
-      cy.get('#essentials_month').should('exist');
-      cy.get('#essentials_month').should('have.attr', 'aria-label', 'checked');
-    });
-
     it('should render the Plan Selector Modal with Essentials and Team displayed', () => {
       cy.get('#render_plan_selector').click();
 
-      cy.get('#essentials_month').should('exist');
-      cy.get('#team_month').should('exist');
-      cy.get('#free_month').should('not.exist');
-      cy.get('#agency_month').should('not.exist');
+      cy.get('#essentials_year').should('exist');
+      cy.get('#team_year').should('exist');
+      cy.get('#free_year').should('not.exist');
+      cy.get('#agency_year').should('not.exist');
     });
 
     it('should render the Plan Selector Modal with Agency CTA displayed in footer', () => {
