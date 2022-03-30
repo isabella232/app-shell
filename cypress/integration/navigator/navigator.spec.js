@@ -54,6 +54,7 @@ describe('Navigator', () => {
 
     it('a user on the Free plan should be able click Upgrade and see essentials or team plan displayed', () => {
       cy.contains('Upgrade').should('exist');
+      cy.contains('No Thanks').click();
       cy.contains('Upgrade').click();
 
       // Plans displayed
