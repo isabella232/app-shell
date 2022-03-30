@@ -14,11 +14,14 @@ const StyledBufferLink = styled.a`
   }
 
   &:after{
-    content: '🇺🇦';
-    display: flex;
-    align-items: center;
-    height: 100%;
-    margin-left: 4px;
+    content: '';
+    width: 16px;
+    height: 12px;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAwIDgwMCI+DQo8cGF0aCBmaWxsPSIjM2E3NWM0IiBkPSJtMCwwaDEyMDB2ODAwaC0xMjAweiIvPg0KPHBhdGggZmlsbD0iI2Y5ZGQxNiIgZD0ibTAsNDAwaDEyMDB2NDAwaC0xMjAweiIvPg0KPC9zdmc+DQo=');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: left top;
+    margin: 4px 0 0 4px;
   }
 `;
 
