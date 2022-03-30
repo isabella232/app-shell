@@ -32,7 +32,7 @@ describe('Modal', () => {
       // Try Free should NOT be displayed
       cy.get('#free_plan_section').should('not.exist');
 
-      // It should default to Esstential year
+      // It should default to Essentials year
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
 
@@ -90,7 +90,7 @@ describe('Modal', () => {
       // Try Free should NOT be displayed
       cy.get('#free_lan_section').should('not.exist');
 
-      // It should default to Esstential year
+      // It should default to Essentials year
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
   });

@@ -69,6 +69,9 @@ describe('Navigator', () => {
 
       // Try Free should NOT be displayed
       cy.get('#free_plan_section').should('not.exist');
+
+      // It should default to Essentials year
+      cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
   });
 
