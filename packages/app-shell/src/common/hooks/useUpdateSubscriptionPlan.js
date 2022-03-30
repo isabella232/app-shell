@@ -30,7 +30,7 @@ const useUpdateSubscriptionPlan = ({
     if (!user || !plan) {
       // eslint-disable-next-line no-console
       console.error(
-        'Could not update plan because either: user, plan are undefined'
+        'Could not update plan because either: user or plan are undefined'
       );
       return;
     }
