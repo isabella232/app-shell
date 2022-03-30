@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import SimpleModal from '@bufferapp/ui/SimpleModal';
 import NonDismissibleModal from '@bufferapp/ui/NonDismissibleModal';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useSplitEnabled } from '@bufferapp/features';
 
 import { getCookie, setCookie, DATES } from '../../common/utils/cookies';
@@ -29,12 +28,6 @@ import {
   shouldShowChannelConnectionPrompt,
   shouldShowPaywallModal,
 } from './utils';
-
-const ModalWrapper = styled.div`
-  > div {
-    z-index: 1;
-  }
-`;
 
 function handleFreeUsersStartTrialPrompt(openModal) {
   openModal(MODALS.startTrial, {
@@ -213,13 +206,11 @@ const Modal = React.memo(({ modal, openModal, data }) => {
   return (
     <>
       {hasModal && (
-        <ModalWrapper>
-          <ModalContent
-            modal={modal}
-            closeAction={() => openModal(null)}
-            shouldUsePlanSelector={shouldUsePlanSelector}
-          />
-        </ModalWrapper>
+        <ModalContent
+          modal={modal}
+          closeAction={() => openModal(null)}
+          shouldUsePlanSelector={shouldUsePlanSelector}
+        />
       )}
     </>
   );
