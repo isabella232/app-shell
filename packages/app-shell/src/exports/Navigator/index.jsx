@@ -114,6 +114,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
               action: () =>
                 modal.openModal(MODALS.planSelector, {
                   cta: 'addPaymentDetailsBanner',
+                  isUpgradeIntent: true,
                 }),
             }}
           />

@@ -5,12 +5,6 @@ export function isFreeUser(user) {
 }
 
 export function isAgencyUser(user) {
-  if (!user) {
-    console.warn(
-      'Warning: isAgencyUser - user was undefined. This could lead to unexpected behaviour.'
-    );
-  }
-
   return (
     user?.currentOrganization?.billing?.subscription?.plan?.id === 'agency'
   );
@@ -25,12 +19,6 @@ export function isOnActiveTrial(user) {
 }
 
 export function isOnAgencyTrial(user) {
-  if (!user) {
-    console.warn(
-      'Warning: isOnAgencyTrial - user was undefined. This could lead to unexpected behaviour.'
-    );
-  }
-
   const isOnAgencyPlan = isAgencyUser(user);
   if (isOnAgencyPlan) {
     return isOnActiveTrial(user);

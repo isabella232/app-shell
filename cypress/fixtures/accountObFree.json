@@ -195,48 +195,6 @@
               "__typename": "OBPlanOption"
             },
             {
-              "planId": "agency",
-              "planName": "Agency",
-              "planInterval": "month",
-              "channelsQuantity": 10,
-              "description": "Support a growing client base with features & pricing that scale with your business.",
-              "isCurrentPlan": false,
-              "highlights": [
-                "Advanced publishing tools",
-                "Analytics & reporting",
-                "Engagement tools",
-                "Unlimited team members & clients",
-                "Draft approval workflows",
-                "Exportable PDF reports",
-                "Agency friendly pricing"
-              ],
-              "currency": "$",
-              "basePrice": 120,
-              "totalPrice": 120,
-              "discountPercentage": 0,
-              "discountNote": "",
-              "priceNote": "For 10 social channels. Add additional channels for $6 per month",
-              "absoluteSavings": "Save $240/year",
-              "summary": {
-                "details": [
-                  "2000 scheduled posts",
-                  "Unlimited users"
-                ],
-                "__typename": "OBPlanOptionSummary"
-              },
-              "isRecommended": false,
-              "downgradedMessage": "",
-              "channelSlotDetails": {
-                "flatFee": 120,
-                "currentQuantity": 10,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 6,
-                "minimumQuantity": 10,
-                "__typename": "OBPlanOption"
-              },
-              "__typename": "OBPlanOption"
-            },
-            {
               "planId": "free",
               "planName": "Free",
               "planInterval": "year",
@@ -348,49 +306,6 @@
                 "chargableQuantity": 0,
                 "pricePerQuantity": 0,
                 "minimumQuantity": 0,
-                "__typename": "ChannelSlotDetails"
-              },
-              "__typename": "OBPlanOption"
-            },
-            {
-              "planId": "agency",
-              "planName": "Agency",
-              "planInterval": "year",
-              "channelsQuantity": 10,
-              "description": "Support a growing client base with features & pricing that scale with your business.",
-              "isCurrentPlan": false,
-              "highlights": [
-                "Advanced publishing tools",
-                "Analytics & reporting",
-                "Engagement tools",
-                "Unlimited team members & clients",
-                "Draft approval workflows",
-                "Exportable PDF reports",
-                "Agency friendly pricing"
-              ],
-              
-              "currency": "$",
-              "basePrice": 100,
-              "totalPrice": 1200,
-              "discountPercentage": 17,
-              "discountNote": "17% Discount",
-              "priceNote": "For 10 social channels. Add additional channels for $5 per month",
-              "absoluteSavings": "Saving $240/year",
-              "summary": {
-                "details": [
-                  "2000 scheduled posts",
-                  "Unlimited users"
-                ],
-                "__typename": "OBPlanOptionSummary"
-              },
-              "isRecommended": false,
-              "downgradedMessage": "",
-              "channelSlotDetails": {
-                "flatFee": 1200,
-                "currentQuantity": 10,
-                "chargableQuantity": 0,
-                "pricePerQuantity": 60,
-                "minimumQuantity": 10,
                 "__typename": "ChannelSlotDetails"
               },
               "__typename": "OBPlanOption"

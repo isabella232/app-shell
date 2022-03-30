@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { getAgencyPlanMinimumChannelInputMessaging } from '../../components/Modal/utils';
+import {
+  getFreePlanChannelInputMessaging,
+  getAgencyPlanMinimumChannelInputMessaging,
+} from '../../components/Modal/utils';
 
 function handleChannelsCountConditions(
   planId,
@@ -17,6 +20,7 @@ function handleChannelsCountConditions(
 
 const agencyPlanLimitMessageStatus =
   getAgencyPlanMinimumChannelInputMessaging();
+const freePlanLimitMessageStatus = getFreePlanChannelInputMessaging();
 
 const useChannelsCounter = (
   planId,
@@ -54,6 +58,14 @@ const useChannelsCounter = (
   function handleWarningMessageChecks() {
     if (planId === 'team' || planId === 'essentials') {
       setChannelCountMessageStatus(null);
+    }
+
+    if (
+      planId === 'free' &&
+      channelsCount > 3 &&
+      channelCountMessageStatus === null
+    ) {
+      setChannelCountMessageStatus(freePlanLimitMessageStatus);
     }
 
     if (

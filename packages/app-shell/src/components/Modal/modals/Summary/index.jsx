@@ -103,6 +103,7 @@ const Summary = ({
   selectedPlan,
   fromPlanSelector,
   subscriptionEndDate,
+  isUpgradeIntent,
   channelsCount,
   increaseCounter,
   decreaseCounter,
@@ -125,6 +126,10 @@ const Summary = ({
       planStatus = `${fromPlanSelector ? 'Changing to' : 'Paying for'} ${
         selectedPlan?.planName
       }`;
+    }
+
+    if (isUpgradeIntent) {
+      planStatus = `Change to ${selectedPlan?.planName}`;
     }
 
     return (
@@ -238,6 +243,7 @@ const Summary = ({
 const SummaryProvider = ({
   selectedPlan,
   fromPlanSelector,
+  isUpgradeIntent,
   channelsCount,
   increaseCounter,
   decreaseCounter,
@@ -258,6 +264,7 @@ const SummaryProvider = ({
             }
             selectedPlan={selectedPlan}
             fromPlanSelector={fromPlanSelector}
+            isUpgradeIntent={isUpgradeIntent}
             channelsCount={channelsCount}
             increaseCounter={() => increaseCounter()}
             decreaseCounter={() => decreaseCounter()}

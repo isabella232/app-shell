@@ -52,25 +52,9 @@ describe('Navigator', () => {
       cy.contains('Upgrade').should('exist');
     });
 
-    it('a user on the Free plan should be able click Upgrade and see essentials or team plan displayed', () => {
-      cy.contains('Upgrade').should('exist');
-      cy.contains('Upgrade').click();
-
-      // Plans displayed
+    it('a user can upgrade to essentials after clicking the upgrade button', () => {
+      cy.get('#upgradeCTA').click();
       cy.get('#essentials_year').should('exist');
-      cy.get('#team_year').should('exist');
-
-      // Plans NOT displayed
-      cy.get('#free_year').should('not.exist');
-      cy.get('#agency_year').should('not.exist');
-
-      // Try agency should be displayed
-      cy.get('#agency_plan_section').should('exist');
-
-      // Try Free should NOT be displayed
-      cy.get('#free_plan_section').should('not.exist');
-
-      // It should default to Essentials year
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
   });

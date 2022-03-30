@@ -115,7 +115,7 @@ const ModalTesting = () => (
   <ModalContext.Consumer>
     {modal => (
       <button onClick={
-        () => {actions.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'renderModal'})}
+        () => {actions.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'renderModal' isUpgradeIntent: false })}
       }>Render Modal</button>
     )}
   </ModalContext.Consumer>
@@ -123,6 +123,16 @@ const ModalTesting = () => (
 ```
 #### Using CTAs for tracking
 In the method above, you'll notice that openModal accepts an object as a second paramater. The cta property is used for tracking. Use it when possible to allow for accurate tracking in Segment
+
+#### Using intentions
+Some places in our apps, the user's intent is to upgrade from Trial or from Free. For that, we only want to show 2 plan options (Essentials and Team) instead of 3. For these CTAs, pass in `isUpgradeIntent : true` as part of the second paramater in openModal:
+```jsx
+<button onClick={
+    () => {modal.openModal(MODALS.paymentMethod, { cta: 'upgradePlan', ctaButton: 'upgradePlan', isUpgradeIntent: true })}
+  }>
+  Upgrade
+</button>
+```
 
 ## Redering components in Product App
 

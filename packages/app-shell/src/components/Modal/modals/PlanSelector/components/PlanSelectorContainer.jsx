@@ -45,8 +45,9 @@ import {
 } from '../../../../../common/utils/user';
 
 import {
+  filterListOfPlans,
   calculateTotalSlotsPrice,
-  getAvailablePlansForDisplay,
+  handleUpgradeIntent,
 } from '../../../utils';
 
 export const PlanSelectorContainer = ({
@@ -57,27 +58,25 @@ export const PlanSelectorContainer = ({
   trialInfo,
   openSuccess,
   isFreePlan,
+  isUpgradeIntent,
 }) => {
   const { isEnabled: splitSBBEnabled } = useSplitEnabled('slot-based-billing');
   const planOptions = changePlanOptions;
 
-  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
-
   const [error, setError] = useState(null);
-  const [showAgencyPlan, setShowAgencyPlan] = useState(shouldIncludeAgencyPlan);
+  const [showAgencyPlan, setShowAgencyPlan] = useState(false);
   const [previousPlanId, setPreviousPlanId] = useState(null);
 
   const { data: modalData, modal } = useContext(ModalContext);
   const { cta } = modalData || {};
-
-  const { selectedPlan, updateSelectedPlan } = useSelectedPlan(planOptions);
-  const availablePlans = getAvailablePlansForDisplay(
-    user,
+  const { monthlyBilling, setBillingInterval } = useInterval(
     planOptions,
-    showAgencyPlan
+    isUpgradeIntent
   );
-
-  const { monthlyBilling, setBillingInterval } = useInterval(availablePlans);
+  const { selectedPlan, updateSelectedPlan } = useSelectedPlan(
+    planOptions,
+    isUpgradeIntent
+  );
 
   const currentPlan = getUsersCurrentPlan(user);
   const currentPlanId = currentPlan?.id;
@@ -137,6 +136,19 @@ export const PlanSelectorContainer = ({
     isFreePlan
   );
 
+  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
+  const planOptionsWithoutAgencyPlans = filterListOfPlans(
+    planOptions,
+    'agency'
+  );
+
+  const shouldIncludeAgencyPlan = isAgencyUser(user) || isOnAgencyTrial(user);
+
+  const availablePlans =
+    shouldIncludeAgencyPlan || showAgencyPlan || isUpgradeIntent
+      ? planOptionsWithoutFreePlans
+      : planOptionsWithoutAgencyPlans;
+
   const disableSumbitButton = splitSBBEnabled
     ? label === 'Stay On My Current Plan' || processing || !action
     : label === 'Stay On My Current Plan' || processing;
@@ -172,15 +184,19 @@ export const PlanSelectorContainer = ({
   }, [monthlyBilling]);
 
   useEffect(() => {
+    handleUpgradeIntent(
+      selectedPlan.planId,
+      isUpgradeIntent,
+      monthlyBilling,
+      updateSelectedPlan
+    );
+
     updateButton(selectedPlan, channelsCount);
   }, [selectedPlan]);
 
   useEffect(() => {
     updateButton(selectedPlan, channelsCount);
 
-    // When the channel count changes and we are on the Free plan
-    // We do this to automatically switch the user to the essentials plan
-    // as Free plans can have a max of 3 channels
     if (
       selectedPlan.planId === 'free' &&
       channelsCount > selectedPlanMinimumQuantity
@@ -240,7 +256,7 @@ export const PlanSelectorContainer = ({
           updateSelectedPlan={updateSelectedPlan}
           monthlyBilling={monthlyBilling}
         />
-        {!shouldIncludeAgencyPlan && !showAgencyPlan && (
+        {!shouldIncludeAgencyPlan && !showAgencyPlan && !isUpgradeIntent && (
           <AgencyPlanSection
             ctaAction={() => {
               updateSelectedPlan(`agency_${monthlyBilling ? 'month' : 'year'}`);
@@ -258,6 +274,7 @@ export const PlanSelectorContainer = ({
                 plan: freePlan,
                 cta,
                 ctaView: modal,
+                isUpgradeIntent: false,
               });
             }}
           />
@@ -267,6 +284,7 @@ export const PlanSelectorContainer = ({
         <Summary
           selectedPlan={selectedPlan}
           fromPlanSelector
+          isUpgradeIntent={isUpgradeIntent}
           channelsCount={channelsCount}
           increaseCounter={() => increaseCounter()}
           decreaseCounter={() => decreaseCounter()}
@@ -282,6 +300,7 @@ export const PlanSelectorContainer = ({
                 plan: selectedPlan,
                 cta,
                 ctaView: modal,
+                isUpgradeIntent,
                 newPrice,
                 channelCounterMessageStatus: channelCountMessageStatus,
                 currentChannelQuantity: currentQuantity,
