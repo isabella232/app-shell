@@ -352,9 +352,7 @@ const NavBar = React.memo((props) => {
                   icon: <PersonIcon color={gray} />,
                   hasDivider: organizations.length > 1,
                   onItemClick: () => {
-                    window.location.assign(
-                      getAccountUrl()
-                    );
+                    window.location.assign(getAccountUrl());
                   },
                 },
                 ...menuItems,
@@ -393,7 +391,6 @@ const NavBar = React.memo((props) => {
                         openModal(MODALS.planSelector, {
                           cta: 'ugradePlan',
                           ctaButton: 'ugradePlan',
-                          isUpgradeIntent: true,
                         });
                       },
                     }
@@ -409,7 +406,6 @@ const NavBar = React.memo((props) => {
                         openModal(MODALS.startTrial, {
                           cta: 'startFreeTrial',
                           ctaButton: 'startFreeTrial',
-                          isUpgradeIntent: true,
                         });
                       },
                     }

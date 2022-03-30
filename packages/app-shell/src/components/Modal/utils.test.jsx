@@ -57,8 +57,6 @@ const listOfFilteredPlanOptions = [
   { planId: 'team', planInterval: 'year', isCurrentPlan: true },
 ];
 
-const isUpgradeIntent = false;
-
 describe('Modal - utils', () => {
   describe('isPendoModalVisible', () => {
     it('should return true if there is a pendo modal visible', () => {
@@ -223,7 +221,7 @@ describe('Modal - utils', () => {
         ...listOfFilteredPlanOptions,
       ];
 
-      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions);
 
       expect(result).toEqual({
         planId: 'team',
@@ -235,7 +233,7 @@ describe('Modal - utils', () => {
     it('should set the default selected plan to essentials yearly when isCurrentPlan cannot be found in the list of plans', () => {
       const planOptions = [...listOfPlanOptionsWithNoCurrentPlan];
 
-      const result = getDefaultSelectedPlan(planOptions, isUpgradeIntent);
+      const result = getDefaultSelectedPlan(planOptions);
 
       expect(result).toEqual({
         planId: 'essentials',

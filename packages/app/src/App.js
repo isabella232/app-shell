@@ -46,7 +46,6 @@ const ModalTesting = () => {
           actions.openModal(MODALS.planSelector, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >
@@ -60,7 +59,6 @@ const ModalTesting = () => {
           actions.openModal(MODALS.paidMigration, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >
@@ -74,7 +72,6 @@ const ModalTesting = () => {
           actions.openModal(MODALS.quantityUpdate, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >
