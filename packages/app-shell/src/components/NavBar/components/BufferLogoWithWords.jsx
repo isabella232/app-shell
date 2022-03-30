@@ -8,7 +8,6 @@ const StyledBufferLink = styled.a`
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  position: relative;
 
   @media screen and (min-width: 1200px) {
     width: 141px;
@@ -16,9 +15,10 @@ const StyledBufferLink = styled.a`
 
   &:after{
     content: '🇺🇦';
-    position: absolute;
-    right: 12px;
-    top: 20px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 4px;
   }
 `;
 
