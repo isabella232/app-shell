@@ -14,7 +14,7 @@ const StyledBufferLink = styled.a`
   }
 
   &:after{
-    content: '🇺🇦';
+    content: '';
     display: flex;
     align-items: center;
     height: 100%;
