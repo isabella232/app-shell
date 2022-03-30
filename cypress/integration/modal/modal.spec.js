@@ -57,7 +57,7 @@ describe('Modal', () => {
       // Try Agency should NOT be displayed
       cy.get('#agency_plan_section').should('not.exist');
 
-      // It should default to Esstential year
+      // It should default to Agency year
       cy.get('#agency_year').should('have.attr', 'aria-label', 'checked');
     });
   });
@@ -143,7 +143,6 @@ describe('Modal', () => {
       cy.get('#render_plan_selector').click();
 
       // Plans displayed
-
       cy.get('#essentials_month').should('exist');
       cy.get('#team_month').should('exist');
       cy.get('#agency_month').should('exist');
@@ -157,8 +156,20 @@ describe('Modal', () => {
       // Try Agency should NOT be displayed
       cy.get('#agency_plan_section').should('not.exist');
 
-      // It should default to Team year
+      // It should default to Agency month
       cy.get('#agency_month').should('have.attr', 'aria-label', 'checked');
+    });
+
+    it('should display Free plan when clicking on Try Free', () => {
+      cy.get('#render_plan_selector').click();
+
+      // Try Free should be displayed
+      cy.get('#free_plan_section').should('exist');
+      cy.get('#try_free_plan').click();
+
+      // Confirmation success modal should be displayed
+      cy.get('#confirmation').should('exist');
+      cy.get('#confirmation').click();
     });
   });
 });
