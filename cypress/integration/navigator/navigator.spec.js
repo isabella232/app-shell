@@ -56,18 +56,19 @@ describe('Navigator', () => {
       cy.contains('Upgrade').should('exist');
       cy.contains('Upgrade').click();
 
+      // Plans displayed
       cy.get('#essentials_year').should('exist');
       cy.get('#team_year').should('exist');
+
+      // Plans NOT displayed
       cy.get('#free_year').should('not.exist');
       cy.get('#agency_year').should('not.exist');
-    });
 
-    it('a user on the Free plan should be able click Upgrade and see the agency cta displayed in footer', () => {
-      cy.contains('Upgrade').should('exist');
-      cy.contains('Upgrade').click();
-
+      // Try agency should be displayed
       cy.get('#agency_plan_section').should('exist');
-      cy.get('#agency_year').should('not.exist');
+
+      // Try Free should NOT be displayed
+      cy.get('#free_plan_section').should('not.exist');
     });
   });
 

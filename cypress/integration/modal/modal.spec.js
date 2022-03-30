@@ -18,17 +18,22 @@ describe('Modal', () => {
     it('should render the Plan Selector Modal with Essentials and Team displayed', () => {
       cy.get('#render_plan_selector').click();
 
+      // Plans displayed
       cy.get('#essentials_year').should('exist');
       cy.get('#team_year').should('exist');
+
+      // Plans NOT displayed
       cy.get('#free_year').should('not.exist');
       cy.get('#agency_year').should('not.exist');
-    });
 
-    it('should render the Plan Selector Modal with Agency CTA displayed in footer', () => {
-      cy.get('#render_plan_selector').click();
-
+      // Try agency should be displayed
       cy.get('#agency_plan_section').should('exist');
-      cy.get('#agency_month').should('not.exist');
+
+      // Try Free should NOT be displayed
+      cy.get('#free_plan_section').should('not.exist');
+
+      // It should default to Esstential year
+      cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
   });
 
@@ -43,27 +48,58 @@ describe('Modal', () => {
       });
     });
 
-    it('should render the Plan Selector Modal with Essentials plan yearly selected when this is the current users plan', () => {
+    it('should render the Plan Selector Modal with Free, Essentials and Team plans displayed', () => {
       cy.get('#render_plan_selector').click();
 
+      // Plans displayed
+      cy.get('#free_year').should('exist');
       cy.get('#essentials_year').should('exist');
+      cy.get('#team_year').should('exist');
+
+      // Plans NOT displayed
+      cy.get('#agency_year').should('not.exist');
+
+      // Try agency should be displayed
+      cy.get('#agency_plan_section').should('exist');
+
+      // Try Free should NOT be displayed
+      cy.get('#free_lan_section').should('not.exist');
+
+      // It should default to Esstential year
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
+    });
+  });
+
+  describe('Plan selector - Team plan', () => {
+    beforeEach(() => {
+      cy.fixture('accountObTeam').then((account) => {
+        cy.intercept('POST', REACT_APP_API_GATEWAY_URL_MATCHER, {
+          status: 200,
+          body: account,
+        });
+        cy.visit('/');
+      });
     });
 
     it('should render the Plan Selector Modal with Free, Essentials and Team plans displayed', () => {
       cy.get('#render_plan_selector').click();
 
+      // Plans displayed
+      cy.get('#free_year').should('exist');
       cy.get('#essentials_year').should('exist');
       cy.get('#team_year').should('exist');
-      cy.get('#free_year').should('exist');
+
+      // Plans NOT displayed
       cy.get('#agency_year').should('not.exist');
-    });
 
-    it('should render the Plan Selector Modal with Agency CTA displayed in footer', () => {
-      cy.get('#render_plan_selector').click();
-
+      // Try agency should be displayed
       cy.get('#agency_plan_section').should('exist');
-      cy.get('#agency_month').should('not.exist');
+
+      // Try Free should NOT be displayed
+      cy.get('#free_lan_section').should('not.exist');
+
+      // It should default to Team year
+      cy.get('#team_year').should('have.attr', 'aria-label', 'checked');
     });
   });
 });

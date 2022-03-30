@@ -9,7 +9,7 @@ function FreePlanSection(props) {
   const { ctaAction } = props;
 
   return (
-    <Container>
+    <Container id="free_plan_section">
       <Text htmlFor="foo" type="help">
         Looking for basic publishing tools?{''}{' '}
         <Button
