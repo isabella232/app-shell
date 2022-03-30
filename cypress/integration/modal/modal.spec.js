@@ -35,6 +35,31 @@ describe('Modal', () => {
       // It should default to Esstential year
       cy.get('#essentials_year').should('have.attr', 'aria-label', 'checked');
     });
+
+    it('should display Agency plan when clicking on Try Agency', () => {
+      cy.get('#render_plan_selector').click();
+
+      // Try agency should be displayed
+      cy.get('#agency_plan_section').should('exist');
+      cy.get('#try_agency_plan').click();
+
+      // Plans displayed
+      cy.get('#essentials_year').should('exist');
+      cy.get('#team_year').should('exist');
+      cy.get('#agency_year').should('exist');
+
+      // Plans NOT displayed
+      cy.get('#free_year').should('not.exist');
+
+      // Try Free should be displayed
+      cy.get('#free_plan_section').should('exist');
+
+      // Try Agency should NOT be displayed
+      cy.get('#agency_plan_section').should('not.exist');
+
+      // It should default to Esstential year
+      cy.get('#agency_year').should('have.attr', 'aria-label', 'checked');
+    });
   });
 
   describe('Plan selector - Essentials plan', () => {

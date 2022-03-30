@@ -13,6 +13,7 @@ function AgencyPlanSection(props) {
       <Text htmlFor="agencyPlan" type="agency">
         Need more than 10 channels?{''}{' '}
         <Button
+          id="try_agency_plan"
           type="text"
           onClick={() => ctaAction()}
           label="Try our Agency plan"
