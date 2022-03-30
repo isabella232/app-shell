@@ -28,7 +28,7 @@ const UpgradeCTA = () => {
         const { currentOrganization } = user;
         const { isOneBufferOrganization } = currentOrganization;
         const isFree = isFreePlan(user);
-        const [hostname, envModifier] = window.location.hostname.match(
+        const [, envModifier] = window.location.hostname.match(
           /\w+\.(\w+\.)buffer\.com/
         ) || [null, null];
 
