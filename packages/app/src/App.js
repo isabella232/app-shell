@@ -20,7 +20,7 @@ const Portal = styled.div`
   border: 6px solid #decd9c;
 
   &:before {
-    content: "#components_container";
+    content: '#components_container';
     font-size: 64px;
     font-weight: bold;
     color: #decd9c;
@@ -40,12 +40,12 @@ const ModalTesting = () => {
     <Wrapper>
       <h3>Render Plan Selector</h3>
       <button
+        id="render_plan_selector"
         onClick={() => {
           const { MODALS, actions } = window?.appshell || {};
           actions.openModal(MODALS.planSelector, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >
@@ -59,7 +59,6 @@ const ModalTesting = () => {
           actions.openModal(MODALS.paidMigration, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >
@@ -74,7 +73,6 @@ const ModalTesting = () => {
           actions.openModal(MODALS.quantityUpdate, {
             cta: 'renderModal',
             ctaButton: 'renderModal',
-            isUpgradeIntent: false,
           });
         }}
       >

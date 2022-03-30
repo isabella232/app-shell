@@ -1,6 +1,11 @@
 import { getCookie } from '../../common/utils/cookies';
 import { getActiveProductFromPath } from '../../common/utils/getProduct';
-import { isFreeUser, userCanStartFreeTrial } from '../../common/utils/user';
+import {
+  isFreeUser,
+  userCanStartFreeTrial,
+  isAgencyUser,
+  isOnAgencyTrial,
+} from '../../common/utils/user';
 import { SUPPORTED_PRODUCTS as CHANNEL_PROMPT_PRODUCTS } from './modals/ChannelConnectionPrompt';
 
 export function isPendoModalVisible() {
@@ -66,15 +71,28 @@ export function getPlanByPlanId(planId, planOptions) {
   return planOptions.find((plan) => plan.planId === planId);
 }
 
+export function getPlanByPlanIdAndInterval(planId, interval, planOptions) {
+  return planOptions.find(
+    (plan) => plan.planId === planId && plan.planInterval === interval
+  );
+}
+
 export function getCurrentPlanFromPlanOptions(planOptions) {
   return planOptions.find((plan) => plan.isCurrentPlan);
 }
 
 export function getDefaultSelectedPlan(planOptions) {
   const currentPlan = getCurrentPlanFromPlanOptions(planOptions);
-  const essentialsPlan = getPlanByPlanId('essentials', planOptions);
+  const essentialsPlan = getPlanByPlanIdAndInterval(
+    'essentials',
+    'year',
+    planOptions
+  );
 
-  const defaultSelectedPlan = !currentPlan ? essentialsPlan : currentPlan;
+  const defaultSelectedPlan =
+    !currentPlan || currentPlan.planId === 'free'
+      ? essentialsPlan
+      : currentPlan;
 
   return defaultSelectedPlan;
 }
@@ -120,21 +138,31 @@ export function getAgencyPlanMinimumChannelInputMessaging() {
   };
 }
 
-export function getFreePlanChannelInputMessaging() {
-  return {
-    messageStatus: 'warning',
-    message:
-      'The Free plan is limited to 3 channels. Additional channels will be locked.',
-  };
-}
+// This will return an array of plan that should be displayed to the user
+// in the selection screen inside the plan selector
+export function getAvailablePlansForDisplay(user, planOptions, showAgencyPlan) {
+  const isOnFreePlan = isFreeUser(user);
+  const shouldIncludeAgencyPlan =
+    isAgencyUser(user) || isOnAgencyTrial(user) || showAgencyPlan;
 
-export function handleUpgradeIntent(
-  selectedPlanId,
-  isUpgradeIntent,
-  monthlyBilling,
-  updateSelectedPlan
-) {
-  if (selectedPlanId === 'free' && isUpgradeIntent) {
-    updateSelectedPlan(`essentials_${monthlyBilling ? 'month' : 'year'}`);
+  const planOptionsWithoutFreePlans = filterListOfPlans(planOptions, 'free');
+  const planOptionsWithoutAgencyPlans = filterListOfPlans(
+    planOptions,
+    'agency'
+  );
+
+  if (shouldIncludeAgencyPlan) {
+    return planOptionsWithoutFreePlans;
   }
+
+  if (isOnFreePlan) {
+    const plansWithoutFreeOrAgency = filterListOfPlans(
+      planOptionsWithoutFreePlans,
+      'agency'
+    );
+
+    return plansWithoutFreeOrAgency;
+  }
+
+  return planOptionsWithoutAgencyPlans;
 }

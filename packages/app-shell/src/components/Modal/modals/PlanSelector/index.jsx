@@ -41,7 +41,6 @@ const PlanSelector = () => {
                 openSuccess={(newData) => {
                   modal.openModal(MODALS.success, newData);
                 }}
-                isUpgradeIntent={modal.data?.isUpgradeIntent}
               />
             );
           }}

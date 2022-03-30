@@ -28,7 +28,6 @@ const Form = ({
   openSuccess,
   plan,
   isTrial,
-  isUpgradeIntent,
   canManageBilling,
   newPrice,
   channelCounterMessageStatus,
@@ -148,7 +147,7 @@ const Form = ({
             <Footer>
               <Button
                 type="text"
-                onClick={() => openPlans(isUpgradeIntent)}
+                onClick={() => openPlans()}
                 label="Go back to plans"
                 icon={<ArrowLeftIcon />}
               />

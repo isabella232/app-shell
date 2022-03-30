@@ -27,10 +27,10 @@ const useUpdateSubscriptionPlan = ({
   );
 
   useEffect(() => {
-    if (!user || !plan || !hasPaymentMethod) {
+    if (!user || !plan) {
       // eslint-disable-next-line no-console
       console.error(
-        'Could not update plan because either: user, plan or paymentDetails are undefined'
+        'Could not update plan because either: user or plan are undefined'
       );
       return;
     }
