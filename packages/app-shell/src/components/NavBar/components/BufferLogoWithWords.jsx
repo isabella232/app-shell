@@ -7,9 +7,17 @@ const StyledBufferLink = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 
   @media screen and (min-width: 1200px) {
     width: 141px;
+  }
+
+  &:after{
+    content: '🇺🇦';
+    position: absolute;
+    right: 12px;
+    top: 23px;
   }
 `;
 
