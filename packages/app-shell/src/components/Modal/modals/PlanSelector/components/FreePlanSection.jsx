@@ -13,6 +13,7 @@ function FreePlanSection(props) {
       <Text htmlFor="foo" type="help">
         Looking for basic publishing tools?{''}{' '}
         <Button
+          id="try_free_plan"
           type="text"
           onClick={() => ctaAction()}
           label="Downgrade to our Free plan"
