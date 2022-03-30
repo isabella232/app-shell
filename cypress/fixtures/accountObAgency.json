@@ -2,7 +2,7 @@
     "data": {
       "account": {
         "id": "606b65d6dad38c9d20b70792",
-        "email": "ob_essential@buffer.com",
+        "email": "ob_agency@buffer.com",
         "createdAt": "2021-04-05T19:32:38.841Z",
         "featureFlips": ["grantAnalyzeAccess", "sharedChannels", "engageRollOut"],
         "isImpersonation": false,
@@ -719,6 +719,15 @@
       "billingUpdateSubscriptionQuantity": {
         "success": true,
         "__typename": "BillingResponse"
+      },
+      "billingUpdateSubscriptionPlan": {
+        "success": true,
+        "__typename": "BillingResponse"
+      },
+      "billingCreateSetupIntent": {
+        "clientSecret": "",
+        "success": true,
+        "__typename": "BillingCreateSetupIntentResponse"
       }
     }
   }
