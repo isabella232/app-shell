@@ -85,8 +85,7 @@ const StartTrial = ({ user, openModal, modalData }) => {
             type="secondary"
             onClick={() => {
               openModal(MODALS.planSelector, {
-                cta: 'startTrialModal',
-                ctaButton: 'checkOutPaidPlans',
+                cta: 'navBar-startTrialModal-seePaidPlans-1',
               });
             }}
             label="See paid plans"
