@@ -139,8 +139,7 @@ const TrialExpired = () => {
               onUpgrade={() => {
                 setTrialDismissedCookies();
                 openModal(MODALS.planSelector, {
-                  cta: 'trialExpiredUpgrade',
-                  ctaButton: 'trialExpired',
+                  cta: 'navBar-trialExpiredModal-trialExpired-1',
                 });
               }}
               closeModal={() => {

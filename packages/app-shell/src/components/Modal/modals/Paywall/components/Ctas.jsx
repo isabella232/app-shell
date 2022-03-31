@@ -52,7 +52,7 @@ const Content = ({ openModal }) => {
             } else {
               openModal(MODALS.planSelector, {
                 cta,
-                ctaButton: `paywall-${cta}-1`,
+                ctaButton: `navBar-paywallModal-${cta}-1`,
               });
             }
           }}
