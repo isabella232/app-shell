@@ -65,13 +65,11 @@ const UpgradeCTA = () => {
                           if (isOneBufferOrganization) {
                             if (canStartTrial) {
                               openModal(MODALS.startTrial, {
-                                cta: 'startTrialNavigatorBar',
-                                ctaButton: 'startTrial',
+                                cta: 'navBar-navBar-startTrial-1',
                               });
                             } else {
                               openModal(MODALS.planSelector, {
-                                cta: 'upgradePlanNavigatorBar',
-                                ctaButton: 'upgradePlan',
+                                cta: 'navBar-navBar-upgradePlan-1',
                               });
                             }
                           } else {

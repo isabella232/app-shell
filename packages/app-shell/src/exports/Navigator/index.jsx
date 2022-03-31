@@ -113,7 +113,7 @@ export const Navigator = React.memo(({ apolloClient, channels }) => {
               label: 'Start Subscription',
               action: () =>
                 modal.openModal(MODALS.planSelector, {
-                  cta: 'addPaymentDetailsBanner',
+                  cta: 'navBar-banner-startSubscription-1',
                 }),
             }}
           />
