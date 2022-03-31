@@ -49,6 +49,14 @@ const CardBody = ({
     channelFee
   );
 
+  const currentPrice = calculateTotalSlotsPrice(
+    planId,
+    quantity,
+    pricePerQuantity,
+    minimumQuantity,
+    channelFee
+  );
+
   const {
     updateSubscriptionQuantity,
     data: updateQuantityData,
@@ -118,6 +126,7 @@ const CardBody = ({
             <Summary>
               {hasCounterChanged ? (
                 <>
+                  <Text type="p">Currently paying: ${currentPrice}</Text>
                   <Text type="p">
                     New cost: <strong>${newPrice}</strong>
                   </Text>
