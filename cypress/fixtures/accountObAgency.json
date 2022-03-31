@@ -1,31 +1,431 @@
 {
-    "data": {
-      "account": {
-        "id": "606b65d6dad38c9d20b70792",
-        "email": "ob_agency@buffer.com",
-        "createdAt": "2021-04-05T19:32:38.841Z",
-        "featureFlips": ["grantAnalyzeAccess", "sharedChannels", "engageRollOut"],
-        "isImpersonation": false,
-        "shouldShowEmailVerificationCommunication": true,
-        "currentOrganization": {
-          "id": "606b65d6dad38c03d2b70793",
-          "name": "test",
+  "data": {
+    "account": {
+      "id": "62309fde44102b0035e3e9fa",
+      "email": "henry+local@buffer.com",
+      "createdAt": "2022-03-15T14:17:02.529Z",
+      "featureFlips": [
+        "grantAnalyzeAccess",
+        "sharedChannels",
+        "engageRollOut"
+      ],
+      "isImpersonation": false,
+      "shouldShowEmailVerificationCommunication": false,
+      "currentOrganization": {
+        "id": "62309fde44102b0035e3e9fb",
+        "name": "henry local org",
+        "canEdit": true,
+        "privileges": {
+          "canManageBilling": true,
+          "__typename": "AccountPrivileges"
+        },
+        "role": "admin",
+        "createdAt": "2022-03-15T14:17:02.641Z",
+        "isOneBufferOrganization": true,
+        "canMigrateToOneBuffer": {
+          "canMigrate": false,
+          "reasons": [
+            "Customer 62309fde44102b0035e3e9fb is not Multi Product"
+          ],
+          "__typename": "CanMigrateToOneBuffer"
+        },
+        "shouldDisplayInviteCTA": true,
+        "featureFlips": [
+          "grantAnalyzeAccess",
+          "sharedChannels",
+          "engageRollOut"
+        ],
+        "channels": [
+          {
+            "id": "5d257761ab23f55e8ccf7331",
+            "name": "indijeane",
+            "service": "instagram",
+            "organizationId": "62309fde44102b0035e3e9fb",
+            "__typename": "Channel"
+          },
+          {
+            "id": "5d257e184d0fce8e963ad6a0",
+            "name": "Better Way Health",
+            "service": "facebook",
+            "organizationId": "62309fde44102b0035e3e9fb",
+            "__typename": "Channel"
+          }
+        ],
+        "billing": {
+          "id": "62309fde44102b0035e3e9fb",
+          "canAccessAnalytics": true,
+          "canAccessEngagement": true,
+          "canAccessPublishing": true,
+          "paymentDetails": {
+            "hasPaymentDetails": true,
+            "__typename": "PaymentDetails"
+          },
+          "canStartTrial": false,
+          "subscription": {
+            "quantity": 10,
+            "interval": "month",
+            "periodEnd": "2022-04-30T11:11:40.000Z",
+            "isCanceledAtPeriodEnd": false,
+            "trial": null,
+            "plan": {
+              "id": "agency",
+              "name": "Agency",
+              "__typename": "OBPlan"
+            },
+            "__typename": "OBSubscription"
+          },
+          "channelSlotDetails": {
+            "flatFee": 120,
+            "currentQuantity": 10,
+            "chargableQuantity": 0,
+            "pricePerQuantity": 6,
+            "minimumQuantity": 10,
+            "__typename": "ChannelSlotDetails"
+          },
+          "changePlanOptions": [
+            {
+              "planId": "free",
+              "planName": "Free",
+              "planInterval": "month",
+              "channelsQuantity": 10,
+              "description": "Simplify the noise and test out social media management tools.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Basic publishing tools",
+                "Limited usage"
+              ],
+              "currency": "$",
+              "basePrice": 0,
+              "totalPrice": 0,
+              "discountPercentage": 0,
+              "discountNote": "",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "",
+              "summary": {
+                "details": [
+                  "10 scheduled posts",
+                  "3 social channels",
+                  "One user"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 3,
+                "chargableQuantity": 3,
+                "pricePerQuantity": 0,
+                "minimumQuantity": 3,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "essentials",
+              "planName": "Essentials",
+              "planInterval": "month",
+              "channelsQuantity": 10,
+              "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools"
+              ],
+              "currency": "$",
+              "basePrice": 6,
+              "totalPrice": 60,
+              "discountPercentage": 0,
+              "discountNote": "",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "Save $120/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "One user"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 10,
+                "chargableQuantity": 10,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 1,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "team",
+              "planName": "Essentials + Team Pack",
+              "planInterval": "month",
+              "channelsQuantity": 10,
+              "description": "Collaborate with your team in one place & save time reporting.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools",
+                "Unlimited team members & clients",
+                "Draft approval workflows",
+                "Exportable PDF reports"
+              ],
+              "currency": "$",
+              "basePrice": 12,
+              "totalPrice": 120,
+              "discountPercentage": 0,
+              "discountNote": "",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "Save $240/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "Unlimited users"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 10,
+                "chargableQuantity": 10,
+                "pricePerQuantity": 12,
+                "minimumQuantity": 1,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "agency",
+              "planName": "Agency",
+              "planInterval": "month",
+              "channelsQuantity": 10,
+              "description": "Support a growing client base with features & pricing that scale with your business.",
+              "isCurrentPlan": true,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools",
+                "Unlimited team members & clients",
+                "Draft approval workflows",
+                "Exportable PDF reports",
+                "Agency friendly pricing"
+              ],
+              "currency": "$",
+              "basePrice": 120,
+              "totalPrice": 120,
+              "discountPercentage": 0,
+              "discountNote": "",
+              "priceNote": "For 10 social channels. Add additional channels for $6 per month",
+              "absoluteSavings": "Save $240/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "Unlimited users"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 120,
+                "currentQuantity": 10,
+                "chargableQuantity": 0,
+                "pricePerQuantity": 6,
+                "minimumQuantity": 10,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "free",
+              "planName": "Free",
+              "planInterval": "year",
+              "channelsQuantity": 10,
+              "description": "Simplify the noise and test out social media management tools.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Basic publishing tools",
+                "Limited usage"
+              ],
+              "currency": "$",
+              "basePrice": 0,
+              "totalPrice": 0,
+              "discountPercentage": 0,
+              "discountNote": "0% Discount",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "",
+              "summary": {
+                "details": [
+                  "10 scheduled posts",
+                  "3 social channels",
+                  "One user"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 3,
+                "chargableQuantity": 3,
+                "pricePerQuantity": 0,
+                "minimumQuantity": 3,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "essentials",
+              "planName": "Essentials",
+              "planInterval": "year",
+              "channelsQuantity": 10,
+              "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools"
+              ],
+              "currency": "$",
+              "basePrice": 5,
+              "totalPrice": 600,
+              "discountPercentage": 17,
+              "discountNote": "17% Discount",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "Saving $120/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "One user"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 10,
+                "chargableQuantity": 10,
+                "pricePerQuantity": 60,
+                "minimumQuantity": 1,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "team",
+              "planName": "Essentials + Team Pack",
+              "planInterval": "year",
+              "channelsQuantity": 10,
+              "description": "Collaborate with your team in one place & save time reporting.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools",
+                "Unlimited team members & clients",
+                "Draft approval workflows",
+                "Exportable PDF reports"
+              ],
+              "currency": "$",
+              "basePrice": 10,
+              "totalPrice": 1200,
+              "discountPercentage": 17,
+              "discountNote": "17% Discount",
+              "priceNote": "Per social channel per month",
+              "absoluteSavings": "Saving $240/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "Unlimited users"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 0,
+                "currentQuantity": 10,
+                "chargableQuantity": 10,
+                "pricePerQuantity": 120,
+                "minimumQuantity": 1,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            },
+            {
+              "planId": "agency",
+              "planName": "Agency",
+              "planInterval": "year",
+              "channelsQuantity": 10,
+              "description": "Support a growing client base with features & pricing that scale with your business.",
+              "isCurrentPlan": false,
+              "highlights": [
+                "Advanced publishing tools",
+                "Analytics & reporting",
+                "Engagement tools",
+                "Unlimited team members & clients",
+                "Draft approval workflows",
+                "Exportable PDF reports",
+                "Agency friendly pricing"
+              ],
+              "currency": "$",
+              "basePrice": 100,
+              "totalPrice": 1200,
+              "discountPercentage": 17,
+              "discountNote": "17% Discount",
+              "priceNote": "For 10 social channels. Add additional channels for $5 per month",
+              "absoluteSavings": "Saving $240/year",
+              "summary": {
+                "details": [
+                  "2000 scheduled posts",
+                  "Unlimited users"
+                ],
+                "__typename": "OBPlanOptionSummary"
+              },
+              "isRecommended": false,
+              "downgradedMessage": "",
+              "channelSlotDetails": {
+                "flatFee": 1200,
+                "currentQuantity": 10,
+                "chargableQuantity": 0,
+                "pricePerQuantity": 60,
+                "minimumQuantity": 10,
+                "__typename": "ChannelSlotDetails"
+              },
+              "__typename": "OBPlanOption"
+            }
+          ],
+          "__typename": "OBBilling"
+        },
+        "__typename": "AccountOrganization"
+      },
+      "organizations": [
+        {
+          "id": "62309fde44102b0035e3e9fb",
+          "name": "henry local org",
           "canEdit": true,
           "privileges": {
             "canManageBilling": true,
             "__typename": "AccountPrivileges"
           },
           "role": "admin",
+          "createdAt": "2022-03-15T14:17:02.641Z",
+          "isOneBufferOrganization": true,
           "canMigrateToOneBuffer": {
             "canMigrate": false,
             "reasons": [
-              "Customer 606b65d6dad38c03d2b70793 is missing the eligibility flag"
+              "Customer 62309fde44102b0035e3e9fb is not Multi Product"
             ],
             "__typename": "CanMigrateToOneBuffer"
           },
-          "createdAt": "2021-04-05T19:32:38.961Z",
-          "isOneBufferOrganization": true,
-          "shouldDisplayInviteCTA": false,
+          "shouldDisplayInviteCTA": true,
           "featureFlips": [
             "grantAnalyzeAccess",
             "sharedChannels",
@@ -33,15 +433,22 @@
           ],
           "channels": [
             {
-              "id": "606b65e1dd934f70840bfef7",
-              "name": "testing public",
+              "id": "5d257761ab23f55e8ccf7331",
+              "name": "indijeane",
+              "service": "instagram",
+              "organizationId": "62309fde44102b0035e3e9fb",
+              "__typename": "Channel"
+            },
+            {
+              "id": "5d257e184d0fce8e963ad6a0",
+              "name": "Better Way Health",
               "service": "facebook",
-              "organizationId": "606b65d6dad38c03d2b70793",
+              "organizationId": "62309fde44102b0035e3e9fb",
               "__typename": "Channel"
             }
           ],
           "billing": {
-            "id": "606b65d6dad38c03d2b70793",
+            "id": "62309fde44102b0035e3e9fb",
             "canAccessAnalytics": true,
             "canAccessEngagement": true,
             "canAccessPublishing": true,
@@ -52,8 +459,8 @@
             "canStartTrial": false,
             "subscription": {
               "quantity": 10,
-              "interval": "yearly",
-              "periodEnd": "2022-08-04T21:25:40.000Z",
+              "interval": "month",
+              "periodEnd": "2022-04-30T11:11:40.000Z",
               "isCanceledAtPeriodEnd": false,
               "trial": null,
               "plan": {
@@ -64,11 +471,11 @@
               "__typename": "OBSubscription"
             },
             "channelSlotDetails": {
-              "flatFee": 0,
-              "currentQuantity": 2,
-              "chargableQuantity": 2,
+              "flatFee": 120,
+              "currentQuantity": 10,
+              "chargableQuantity": 0,
               "pricePerQuantity": 6,
-              "minimumQuantity": 1,
+              "minimumQuantity": 10,
               "__typename": "ChannelSlotDetails"
             },
             "changePlanOptions": [
@@ -76,10 +483,13 @@
                 "planId": "free",
                 "planName": "Free",
                 "planInterval": "month",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": false,
-                "highlights": ["Basic publishing tools", "Limited usage"],
+                "highlights": [
+                  "Basic publishing tools",
+                  "Limited usage"
+                ],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,
@@ -111,7 +521,7 @@
                 "planId": "essentials",
                 "planName": "Essentials",
                 "planInterval": "month",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
                 "isCurrentPlan": false,
                 "highlights": [
@@ -121,15 +531,14 @@
                 ],
                 "currency": "$",
                 "basePrice": 6,
-                "totalPrice": 6,
+                "totalPrice": 60,
                 "discountPercentage": 0,
                 "discountNote": "",
                 "priceNote": "Per social channel per month",
-                "absoluteSavings": "Save $12/year",
+                "absoluteSavings": "Save $120/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "One user"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -138,8 +547,8 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
+                  "currentQuantity": 10,
+                  "chargableQuantity": 10,
                   "pricePerQuantity": 6,
                   "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
@@ -150,7 +559,7 @@
                 "planId": "team",
                 "planName": "Essentials + Team Pack",
                 "planInterval": "month",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Collaborate with your team in one place & save time reporting.",
                 "isCurrentPlan": false,
                 "highlights": [
@@ -158,20 +567,19 @@
                   "Analytics & reporting",
                   "Engagement tools",
                   "Unlimited team members & clients",
-                  "Drafting & approval workflow tools",
+                  "Draft approval workflows",
                   "Exportable PDF reports"
                 ],
                 "currency": "$",
                 "basePrice": 12,
-                "totalPrice": 12,
+                "totalPrice": 120,
                 "discountPercentage": 0,
                 "discountNote": "",
                 "priceNote": "Per social channel per month",
-                "absoluteSavings": "Save $24/year",
+                "absoluteSavings": "Save $240/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "Unlimited users"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -180,9 +588,9 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
+                  "currentQuantity": 10,
+                  "chargableQuantity": 10,
+                  "pricePerQuantity": 12,
                   "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
@@ -200,20 +608,20 @@
                   "Analytics & reporting",
                   "Engagement tools",
                   "Unlimited team members & clients",
-                  "Drafting & approval workflow tools",
-                  "Exportable PDF reports"
+                  "Draft approval workflows",
+                  "Exportable PDF reports",
+                  "Agency friendly pricing"
                 ],
                 "currency": "$",
-                "basePrice": 10,
+                "basePrice": 120,
                 "totalPrice": 120,
-                "discountPercentage": 17,
-                "discountNote": "17% Discount",
-                "priceNote": "Per social channel per month",
-                "absoluteSavings": "Saving $24/year",
+                "discountPercentage": 0,
+                "discountNote": "",
+                "priceNote": "For 10 social channels. Add additional channels for $6 per month",
+                "absoluteSavings": "Save $240/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "Unlimited users"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -221,11 +629,11 @@
                 "isRecommended": false,
                 "downgradedMessage": "",
                 "channelSlotDetails": {
-                  "flatFee": 0,
-                  "currentQuantity": 0,
+                  "flatFee": 120,
+                  "currentQuantity": 10,
                   "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "pricePerQuantity": 6,
+                  "minimumQuantity": 10,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -234,10 +642,13 @@
                 "planId": "free",
                 "planName": "Free",
                 "planInterval": "year",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Simplify the noise and test out social media management tools.",
                 "isCurrentPlan": false,
-                "highlights": ["Basic publishing tools", "Limited usage"],
+                "highlights": [
+                  "Basic publishing tools",
+                  "Limited usage"
+                ],
                 "currency": "$",
                 "basePrice": 0,
                 "totalPrice": 0,
@@ -257,10 +668,10 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
-                  "minimumQuantity": 1,
+                  "currentQuantity": 3,
+                  "chargableQuantity": 3,
+                  "pricePerQuantity": 0,
+                  "minimumQuantity": 3,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
@@ -269,7 +680,7 @@
                 "planId": "essentials",
                 "planName": "Essentials",
                 "planInterval": "year",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
                 "isCurrentPlan": false,
                 "highlights": [
@@ -279,15 +690,14 @@
                 ],
                 "currency": "$",
                 "basePrice": 5,
-                "totalPrice": 60,
+                "totalPrice": 600,
                 "discountPercentage": 17,
                 "discountNote": "17% Discount",
                 "priceNote": "Per social channel per month",
-                "absoluteSavings": "Saving $12/year",
+                "absoluteSavings": "Saving $120/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "One user"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -296,9 +706,9 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
+                  "currentQuantity": 10,
+                  "chargableQuantity": 10,
+                  "pricePerQuantity": 60,
                   "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
@@ -308,7 +718,7 @@
                 "planId": "team",
                 "planName": "Essentials + Team Pack",
                 "planInterval": "year",
-                "channelsQuantity": 1,
+                "channelsQuantity": 10,
                 "description": "Collaborate with your team in one place & save time reporting.",
                 "isCurrentPlan": false,
                 "highlights": [
@@ -316,20 +726,19 @@
                   "Analytics & reporting",
                   "Engagement tools",
                   "Unlimited team members & clients",
-                  "Drafting & approval workflow tools",
+                  "Draft approval workflows",
                   "Exportable PDF reports"
                 ],
                 "currency": "$",
                 "basePrice": 10,
-                "totalPrice": 120,
+                "totalPrice": 1200,
                 "discountPercentage": 17,
                 "discountNote": "17% Discount",
                 "priceNote": "Per social channel per month",
-                "absoluteSavings": "Saving $24/year",
+                "absoluteSavings": "Saving $240/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "Unlimited users"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -338,9 +747,9 @@
                 "downgradedMessage": "",
                 "channelSlotDetails": {
                   "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
+                  "currentQuantity": 10,
+                  "chargableQuantity": 10,
+                  "pricePerQuantity": 120,
                   "minimumQuantity": 1,
                   "__typename": "ChannelSlotDetails"
                 },
@@ -358,20 +767,20 @@
                   "Analytics & reporting",
                   "Engagement tools",
                   "Unlimited team members & clients",
-                  "Drafting & approval workflow tools",
-                  "Exportable PDF reports"
+                  "Draft approval workflows",
+                  "Exportable PDF reports",
+                  "Agency friendly pricing"
                 ],
                 "currency": "$",
-                "basePrice": 10,
-                "totalPrice": 120,
+                "basePrice": 100,
+                "totalPrice": 1200,
                 "discountPercentage": 17,
                 "discountNote": "17% Discount",
-                "priceNote": "Per social channel per month",
-                "absoluteSavings": "Saving $24/year",
+                "priceNote": "For 10 social channels. Add additional channels for $5 per month",
+                "absoluteSavings": "Saving $240/year",
                 "summary": {
                   "details": [
-                    "Unlimited scheduled posts",
-                    "Unlimited social channels",
+                    "2000 scheduled posts",
                     "Unlimited users"
                   ],
                   "__typename": "OBPlanOptionSummary"
@@ -379,355 +788,52 @@
                 "isRecommended": false,
                 "downgradedMessage": "",
                 "channelSlotDetails": {
-                  "flatFee": 0,
-                  "currentQuantity": 0,
+                  "flatFee": 1200,
+                  "currentQuantity": 10,
                   "chargableQuantity": 0,
-                  "pricePerQuantity": 0,
-                  "minimumQuantity": 0,
+                  "pricePerQuantity": 60,
+                  "minimumQuantity": 10,
                   "__typename": "ChannelSlotDetails"
                 },
                 "__typename": "OBPlanOption"
               }
             ],
-            "__typename": "OBBilling"
+              "__typename": "OBBilling"
           },
           "__typename": "AccountOrganization"
+        }
+      ],
+      "products": [
+        {
+          "name": "analyze",
+          "userId": "62309fde44102b0035e3e9fa",
+          "__typename": "ProductLink"
         },
-        "organizations": [
-          {
-            "id": "606b65d6dad38c03d2b70793",
-            "name": "test",
-            "canEdit": true,
-            "privileges": {
-              "canManageBilling": true,
-              "__typename": "AccountPrivileges"
-            },
-            "role": "admin",
-            "canMigrateToOneBuffer": {
-              "canMigrate": false,
-              "reasons": [
-                "Customer 606b65d6dad38c03d2b70793 is missing the eligibility flag"
-              ],
-              "__typename": "CanMigrateToOneBuffer"
-            },
-            "createdAt": "2021-04-05T19:32:38.961Z",
-            "isOneBufferOrganization": true,
-            "shouldDisplayInviteCTA": false,
-            "featureFlips": [
-              "grantAnalyzeAccess",
-              "sharedChannels",
-              "engageRollOut"
-            ],
-            "channels": [
-              {
-                "id": "606b65e1dd934f70840bfef7",
-                "name": "testing public",
-                "service": "facebook",
-                "organizationId": "606b65d6dad38c03d2b70793",
-                "__typename": "Channel"
-              }
-            ],
-            "billing": {
-              "id": "606b65d6dad38c03d2b70793",
-              "canAccessAnalytics": true,
-              "canAccessEngagement": true,
-              "canAccessPublishing": true,
-              "paymentDetails": {
-                "hasPaymentDetails": true,
-                "__typename": "PaymentDetails"
-              },
-              "canStartTrial": false,
-              "subscription": {
-                "quantity": 1,
-                "interval": "year",
-                "periodEnd": "2022-08-04T21:25:40.000Z",
-                "isCanceledAtPeriodEnd": false,
-                "trial": null,
-                "plan": {
-                  "id": "essentials",
-                  "name": "Essentials",
-                  "__typename": "OBPlan"
-                },
-                "__typename": "OBSubscription"
-              },
-              "channelSlotDetails": {
-                "flatFee": 0,
-                "currentQuantity": 2,
-                "chargableQuantity": 2,
-                "pricePerQuantity": 6,
-                "minimumQuantity": 1,
-                "__typename": "ChannelSlotDetails"
-              },
-              "changePlanOptions": [
-                {
-                  "planId": "free",
-                  "planName": "Free",
-                  "planInterval": "month",
-                  "channelsQuantity": 1,
-                  "description": "Simplify the noise and test out social media management tools.",
-                  "isCurrentPlan": false,
-                  "highlights": ["Basic publishing tools", "Limited usage"],
-                  "currency": "$",
-                  "basePrice": 0,
-                  "totalPrice": 0,
-                  "discountPercentage": 0,
-                  "discountNote": "",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "",
-                  "summary": {
-                    "details": [
-                      "10 scheduled posts",
-                      "3 social channels",
-                      "One user"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                    "currentQuantity": 2,
-                    "chargableQuantity": 2,
-                    "pricePerQuantity": 6,
-                    "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                },
-                {
-                  "planId": "essentials",
-                  "planName": "Essentials",
-                  "planInterval": "month",
-                  "channelsQuantity": 1,
-                  "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
-                  "isCurrentPlan": false,
-                  "highlights": [
-                    "Advanced publishing tools",
-                    "Analytics & reporting",
-                    "Engagement tools"
-                  ],
-                  "currency": "$",
-                  "basePrice": 6,
-                  "totalPrice": 6,
-                  "discountPercentage": 0,
-                  "discountNote": "",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "Save $12/year",
-                  "summary": {
-                    "details": [
-                      "Unlimited scheduled posts",
-                      "Unlimited social channels",
-                      "One user"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                    "currentQuantity": 2,
-                    "chargableQuantity": 2,
-                    "pricePerQuantity": 6,
-                    "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                },
-                {
-                  "planId": "team",
-                  "planName": "Essentials + Team Pack",
-                  "planInterval": "month",
-                  "channelsQuantity": 1,
-                  "description": "Collaborate with your team in one place & save time reporting.",
-                  "isCurrentPlan": false,
-                  "highlights": [
-                    "Advanced publishing tools",
-                    "Analytics & reporting",
-                    "Engagement tools",
-                    "Unlimited team members & clients",
-                    "Drafting & approval workflow tools",
-                    "Exportable PDF reports"
-                  ],
-                  "currency": "$",
-                  "basePrice": 12,
-                  "totalPrice": 12,
-                  "discountPercentage": 0,
-                  "discountNote": "",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "Save $24/year",
-                  "summary": {
-                    "details": [
-                      "Unlimited scheduled posts",
-                      "Unlimited social channels",
-                      "Unlimited users"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                    "currentQuantity": 2,
-                    "chargableQuantity": 2,
-                    "pricePerQuantity": 6,
-                    "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                },
-                {
-                  "planId": "free",
-                  "planName": "Free",
-                  "planInterval": "year",
-                  "channelsQuantity": 1,
-                  "description": "Simplify the noise and test out social media management tools.",
-                  "isCurrentPlan": false,
-                  "highlights": ["Basic publishing tools", "Limited usage"],
-                  "currency": "$",
-                  "basePrice": 0,
-                  "totalPrice": 0,
-                  "discountPercentage": 0,
-                  "discountNote": "0% Discount",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "",
-                  "summary": {
-                    "details": [
-                      "10 scheduled posts",
-                      "3 social channels",
-                      "One user"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                    "currentQuantity": 2,
-                    "chargableQuantity": 2,
-                    "pricePerQuantity": 6,
-                    "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                },
-                {
-                  "planId": "essentials",
-                  "planName": "Essentials",
-                  "planInterval": "year",
-                  "channelsQuantity": 1,
-                  "description": "Get the most out of your creative with publishing, analytics & engagement tools.",
-                  "isCurrentPlan": false,
-                  "highlights": [
-                    "Advanced publishing tools",
-                    "Analytics & reporting",
-                    "Engagement tools"
-                  ],
-                  "currency": "$",
-                  "basePrice": 5,
-                  "totalPrice": 60,
-                  "discountPercentage": 17,
-                  "discountNote": "17% Discount",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "Saving $12/year",
-                  "summary": {
-                    "details": [
-                      "Unlimited scheduled posts",
-                      "Unlimited social channels",
-                      "One user"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
-                  "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                },
-                {
-                  "planId": "team",
-                  "planName": "Essentials + Team Pack",
-                  "planInterval": "year",
-                  "channelsQuantity": 1,
-                  "description": "Collaborate with your team in one place & save time reporting.",
-                  "isCurrentPlan": false,
-                  "highlights": [
-                    "Advanced publishing tools",
-                    "Analytics & reporting",
-                    "Engagement tools",
-                    "Unlimited team members & clients",
-                    "Drafting & approval workflow tools",
-                    "Exportable PDF reports"
-                  ],
-                  "currency": "$",
-                  "basePrice": 10,
-                  "totalPrice": 120,
-                  "discountPercentage": 17,
-                  "discountNote": "17% Discount",
-                  "priceNote": "Per social channel per month",
-                  "absoluteSavings": "Saving $24/year",
-                  "summary": {
-                    "details": [
-                      "Unlimited scheduled posts",
-                      "Unlimited social channels",
-                      "Unlimited users"
-                    ],
-                    "__typename": "OBPlanOptionSummary"
-                  },
-                  "isRecommended": false,
-                  "downgradedMessage": "",
-                  "channelSlotDetails": {
-                    "flatFee": 0,
-                  "currentQuantity": 2,
-                  "chargableQuantity": 2,
-                  "pricePerQuantity": 6,
-                  "minimumQuantity": 1,
-                    "__typename": "ChannelSlotDetails"
-                  },
-                  "__typename": "OBPlanOption"
-                }
-              ],
-              "__typename": "OBBilling"
-            },
-            "__typename": "AccountOrganization"
-          }
-        ],
-        "products": [
-          {
-            "name": "publish",
-            "userId": "606b65d760292104ad6ef6b5",
-            "__typename": "ProductLink"
-          },
-          {
-            "name": "analyze",
-            "userId": "606b65d6dad38c9d20b70792",
-            "__typename": "ProductLink"
-          },
-          {
-            "name": "engage",
-            "userId": "606b65d6dad38c9d20b70792",
-            "__typename": "ProductLink"
-          }
-        ],
-        "__typename": "Account"
-      },
-      "billingUpdateSubscriptionQuantity": {
-        "success": true,
-        "__typename": "BillingResponse"
-      },
-      "billingUpdateSubscriptionPlan": {
-        "success": true,
-        "__typename": "BillingResponse"
-      },
-      "billingCreateSetupIntent": {
-        "clientSecret": "",
-        "success": true,
-        "__typename": "BillingCreateSetupIntentResponse"
-      }
+        {
+          "name": "engage",
+          "userId": "62309fde44102b0035e3e9fa",
+          "__typename": "ProductLink"
+        },
+        {
+          "name": "publish",
+          "userId": "62309fe3a0de5a0b8b2eaff2",
+          "__typename": "ProductLink"
+        }
+      ],
+      "__typename": "Account"
+    },
+    "billingUpdateSubscriptionQuantity": {
+      "success": true,
+      "__typename": "BillingResponse"
+    },
+    "billingUpdateSubscriptionPlan": {
+      "success": true,
+      "__typename": "BillingResponse"
+    },
+    "billingCreateSetupIntent": {
+      "clientSecret": "",
+      "success": true,
+      "__typename": "BillingCreateSetupIntentResponse"
     }
   }
+}
